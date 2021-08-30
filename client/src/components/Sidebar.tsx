@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Layout, Menu } from 'antd';
-import { UserOutlined, VideoCameraOutlined, UploadOutlined } from '@ant-design/icons';
+import { FormOutlined, CopyOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 const { Sider } = Layout;
 
 interface ISider {
@@ -14,9 +15,8 @@ const Sidebar: React.FC<ISider> = ({collapsed, toggle}) => {
         <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
             <Logo/>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                <Menu.Item key="1" icon={<UserOutlined />}>Новый заказ</Menu.Item>
-                <Menu.Item key="2" icon={<VideoCameraOutlined />}>Заказы</Menu.Item>
-                <Menu.Item key="3" icon={<UploadOutlined />}>Цех</Menu.Item>
+                <Menu.Item key="1" icon={<FormOutlined />}><Link to="/order">Новый заказ</Link></Menu.Item>
+                <Menu.Item key="2" icon={<CopyOutlined />}><Link to="/userlist">Пользователи</Link></Menu.Item>               
             </Menu>
         </Sider>
     )

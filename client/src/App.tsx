@@ -1,10 +1,13 @@
 import React, { FC, useState } from 'react'
 import 'antd/dist/antd.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import Sidebar from './components/Sidebar';
+import TopBar from './components/TopBar';
+import styled from 'styled-components';
+import Order from './pages/Order/Order';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const App: FC = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -17,22 +20,29 @@ const App: FC = () => {
         <BrowserRouter>
             <Layout>
                 <Sidebar collapsed={collapsed} toggle={toggle}/>
-                <Layout className="site-layout">
-                    <Header className="site-layout-background">Цех 2.0</Header>
-                    <Content
-                        className="site-layout-background"
-                        style={{
-                            margin: '24px 16px',
-                            padding: 24,
-                            height: "88vh"                            
-                        }}
-                    >
-                        Content
-                    </Content>
-                </Layout>
+                <StyledLayout>
+                    <TopBar/>
+                    <StyledContent>
+                    <Switch>
+                        <Route exact path="/order" component={Order} />
+                        <Route exact path="/userlist" />
+                    </Switch>
+                    </StyledContent>
+                </StyledLayout>
             </Layout>
         </BrowserRouter>
     )
 }
 
 export default App
+
+const StyledContent = styled(Content)`
+    background: #fff;
+    margin: 24px 16px;
+    padding: 24px;
+    height: 88vh; 
+`;
+
+const StyledLayout = styled(Layout)`
+    background: rgba(255, 255, 255, 0.2);
+`;

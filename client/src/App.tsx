@@ -40,7 +40,7 @@ const StyledContent = styled(Content)`
     background: #fff;
     margin: 24px 16px;
     padding: 24px;
-    height: 88vh; 
+    height: 86vh; 
 `;
 
 const StyledLayout = styled(Layout)`

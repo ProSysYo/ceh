@@ -3,12 +3,12 @@ import {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { fetchCustomers } from '../../store/slices/orderSlice';
-import Basic from './Basic';
+import Step0 from './Step0';
 import OrderSteps from './OrderSteps';
 
 const renderStep = (step: number) => {
     switch (step) {
-        case 0: return <Basic/>
+        case 0: return <Step0/>
     }
 }
 

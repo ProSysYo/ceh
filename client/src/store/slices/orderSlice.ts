@@ -11,10 +11,9 @@ const initialState: OrderSate = {
   customers: [],
 }
 
-export const fetchCustomers = createAsyncThunk(
-  'order/fetchCustomers',
+export const fetchCustomers = createAsyncThunk('order/fetchCustomers',
   async () => {
-    const response = await api.getCustomers() 
+    const response = await api.getCustomers()
     return response.data
   }
 )
@@ -27,13 +26,13 @@ export const orderSlice = createSlice({
       state.customers = action.payload
     },
   },
-  extraReducers: (builder) => {    
-    builder.addCase(fetchCustomers.fulfilled, (state, action) => {      
+  extraReducers: (builder) => {
+    builder.addCase(fetchCustomers.fulfilled, (state, action) => {
       state.customers = action.payload
     })
   },
 })
 
-export const { } = orderSlice.actions
+//export const { } = orderSlice.actions
 
 export default orderSlice.reducer

@@ -15,8 +15,8 @@ const Sidebar: React.FC<ISider> = ({collapsed, toggle}) => {
         <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
             <Logo/>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                <Menu.Item key="1" icon={<FormOutlined />}><Link to="/order">Новый заказ</Link></Menu.Item>
-                <Menu.Item key="2" icon={<CopyOutlined />}><Link to="/userlist">Пользователи</Link></Menu.Item>               
+                <Menu.Item key="1" icon={<FormOutlined />}><Link to="/neworder">Новый заказ</Link></Menu.Item>
+                <Menu.Item key="2" icon={<CopyOutlined />}><Link to="/editorder">Редактировать заказ</Link></Menu.Item>               
             </Menu>
         </Sider>
     )

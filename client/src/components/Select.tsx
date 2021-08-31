@@ -2,20 +2,28 @@ import React, {FC} from 'react'
 import { Select as SelectAnt } from 'antd';
 
 interface SelectProps {
-    items: any[],
-    defaultValue: string
+    items: any[];
+    value: string | number;
+    
+    onChange?: (value: any, e: any) => void;   
 }
 
-const Select: FC<SelectProps> = ({items, defaultValue}) => {
+const Select: FC<SelectProps> = ({items, value, onChange}) => {
     return (
         <SelectAnt
-            defaultValue={defaultValue}
+            value={value}
             showSearch
-            optionFilterProp="children"
+            optionFilterProp="children"            
+            onChange={onChange}          
         >
             <SelectAnt.Option value="" disabled>Не выбрано</SelectAnt.Option>
-            {items.map(item =>
-                <SelectAnt.Option key={item._id} value={item.code}>{item.name}</SelectAnt.Option>)
+            {items.map((item, index) => 
+                <SelectAnt.Option 
+                key={item._id ? item._id : index} 
+                value={item.value ? item.value : item}
+                >
+                    {item.name ? item.name : item}
+                </SelectAnt.Option>)
             }
         </SelectAnt>
     )

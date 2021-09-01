@@ -17,7 +17,7 @@ const OrderSteps: FC<IOrderSteps> = ({step, changeStep}) => {
         <Steps size="small" current={step} onChange={onChange}>
             <Step title="Основное" />
             <Step title="Модель" />
-            <Step title="Замки" />
+            <Step title="Фурнитура" />
             <Step title="Накладки" />
             <Step title="Отделка" />
             <Step title="Металл" />

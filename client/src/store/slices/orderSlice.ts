@@ -4,16 +4,22 @@ import { IOrder } from '../../interfaces/IOrder';
 import { IParty } from '../../interfaces/IParty';
 import { IModel } from '../../interfaces/IModel';
 import { IModelBox } from '../../interfaces/IModelBox';
+import { IOpeningType } from '../../interfaces/IOpeningType';
+import { ILock } from '../../interfaces/ILock';
 
 interface OrderSate {
   customers: ICustomer[];
   parties: IParty[];
   models: IModel[];
   contours: number[];
-  status: string;
+  isLoading: boolean;
   order: IOrder;
   doorThicks: number[];
   modelBoxes: IModelBox[]
+  openingTypes: IOpeningType[];
+  locks: ILock[];
+  baseLocks: ILock[],
+  optionalLocks: ILock[]
 }
 
 const initialState: OrderSate = {
@@ -23,7 +29,11 @@ const initialState: OrderSate = {
   contours: [],
   doorThicks: [],
   modelBoxes: [],
-  status: "",
+  openingTypes: [],
+  locks: [],
+  baseLocks: [],
+  optionalLocks: [],
+  isLoading: false,
   order: {
     customer: "",
     number: "",
@@ -34,14 +44,21 @@ const initialState: OrderSate = {
     doorThick: "",
     height: "",
     width: "",
-    modelBox: ""
+    modelBox: "",
+    openingType: "",
+    isDouble: false,
+    widthDouble: "",
   }
 }
 
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
-  reducers: { 
+  reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
+    
     setCustomers: (state, action: PayloadAction<ICustomer[]>) => {
       state.customers = action.payload
     },
@@ -56,6 +73,22 @@ export const orderSlice = createSlice({
 
     setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => {
       state.modelBoxes = action.payload
+    },
+
+    setOpeningTypes: (state, action: PayloadAction<IOpeningType[]>) => {
+      state.openingTypes = action.payload
+    },
+    
+    setLoks: (state, action: PayloadAction<ILock[]>) => {
+      state.locks = action.payload
+    },
+
+    setBaseLoks: (state, action: PayloadAction<ILock[]>) => {
+      state.baseLocks = action.payload
+    }, 
+
+    setOptionalLoks: (state, action: PayloadAction<ILock[]>) => {
+      state.optionalLocks = action.payload
     },
 
     setNumberCustomer: (state, action: PayloadAction<string>) => {
@@ -100,19 +133,19 @@ export const orderSlice = createSlice({
       }      
     },
 
-    setContour: (state, action: PayloadAction<string>) => {
+    setContour: (state, action: PayloadAction<string | number>) => {
       state.order.contour = action.payload
     },
 
-    setDoorThick: (state, action: PayloadAction<string>) => {
+    setDoorThick: (state, action: PayloadAction<string | number>) => {
       state.order.doorThick = action.payload
     },
 
-    setHeight: (state, action: PayloadAction<string>) => {
+    setHeight: (state, action: PayloadAction<string | number>) => {
       state.order.height = action.payload
     },
 
-    setWidth: (state, action: PayloadAction<string>) => {
+    setWidth: (state, action: PayloadAction<string | number>) => {
       state.order.width = action.payload
     },
 
@@ -120,14 +153,45 @@ export const orderSlice = createSlice({
       state.order.modelBox = action.payload
     },
 
+    setOpeningType: (state, action: PayloadAction<string>) => {
+      state.order.openingType = action.payload
+    },
+
+    setIsDouble: (state, action: PayloadAction<boolean>) => {
+      state.order.isDouble = action.payload
+    },
+
+    setWidthDouble: (state, action: PayloadAction<number | string>) => {
+      state.order.widthDouble = action.payload
+    },    
+
   }  
 })
 
 export const {
-  setCustomer, setNumberCustomer, setParty, setModel, setContour,
-  setDoorThick, setCustomers, setParties, setModels, setContours, 
-  setDoorThicks, checkSelectedContour, checkSelectedDoorThick,
-  setHeight, setWidth, setModelBox, setModelBoxes
+  setCustomer, 
+  setNumberCustomer, 
+  setParty, 
+  setModel, 
+  setContour, 
+  setDoorThick, 
+  setCustomers, 
+  setParties, 
+  setModels, 
+  setContours, 
+  setDoorThicks, 
+  checkSelectedContour, 
+  checkSelectedDoorThick,
+  setHeight, 
+  setWidth, 
+  setModelBox, 
+  setModelBoxes, 
+  setOpeningTypes,
+  setOpeningType, 
+  setWidthDouble, 
+  setIsDouble, 
+  setLoading, 
+  setLoks
 } = orderSlice.actions
 
 export default orderSlice.reducer

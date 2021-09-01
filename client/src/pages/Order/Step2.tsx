@@ -5,21 +5,22 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setContour, setDoorThick, setHeight, setModelBox, setWidth 
+    setContour, setDoorThick, setHeight, setModelBox, setOpeningType, setWidth, setWidthDouble 
 } from '../../store/slices/orderSlice';
-import { changeModel } from '../../store/actions/orderActions';
+import { changeModel, changeIsDouble } from '../../store/actions/orderActions';
+import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 
 const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        models, contours, doorThicks, modelBoxes
+        models, contours, doorThicks, modelBoxes, openingTypes
     } = useAppSelector(state => state.order)
     
     const {
         model, contour, doorThick, height, width,
-        modelBox
+        modelBox, openingType, isDouble, widthDouble,
     } = useAppSelector(state => state.order.order)
 
 
@@ -70,6 +71,21 @@ const Step2: FC = () => {
                     />
                 </Form.Item>
 
+                <Form.Item label="Тип открывания">
+                    <Select 
+                        items={openingTypes} 
+                        value={openingType} 
+                        onChange={ (value) => dispatch(setOpeningType(value))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item label="Двустворчатая">
+                    <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} />
+                </Form.Item>
+
+                <Form.Item label="Ширина раб. створки">
+                    <Input disabled={!isDouble} value={widthDouble} onChange={(e)=> dispatch(setWidthDouble(Number(e.target.value)))} />
+                </Form.Item>
             </Form>
         </Container>
     )

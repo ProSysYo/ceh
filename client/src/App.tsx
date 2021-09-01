@@ -6,7 +6,6 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import styled from 'styled-components';
 import NewOrder from './pages/Order/NewOrder';
-import EditOrder from './pages/Order/EditOrder';
 
 const { Content } = Layout;
 
@@ -25,8 +24,7 @@ const App: FC = () => {
                     <TopBar/>
                     <StyledContent>
                     <Switch>
-                        <Route exact path="/neworder" component={NewOrder} />
-                        <Route exact path="/editorder" component={EditOrder}/>
+                        <Route exact path="/neworder" component={NewOrder} />                        
                     </Switch>
                     </StyledContent>
                 </StyledLayout>

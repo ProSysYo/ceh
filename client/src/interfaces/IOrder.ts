@@ -10,4 +10,7 @@ export interface IOrder {
     height: number | string;
     width: number | string;
     modelBox: string;
+    openingType: string;
+    isDouble: boolean;
+    widthDouble: number | string;
 }

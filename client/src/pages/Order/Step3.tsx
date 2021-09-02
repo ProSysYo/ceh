@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setCustomer
+    setBaseLock,    
 } from '../../store/slices/orderSlice';
 
 
@@ -13,11 +13,11 @@ const Step3: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        customers
+        baseLocks
     } = useAppSelector(state => state.order)
     
     const {
-        customer
+        baseLock
     } = useAppSelector(state => state.order.order)
 
 
@@ -30,9 +30,9 @@ const Step3: FC = () => {
             >                   
                 <Form.Item label="Основной замок">
                     <Select 
-                        items={customers} 
-                        value={customer} 
-                        onChange={ (value) => dispatch(setCustomer(value))}                       
+                        items={baseLocks} 
+                        value={baseLock} 
+                        onChange={ (value) => dispatch(setBaseLock(value))}                       
                     />
                 </Form.Item>                
             </Form>

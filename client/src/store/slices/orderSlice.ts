@@ -16,8 +16,7 @@ interface OrderSate {
   order: IOrder;
   doorThicks: number[];
   modelBoxes: IModelBox[]
-  openingTypes: IOpeningType[];
-  locks: ILock[];
+  openingTypes: IOpeningType[];  
   baseLocks: ILock[],
   optionalLocks: ILock[]
 }
@@ -29,8 +28,7 @@ const initialState: OrderSate = {
   contours: [],
   doorThicks: [],
   modelBoxes: [],
-  openingTypes: [],
-  locks: [],
+  openingTypes: [], 
   baseLocks: [],
   optionalLocks: [],
   isLoading: false,
@@ -48,6 +46,7 @@ const initialState: OrderSate = {
     openingType: "",
     isDouble: false,
     widthDouble: "",
+    baseLock: ""
   }
 }
 
@@ -77,10 +76,6 @@ export const orderSlice = createSlice({
 
     setOpeningTypes: (state, action: PayloadAction<IOpeningType[]>) => {
       state.openingTypes = action.payload
-    },
-    
-    setLoks: (state, action: PayloadAction<ILock[]>) => {
-      state.locks = action.payload
     },
 
     setBaseLoks: (state, action: PayloadAction<ILock[]>) => {
@@ -163,7 +158,11 @@ export const orderSlice = createSlice({
 
     setWidthDouble: (state, action: PayloadAction<number | string>) => {
       state.order.widthDouble = action.payload
-    },    
+    },
+    
+    setBaseLock: (state, action: PayloadAction<string>) => {
+      state.order.baseLock = action.payload
+    }, 
 
   }  
 })
@@ -190,8 +189,10 @@ export const {
   setOpeningType, 
   setWidthDouble, 
   setIsDouble, 
-  setLoading, 
-  setLoks
+  setLoading,   
+  setBaseLoks,
+  setOptionalLoks,
+  setBaseLock
 } = orderSlice.actions
 
 export default orderSlice.reducer

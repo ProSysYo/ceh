@@ -13,4 +13,5 @@ export interface IOrder {
     openingType: string;
     isDouble: boolean;
     widthDouble: number | string;
+    baseLock: string
 }

@@ -41,12 +41,12 @@ const locks: ILock[] = [
     { _id: "2", value: "осн сув с верт", name: "осн сув с верт", installation: "основной", type: "сувальда", isBolt: true },
     { _id: "3", value: "осн цил без верт", name: "осн цил без верт", installation: "основной", type: "сувальда", isBolt: false },
     { _id: "4", value: "осн цил c верт", name: "осн цил c верт", installation: "основной", type: "сувальда", isBolt: true },
-    { _id: "5", value: "цил-сув без верт", name: "цил-сув без верт", installation: "основной", type: "цилиндр-сувальда", isBolt: false },
-    { _id: "6", value: "цил-сув c верт", name: "цил-сув c верт", installation: "основной", type: "цилиндр-сувальда", isBolt: true },
-    { _id: "7", value: "сув-цил без верт", name: "сув-цил без верт", installation: "основной", type: "сувальда-цилиндр", isBolt: false },
-    { _id: "8", value: "сув-цил с верт", name: "сув-цил с верт", installation: "основной", type: "сувальда-цилиндр", isBolt: true },
-    { _id: "9", value: "другое без верт", name: "другое без верт", installation: "основной", type: "другое", isBolt: false },
-    { _id: "10", value: "другое с верт", name: "другое с верт", installation: "основной", type: "другое", isBolt: true },
+    { _id: "5", value: "осн цил-сув без верт", name: "осн цил-сув без верт", installation: "основной", type: "цилиндр-сувальда", isBolt: false },
+    { _id: "6", value: "осн цил-сув c верт", name: "осн цил-сув c верт", installation: "основной", type: "цилиндр-сувальда", isBolt: true },
+    { _id: "7", value: "осн сув-цил без верт", name: "осн сув-цил без верт", installation: "основной", type: "сувальда-цилиндр", isBolt: false },
+    { _id: "8", value: "осн сув-цил с верт", name: "осн сув-цил с верт", installation: "основной", type: "сувальда-цилиндр", isBolt: true },
+    { _id: "9", value: "осн другое без верт", name: "осн другое без верт", installation: "основной", type: "другое", isBolt: false },
+    { _id: "10", value: "осн другое с верт", name: "осн другое с верт", installation: "основной", type: "другое", isBolt: true },
     { _id: "11", value: "доп цил", name: "доп цил", installation: "дополнительный", type: "цилиндр", isBolt: false },
     { _id: "12", value: "доп сув", name: "доп сув", installation: "дополнительный", type: "сувальда", isBolt: false },
 ]
@@ -105,15 +105,9 @@ const getOpeningTypes = () => new Promise<any>((resolve, reject) => {
     setTimeout(() => resolve({data: openingTypes}) , deley);
 });
 
-const getLocks = () => new Promise<any>((resolve, reject) => {
-    if (!locks) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: locks}) , deley);
-});
+const getLocks = () => new Promise<{data:ILock[]}>((res) => {
+    setTimeout(() => res({data: locks}), deley)
+})    
 
 export const api = {
     getCustomers,

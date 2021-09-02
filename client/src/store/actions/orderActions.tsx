@@ -7,11 +7,10 @@ import {
     setIsDouble,
     setWidthDouble,
     setLoading,
-    setLoks
+    setBaseLoks,
+    setOptionalLoks
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
-
-
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -72,7 +71,10 @@ export const fetchLocks = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getLocks()
-            dispatch(setLoks(response.data))
+            const baseLocks = response.data.filter(lock => lock.installation === "основной")
+            const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный")
+            dispatch(setBaseLoks(baseLocks))
+            dispatch(setOptionalLoks(optionalLocks))
         } catch (e) {
             
         }

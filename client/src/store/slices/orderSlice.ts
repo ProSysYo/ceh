@@ -6,19 +6,27 @@ import { IModel } from '../../interfaces/IModel';
 import { IModelBox } from '../../interfaces/IModelBox';
 import { IOpeningType } from '../../interfaces/IOpeningType';
 import { ILock } from '../../interfaces/ILock';
+import { ISpinner } from '../../interfaces/ISpinner';
+import { ICylinder } from '../../interfaces/ICylinder';
 
-interface OrderSate {
+interface OrderSate {  
   customers: ICustomer[];
   parties: IParty[];
   models: IModel[];
   contours: number[];
-  isLoading: boolean;
-  order: IOrder;
   doorThicks: number[];
   modelBoxes: IModelBox[]
   openingTypes: IOpeningType[];  
-  baseLocks: ILock[],
-  optionalLocks: ILock[]
+  baseLocks: ILock[];
+  optionalLocks: ILock[];
+  spinners: ISpinner[];
+  cylinders: ICylinder[];
+
+  isLoading: boolean;
+  isLockSpinner: boolean;
+  isBaseCylinder: boolean;
+
+  order: IOrder; 
 }
 
 const initialState: OrderSate = {
@@ -31,7 +39,13 @@ const initialState: OrderSate = {
   openingTypes: [], 
   baseLocks: [],
   optionalLocks: [],
+  spinners: [],
+  cylinders: [],
+
   isLoading: false,
+  isLockSpinner: false,
+  isBaseCylinder: false,
+
   order: {
     customer: "",
     number: "",
@@ -46,7 +60,9 @@ const initialState: OrderSate = {
     openingType: "",
     isDouble: false,
     widthDouble: "",
-    baseLock: ""
+    baseLock: "",
+    lockSpinner: "нет", 
+    baseCylinder: "нет"
   }
 }
 
@@ -84,6 +100,14 @@ export const orderSlice = createSlice({
 
     setOptionalLoks: (state, action: PayloadAction<ILock[]>) => {
       state.optionalLocks = action.payload
+    },
+
+    setSpinners: (state, action: PayloadAction<ISpinner[]>) => {
+      state.spinners = action.payload
+    },
+
+    setCylinders: (state, action: PayloadAction<ISpinner[]>) => {
+      state.spinners = action.payload
     },
 
     setNumberCustomer: (state, action: PayloadAction<string>) => {
@@ -162,7 +186,15 @@ export const orderSlice = createSlice({
     
     setBaseLock: (state, action: PayloadAction<string>) => {
       state.order.baseLock = action.payload
-    }, 
+    },
+
+    setLockSpinner: (state, action: PayloadAction<string>) => {
+      state.order.lockSpinner = action.payload
+    },
+
+    setIsLockSpinner: (state, action: PayloadAction<boolean>) => {
+      state.isLockSpinner = action.payload
+    },
 
   }  
 })
@@ -192,7 +224,10 @@ export const {
   setLoading,   
   setBaseLoks,
   setOptionalLoks,
-  setBaseLock
+  setBaseLock,
+  setSpinners,
+  setLockSpinner,  
+  setIsLockSpinner
 } = orderSlice.actions
 
 export default orderSlice.reducer

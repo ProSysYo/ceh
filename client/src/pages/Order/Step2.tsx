@@ -31,7 +31,7 @@ const Step2: FC = () => {
                 labelCol={{ span: 9 }}
                 wrapperCol={{ span: 6 }}                
             >   
-                <Form.Item label="Модель двери">
+                <Form.Item label="Модель двери*">
                     <Select 
                         items={models} 
                         value={model} 
@@ -84,7 +84,7 @@ const Step2: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Ширина раб. створки">
-                    <Input disabled={!isDouble} value={widthDouble} onChange={(e)=> dispatch(setWidthDouble(Number(e.target.value)))} />
+                    <Input disabled={!isDouble} value={widthDouble} onChange={(e)=> dispatch(setWidthDouble(e.target.value))} />
                 </Form.Item>
             </Form>
         </Container>

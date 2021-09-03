@@ -1,6 +1,8 @@
 import { IModel } from "../interfaces/IModel";
 import { IOpeningType } from "../interfaces/IOpeningType";
 import { ILock } from '../interfaces/ILock';
+import { ISpinner } from '../interfaces/ISpinner';
+import { ICylinder } from '../interfaces/ICylinder';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -51,9 +53,21 @@ const locks: ILock[] = [
     { _id: "12", value: "доп сув", name: "доп сув", installation: "дополнительный", type: "сувальда", isBolt: false },
 ]
 
+const spinners: ISpinner[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "Вертушок 1", name: "Вертушок 1" },
+    { _id: "3", value: "Вертушок 2", name: "Вертушок 2" },
+];
+
+const cylinders: ICylinder[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "Цилиндр 1", name: "Цилиндр 1" },
+    { _id: "3", value: "Цилиндр 2", name: "Цилиндр 2" },
+];
 
 
-const deley = 300
+
+const deley = 100
 
 const getCustomers = () => new Promise<any>((resolve, reject) => {
     if (!customers) {
@@ -109,11 +123,20 @@ const getLocks = () => new Promise<{data:ILock[]}>((res) => {
     setTimeout(() => res({data: locks}), deley)
 })    
 
+const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => {
+    setTimeout(() => res({data: spinners}), deley)
+}) 
+
+const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => {
+    setTimeout(() => res({data: cylinders}), deley)
+})
 export const api = {
     getCustomers,
     getParties, 
     getModels,
     getModelBoxes,
     getOpeningTypes,
-    getLocks
+    getLocks,
+    getSpinners,
+    getCyliners
 }

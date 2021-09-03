@@ -4,17 +4,19 @@ import { Select as SelectAnt } from 'antd';
 interface SelectProps {
     items: any[];
     value: string | number;
+    disabled?: boolean;
     
     onChange?: (value: any, e: any) => void;   
 }
 
-const Select: FC<SelectProps> = ({items, value, onChange}) => {
+const Select: FC<SelectProps> = ({items, value, onChange, disabled = false}) => {
     return (
         <SelectAnt
             value={value}
             showSearch
-            optionFilterProp="children"            
-            onChange={onChange}          
+            optionFilterProp="children"
+            disabled={disabled}            
+            onChange={onChange}         
         >
             <SelectAnt.Option value="" disabled>не выбрано</SelectAnt.Option>
             {items.map((item, index) => 

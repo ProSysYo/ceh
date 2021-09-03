@@ -8,9 +8,15 @@ import {
     setWidthDouble,
     setLoading,
     setBaseLoks,
-    setOptionalLoks
+    setOptionalLoks,
+    setSpinners,
+    setBaseLock,   
+    // checkSelectedLockSpinner,
+    setLockSpinner,
+    setIsLockSpinner
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
+import { RootState } from '../store';
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -81,6 +87,17 @@ export const fetchLocks = () => {
     }
 }
 
+export const fetchSpinners = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getSpinners()
+            dispatch(setSpinners(response.data))
+        } catch (e) {
+            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -91,6 +108,7 @@ export const fetchAll = () => {
             await dispatch(fetchModelBoxes())
             await dispatch(fetchOpeningTypes())
             await dispatch(fetchLocks())
+            await dispatch(fetchSpinners())
             dispatch(setLoading(false))
         } catch (e) {
             
@@ -119,6 +137,27 @@ export const changeIsDouble = (value: boolean) => {
             if (!value) {
                 dispatch(setWidthDouble(""))
             }
+        } catch (e) {
+            
+        }
+    }
+}
+
+export const changeBaseLock = (value: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch(setBaseLock(value))
+
+            const { baseLocks } = getState().order
+            const baseLock = baseLocks.find(lock => lock.value === value)
+            if (baseLock?.isBolt) {
+                dispatch(setIsLockSpinner(true))
+                dispatch(setLockSpinner(""))                
+            } else {
+                dispatch(setIsLockSpinner(false))
+                dispatch(setLockSpinner("нет"))                
+            }
+                
         } catch (e) {
             
         }

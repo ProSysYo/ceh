@@ -8,7 +8,7 @@ import {
     setWidthDouble,
     setLoading,
     setBaseLoks,
-    setOptionalLoks,
+    setOptionalLocks,
     setSpinners,
     setBaseLock,   
     // checkSelectedLockSpinner,
@@ -80,7 +80,7 @@ export const fetchLocks = () => {
             const baseLocks = response.data.filter(lock => lock.installation === "основной")
             const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный")
             dispatch(setBaseLoks(baseLocks))
-            dispatch(setOptionalLoks(optionalLocks))
+            dispatch(setOptionalLocks(optionalLocks))
         } catch (e) {
             
         }

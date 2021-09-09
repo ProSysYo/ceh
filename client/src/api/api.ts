@@ -3,6 +3,7 @@ import { IOpeningType } from "../interfaces/IOpeningType";
 import { ILock } from '../interfaces/ILock';
 import { ISpinner } from '../interfaces/ISpinner';
 import { ICylinder } from '../interfaces/ICylinder';
+import { ICover } from '../interfaces/ICover';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -41,16 +42,18 @@ const openingTypes: IOpeningType[] = [
 const locks: ILock[] = [
     { _id: "1", value: "осн сув без верт", name: "осн сув без верт", installation: "основной", type: "сувальда", isBolt: false },
     { _id: "2", value: "осн сув с верт", name: "осн сув с верт", installation: "основной", type: "сувальда", isBolt: true },
-    { _id: "3", value: "осн цил без верт", name: "осн цил без верт", installation: "основной", type: "сувальда", isBolt: false },
-    { _id: "4", value: "осн цил c верт", name: "осн цил c верт", installation: "основной", type: "сувальда", isBolt: true },
-    { _id: "5", value: "осн цил-сув без верт", name: "осн цил-сув без верт", installation: "основной", type: "цилиндр-сувальда", isBolt: false },
-    { _id: "6", value: "осн цил-сув c верт", name: "осн цил-сув c верт", installation: "основной", type: "цилиндр-сувальда", isBolt: true },
-    { _id: "7", value: "осн сув-цил без верт", name: "осн сув-цил без верт", installation: "основной", type: "сувальда-цилиндр", isBolt: false },
-    { _id: "8", value: "осн сув-цил с верт", name: "осн сув-цил с верт", installation: "основной", type: "сувальда-цилиндр", isBolt: true },
+    { _id: "3", value: "осн цил без верт", name: "осн цил без верт", installation: "основной", type: "цилиндр", isBolt: false },
+    { _id: "4", value: "осн цил c верт", name: "осн цил c верт", installation: "основной", type: "цилиндр", isBolt: true },
+    { _id: "5", value: "осн цил-сув без верт", name: "осн двухсистемный без верт", installation: "основной", type: "двухсистемный", isBolt: false },
+    { _id: "6", value: "осн цил-сув c верт", name: "осн двухсистемный c верт", installation: "основной", type: "двухсистемный", isBolt: true },
+    { _id: "7", value: "осн сув-цил без верт", name: "осн двухсистемный без верт", installation: "основной", type: "двухсистемный", isBolt: false },
+    { _id: "8", value: "осн сув-цил с верт", name: "осн двухсистемный с верт", installation: "основной", type: "двухсистемный", isBolt: true },
     { _id: "9", value: "осн другое без верт", name: "осн другое без верт", installation: "основной", type: "другое", isBolt: false },
     { _id: "10", value: "осн другое с верт", name: "осн другое с верт", installation: "основной", type: "другое", isBolt: true },
     { _id: "11", value: "доп цил", name: "доп цил", installation: "дополнительный", type: "цилиндр", isBolt: false },
     { _id: "12", value: "доп сув", name: "доп сув", installation: "дополнительный", type: "сувальда", isBolt: false },
+    { _id: "13", value: "нет", name: "нет", installation: "нет", type: "нет", isBolt: false },
+    { _id: "14", value: "см. прим.", name: "см. прим.", installation: "примечание", type: "примечание", isBolt: true },
 ]
 
 const spinners: ISpinner[] = [
@@ -65,6 +68,12 @@ const cylinders: ICylinder[] = [
     { _id: "3", value: "Цилиндр 2", name: "Цилиндр 2" },
 ];
 
+const covers: ICover[] = [
+    { _id: "1", value: "нет", name: "нет", type: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
+    { _id: "3", value: "Накладка 1 цил", name: "Накладка 1 цил" , type: "цилиндр"},
+    { _id: "4", value: "Накладка 2 сув", name: "Накладка 2 сув" , type: "сувальда"},
+];
 
 
 const deley = 100
@@ -130,6 +139,11 @@ const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => {
 const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => {
     setTimeout(() => res({data: cylinders}), deley)
 })
+
+const getCovers = () => new Promise<{data:ICover[]}>((res) => {
+    setTimeout(() => res({data: covers}), deley)
+})
+
 export const api = {
     getCustomers,
     getParties, 
@@ -138,5 +152,6 @@ export const api = {
     getOpeningTypes,
     getLocks,
     getSpinners,
-    getCyliners
+    getCyliners,
+    getCovers
 }

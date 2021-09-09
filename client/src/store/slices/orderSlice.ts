@@ -8,6 +8,7 @@ import { IOpeningType } from '../../interfaces/IOpeningType';
 import { ILock } from '../../interfaces/ILock';
 import { ISpinner } from '../../interfaces/ISpinner';
 import { ICylinder } from '../../interfaces/ICylinder';
+import { ICover } from '../../interfaces/ICover';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -21,6 +22,8 @@ interface OrderSate {
     optionalLocks: ILock[];
     spinners: ISpinner[];
     cylinders: ICylinder[];
+    covers: ICover[];
+    baseCovers: ICover[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -41,7 +44,8 @@ const initialState: OrderSate = {
     optionalLocks: [],
     spinners: [],
     cylinders: [],
-
+    covers: [],
+    baseCovers: [],
     isLoading: false,
     isLockSpinner: false,
     isBaseCylinder: false,
@@ -62,7 +66,9 @@ const initialState: OrderSate = {
         widthDouble: "",
         baseLock: "",
         lockSpinner: "нет",
-        baseCylinder: "нет"
+        baseCylinder: "нет",
+        baseCoverOutside: "",
+        baseCoverInside: "",
     }
 }
 
@@ -73,7 +79,7 @@ export const orderSlice = createSlice({
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload
         },
-
+        
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => {
             state.customers = action.payload
         },
@@ -106,9 +112,19 @@ export const orderSlice = createSlice({
             state.spinners = action.payload
         },
 
-        setCylinders: (state, action: PayloadAction<ISpinner[]>) => {
-            state.spinners = action.payload
+        setCylinders: (state, action: PayloadAction<ICylinder[]>) => {
+            state.cylinders = action.payload
         },
+
+        setCovers: (state, action: PayloadAction<ICover[]>) => {
+            state.covers = action.payload
+        },
+
+        setBaseCovers: (state, action: PayloadAction<ICover[]>) => {
+            state.baseCovers = action.payload
+        },
+
+        //---------
 
         setNumberCustomer: (state, action: PayloadAction<string>) => {
             state.order.numberCustomer = action.payload
@@ -196,6 +212,22 @@ export const orderSlice = createSlice({
             state.isLockSpinner = action.payload
         },
 
+        setBaseCylinder: (state, action: PayloadAction<string>) => {
+            state.order.baseCylinder = action.payload
+        },
+        
+        setIsBaseCylinder: (state, action: PayloadAction<boolean>) => {
+            state.isBaseCylinder = action.payload
+        },
+
+        setBaseCoverOutside: (state, action: PayloadAction<string>) => {
+            state.order.baseCoverOutside = action.payload
+        },
+
+        setBaseCoverInside: (state, action: PayloadAction<string>) => {
+            state.order.baseCoverInside = action.payload
+        },
+
     }
 })
 
@@ -211,6 +243,9 @@ export const {
     setModels,
     setContours,
     setDoorThicks,
+    setCylinders,
+    setCovers,
+    setBaseCovers,
     checkSelectedContour,
     checkSelectedDoorThick,
     setHeight,
@@ -227,7 +262,11 @@ export const {
     setBaseLock,
     setSpinners,
     setLockSpinner,
-    setIsLockSpinner
+    setIsLockSpinner,
+    setBaseCylinder,
+    setIsBaseCylinder,
+    setBaseCoverOutside,
+    setBaseCoverInside
 } = orderSlice.actions
 
 export default orderSlice.reducer

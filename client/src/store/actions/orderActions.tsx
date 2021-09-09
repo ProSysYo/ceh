@@ -13,10 +13,18 @@ import {
     setBaseLock,   
     // checkSelectedLockSpinner,
     setLockSpinner,
-    setIsLockSpinner
+    setIsLockSpinner,
+    setCylinders,
+    setIsBaseCylinder,
+    setBaseCylinder,
+    setCovers,
+    setBaseCovers,
+    setBaseCoverOutside,
+    setBaseCoverInside
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
+import { ICover } from "../../interfaces/ICover";
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -77,8 +85,8 @@ export const fetchLocks = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getLocks()
-            const baseLocks = response.data.filter(lock => lock.installation === "основной")
-            const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный")
+            const baseLocks = response.data.filter(lock => lock.installation === "основной" || lock.installation === "нет" || lock.installation === "примечание")
+            const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный" || lock.installation === "нет" || lock.installation === "примечание")
             dispatch(setBaseLoks(baseLocks))
             dispatch(setOptionalLocks(optionalLocks))
         } catch (e) {
@@ -98,10 +106,33 @@ export const fetchSpinners = () => {
     }
 }
 
+export const fetchCylinders = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getCyliners()
+            dispatch(setCylinders(response.data))
+        } catch (e) {
+            
+        }
+    }
+}
+
+export const fetchCovers = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getCovers()
+            dispatch(setCovers(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
             dispatch(setLoading(true))
+
             await dispatch(fetchCustomers())
             await dispatch(fetchParties())
             await dispatch(fetchModels())
@@ -109,6 +140,9 @@ export const fetchAll = () => {
             await dispatch(fetchOpeningTypes())
             await dispatch(fetchLocks())
             await dispatch(fetchSpinners())
+            await dispatch(fetchCylinders())
+            await dispatch(fetchCovers())
+
             dispatch(setLoading(false))
         } catch (e) {
             
@@ -148,7 +182,7 @@ export const changeBaseLock = (value: string) => {
         try {
             dispatch(setBaseLock(value))
 
-            const { baseLocks } = getState().order
+            const { baseLocks, covers } = getState().order
             const baseLock = baseLocks.find(lock => lock.value === value)
             if (baseLock?.isBolt) {
                 dispatch(setIsLockSpinner(true))
@@ -157,9 +191,48 @@ export const changeBaseLock = (value: string) => {
                 dispatch(setIsLockSpinner(false))
                 dispatch(setLockSpinner("нет"))                
             }
+
+            let baseCovers: ICover[] = []
+            let isBaseCylinder: boolean = false
+            let baseCylinder: string = "" 
+            let baseCoverOutside: string = ""
+            let baseCoverInside: string = ""           
+            
+            switch (baseLock?.type) {
+                case "цилиндр":
+                case "двухсистемный":
+                    isBaseCylinder = true                    
+                    baseCylinder = ""
+                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    break
+                case "сувальда":
+                    isBaseCylinder = false                    
+                    baseCylinder = "нет"
+                    baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    break
+                case "нет":
+                case "другое":
+                    isBaseCylinder = false
+                    baseCylinder = "нет"
+                    baseCoverOutside = "нет"
+                    baseCoverInside = "нет"
+                    baseCovers = covers.filter(cover => cover.type === "нет")
+                    break
+                case "примечание":
+                    isBaseCylinder = true
+                    baseCylinder = ""
+                    baseCovers = covers
+                    break 
+            }
+
+            dispatch(setIsBaseCylinder(isBaseCylinder))
+            dispatch(setBaseCylinder(baseCylinder))
+            dispatch(setBaseCovers(baseCovers))
+            dispatch(setBaseCoverOutside(baseCoverOutside))
+            dispatch(setBaseCoverInside(baseCoverInside))             
                 
         } catch (e) {
-            
+            console.log(e);            
         }
     }
 }

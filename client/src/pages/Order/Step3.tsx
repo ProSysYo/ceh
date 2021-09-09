@@ -5,6 +5,9 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
+    setBaseCoverInside,
+    setBaseCoverOutside,
+    setBaseCylinder,
     setLockSpinner,    
 } from '../../store/slices/orderSlice';
 import { changeBaseLock } from '../../store/actions/orderActions';
@@ -14,11 +17,11 @@ const Step3: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        baseLocks, spinners,  isLockSpinner
+        baseLocks, spinners, cylinders, baseCovers, isLockSpinner, isBaseCylinder
     } = useAppSelector(state => state.order)
     
     const {
-        baseLock, lockSpinner
+        baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside
     } = useAppSelector(state => state.order.order)
 
 
@@ -46,14 +49,30 @@ const Step3: FC = () => {
                     />
                 </Form.Item>
 
-                {/* <Form.Item label="Цилиндр основного замка">
+                <Form.Item label="Цилиндр основного замка">
                     <Select 
                         items={cylinders} 
                         value={baseCylinder}
                         disabled = {!isBaseCylinder} 
                         onChange={ (value) => dispatch(setBaseCylinder(value))}                       
                     />
-                </Form.Item>                */}
+                </Form.Item>
+
+                <Form.Item label="Накладка основного замка снаружи">
+                    <Select 
+                        items={baseCovers} 
+                        value={baseCoverOutside}                        
+                        onChange={ (value) => dispatch(setBaseCoverOutside(value))}                       
+                    />
+                </Form.Item> 
+
+                <Form.Item label="Накладка основного замка внутри">
+                    <Select 
+                        items={baseCovers} 
+                        value={baseCoverInside}                        
+                        onChange={ (value) => dispatch(setBaseCoverInside(value))}                       
+                    />
+                </Form.Item>           
             </Form>
         </Container>
     )

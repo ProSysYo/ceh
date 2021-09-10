@@ -14,8 +14,11 @@ export interface IOrder {
     isDouble: boolean;
     widthDouble: number | string;
     baseLock: string;
+    optionalLock: string;
     lockSpinner: string;
     baseCylinder: string;
     baseCoverOutside: string;
     baseCoverInside: string;
+    baseCoverOutside2: string;
+    baseCoverInside2: string;
 }

@@ -24,10 +24,12 @@ interface OrderSate {
     cylinders: ICylinder[];
     covers: ICover[];
     baseCovers: ICover[];
+    baseCovers2: ICover[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
     isBaseCylinder: boolean;
+    isBaseCover2: boolean;
 
     order: IOrder;
 }
@@ -46,9 +48,11 @@ const initialState: OrderSate = {
     cylinders: [],
     covers: [],
     baseCovers: [],
+    baseCovers2: [],
     isLoading: false,
     isLockSpinner: false,
     isBaseCylinder: false,
+    isBaseCover2: false,
 
     order: {
         customer: "",
@@ -65,10 +69,13 @@ const initialState: OrderSate = {
         isDouble: false,
         widthDouble: "",
         baseLock: "",
+        optionalLock: "",
         lockSpinner: "нет",
         baseCylinder: "нет",
         baseCoverOutside: "",
         baseCoverInside: "",
+        baseCoverOutside2: "нет",
+        baseCoverInside2: "нет",
     }
 }
 
@@ -122,6 +129,10 @@ export const orderSlice = createSlice({
 
         setBaseCovers: (state, action: PayloadAction<ICover[]>) => {
             state.baseCovers = action.payload
+        },
+
+        setBaseCovers2: (state, action: PayloadAction<ICover[]>) => {
+            state.baseCovers2 = action.payload
         },
 
         //---------
@@ -228,6 +239,22 @@ export const orderSlice = createSlice({
             state.order.baseCoverInside = action.payload
         },
 
+        setBaseCoverOutside2: (state, action: PayloadAction<string>) => {
+            state.order.baseCoverOutside2 = action.payload
+        },
+
+        setBaseCoverInside2: (state, action: PayloadAction<string>) => {
+            state.order.baseCoverInside2 = action.payload
+        },
+
+        setIsBaseCover2: (state, action: PayloadAction<boolean>) => {
+            state.isBaseCover2 = action.payload
+        },
+
+        setOptionalLock: (state, action: PayloadAction<string>) => {
+            state.order.optionalLock = action.payload
+        }
+
     }
 })
 
@@ -246,6 +273,7 @@ export const {
     setCylinders,
     setCovers,
     setBaseCovers,
+    setBaseCovers2,
     checkSelectedContour,
     checkSelectedDoorThick,
     setHeight,
@@ -266,7 +294,11 @@ export const {
     setBaseCylinder,
     setIsBaseCylinder,
     setBaseCoverOutside,
-    setBaseCoverInside
+    setBaseCoverInside,
+    setBaseCoverOutside2,
+    setBaseCoverInside2,
+    setIsBaseCover2,
+    setOptionalLock
 } = orderSlice.actions
 
 export default orderSlice.reducer

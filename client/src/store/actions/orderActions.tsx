@@ -20,7 +20,12 @@ import {
     setCovers,
     setBaseCovers,
     setBaseCoverOutside,
-    setBaseCoverInside
+    setBaseCoverInside,
+    setBaseCovers2,
+    setIsBaseCover2,
+    setBaseCoverOutside2,
+    setBaseCoverInside2,
+    setOptionalLock
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -193,17 +198,32 @@ export const changeBaseLock = (value: string) => {
             }
 
             let baseCovers: ICover[] = []
+            let baseCovers2: ICover[] = []
+
             let isBaseCylinder: boolean = false
             let baseCylinder: string = "" 
+
             let baseCoverOutside: string = ""
-            let baseCoverInside: string = ""           
+            let baseCoverInside: string = ""
+
+            let isBaseCover2: boolean = false
+            let baseCoverOutside2: string = "нет"
+            let baseCoverInside2: string = "нет"          
             
             switch (baseLock?.type) {
-                case "цилиндр":
-                case "двухсистемный":
+                case "цилиндр":                
                     isBaseCylinder = true                    
                     baseCylinder = ""
                     baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    break
+                case "двухсистемный":
+                    isBaseCylinder = true                    
+                    baseCylinder = ""
+                    isBaseCover2 = true
+                    baseCoverOutside2 = ""
+                    baseCoverInside2 = ""
+                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
                     break
                 case "сувальда":
                     isBaseCylinder = false                    
@@ -221,7 +241,11 @@ export const changeBaseLock = (value: string) => {
                 case "примечание":
                     isBaseCylinder = true
                     baseCylinder = ""
-                    baseCovers = covers
+                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    isBaseCover2 = true
+                    baseCoverOutside2 = ""
+                    baseCoverInside2 = ""
+                    baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
                     break 
             }
 
@@ -229,8 +253,22 @@ export const changeBaseLock = (value: string) => {
             dispatch(setBaseCylinder(baseCylinder))
             dispatch(setBaseCovers(baseCovers))
             dispatch(setBaseCoverOutside(baseCoverOutside))
-            dispatch(setBaseCoverInside(baseCoverInside))             
+            dispatch(setBaseCoverInside(baseCoverInside)) 
+            dispatch(setBaseCovers2(baseCovers2))            
+            dispatch(setIsBaseCover2(isBaseCover2))
+            dispatch(setBaseCoverOutside2(baseCoverOutside2))
+            dispatch(setBaseCoverInside2(baseCoverInside2))            
                 
+        } catch (e) {
+            console.log(e);            
+        }
+    }
+}
+
+export const changeOptionalLock = (lock: string) => {
+    return (dispatch: Dispatch) => {
+        try {                        
+            dispatch(setOptionalLock(lock))
         } catch (e) {
             console.log(e);            
         }

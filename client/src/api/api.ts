@@ -4,6 +4,8 @@ import { ILock } from '../interfaces/ILock';
 import { ISpinner } from '../interfaces/ISpinner';
 import { ICylinder } from '../interfaces/ICylinder';
 import { ICover } from '../interfaces/ICover';
+import { IEye } from '../interfaces/IEye';
+import { IHandle } from '../interfaces/IHandle';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -58,8 +60,9 @@ const locks: ILock[] = [
 
 const spinners: ISpinner[] = [
     { _id: "1", value: "нет", name: "нет" },
-    { _id: "2", value: "Вертушок 1", name: "Вертушок 1" },
-    { _id: "3", value: "Вертушок 2", name: "Вертушок 2" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "вертушок 1", name: "вертушок 1" },
+    { _id: "4", value: "вертушок 2", name: "вертушок 2" },
 ];
 
 const cylinders: ICylinder[] = [
@@ -71,8 +74,22 @@ const cylinders: ICylinder[] = [
 const covers: ICover[] = [
     { _id: "1", value: "нет", name: "нет", type: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
-    { _id: "3", value: "Накладка 1 цил", name: "Накладка 1 цил" , type: "цилиндр"},
-    { _id: "4", value: "Накладка 2 сув", name: "Накладка 2 сув" , type: "сувальда"},
+    { _id: "3", value: "накладка 1 цил", name: "накладка 1 цил" , type: "цилиндр"},
+    { _id: "4", value: "накладка 2 сув", name: "накладка 2 сув" , type: "сувальда"},
+];
+
+const eyes: IEye[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "хром центр", name: "хром центр" },
+    { _id: "4", value: "хром сбоку", name: "хром сбоку" },
+];
+
+const handles: IHandle[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "ручка хром", name: "ручка хром" },
+    { _id: "4", value: "ручка бронза", name: "ручка бронза" },
 ];
 
 
@@ -144,6 +161,14 @@ const getCovers = () => new Promise<{data:ICover[]}>((res) => {
     setTimeout(() => res({data: covers}), deley)
 })
 
+const getEyes = () => new Promise<{data:IEye[]}>((res) => {
+    setTimeout(() => res({data: eyes}), deley)
+})
+
+const getHandles = () => new Promise<{data:IHandle[]}>((res) => {
+    setTimeout(() => res({data: handles}), deley)
+})
+
 export const api = {
     getCustomers,
     getParties, 
@@ -153,5 +178,7 @@ export const api = {
     getLocks,
     getSpinners,
     getCyliners,
-    getCovers
+    getCovers,
+    getEyes,
+    getHandles
 }

@@ -13,12 +13,18 @@ export interface IOrder {
     openingType: string;
     isDouble: boolean;
     widthDouble: number | string;
-    baseLock: string;
-    optionalLock: string;
+    baseLock: string;    
     lockSpinner: string;
     baseCylinder: string;
     baseCoverOutside: string;
     baseCoverInside: string;
     baseCoverOutside2: string;
     baseCoverInside2: string;
+    optionalLock: string;
+    optionalCylinder: string;
+    optionalCoverOutside: string,
+    optionalCoverInside: string,
+    eye: string;
+    handle: string;
+    spinner: string;
 }

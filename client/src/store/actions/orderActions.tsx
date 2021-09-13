@@ -25,7 +25,14 @@ import {
     setIsBaseCover2,
     setBaseCoverOutside2,
     setBaseCoverInside2,
-    setOptionalLock
+    setOptionalLock,
+    setIsOptonalCylinder,
+    setOptionalCylinder,
+    setOptionalCovers,
+    setIsOptonalCoverOutside,
+    setIsOptonalCoverInside,
+    setEyes,
+    setHandles
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -133,6 +140,28 @@ export const fetchCovers = () => {
     }
 }
 
+export const fetchEyes = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getEyes()
+            dispatch(setEyes(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchHandles = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getHandles()
+            dispatch(setHandles(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -147,6 +176,8 @@ export const fetchAll = () => {
             await dispatch(fetchSpinners())
             await dispatch(fetchCylinders())
             await dispatch(fetchCovers())
+            await dispatch(fetchEyes())
+            await dispatch(fetchHandles())
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -265,10 +296,56 @@ export const changeBaseLock = (value: string) => {
     }
 }
 
-export const changeOptionalLock = (lock: string) => {
-    return (dispatch: Dispatch) => {
-        try {                        
-            dispatch(setOptionalLock(lock))
+export const changeOptionalLock = (value: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch(setOptionalLock(value))
+
+            let isOptionalCylinder: boolean
+            let optionalCylinder: string
+            let optionalCovers: ICover[]
+            let optionalCoverOutside: string
+            let optionalCoverInside: string
+
+            const { optionalLocks, covers } = getState().order                     
+            const optionalLock = optionalLocks.find(lock => lock.value === value)
+
+            switch (optionalLock?.type) {
+                case "цилиндр":
+                    isOptionalCylinder = true
+                    optionalCylinder = ""
+                    optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    optionalCoverOutside = ""
+                    optionalCoverInside = ""
+                    break
+                case "сувальда":
+                    isOptionalCylinder = false
+                    optionalCylinder = "нет"
+                    optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    optionalCoverOutside = ""
+                    optionalCoverInside = ""
+                    break  
+                case "примечание":
+                    isOptionalCylinder = true
+                    optionalCylinder = ""
+                    optionalCovers = covers
+                    optionalCoverOutside = ""
+                    optionalCoverInside = ""
+                    break
+                default: 
+                    isOptionalCylinder = false
+                    optionalCylinder = "нет"
+                    optionalCovers = covers.filter(cover => cover.type === "нет")
+                    optionalCoverOutside = "нет"
+                    optionalCoverInside = "нет"                   
+            }           
+            
+            dispatch(setIsOptonalCylinder(isOptionalCylinder))
+            dispatch(setOptionalCylinder(optionalCylinder)) 
+            dispatch(setOptionalCovers(optionalCovers)) 
+            dispatch(setIsOptonalCoverOutside(optionalCoverOutside)) 
+            dispatch(setIsOptonalCoverInside(optionalCoverInside)) 
+
         } catch (e) {
             console.log(e);            
         }

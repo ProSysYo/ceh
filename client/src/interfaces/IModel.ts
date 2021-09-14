@@ -3,5 +3,7 @@ export interface IModel {
     value: string;
     name: string;
     contours: number[];
-    doorThicks: number[];  
+    doorThicks: number[];
+    typeOutside: string;
+    typeInside: string;  
 }

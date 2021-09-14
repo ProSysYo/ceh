@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Col, Form, Row } from 'antd';
+import { Col, Divider, Form, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -49,6 +49,8 @@ const Step3: FC = () => {
             <Form
                 name="basic"
             >
+                <Divider >Основной замок</Divider>
+                
                 <Form.Item label="Основной замок*" {...formItemLayout}>
                     <Select
                         items={baseLocks}
@@ -116,6 +118,7 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>
 
+                <Divider >Дополнительный замок</Divider>
                 <Form.Item label="Дополнительный замок*" {...formItemLayout}>
                     <Select
                         items={optionalLocks}
@@ -152,6 +155,7 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>
 
+                <Divider></Divider>
                 <Form.Item label="Глазок" {...formItemLayout}>
                     <Select
                         items={eyes}

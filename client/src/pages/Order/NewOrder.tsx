@@ -11,12 +11,14 @@ import Step2 from './Step2';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchAll } from '../../store/actions/orderActions';
 import Step3 from './Step3';
+import Step4 from './Step4';
 
 const renderStep = (step: number) => {
     switch (step) {
         case 0: return <Step1/>
         case 1: return <Step2/>
         case 2: return <Step3/>
+        case 3: return <Step4/>
     }
 }
 

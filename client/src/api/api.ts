@@ -6,6 +6,7 @@ import { ICylinder } from '../interfaces/ICylinder';
 import { ICover } from '../interfaces/ICover';
 import { IEye } from '../interfaces/IEye';
 import { IHandle } from '../interfaces/IHandle';
+import { ITypeDecoration } from '../interfaces/ITypeDecoration';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -23,11 +24,11 @@ const parties = [
 ];
 
 const models: IModel[] = [
-    { _id: "1", value: "ММ", name: "металл-металл", contours: [1], doorThicks: [60] },
-    { _id: "2", value: "МП", name: "металл-панель", contours: [1, 2], doorThicks: [60, 70] },
-    { _id: "3", value: "ПП", name: "панель-панель", contours: [1, 2, 3], doorThicks: [60, 70, 80] },
-    { _id: "4", value: "МП_Пена", name: "металл-панель пенопласт", contours: [3], doorThicks: [60, 70, 80, 90, 100] },
-    { _id: "5", value: "ПП_Пена", name: "панель-панель пенопласт", contours: [2, 3], doorThicks: [90, 100] },
+    { _id: "1", value: "ММ", name: "металл-металл", contours: [1], doorThicks: [60], typeOutside: "металл", typeInside: "металл"},
+    { _id: "2", value: "МП", name: "металл-панель", contours: [1, 2], doorThicks: [60, 70], typeOutside: "металл", typeInside: "панель"},
+    { _id: "3", value: "ПП", name: "панель-панель", contours: [1, 2, 3], doorThicks: [60, 70, 80], typeOutside: "панель", typeInside: "панель" },
+    { _id: "4", value: "МП_Пена", name: "металл-панель пенопласт", contours: [3], doorThicks: [60, 70, 80, 90, 100], typeOutside: "металл", typeInside: "панель" },
+    { _id: "5", value: "ПП_Пена", name: "панель-панель пенопласт", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель" },
 ];
 
 const modelBoxes = [
@@ -55,7 +56,7 @@ const locks: ILock[] = [
     { _id: "11", value: "доп цил", name: "доп цил", installation: "дополнительный", type: "цилиндр", isBolt: false },
     { _id: "12", value: "доп сув", name: "доп сув", installation: "дополнительный", type: "сувальда", isBolt: false },
     { _id: "13", value: "нет", name: "нет", installation: "нет", type: "нет", isBolt: false },
-    { _id: "14", value: "см. прим.", name: "см. прим.", installation: "примечание", type: "примечание", isBolt: true },
+    { _id: "14", value: "см. прим.", name: "см. прим.", installation: "примечание", type: "примечание", isBolt: true },    
 ]
 
 const spinners: ISpinner[] = [
@@ -92,8 +93,19 @@ const handles: IHandle[] = [
     { _id: "4", value: "ручка бронза", name: "ручка бронза" },
 ];
 
+const typeDecorations: ITypeDecoration[] = [
+    { _id: "1", value: "нет", name: "нет", type: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
+    { _id: "3", value: "Кованные элементы", name: "Кованные элементы", type: "металл" },
+    { _id: "4", value: "Наружняя отделка металлом", name: "Наружняя отделка металлом", type: "металл" },
+    { _id: "5", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель" },
+    { _id: "6", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель" },
+    { _id: "7", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель" },
+    { _id: "8", value: "под панель 16мм", name: "под панель 16мм", type: "панель" },
+];
 
-const deley = 100
+
+const deley = 50
 
 const getCustomers = () => new Promise<any>((resolve, reject) => {
     if (!customers) {
@@ -169,6 +181,10 @@ const getHandles = () => new Promise<{data:IHandle[]}>((res) => {
     setTimeout(() => res({data: handles}), deley)
 })
 
+const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => {
+    setTimeout(() => res({data: typeDecorations}), deley)
+})
+
 export const api = {
     getCustomers,
     getParties, 
@@ -180,5 +196,6 @@ export const api = {
     getCyliners,
     getCovers,
     getEyes,
-    getHandles
+    getHandles,
+    getTypeDecorations
 }

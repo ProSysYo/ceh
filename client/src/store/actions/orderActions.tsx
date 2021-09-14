@@ -32,7 +32,8 @@ import {
     setIsOptonalCoverOutside,
     setIsOptonalCoverInside,
     setEyes,
-    setHandles
+    setHandles,
+    setTypeDecorations
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -187,13 +188,17 @@ export const fetchAll = () => {
 }
 
 export const changeModel = (model: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {
         try {
+            const { models } = getState().order
+            const selectedModel = models.find(item=>item.value === model)
+            
             dispatch(setModel(model))
             dispatch(setContours(model))
             dispatch(setDoorThicks(model))
             dispatch(checkSelectedContour())            
             dispatch(checkSelectedDoorThick())
+            dispatch(setTypeDecorations())
         } catch (e) {
             
         }

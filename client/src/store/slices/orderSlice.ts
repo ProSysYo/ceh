@@ -11,6 +11,7 @@ import { ICylinder } from '../../interfaces/ICylinder';
 import { ICover } from '../../interfaces/ICover';
 import { IEye } from '../../interfaces/IEye';
 import { IHandle } from '../../interfaces/IHandle';
+import { ITypeDecoration } from '../../interfaces/ITypeDecoration';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -30,6 +31,7 @@ interface OrderSate {
     optionalCovers: ICover[];
     eyes: IEye[];
     handles: IHandle[];
+    typeDecorations: ITypeDecoration[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -58,6 +60,7 @@ const initialState: OrderSate = {
     optionalCovers: [],
     eyes: [],
     handles: [],
+    typeDecorations: [],
 
     isLoading: false,
     isLockSpinner: false,
@@ -116,6 +119,7 @@ export const orderSlice = createSlice({
         setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.optionalCovers = action.payload },
         setEyes: (state, action: PayloadAction<IEye[]>) => { state.eyes = action.payload },
         setHandles: (state, action: PayloadAction<IHandle[]>) => { state.handles = action.payload },
+        setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorations = action.payload },
        
         setContours: (state, action: PayloadAction<string>) => {
             const model = state.models.find(model => model.value === action.payload)
@@ -227,6 +231,7 @@ export const {
     setHandles,
     setHandle,
     setSpinner,
+    setTypeDecorations,
 } = orderSlice.actions
 
 export default orderSlice.reducer

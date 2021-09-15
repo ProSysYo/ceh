@@ -7,6 +7,7 @@ import { ICover } from '../interfaces/ICover';
 import { IEye } from '../interfaces/IEye';
 import { IHandle } from '../interfaces/IHandle';
 import { ITypeDecoration } from '../interfaces/ITypeDecoration';
+import { IDecoration } from "../interfaces/IDecoration";
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -94,14 +95,32 @@ const handles: IHandle[] = [
 ];
 
 const typeDecorations: ITypeDecoration[] = [
-    { _id: "1", value: "нет", name: "нет", type: "нет" },
-    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
-    { _id: "3", value: "Кованные элементы", name: "Кованные элементы", type: "металл" },
-    { _id: "4", value: "Наружняя отделка металлом", name: "Наружняя отделка металлом", type: "металл" },
-    { _id: "5", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель" },
-    { _id: "6", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель" },
-    { _id: "7", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель" },
-    { _id: "8", value: "под панель 16мм", name: "под панель 16мм", type: "панель" },
+    { _id: "1", value: "нет", name: "нет", type: "нет", isWindow: false, variety: "нет"},
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание", isWindow: true, variety: "примечание" },    
+    { _id: "3", value: "Давление на полотне", name: "Давление на полотне", type: "металл", isWindow: false, variety: "Д" },
+    { _id: "10", value: "Давление на полотне с эл. нерж. стали", name: "Давление на полотне с эл. нерж. стали", type: "металл", isWindow: false, variety: "ДН" },
+    { _id: "11", value: "Давление и резка на полотне с эл. нерж. стали", name: "Давление и резка на полотне с эл. нерж. стали", type: "металл", isWindow: false, variety: "ДР" },
+    { _id: "12", value: "Кованные элементы, стеклопакеты", name: "Кованные элементы, стеклопакеты", type: "металл", isWindow: true, variety: "КС" },
+    { _id: "13", value: "Металлофиленки на металле", name: "Металлофиленки на металле", type: "металл", isWindow: false, variety: "Ф" },
+    { _id: "6", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель", isWindow: true, variety: "нет" },
+    { _id: "7", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель", isWindow: false, variety: "нет" },
+    { _id: "8", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель", isWindow: false, variety: "нет" },
+    { _id: "9", value: "под панель 16мм", name: "под панель 16мм", type: "панель", isWindow: true, variety: "нет" },
+];
+
+const decorations: IDecoration[] = [
+    { _id: "1", value: "нет", name: "нет", type: "нет", variety: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание", variety: "примечание" },
+    { _id: "3", value: "Д1", name: "Д1", type: "металл", variety: "Д" },
+    { _id: "4", value: "Д2", name: "Д2", type: "металл", variety: "Д" },
+    { _id: "5", value: "ДН1", name: "ДН1", type: "металл", variety: "ДН" },
+    { _id: "6", value: "ДН2", name: "ДН2", type: "металл", variety: "ДН" },
+    { _id: "7", value: "ДР1", name: "ДР1", type: "металл", variety: "ДР" },
+    { _id: "8", value: "ДР2", name: "ДР2", type: "металл", variety: "ДР" },
+    { _id: "9", value: "С1", name: "С1", type: "металл", variety: "КС" },
+    { _id: "10", value: "КС1", name: "КС1", type: "металл", variety: "КС" },
+    { _id: "11", value: "Ф1", name: "Ф1", type: "металл", variety: "Ф" },
+    { _id: "12", value: "Ф2", name: "Ф2", type: "металл", variety: "Ф" },
 ];
 
 
@@ -157,33 +176,14 @@ const getOpeningTypes = () => new Promise<any>((resolve, reject) => {
     setTimeout(() => resolve({data: openingTypes}) , deley);
 });
 
-const getLocks = () => new Promise<{data:ILock[]}>((res) => {
-    setTimeout(() => res({data: locks}), deley)
-})    
-
-const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => {
-    setTimeout(() => res({data: spinners}), deley)
-}) 
-
-const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => {
-    setTimeout(() => res({data: cylinders}), deley)
-})
-
-const getCovers = () => new Promise<{data:ICover[]}>((res) => {
-    setTimeout(() => res({data: covers}), deley)
-})
-
-const getEyes = () => new Promise<{data:IEye[]}>((res) => {
-    setTimeout(() => res({data: eyes}), deley)
-})
-
-const getHandles = () => new Promise<{data:IHandle[]}>((res) => {
-    setTimeout(() => res({data: handles}), deley)
-})
-
-const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => {
-    setTimeout(() => res({data: typeDecorations}), deley)
-})
+const getLocks = () => new Promise<{data:ILock[]}>((res) => { setTimeout(() => res({data: locks}), deley) })
+const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => { setTimeout(() => res({data: spinners}), deley) })
+const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => { setTimeout(() => res({data: cylinders}), deley) })
+const getCovers = () => new Promise<{data:ICover[]}>((res) => { setTimeout(() => res({data: covers}), deley) })
+const getEyes = () => new Promise<{data:IEye[]}>((res) => { setTimeout(() => res({data: eyes}), deley) })
+const getHandles = () => new Promise<{data:IHandle[]}>((res) => { setTimeout(() => res({data: handles}), deley) })
+const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => { setTimeout(() => res({data: typeDecorations}), deley) })
+const getDecorations = () => new Promise<{data:IDecoration[]}>((res) => { setTimeout(() => res({data: decorations}), deley) })
 
 export const api = {
     getCustomers,
@@ -197,5 +197,6 @@ export const api = {
     getCovers,
     getEyes,
     getHandles,
-    getTypeDecorations
+    getTypeDecorations,
+    getDecorations
 }

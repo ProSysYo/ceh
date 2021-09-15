@@ -1,7 +1,11 @@
 import {Dispatch} from "redux";
 import { 
-    checkSelectedContour, checkSelectedDoorThick, setContours, 
-    setCustomers, setDoorThicks, setModel, setModels, setParties, 
+    setContours, 
+    setCustomers, 
+    setDoorThicks, 
+    setModel, 
+    setModels, 
+    setParties, 
     setModelBoxes,
     setOpeningTypes,
     setIsDouble,
@@ -10,8 +14,7 @@ import {
     setBaseLoks,
     setOptionalLocks,
     setSpinners,
-    setBaseLock,   
-    // checkSelectedLockSpinner,
+    setBaseLock,
     setLockSpinner,
     setIsLockSpinner,
     setCylinders,
@@ -33,11 +36,21 @@ import {
     setIsOptonalCoverInside,
     setEyes,
     setHandles,
-    setTypeDecorations
+    setTypeDecorations,
+    setContour,
+    setDoorThick,
+    setTypeDecorationsInside,
+    setTypeDecorationsOutside,
+    setTypeDecorationOutside,
+    setTypeDecorationInside,
+    setDecorations,
+    setDecorationsOutside,
+    setDecorationOutside
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
 import { ICover } from "../../interfaces/ICover";
+import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -163,6 +176,28 @@ export const fetchHandles = () => {
     }
 }
 
+export const fetchTypeDecorations = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getTypeDecorations()
+            dispatch(setTypeDecorations(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchDecorations = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getDecorations()
+            dispatch(setDecorations(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -179,6 +214,8 @@ export const fetchAll = () => {
             await dispatch(fetchCovers())
             await dispatch(fetchEyes())
             await dispatch(fetchHandles())
+            await dispatch(fetchTypeDecorations())
+            await dispatch(fetchDecorations())
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -190,17 +227,49 @@ export const fetchAll = () => {
 export const changeModel = (model: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {
         try {
-            const { models } = getState().order
+            let typeDecorationsOutside: ITypeDecoration[]
+            let typeDecorationsInside: ITypeDecoration[]
+
+            const { models, typeDecorations } = getState().order
             const selectedModel = models.find(item=>item.value === model)
             
+            typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel?.typeOutside || item.type === "нет" || item.type === "примечание")            
+            typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel?.typeInside || item.type === "нет" || item.type === "примечание")
+
             dispatch(setModel(model))
-            dispatch(setContours(model))
-            dispatch(setDoorThicks(model))
-            dispatch(checkSelectedContour())            
-            dispatch(checkSelectedDoorThick())
-            dispatch(setTypeDecorations())
+
+            dispatch(setContours(selectedModel!.contours))
+            dispatch(setContour("")) 
+
+            dispatch(setDoorThicks(selectedModel!.doorThicks))
+            dispatch(setDoorThick(""))           
+            
+            dispatch(setTypeDecorationsOutside(typeDecorationsOutside))
+            dispatch(setTypeDecorationOutside(""))
+
+            dispatch(setTypeDecorationsInside(typeDecorationsInside))            
+            dispatch(setTypeDecorationInside(""))
+
+            dispatch(setDecorationOutside(""))
         } catch (e) {
             
+        }
+    }
+}
+
+export const changeTypeDecorationOutside = (type: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {
+        try {            
+            dispatch(setTypeDecorationOutside(type))
+
+            const { typeDecorationsOutside, decorations } = getState().order
+            
+            const selectedType = typeDecorationsOutside.find(item => item.value === type)!
+            const decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+
+            dispatch(setDecorationsOutside(decorationsOutside))
+        } catch (e) {
+            console.log(e);            
         }
     }
 }

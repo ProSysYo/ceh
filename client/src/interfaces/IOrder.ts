@@ -27,4 +27,7 @@ export interface IOrder {
     eye: string;
     handle: string;
     spinner: string;
+    typeDecorationOutside: string;
+    typeDecorationInside: string;
+    decorationOutside: string;
 }

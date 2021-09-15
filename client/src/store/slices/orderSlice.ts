@@ -12,6 +12,7 @@ import { ICover } from '../../interfaces/ICover';
 import { IEye } from '../../interfaces/IEye';
 import { IHandle } from '../../interfaces/IHandle';
 import { ITypeDecoration } from '../../interfaces/ITypeDecoration';
+import { IDecoration } from '../../interfaces/IDecoration';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -32,6 +33,10 @@ interface OrderSate {
     eyes: IEye[];
     handles: IHandle[];
     typeDecorations: ITypeDecoration[];
+    typeDecorationsOutside: ITypeDecoration[];
+    typeDecorationsInside: ITypeDecoration[];
+    decorations: IDecoration[];
+    decorationsOutside: IDecoration[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -61,6 +66,10 @@ const initialState: OrderSate = {
     eyes: [],
     handles: [],
     typeDecorations: [],
+    typeDecorationsOutside: [],
+    typeDecorationsInside: [],
+    decorations: [],
+    decorationsOutside: [],
 
     isLoading: false,
     isLockSpinner: false,
@@ -95,7 +104,10 @@ const initialState: OrderSate = {
         optionalCoverInside: "",
         eye: "",
         handle: "",
-        spinner: ""
+        spinner: "",
+        typeDecorationOutside: "",
+        typeDecorationInside: "",
+        decorationOutside: "",
     }
 }
 
@@ -120,32 +132,12 @@ export const orderSlice = createSlice({
         setEyes: (state, action: PayloadAction<IEye[]>) => { state.eyes = action.payload },
         setHandles: (state, action: PayloadAction<IHandle[]>) => { state.handles = action.payload },
         setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorations = action.payload },
-       
-        setContours: (state, action: PayloadAction<string>) => {
-            const model = state.models.find(model => model.value === action.payload)
-            const contours = model!.contours
-            state.contours = contours
-        },
-
-        setDoorThicks: (state, action: PayloadAction<string>) => {
-            const model = state.models.find(model => model.value === action.payload)
-            const doorThicks = model!.doorThicks
-            state.doorThicks = doorThicks
-        },
-
-        checkSelectedContour: (state) => {
-            const contour = state.contours.find(contour => contour === state.order.contour)
-            if (!contour) {
-                state.order.contour = ""
-            }
-        },
-
-        checkSelectedDoorThick: (state) => {
-            const thick = state.doorThicks.find(thick => thick === state.order.doorThick)
-            if (!thick) {
-                state.order.doorThick = ""
-            }
-        },
+        setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsOutside = action.payload },
+        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsInside = action.payload },       
+        setContours: (state, action: PayloadAction<number[]>) => { state.contours = action.payload },
+        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.doorThicks = action.payload },
+        setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.decorations = action.payload },        
+        setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsOutside = action.payload },        
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -177,6 +169,9 @@ export const orderSlice = createSlice({
         setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },
         setHandle: (state, action: PayloadAction<string>) => { state.order.handle = action.payload },
         setSpinner: (state, action: PayloadAction<string>) => { state.order.spinner = action.payload },
+        setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
+        setTypeDecorationInside: (state, action: PayloadAction<string>) => { state.order.typeDecorationInside = action.payload },
+        setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload},
     }
 })
 
@@ -196,8 +191,6 @@ export const {
     setCovers,
     setBaseCovers,
     setBaseCovers2,
-    checkSelectedContour,
-    checkSelectedDoorThick,
     setHeight,
     setWidth,
     setModelBox,
@@ -232,6 +225,13 @@ export const {
     setHandle,
     setSpinner,
     setTypeDecorations,
+    setTypeDecorationsOutside,
+    setTypeDecorationsInside,
+    setTypeDecorationOutside,
+    setTypeDecorationInside,
+    setDecorations,
+    setDecorationsOutside,
+    setDecorationOutside,
 } = orderSlice.actions
 
 export default orderSlice.reducer

@@ -3,6 +3,5 @@ export interface ITypeDecoration {
     value: string;
     name: string;
     type: string;
-    isWindow: boolean;
     variety: string;    
 }

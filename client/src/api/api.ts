@@ -95,17 +95,17 @@ const handles: IHandle[] = [
 ];
 
 const typeDecorations: ITypeDecoration[] = [
-    { _id: "1", value: "нет", name: "нет", type: "нет", isWindow: false, variety: "нет"},
-    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание", isWindow: true, variety: "примечание" },    
-    { _id: "3", value: "Давление на полотне", name: "Давление на полотне", type: "металл", isWindow: false, variety: "Д" },
-    { _id: "10", value: "Давление на полотне с эл. нерж. стали", name: "Давление на полотне с эл. нерж. стали", type: "металл", isWindow: false, variety: "ДН" },
-    { _id: "11", value: "Давление и резка на полотне с эл. нерж. стали", name: "Давление и резка на полотне с эл. нерж. стали", type: "металл", isWindow: false, variety: "ДР" },
-    { _id: "12", value: "Кованные элементы, стеклопакеты", name: "Кованные элементы, стеклопакеты", type: "металл", isWindow: true, variety: "КС" },
-    { _id: "13", value: "Металлофиленки на металле", name: "Металлофиленки на металле", type: "металл", isWindow: false, variety: "Ф" },
-    { _id: "6", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель", isWindow: true, variety: "нет" },
-    { _id: "7", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель", isWindow: false, variety: "нет" },
-    { _id: "8", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель", isWindow: false, variety: "нет" },
-    { _id: "9", value: "под панель 16мм", name: "под панель 16мм", type: "панель", isWindow: true, variety: "нет" },
+    { _id: "1", value: "нет", name: "нет", type: "нет",  variety: "нет"},
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание", variety: "примечание" },    
+    { _id: "3", value: "Давление на полотне", name: "Давление на полотне", type: "металл",  variety: "Д" },
+    { _id: "10", value: "Давление на полотне с эл. нерж. стали", name: "Давление на полотне с эл. нерж. стали", type: "металл",  variety: "ДН" },
+    { _id: "11", value: "Давление и резка на полотне с эл. нерж. стали", name: "Давление и резка на полотне с эл. нерж. стали", type: "металл",  variety: "ДР" },
+    { _id: "12", value: "Накладные элементы на металле", name: "Накладные элементы на металле", type: "металл",  variety: "Н" },
+    { _id: "13", value: "Металлофиленки на металле", name: "Металлофиленки на металле", type: "металл",  variety: "Ф" },
+    { _id: "6", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель", variety: "фрезеровка" },
+    { _id: "7", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель",  variety: "нет" },
+    { _id: "8", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель",  variety: "нет" },
+    { _id: "9", value: "под панель 16мм", name: "под панель 16мм", type: "панель", variety: "нет" },
 ];
 
 const decorations: IDecoration[] = [
@@ -117,8 +117,8 @@ const decorations: IDecoration[] = [
     { _id: "6", value: "ДН2", name: "ДН2", type: "металл", variety: "ДН" },
     { _id: "7", value: "ДР1", name: "ДР1", type: "металл", variety: "ДР" },
     { _id: "8", value: "ДР2", name: "ДР2", type: "металл", variety: "ДР" },
-    { _id: "9", value: "С1", name: "С1", type: "металл", variety: "КС" },
-    { _id: "10", value: "КС1", name: "КС1", type: "металл", variety: "КС" },
+    { _id: "9", value: "Н1", name: "Н1", type: "металл", variety: "Н" },
+    { _id: "10", value: "Н2", name: "Н2", type: "металл", variety: "Н" },
     { _id: "11", value: "Ф1", name: "Ф1", type: "металл", variety: "Ф" },
     { _id: "12", value: "Ф2", name: "Ф2", type: "металл", variety: "Ф" },
 ];

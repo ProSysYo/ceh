@@ -89,7 +89,7 @@ const Step4: FC = () => {
                         value={party} 
                         onChange={ (value) => dispatch(setParty(value))}                        
                     />
-                </Form.Item>
+                </Form.Item>                
             </Form>
         </Container>
     )

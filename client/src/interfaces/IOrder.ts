@@ -30,4 +30,8 @@ export interface IOrder {
     typeDecorationOutside: string;
     typeDecorationInside: string;
     decorationOutside: string;
+    wrapOutside: string;
+    wrapInside: string;
+    patinaOutside: string;
+    patinaInside: string;
 }

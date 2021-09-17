@@ -6,8 +6,11 @@ import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
     setDecorationOutside,
+    setPatinaOutside,
     setParty, 
-    setTypeDecorationInside 
+    setTypeDecorationInside, 
+    setWrapInside, 
+    setWrapOutside
 } from '../../store/slices/orderSlice';
 import { changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
@@ -16,11 +19,12 @@ const Step4: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        parties, typeDecorationsOutside, typeDecorationsInside, decorationsOutside
+        parties, typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
+        patinas, 
     } = useAppSelector(state => state.order)
     
     const {
-        party, typeDecorationOutside, typeDecorationInside, decorationOutside
+        party, typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside
     } = useAppSelector(state => state.order.order)
 
 
@@ -32,7 +36,7 @@ const Step4: FC = () => {
                 wrapperCol={{ span: 7 }}                
             >  
                 <Divider>Наружная отделка</Divider>
-                <Form.Item label="Отделка / Тип панели">
+                <Form.Item label="Отделка / Тип панели*">
                     <Select 
                         items={typeDecorationsOutside} 
                         value={typeDecorationOutside} 
@@ -48,21 +52,23 @@ const Step4: FC = () => {
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">
                     <Select 
-                        items={parties} 
-                        value={party} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        items={wraps} 
+                        value={wrapOutside}
+                        disabled={!isWrapOutside} 
+                        onChange={ (value) => dispatch(setWrapOutside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Патина на панели">
                     <Select 
-                        items={parties} 
-                        value={party} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        items={patinas} 
+                        value={patinaOutside} 
+                        disabled={!isPatinaOutside} 
+                        onChange={ (value) => dispatch(setPatinaOutside(value))}                        
                     />
                 </Form.Item>
 
                 <Divider>Внутренняя отделка</Divider>
-                <Form.Item label="Отделка / Тип панели">
+                <Form.Item label="Отделка / Тип панели*">
                     <Select 
                         items={typeDecorationsInside} 
                         value={typeDecorationInside} 
@@ -78,9 +84,10 @@ const Step4: FC = () => {
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">
                     <Select 
-                        items={parties} 
-                        value={party} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        items={wraps} 
+                        value={wrapInside} 
+                        disabled={!isWrapInside}
+                        onChange={ (value) => dispatch(setWrapInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Патина на панели">

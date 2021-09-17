@@ -32,7 +32,7 @@ const NewOrder: React.FC = () => {
         dispatch(fetchAll())
     }, [dispatch])     
 
-    if (isLoading) return <StyledSpin size="large" />
+    if (isLoading) return <StyledSpin size="large" tip="Загрузка данных..."/>
 
     return (
         <Container>
@@ -58,7 +58,7 @@ const Container = styled.div`
 const StyledSpin = styled(Spin)`
     position: absolute;
     top: 50%;
-    left: 60%;    
+    left: 50%;    
 `;
 
 const Steps = styled.div`

@@ -13,6 +13,8 @@ import { IEye } from '../../interfaces/IEye';
 import { IHandle } from '../../interfaces/IHandle';
 import { ITypeDecoration } from '../../interfaces/ITypeDecoration';
 import { IDecoration } from '../../interfaces/IDecoration';
+import { IWrap } from '../../interfaces/IWrap';
+import { IPatina } from '../../interfaces/IPatina';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -37,12 +39,18 @@ interface OrderSate {
     typeDecorationsInside: ITypeDecoration[];
     decorations: IDecoration[];
     decorationsOutside: IDecoration[];
+    wraps: IWrap[];
+    patinas: IPatina[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
     isBaseCylinder: boolean;
     isBaseCover2: boolean;
     isOptionalCylinder: boolean;
+    isWrapOutside: boolean;
+    isWrapInside: boolean;
+    isPatinaOutside: boolean;
+    isPatinaInside: boolean;
 
     order: IOrder;
 }
@@ -70,12 +78,18 @@ const initialState: OrderSate = {
     typeDecorationsInside: [],
     decorations: [],
     decorationsOutside: [],
+    wraps: [],
+    patinas: [],
 
     isLoading: false,
     isLockSpinner: false,
     isBaseCylinder: false,
     isBaseCover2: false,
     isOptionalCylinder: false,
+    isWrapOutside: false,
+    isWrapInside: false,
+    isPatinaOutside: false,
+    isPatinaInside: false,
 
     order: {
         customer: "",
@@ -108,6 +122,10 @@ const initialState: OrderSate = {
         typeDecorationOutside: "",
         typeDecorationInside: "",
         decorationOutside: "",
+        wrapInside: "",
+        wrapOutside: "",
+        patinaOutside: "",
+        patinaInside: ""
     }
 }
 
@@ -138,6 +156,8 @@ export const orderSlice = createSlice({
         setDoorThicks: (state, action: PayloadAction<number[]>) => { state.doorThicks = action.payload },
         setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.decorations = action.payload },        
         setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsOutside = action.payload },        
+        setWraps: (state, action: PayloadAction<IWrap[]>) => { state.wraps = action.payload },      
+        setPatinas: (state, action: PayloadAction<IPatina[]>) => { state.patinas = action.payload },      
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -172,6 +192,12 @@ export const orderSlice = createSlice({
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
         setTypeDecorationInside: (state, action: PayloadAction<string>) => { state.order.typeDecorationInside = action.payload },
         setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload},
+        setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload},
+        setWrapInside: (state, action: PayloadAction<string>) => { state.order.wrapInside = action.payload}, 
+        setIsWrapOutside: (state, action: PayloadAction<boolean>) => { state.isWrapOutside = action.payload}, 
+        setIsPatinaOutside: (state, action: PayloadAction<boolean>) => { state.isPatinaOutside = action.payload},
+        setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload},
+        setIsWrapInside: (state, action: PayloadAction<boolean>) => { state.isWrapInside = action.payload},
     }
 })
 
@@ -232,6 +258,14 @@ export const {
     setDecorations,
     setDecorationsOutside,
     setDecorationOutside,
+    setWraps,
+    setWrapOutside,
+    setWrapInside,
+    setIsWrapOutside,
+    setPatinas,
+    setIsPatinaOutside,
+    setPatinaOutside,
+    setIsWrapInside
 } = orderSlice.actions
 
 export default orderSlice.reducer

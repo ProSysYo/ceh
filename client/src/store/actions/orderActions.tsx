@@ -45,12 +45,21 @@ import {
     setTypeDecorationInside,
     setDecorations,
     setDecorationsOutside,
-    setDecorationOutside
+    setDecorationOutside,
+    setWraps,
+    setWrapOutside,
+    setWrapInside,
+    setIsWrapOutside,
+    setPatinas,
+    setPatinaOutside,
+    setIsPatinaOutside,
+    setIsWrapInside
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
 import { ICover } from "../../interfaces/ICover";
 import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
+import { IDecoration } from "../../interfaces/IDecoration";
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -198,6 +207,28 @@ export const fetchDecorations = () => {
     }
 }
 
+export const fetchWraps = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getWraps()
+            dispatch(setWraps(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchPatinas = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getPatinas()
+            dispatch(setPatinas(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -216,6 +247,9 @@ export const fetchAll = () => {
             await dispatch(fetchHandles())
             await dispatch(fetchTypeDecorations())
             await dispatch(fetchDecorations())
+            await dispatch(fetchWraps())
+            await dispatch(fetchWraps())
+            await dispatch(fetchPatinas())
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -251,6 +285,15 @@ export const changeModel = (model: string) => {
             dispatch(setTypeDecorationInside(""))
 
             dispatch(setDecorationOutside(""))
+
+            dispatch(setIsWrapOutside(false))
+            dispatch(setWrapOutside(""))
+
+            dispatch(setIsWrapInside(false))
+            dispatch(setWrapInside(""))
+
+            dispatch(setIsPatinaOutside(false))
+            dispatch(setPatinaOutside(""))
         } catch (e) {
             
         }
@@ -259,15 +302,61 @@ export const changeModel = (model: string) => {
 
 export const changeTypeDecorationOutside = (type: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {
+        let decorationsOutside: IDecoration[] = []
+        let isWrapOutside: boolean = false
+        let isPatinaOutside: boolean = false
+        let wrapOutside: string = ""
+        let patinaOutside: string = ""
+        let decorationOutside: string = ""
+
         try {            
             dispatch(setTypeDecorationOutside(type))
 
-            const { typeDecorationsOutside, decorations } = getState().order
-            
-            const selectedType = typeDecorationsOutside.find(item => item.value === type)!
-            const decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+            const { typeDecorationsOutside, decorations } = getState().order           
 
-            dispatch(setDecorationsOutside(decorationsOutside))
+            const selectedType = typeDecorationsOutside.find(item => item.value === type)!
+            
+            switch (selectedType.variety) {
+                case "нет":
+                case "примечание":
+                    decorationsOutside = decorations.filter(item => item.variety === "нет")
+                    break
+                default: 
+                    decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+            }                        
+
+            switch (selectedType.type) {
+                case "панель":                                                      
+                    isWrapOutside = true
+                    isPatinaOutside = true
+                    wrapOutside = ""
+                    patinaOutside = ""
+                    break
+                case "металл":                                       
+                    isWrapOutside = false
+                    isPatinaOutside = false
+                    wrapOutside = "нет"
+                    patinaOutside = "нет"
+                    break
+                case "нет":
+                case "примечание":
+                    decorationOutside = "нет" 
+                    isWrapOutside = false
+                    isPatinaOutside = false
+                    wrapOutside = "нет"
+                    patinaOutside = "нет"
+                    break                
+            }
+            
+
+            dispatch(setDecorationsOutside(decorationsOutside))            
+            dispatch(setDecorationOutside(decorationOutside))            
+
+            dispatch(setIsWrapOutside(isWrapOutside))                       
+            dispatch(setWrapOutside(wrapOutside)) 
+
+            dispatch(setIsPatinaOutside(isPatinaOutside))                     
+            dispatch(setPatinaOutside(patinaOutside))          
         } catch (e) {
             console.log(e);            
         }

@@ -8,6 +8,8 @@ import { IEye } from '../interfaces/IEye';
 import { IHandle } from '../interfaces/IHandle';
 import { ITypeDecoration } from '../interfaces/ITypeDecoration';
 import { IDecoration } from "../interfaces/IDecoration";
+import { IWrap } from '../interfaces/IWrap';
+import { IPatina } from '../interfaces/IPatina';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -105,7 +107,7 @@ const typeDecorations: ITypeDecoration[] = [
     { _id: "6", value: "МДФ 16мм лам. фр.", name: "МДФ 16мм лам. фр.", type: "панель", variety: "фрезеровка" },
     { _id: "7", value: "МДФ 16мм лам. б/фр.", name: "МДФ 16мм лам. б/фр.", type: "панель",  variety: "нет" },
     { _id: "8", value: "МДФ 16мм лам. фр.с зеркалом", name: "МДФ 16мм лам. фр.с зеркалом", type: "панель",  variety: "нет" },
-    { _id: "9", value: "под панель 16мм", name: "под панель 16мм", type: "панель", variety: "нет" },
+    { _id: "9", value: "под панель 16мм", name: "под панель 16мм", type: "нет", variety: "нет" },
 ];
 
 const decorations: IDecoration[] = [
@@ -121,6 +123,23 @@ const decorations: IDecoration[] = [
     { _id: "10", value: "Н2", name: "Н2", type: "металл", variety: "Н" },
     { _id: "11", value: "Ф1", name: "Ф1", type: "металл", variety: "Ф" },
     { _id: "12", value: "Ф2", name: "Ф2", type: "металл", variety: "Ф" },
+    { _id: "13", value: "ФЛ-1", name: "ФЛ-1", type: "панель", variety: "фрезеровка" },
+    { _id: "14", value: "ФЛЗ-1", name: "ФЛЗ-1", type: "панель", variety: "фрезеровка" },
+];
+
+const wraps: IWrap[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "ALMON 2", name: "ALMON 2" },
+    { _id: "4", value: "Белая скала", name: "Белая скала" },
+    { _id: "5", value: "Венге глянец", name: "Венге глянец" },
+];
+
+const patinas: IPatina[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "золото", name: "золото" },
+    { _id: "4", value: "серебро", name: "серебро" },    
 ];
 
 
@@ -184,6 +203,8 @@ const getEyes = () => new Promise<{data:IEye[]}>((res) => { setTimeout(() => res
 const getHandles = () => new Promise<{data:IHandle[]}>((res) => { setTimeout(() => res({data: handles}), deley) })
 const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => { setTimeout(() => res({data: typeDecorations}), deley) })
 const getDecorations = () => new Promise<{data:IDecoration[]}>((res) => { setTimeout(() => res({data: decorations}), deley) })
+const getWraps = () => new Promise<{data:IWrap[]}>((res) => { setTimeout(() => res({data: wraps}), deley) })
+const getPatinas = () => new Promise<{data:IPatina[]}>((res) => { setTimeout(() => res({data: patinas}), deley) })
 
 export const api = {
     getCustomers,
@@ -198,5 +219,7 @@ export const api = {
     getEyes,
     getHandles,
     getTypeDecorations,
-    getDecorations
+    getDecorations,
+    getWraps,
+    getPatinas,
 }

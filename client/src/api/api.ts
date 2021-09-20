@@ -131,8 +131,8 @@ const wraps: IWrap[] = [
     { _id: "1", value: "нет", name: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим." },
     { _id: "3", value: "ALMON 2", name: "ALMON 2" },
-    { _id: "4", value: "Белая скала", name: "Белая скала" },
-    { _id: "5", value: "Венге глянец", name: "Венге глянец" },
+    { _id: "4", value: "белая скала", name: "белая скала" },
+    { _id: "5", value: "венге глянец", name: "венге глянец" },
 ];
 
 const patinas: IPatina[] = [

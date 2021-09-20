@@ -363,6 +363,17 @@ export const changeTypeDecorationOutside = (type: string) => {
     }
 }
 
+export const changeTypeDecorationInside = (type: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {
+
+        try {            
+            dispatch(setTypeDecorationInside(type))
+        } catch (e) {
+            console.log(e);            
+        }
+    }
+}
+
 export const changeIsDouble = (value: boolean) => {
     return (dispatch: Dispatch) => {
         try {

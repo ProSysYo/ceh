@@ -7,12 +7,11 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
     setDecorationOutside,
     setPatinaOutside,
-    setParty, 
-    setTypeDecorationInside, 
+    setParty,     
     setWrapInside, 
     setWrapOutside
 } from '../../store/slices/orderSlice';
-import { changeTypeDecorationOutside } from '../../store/actions/orderActions';
+import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
 
 const Step4: FC = () => {
@@ -72,7 +71,7 @@ const Step4: FC = () => {
                     <Select 
                         items={typeDecorationsInside} 
                         value={typeDecorationInside} 
-                        onChange={ (value) => dispatch(setTypeDecorationInside(value))}                        
+                        onChange={ (value) => dispatch(changeTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Элемент отделки / Фрезеровка">

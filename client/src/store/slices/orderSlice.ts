@@ -35,12 +35,13 @@ interface OrderSate {
     eyes: IEye[];
     handles: IHandle[];
     typeDecorations: ITypeDecoration[];
-    typeDecorationsOutside: ITypeDecoration[];
-    typeDecorationsInside: ITypeDecoration[];
+    typeDecorationsOutside: ITypeDecoration[];    
     decorations: IDecoration[];
     decorationsOutside: IDecoration[];
     wraps: IWrap[];
     patinas: IPatina[];
+    typeDecorationsInside: ITypeDecoration[];
+    decorationsInside: IDecoration[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -80,6 +81,7 @@ const initialState: OrderSate = {
     decorationsOutside: [],
     wraps: [],
     patinas: [],
+    decorationsInside: [],
 
     isLoading: false,
     isLockSpinner: false,
@@ -119,13 +121,14 @@ const initialState: OrderSate = {
         eye: "",
         handle: "",
         spinner: "",
-        typeDecorationOutside: "",
-        typeDecorationInside: "",
+        typeDecorationOutside: "",        
         decorationOutside: "",
         wrapInside: "",
         wrapOutside: "",
         patinaOutside: "",
-        patinaInside: ""
+        patinaInside: "",
+        typeDecorationInside: "",
+        decorationInside: ""
     }
 }
 
@@ -198,6 +201,8 @@ export const orderSlice = createSlice({
         setIsPatinaOutside: (state, action: PayloadAction<boolean>) => { state.isPatinaOutside = action.payload},
         setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload},
         setIsWrapInside: (state, action: PayloadAction<boolean>) => { state.isWrapInside = action.payload},
+        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload},
+        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload }
     }
 })
 
@@ -265,7 +270,8 @@ export const {
     setPatinas,
     setIsPatinaOutside,
     setPatinaOutside,
-    setIsWrapInside
+    setIsWrapInside,
+    setDecorationInside
 } = orderSlice.actions
 
 export default orderSlice.reducer

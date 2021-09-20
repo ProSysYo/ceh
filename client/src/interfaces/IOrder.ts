@@ -27,11 +27,12 @@ export interface IOrder {
     eye: string;
     handle: string;
     spinner: string;
-    typeDecorationOutside: string;
-    typeDecorationInside: string;
+    typeDecorationOutside: string;    
     decorationOutside: string;
     wrapOutside: string;
     wrapInside: string;
     patinaOutside: string;
     patinaInside: string;
+    typeDecorationInside: string;
+    decorationInside: string;
 }

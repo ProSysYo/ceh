@@ -9,7 +9,8 @@ import {
     setPatinaOutside,
     setParty,     
     setWrapInside, 
-    setWrapOutside
+    setWrapOutside,
+    setDecorationInside
 } from '../../store/slices/orderSlice';
 import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
@@ -19,11 +20,12 @@ const Step4: FC = () => {
 
     const {
         parties, typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
-        patinas, 
+        patinas, decorationsInside
     } = useAppSelector(state => state.order)
     
     const {
-        party, typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside
+        party, typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside,
+        decorationInside
     } = useAppSelector(state => state.order.order)
 
 
@@ -76,9 +78,9 @@ const Step4: FC = () => {
                 </Form.Item>
                 <Form.Item label="Элемент отделки / Фрезеровка">
                     <Select 
-                        items={parties} 
-                        value={typeDecorationInside} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        items={decorationsInside} 
+                        value={decorationInside} 
+                        onChange={ (value) => dispatch(setDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">

@@ -122,13 +122,13 @@ const initialState: OrderSate = {
         handle: "",
         spinner: "",
         typeDecorationOutside: "",        
-        decorationOutside: "",
-        wrapInside: "",
+        decorationOutside: "",        
         wrapOutside: "",
-        patinaOutside: "",
-        patinaInside: "",
+        patinaOutside: "",        
         typeDecorationInside: "",
-        decorationInside: ""
+        decorationInside: "",
+        wrapInside: "",
+        patinaInside: "",
     }
 }
 
@@ -202,7 +202,10 @@ export const orderSlice = createSlice({
         setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload},
         setIsWrapInside: (state, action: PayloadAction<boolean>) => { state.isWrapInside = action.payload},
         setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload},
-        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload }
+        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload },
+        setPatinaInside: (state, action: PayloadAction<string>) => { state.order.patinaInside = action.payload },
+        setIsPatinaInside: (state, action: PayloadAction<boolean>) => { state.isPatinaInside = action.payload },
+
     }
 })
 
@@ -271,7 +274,10 @@ export const {
     setIsPatinaOutside,
     setPatinaOutside,
     setIsWrapInside,
-    setDecorationInside
+    setDecorationInside,
+    setDecorationsInside,
+    setPatinaInside,
+    setIsPatinaInside
 } = orderSlice.actions
 
 export default orderSlice.reducer

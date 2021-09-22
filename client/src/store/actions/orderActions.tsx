@@ -53,7 +53,11 @@ import {
     setPatinas,
     setPatinaOutside,
     setIsPatinaOutside,
-    setIsWrapInside
+    setIsWrapInside,
+    setDecorationsInside,
+    setDecorationInside,
+    setIsPatinaInside,
+    setPatinaInside
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -365,9 +369,60 @@ export const changeTypeDecorationOutside = (type: string) => {
 
 export const changeTypeDecorationInside = (type: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {
+        let decorationsInside: IDecoration[] = []
+        let isWrapInside: boolean = false
+        let isPatinaInside: boolean = false
+        let wrapInside: string = ""
+        let patinaInside: string = ""
+        let decorationInside: string = ""
+
+        const { typeDecorationsInside, decorations } = getState().order 
 
         try {            
             dispatch(setTypeDecorationInside(type))
+            const selectedType = typeDecorationsInside.find(item => item.value === type)!
+
+            switch (selectedType.variety) {
+                case "нет":
+                case "примечание":
+                    decorationsInside = decorations.filter(item => item.variety === "нет")
+                    break
+                default: 
+                    decorationsInside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+            }
+            
+            switch (selectedType.type) {
+                case "панель":                                                      
+                    isWrapInside = true
+                    isPatinaInside = true
+                    wrapInside = ""
+                    patinaInside = ""
+                    break
+                case "металл":                                       
+                    isWrapInside = false
+                    isPatinaInside = false
+                    wrapInside = "нет"
+                    patinaInside = "нет"
+                    break
+                case "нет":
+                case "примечание":
+                    decorationInside = "нет" 
+                    isWrapInside = false
+                    isPatinaInside = false
+                    wrapInside = "нет"
+                    patinaInside = "нет"
+                    break                
+            }
+
+            dispatch(setDecorationsInside(decorationsInside))
+            dispatch(setDecorationInside(decorationInside))            
+
+            dispatch(setIsWrapInside(isWrapInside))                       
+            dispatch(setWrapInside(wrapInside)) 
+
+            dispatch(setIsPatinaInside(isPatinaInside))                     
+            dispatch(setPatinaInside(patinaInside))
+
         } catch (e) {
             console.log(e);            
         }

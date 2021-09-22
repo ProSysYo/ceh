@@ -7,10 +7,10 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
     setDecorationOutside,
     setPatinaOutside,
-    setParty,     
     setWrapInside, 
     setWrapOutside,
-    setDecorationInside
+    setDecorationInside,
+    setPatinaInside
 } from '../../store/slices/orderSlice';
 import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
@@ -19,13 +19,13 @@ const Step4: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        parties, typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
-        patinas, decorationsInside
+        typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
+        patinas, decorationsInside, isPatinaInside
     } = useAppSelector(state => state.order)
     
     const {
-        party, typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside,
-        decorationInside
+        typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside, 
+        decorationInside, patinaInside
     } = useAppSelector(state => state.order.order)
 
 
@@ -93,9 +93,10 @@ const Step4: FC = () => {
                 </Form.Item>
                 <Form.Item label="Патина на панели">
                     <Select 
-                        items={parties} 
-                        value={party} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        items={patinas} 
+                        value={patinaInside}
+                        disabled={!isPatinaInside}
+                        onChange={ (value) => dispatch(setPatinaInside(value))}                        
                     />
                 </Form.Item>                
             </Form>

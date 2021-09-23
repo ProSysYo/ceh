@@ -10,6 +10,10 @@ import { ITypeDecoration } from '../interfaces/ITypeDecoration';
 import { IDecoration } from "../interfaces/IDecoration";
 import { IWrap } from '../interfaces/IWrap';
 import { IPatina } from '../interfaces/IPatina';
+import { ITypeWindow } from "../interfaces/ITypeWindow";
+import { IWindow } from '../interfaces/IWindow';
+import { IColorTint } from '../interfaces/IColorTint';
+import { IColorForge } from '../interfaces/IColorForge';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -142,6 +146,35 @@ const patinas: IPatina[] = [
     { _id: "4", value: "серебро", name: "серебро" },    
 ];
 
+const typeWindows: ITypeWindow[] = [
+    { _id: "1", value: "нет", name: "нет", type: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
+    { _id: "3", value: "стеклопакет", name: "стеклопакет", type: "С" },
+    { _id: "4", value: "ковка + стеклопакет", name: "ковка + стеклопакет", type: "КС" },
+];
+
+const windows: IWindow[] = [
+    { _id: "1", value: "нет", name: "нет", type: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
+    { _id: "3", value: "С1", name: "С1", type: "С" },
+    { _id: "4", value: "С2", name: "С2", type: "С" },
+    { _id: "5", value: "КС1", name: "КС1", type: "КС" },
+    { _id: "6", value: "КС2", name: "КС2", type: "КС" },
+];
+
+const colorTints: IColorTint[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "коричневое стекло", name: "коричневое стекло" },
+    { _id: "4", value: "серебро", name: "серебро" },    
+];
+
+const colorForges: IColorForge[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "в цвет двери", name: "в цвет двери" },
+    { _id: "4", value: "черный муар", name: "черный муар" },    
+];
 
 const deley = 50
 
@@ -205,6 +238,10 @@ const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => 
 const getDecorations = () => new Promise<{data:IDecoration[]}>((res) => { setTimeout(() => res({data: decorations}), deley) })
 const getWraps = () => new Promise<{data:IWrap[]}>((res) => { setTimeout(() => res({data: wraps}), deley) })
 const getPatinas = () => new Promise<{data:IPatina[]}>((res) => { setTimeout(() => res({data: patinas}), deley) })
+const getTypeWindows = () => new Promise<{data:ITypeWindow[]}>((res) => { setTimeout(() => res({data: typeWindows}), deley) })
+const getWindows = () => new Promise<{data:IWindow[]}>((res) => { setTimeout(() => res({data: windows}), deley) })
+const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeout(() => res({data: colorTints}), deley) })
+const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
 
 export const api = {
     getCustomers,
@@ -222,4 +259,8 @@ export const api = {
     getDecorations,
     getWraps,
     getPatinas,
+    getTypeWindows,
+    getWindows,
+    getColorTints,
+    getColorForges,
 }

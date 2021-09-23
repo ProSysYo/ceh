@@ -57,13 +57,22 @@ import {
     setDecorationsInside,
     setDecorationInside,
     setIsPatinaInside,
-    setPatinaInside
+    setPatinaInside,
+    setTypeWindows,
+    setTypeWindow,
+    setWindows,
+    setCurrentWindows,
+    setDoorWindow,
+    setColorTints,
+    setColorTint,
+    setColorForges
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
 import { ICover } from "../../interfaces/ICover";
 import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
 import { IDecoration } from "../../interfaces/IDecoration";
+import { IWindow } from '../../interfaces/IWindow';
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -233,6 +242,50 @@ export const fetchPatinas = () => {
     }
 }
 
+export const fetchTypeWindows = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getTypeWindows()
+            dispatch(setTypeWindows(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchWindows = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getWindows()
+            dispatch(setWindows(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchColorTints = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getColorTints()
+            dispatch(setColorTints(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchColorForges = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getColorForges()
+            dispatch(setColorForges(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -254,6 +307,10 @@ export const fetchAll = () => {
             await dispatch(fetchWraps())
             await dispatch(fetchWraps())
             await dispatch(fetchPatinas())
+            await dispatch(fetchTypeWindows())
+            await dispatch(fetchWindows())
+            await dispatch(fetchColorTints())
+            await dispatch(fetchColorForges())
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -578,5 +635,26 @@ export const changeOptionalLock = (value: string) => {
         } catch (e) {
             console.log(e);            
         }
+    }
+}
+
+export const changeTypeWindow = (value: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {        
+        let currentWindows: IWindow[] = []       
+
+        const { windows, typeWindows } = getState().order
+        
+        try {
+            dispatch(setTypeWindow(value))
+            const selectedType = typeWindows.find(item => item.value === value)!
+            currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")
+            dispatch(setCurrentWindows(currentWindows))
+            dispatch(setDoorWindow(""))
+            dispatch(setColorTint(""))
+        } catch (e) {
+            console.log(e); 
+        }
+        
+        
     }
 }

@@ -35,4 +35,8 @@ export interface IOrder {
     patinaInside: string;
     typeDecorationInside: string;
     decorationInside: string;
+    typeWindow: string;
+    doorWindow: string;
+    colorTint: string;
+    colorForge: string;
 }

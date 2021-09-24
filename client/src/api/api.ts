@@ -14,6 +14,7 @@ import { ITypeWindow } from "../interfaces/ITypeWindow";
 import { IWindow } from '../interfaces/IWindow';
 import { IColorTint } from '../interfaces/IColorTint';
 import { IColorForge } from '../interfaces/IColorForge';
+import { IPatinaForge } from '../interfaces/IPatinaForge';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -31,11 +32,13 @@ const parties = [
 ];
 
 const models: IModel[] = [
-    { _id: "1", value: "ММ", name: "металл-металл", contours: [1], doorThicks: [60], typeOutside: "металл", typeInside: "металл"},
-    { _id: "2", value: "МП", name: "металл-панель", contours: [1, 2], doorThicks: [60, 70], typeOutside: "металл", typeInside: "панель"},
-    { _id: "3", value: "ПП", name: "панель-панель", contours: [1, 2, 3], doorThicks: [60, 70, 80], typeOutside: "панель", typeInside: "панель" },
-    { _id: "4", value: "МП_Пена", name: "металл-панель пенопласт", contours: [3], doorThicks: [60, 70, 80, 90, 100], typeOutside: "металл", typeInside: "панель" },
-    { _id: "5", value: "ПП_Пена", name: "панель-панель пенопласт", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель" },
+    { _id: "1", value: "ММ", name: "металл-металл", contours: [1], doorThicks: [60], typeOutside: "металл", typeInside: "металл", isTermo: false},
+    { _id: "2", value: "МП", name: "металл-панель", contours: [1, 2], doorThicks: [60, 70], typeOutside: "металл", typeInside: "панель", isTermo: false},
+    { _id: "3", value: "ПП", name: "панель-панель", contours: [1, 2, 3], doorThicks: [60, 70, 80], typeOutside: "панель", typeInside: "панель", isTermo: false },
+    { _id: "4", value: "МП_Пена", name: "металл-панель пенопласт", contours: [3], doorThicks: [60, 70, 80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false },
+    { _id: "5", value: "ПП_Пена", name: "панель-панель пенопласт", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false },
+    { _id: "6", value: "МПТ", name: "металл-панель термо", contours: [2, 3], doorThicks: [90, 100], typeOutside: "металл", typeInside: "панель", isTermo: true },
+    { _id: "7", value: "ППТ", name: "панель-панель термо", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель", isTermo: true },
 ];
 
 const modelBoxes = [
@@ -154,12 +157,12 @@ const typeWindows: ITypeWindow[] = [
 ];
 
 const windows: IWindow[] = [
-    { _id: "1", value: "нет", name: "нет", type: "нет" },
-    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
-    { _id: "3", value: "С1", name: "С1", type: "С" },
-    { _id: "4", value: "С2", name: "С2", type: "С" },
-    { _id: "5", value: "КС1", name: "КС1", type: "КС" },
-    { _id: "6", value: "КС2", name: "КС2", type: "КС" },
+    { _id: "1", value: "нет", name: "нет", type: "нет", height: 0, width: 0, tTermo: 0, t60: 0, t70: 0, t80: 0, t90: 0, t100: 0 },
+    { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание", height: 0, width: 0, tTermo: 0, t60: 0, t70: 0, t80: 0, t90: 0, t100: 0},
+    { _id: "3", value: "С1", name: "С1", type: "С", height: 1415, width: 260, tTermo: 81, t60: 42, t70: 52, t80: 62, t90: 72, t100: 81 },
+    { _id: "4", value: "С2", name: "С2", type: "С", height: 1500, width: 260, tTermo: 81, t60: 32, t70: 32, t80: 32, t90: 32, t100: 32},
+    { _id: "5", value: "КС1", name: "КС1", type: "КС", height: 1415, width: 260, tTermo: 81, t60: 42, t70: 52, t80: 62, t90: 72, t100: 81 },
+    { _id: "6", value: "КС2", name: "КС2", type: "КС", height: 1500, width: 260, tTermo: 81, t60: 32, t70: 32, t80: 32, t90: 32, t100: 32 },
 ];
 
 const colorTints: IColorTint[] = [
@@ -174,6 +177,13 @@ const colorForges: IColorForge[] = [
     { _id: "2", value: "см. прим.", name: "см. прим." },
     { _id: "3", value: "в цвет двери", name: "в цвет двери" },
     { _id: "4", value: "черный муар", name: "черный муар" },    
+];
+
+const patinaForges: IPatinaForge[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "см. прим.", name: "см. прим." },
+    { _id: "3", value: "бронза", name: "бронза" },
+    { _id: "4", value: "золото", name: "золото" },    
 ];
 
 const deley = 50
@@ -242,6 +252,7 @@ const getTypeWindows = () => new Promise<{data:ITypeWindow[]}>((res) => { setTim
 const getWindows = () => new Promise<{data:IWindow[]}>((res) => { setTimeout(() => res({data: windows}), deley) })
 const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeout(() => res({data: colorTints}), deley) })
 const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
+const getPatinaForges = () => new Promise<{data: IPatinaForge[]}>((res) => { setTimeout(() => res({data: patinaForges}), deley) })
 
 export const api = {
     getCustomers,
@@ -263,4 +274,5 @@ export const api = {
     getWindows,
     getColorTints,
     getColorForges,
+    getPatinaForges
 }

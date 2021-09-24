@@ -65,7 +65,15 @@ import {
     setDoorWindow,
     setColorTints,
     setColorTint,
-    setColorForges
+    setColorForges,
+    setColorForge,
+    setPatinaForges,
+    setPatinaForge,
+    setHeightWindow,
+    setWidthWindow,
+    setThickWindow,
+    setIsColorForge,
+    setIsPatinaForge
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -286,6 +294,17 @@ export const fetchColorForges = () => {
     }
 }
 
+export const fetchPatinaForges = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getPatinaForges()
+            dispatch(setPatinaForges(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -311,6 +330,7 @@ export const fetchAll = () => {
             await dispatch(fetchWindows())
             await dispatch(fetchColorTints())
             await dispatch(fetchColorForges())
+            await dispatch(fetchPatinaForges())
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -355,6 +375,22 @@ export const changeModel = (model: string) => {
 
             dispatch(setIsPatinaOutside(false))
             dispatch(setPatinaOutside(""))
+
+            dispatch(setTypeWindow(""))
+
+            dispatch(setDoorWindow(""))
+
+            dispatch(setColorTint(""))
+
+            dispatch(setIsColorForge(false))
+            dispatch(setColorForge(""))
+
+            dispatch(setIsPatinaForge(false))
+            dispatch(setPatinaForge(""))
+            
+            dispatch(setHeightWindow(""))
+            dispatch(setWidthWindow(""))
+            dispatch(setThickWindow(""))
         } catch (e) {
             
         }
@@ -640,21 +676,128 @@ export const changeOptionalLock = (value: string) => {
 
 export const changeTypeWindow = (value: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {        
-        let currentWindows: IWindow[] = []       
+        let currentWindows: IWindow[] = []
+        let isPatinaForge: boolean = false
+        let isColorForge: boolean = false
+        let patinaForge: string = ""
+        let colorForge: string = ""
+        let doorWindow: string = ""
+        let colorTint: string = ""
+        let heightWindow: number | string = ""
+        let widthWindow: number | string = ""
+        let thickWindow: number | string= ""   
 
-        const { windows, typeWindows } = getState().order
-        
+        const state= getState().order
+
+        const { model, doorThick} = state.order
+
+        if (model === "" || doorThick === "") {
+            return alert("Сначала выберите модель двери и толщину")
+        }
+
+        const { windows, typeWindows } = state                
+
         try {
             dispatch(setTypeWindow(value))
+
             const selectedType = typeWindows.find(item => item.value === value)!
+
+            switch (selectedType.type) {
+                case "нет":
+                case "примечание":    
+                    doorWindow = "нет"
+                    colorTint = "нет"
+                    isColorForge = false
+                    colorForge = "нет"
+                    isPatinaForge = false
+                    patinaForge = "нет"
+                    heightWindow = ""
+                    widthWindow = ""
+                    thickWindow= ""  
+                    break
+                case "КС":
+                    doorWindow = ""
+                    colorTint = ""
+                    isColorForge = true
+                    colorForge = ""
+                    isPatinaForge = true
+                    patinaForge = ""
+                    heightWindow = ""
+                    widthWindow = ""
+                    thickWindow= "" 
+                    break 
+                case "С":
+                    doorWindow = ""
+                    colorTint = ""
+                    isColorForge = false
+                    colorForge = "нет"
+                    isPatinaForge = false
+                    patinaForge = "нет"
+                    heightWindow = ""
+                    widthWindow = ""
+                    thickWindow= "" 
+                    break  
+            }
+
             currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")
+
             dispatch(setCurrentWindows(currentWindows))
-            dispatch(setDoorWindow(""))
-            dispatch(setColorTint(""))
+            dispatch(setDoorWindow(doorWindow))
+            dispatch(setColorTint(colorTint))
+            dispatch(setIsColorForge(isColorForge))
+            dispatch(setColorForge(colorForge))
+            dispatch(setIsPatinaForge(isPatinaForge))
+            dispatch(setPatinaForge(patinaForge))
+            dispatch(setHeightWindow(heightWindow))
+            dispatch(setWidthWindow(widthWindow))
+            dispatch(setThickWindow(thickWindow))
         } catch (e) {
             console.log(e); 
         }
-        
-        
+    }
+}
+
+export const changeWindow = (doorWindow: string) => {
+    return (dispatch: Dispatch, getState: () => RootState) => {        
+        try {
+            let thickWindow: number | string = ""      
+            const state= getState().order
+            const {windows, models} = state
+            const { doorThick, model } = state.order
+
+            const selectedModel = models.find(item => item.value === model)!
+            const selectedWindow = windows.find(item => item.value === doorWindow)!
+            
+            if (selectedModel.isTermo) {
+                thickWindow = selectedWindow.tTermo
+            } else {
+                switch (doorThick) {
+                    case 60:
+                        thickWindow = selectedWindow.t60
+                        break
+                    case 70:
+                        thickWindow = selectedWindow.t70
+                        break
+                    case 80:
+                        thickWindow = selectedWindow.t80
+                        break
+                    case 90:
+                        thickWindow = selectedWindow.t90
+                        break
+                    case 100:
+                        thickWindow = selectedWindow.t100
+                        break       
+                }
+            }
+
+            
+
+            dispatch(setDoorWindow(doorWindow))
+            dispatch(setHeightWindow(selectedWindow.height))
+            dispatch(setWidthWindow(selectedWindow.width))
+            dispatch(setThickWindow(thickWindow))
+        } catch (e) {
+            console.log(e)
+        }
     }
 }

@@ -39,4 +39,8 @@ export interface IOrder {
     doorWindow: string;
     colorTint: string;
     colorForge: string;
+    patinaForge: string;
+    heightWindow: number | string;
+    widthWindow: number | string;
+    thickWindow: number | string;
 }

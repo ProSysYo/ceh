@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, Input } from 'antd';
+import { Form, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { changeTypeWindow } from '../../store/actions/orderActions';
-import { setColorForge, setColorTint, setDoorWindow } from '../../store/slices/orderSlice';
+import { changeTypeWindow, changeWindow } from '../../store/actions/orderActions';
+import { setColorForge, setColorTint, setHeightWindow, setPatinaForge, setThickWindow, setWidthWindow } from '../../store/slices/orderSlice';
 
 
 const Step5: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        typeWindows, currentWindows, colorTints, colorForges
+        typeWindows, currentWindows, colorTints, colorForges, patinaForges, isColorForge, isPatinaForge
     } = useAppSelector(state => state.order)
     
     const {
-        typeWindow, doorWindow, colorTint, colorForge
+        typeWindow, doorWindow, colorTint, colorForge, patinaForge, heightWindow, widthWindow, thickWindow
     } = useAppSelector(state => state.order.order)
 
 
@@ -27,18 +27,18 @@ const Step5: FC = () => {
                 labelCol={{ span: 9 }}
                 wrapperCol={{ span: 6 }}                
             >                   
-                <Form.Item label="Тип окна">
+                <Form.Item label="Тип окна*">
                     <Select 
                         items={typeWindows} 
                         value={typeWindow} 
                         onChange={ (value) => dispatch(changeTypeWindow(value))}                       
                     />
                 </Form.Item>
-                <Form.Item label="Окно">
+                <Form.Item label="Окно*">
                     <Select 
                         items={currentWindows} 
                         value={doorWindow} 
-                        onChange={ (value) => dispatch(setDoorWindow(value))}                       
+                        onChange={ (value) => dispatch(changeWindow(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Цвет тонировки">
@@ -51,25 +51,27 @@ const Step5: FC = () => {
                 <Form.Item label="Цвет ковки">
                     <Select 
                         items={colorForges} 
-                        value={colorForge} 
+                        value={colorForge}
+                        disabled={!isColorForge}
                         onChange={ (value) => dispatch(setColorForge(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Патина на ковке">
                     <Select 
-                        items={typeWindows} 
-                        value={typeWindow} 
-                        onChange={ (value) => dispatch(changeTypeWindow(value))}                       
+                        items={patinaForges} 
+                        value={patinaForge}
+                        disabled={!isPatinaForge}
+                        onChange={ (value) => dispatch(setPatinaForge(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Высота стеклопакета">
-                    <Input  value={""} onChange={(e)=> console.log(e.target.value)} />
+                    <InputNumber value={heightWindow} onChange={(value)=> dispatch(setHeightWindow(value))} />
                 </Form.Item>
                 <Form.Item label="Ширина стеклопакета">
-                    <Input  value={""} onChange={(e)=> console.log(e.target.value)} />
+                    <InputNumber  value={widthWindow} onChange={(value)=>  dispatch(setWidthWindow(value))} />
                 </Form.Item>
                 <Form.Item label="Толщина стеклопакета">
-                    <Input  value={""} onChange={(e)=> console.log(e.target.value)} />
+                    <InputNumber  value={thickWindow} onChange={(value)=> dispatch(setThickWindow(value))} />
                 </Form.Item> 
             </Form>
         </Container>

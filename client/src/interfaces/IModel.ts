@@ -5,5 +5,6 @@ export interface IModel {
     contours: number[];
     doorThicks: number[];
     typeOutside: string;
-    typeInside: string;  
+    typeInside: string;
+    isTermo: boolean;
 }

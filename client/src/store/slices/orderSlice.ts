@@ -19,6 +19,7 @@ import { ITypeWindow } from '../../interfaces/ITypeWindow';
 import { IWindow } from '../../interfaces/IWindow';
 import { IColorTint } from '../../interfaces/IColorTint';
 import { IColorForge } from '../../interfaces/IColorForge';
+import { IPatinaForge } from '../../interfaces/IPatinaForge';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -50,7 +51,8 @@ interface OrderSate {
     windows: IWindow[];
     currentWindows: IWindow[];
     colorTints: IColorTint[];
-    colorForges: IColorForge[]
+    colorForges: IColorForge[];
+    patinaForges: IPatinaForge[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -61,6 +63,8 @@ interface OrderSate {
     isWrapInside: boolean;
     isPatinaOutside: boolean;
     isPatinaInside: boolean;
+    isColorForge: boolean;
+    isPatinaForge: boolean;
 
     order: IOrder;
 }
@@ -96,6 +100,7 @@ const initialState: OrderSate = {
     currentWindows: [],
     colorTints: [],
     colorForges: [],
+    patinaForges: [],
 
 
     isLoading: false,
@@ -107,6 +112,8 @@ const initialState: OrderSate = {
     isWrapInside: false,
     isPatinaOutside: false,
     isPatinaInside: false,
+    isColorForge: false,
+    isPatinaForge: false,
 
     order: {
         customer: "",
@@ -148,6 +155,10 @@ const initialState: OrderSate = {
         doorWindow: "",
         colorTint: "",
         colorForge: "",
+        patinaForge: "",
+        heightWindow: "",
+        widthWindow: "",
+        thickWindow: "",
     }
 }
 
@@ -185,6 +196,7 @@ export const orderSlice = createSlice({
         setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.currentWindows = action.payload },
         setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.colorTints = action.payload },
         setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.colorForges = action.payload },
+        setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.patinaForges = action.payload },
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -233,6 +245,12 @@ export const orderSlice = createSlice({
         setDoorWindow: (state, action: PayloadAction<string>) => { state.order.doorWindow = action.payload },
         setColorTint: (state, action: PayloadAction<string>) => { state.order.colorTint = action.payload },
         setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },
+        setIsColorForge: (state, action: PayloadAction<boolean>) => { state.isColorForge = action.payload },
+        setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },       
+        setIsPatinaForge: (state, action: PayloadAction<boolean>) => { state.isPatinaForge = action.payload },       
+        setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = Number(action.payload) },        
+        setWidthWindow: (state, action: PayloadAction<number| string>) => {  state.order.widthWindow = Number(action.payload) },        
+        setThickWindow: (state, action: PayloadAction<number| string>) => {  state.order.thickWindow = Number(action.payload) },        
     }
 })
 
@@ -314,6 +332,13 @@ export const {
     setColorTint,
     setColorForges,
     setColorForge,
+    setPatinaForges,
+    setPatinaForge,
+    setHeightWindow,
+    setWidthWindow,
+    setThickWindow,
+    setIsPatinaForge,
+    setIsColorForge,
 } = orderSlice.actions
 
 export default orderSlice.reducer

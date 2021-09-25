@@ -16,7 +16,7 @@ const Select: FC<SelectProps> = ({items, value, onChange, disabled = false}) => 
             showSearch
             optionFilterProp="children"
             disabled={disabled}            
-            onChange={onChange}         
+            onChange={onChange}              
         >
             <SelectAnt.Option value="" disabled>не выбрано</SelectAnt.Option>
             {items.map((item, index) => 

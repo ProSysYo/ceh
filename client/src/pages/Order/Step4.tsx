@@ -34,7 +34,8 @@ const Step4: FC = () => {
             <Form
                 name="basic"
                 labelCol={{ span: 9 }}
-                wrapperCol={{ span: 7 }}                
+                wrapperCol={{ span: 7 }}   
+                size = "small"              
             >  
                 <Divider>Наружная отделка</Divider>
                 <Form.Item label="Отделка / Тип панели*">

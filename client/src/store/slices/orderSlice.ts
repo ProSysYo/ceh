@@ -20,6 +20,7 @@ import { IWindow } from '../../interfaces/IWindow';
 import { IColorTint } from '../../interfaces/IColorTint';
 import { IColorForge } from '../../interfaces/IColorForge';
 import { IPatinaForge } from '../../interfaces/IPatinaForge';
+import { ILocationHinge } from '../../interfaces/ILoacationHinge';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -53,6 +54,7 @@ interface OrderSate {
     colorTints: IColorTint[];
     colorForges: IColorForge[];
     patinaForges: IPatinaForge[];
+    locationHinges: ILocationHinge[];
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -101,6 +103,7 @@ const initialState: OrderSate = {
     colorTints: [],
     colorForges: [],
     patinaForges: [],
+    locationHinges: [],
 
 
     isLoading: false,
@@ -129,6 +132,7 @@ const initialState: OrderSate = {
         openingType: "",
         isDouble: false,
         widthDouble: "",
+        locationHinge: "",
         baseLock: "",        
         lockSpinner: "нет",
         baseCylinder: "нет",
@@ -197,6 +201,7 @@ export const orderSlice = createSlice({
         setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.colorTints = action.payload },
         setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.colorForges = action.payload },
         setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.patinaForges = action.payload },
+        setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.locationHinges = action.payload },
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -210,6 +215,7 @@ export const orderSlice = createSlice({
         setOpeningType: (state, action: PayloadAction<string>) => { state.order.openingType = action.payload },
         setIsDouble: (state, action: PayloadAction<boolean>) => { state.order.isDouble = action.payload },
         setWidthDouble: (state, action: PayloadAction<number | string>) => { state.order.widthDouble = action.payload },
+        setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         setBaseLock: (state, action: PayloadAction<string>) => { state.order.baseLock = action.payload },
         setLockSpinner: (state, action: PayloadAction<string>) => { state.order.lockSpinner = action.payload },
         setIsLockSpinner: (state, action: PayloadAction<boolean>) => { state.isLockSpinner = action.payload },
@@ -248,9 +254,9 @@ export const orderSlice = createSlice({
         setIsColorForge: (state, action: PayloadAction<boolean>) => { state.isColorForge = action.payload },
         setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },       
         setIsPatinaForge: (state, action: PayloadAction<boolean>) => { state.isPatinaForge = action.payload },       
-        setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = Number(action.payload) },        
-        setWidthWindow: (state, action: PayloadAction<number| string>) => {  state.order.widthWindow = Number(action.payload) },        
-        setThickWindow: (state, action: PayloadAction<number| string>) => {  state.order.thickWindow = Number(action.payload) },        
+        setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = action.payload },        
+        setWidthWindow: (state, action: PayloadAction<number| string>) => {  state.order.widthWindow = action.payload },        
+        setThickWindow: (state, action: PayloadAction<number| string>) => {  state.order.thickWindow = action.payload },        
     }
 })
 
@@ -277,6 +283,7 @@ export const {
     setOpeningTypes,
     setOpeningType,
     setWidthDouble,
+    setLocationHinge,
     setIsDouble,
     setLoading,
     setBaseLoks,
@@ -339,6 +346,7 @@ export const {
     setThickWindow,
     setIsPatinaForge,
     setIsColorForge,
+    setLocationHinges,
 } = orderSlice.actions
 
 export default orderSlice.reducer

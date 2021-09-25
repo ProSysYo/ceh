@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, Input } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setContour, setDoorThick, setHeight, setModelBox, setOpeningType, setWidth, setWidthDouble 
+    setContour, setDoorThick, setHeight, setLocationHinge, setModelBox, setOpeningType, setWidth, setWidthDouble 
 } from '../../store/slices/orderSlice';
 import { changeModel, changeIsDouble } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
@@ -15,12 +15,12 @@ const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        models, contours, doorThicks, modelBoxes, openingTypes
+        models, contours, doorThicks, modelBoxes, openingTypes, locationHinges
     } = useAppSelector(state => state.order)
     
     const {
         model, contour, doorThick, height, width,
-        modelBox, openingType, isDouble, widthDouble,
+        modelBox, openingType, isDouble, widthDouble, locationHinge
     } = useAppSelector(state => state.order.order)
 
 
@@ -29,7 +29,8 @@ const Step2: FC = () => {
             <Form
                 name="basic"
                 labelCol={{ span: 9 }}
-                wrapperCol={{ span: 6 }}                
+                wrapperCol={{ span: 6 }}
+                size = "small"             
             >   
                 <Form.Item label="Модель двери*">
                     <Select 
@@ -56,11 +57,11 @@ const Step2: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Высота двери">
-                    <Input  value={height} onChange={(e)=> dispatch(setHeight(e.target.value))} />
+                    <InputNumber  value={height} onChange={(value)=> dispatch(setHeight(value))} />
                 </Form.Item>
 
                 <Form.Item label="Ширина двери">
-                    <Input  value={width} onChange={(e)=> dispatch(setWidth(e.target.value))} />
+                    <InputNumber  value={width} onChange={(value)=> dispatch(setWidth(value))} />
                 </Form.Item>
 
                 <Form.Item label="Модель коробки">
@@ -84,7 +85,15 @@ const Step2: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Ширина раб. створки">
-                    <Input disabled={!isDouble} value={widthDouble} onChange={(e)=> dispatch(setWidthDouble(e.target.value))} />
+                    <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(setWidthDouble(value))} />
+                </Form.Item>
+
+                <Form.Item label="Расположение петель">
+                    <Select 
+                        items={locationHinges} 
+                        value={locationHinge} 
+                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                    />
                 </Form.Item>
             </Form>
         </Container>

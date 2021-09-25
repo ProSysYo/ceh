@@ -48,6 +48,7 @@ const Step3: FC = () => {
         <Container>
             <Form
                 name="basic"
+                size = "small"  
             >
                 <Divider >Основной замок</Divider>
                 

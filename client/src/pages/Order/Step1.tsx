@@ -26,7 +26,8 @@ const Step1: FC = () => {
             <Form
                 name="basic"
                 labelCol={{ span: 9 }}
-                wrapperCol={{ span: 6 }}                
+                wrapperCol={{ span: 6 }}
+                size = "small"              
             >   
                 <Form.Item label="Номер заказа">
                     <Input  value={number} />

@@ -73,7 +73,8 @@ import {
     setWidthWindow,
     setThickWindow,
     setIsColorForge,
-    setIsPatinaForge
+    setIsPatinaForge,
+    setLocationHinges
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -305,6 +306,17 @@ export const fetchPatinaForges = () => {
     }
 }
 
+export const fetchLocationHinges = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getLoacationHinges()
+            dispatch(setLocationHinges(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -315,6 +327,7 @@ export const fetchAll = () => {
             await dispatch(fetchModels())
             await dispatch(fetchModelBoxes())
             await dispatch(fetchOpeningTypes())
+            await dispatch(fetchLocationHinges())
             await dispatch(fetchLocks())
             await dispatch(fetchSpinners())
             await dispatch(fetchCylinders())

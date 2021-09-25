@@ -15,6 +15,7 @@ import { IWindow } from '../interfaces/IWindow';
 import { IColorTint } from '../interfaces/IColorTint';
 import { IColorForge } from '../interfaces/IColorForge';
 import { IPatinaForge } from '../interfaces/IPatinaForge';
+import { ILocationHinge } from '../interfaces/ILoacationHinge';
 
 const customers = [
     { _id: 1, value: "D001", name: "Бункер" },
@@ -186,6 +187,11 @@ const patinaForges: IPatinaForge[] = [
     { _id: "4", value: "золото", name: "золото" },    
 ];
 
+const locationHinges: ILocationHinge[] = [
+    { _id: "1", value: "левые", name: "левые" },
+    { _id: "2", value: "правые", name: "правые" },       
+];
+
 const deley = 50
 
 const getCustomers = () => new Promise<any>((resolve, reject) => {
@@ -253,6 +259,7 @@ const getWindows = () => new Promise<{data:IWindow[]}>((res) => { setTimeout(() 
 const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeout(() => res({data: colorTints}), deley) })
 const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
 const getPatinaForges = () => new Promise<{data: IPatinaForge[]}>((res) => { setTimeout(() => res({data: patinaForges}), deley) })
+const getLoacationHinges = () => new Promise<{data: ILocationHinge[]}>((res) => { setTimeout(() => res({data: locationHinges}), deley) })
 
 export const api = {
     getCustomers,
@@ -274,5 +281,6 @@ export const api = {
     getWindows,
     getColorTints,
     getColorForges,
-    getPatinaForges
+    getPatinaForges,
+    getLoacationHinges
 }

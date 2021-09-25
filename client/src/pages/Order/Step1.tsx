@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, Input } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -25,8 +25,8 @@ const Step1: FC = () => {
         <Container>
             <Form
                 name="basic"
-                labelCol={{ span: 9 }}
-                wrapperCol={{ span: 6 }}
+                labelCol={{ span: 10 }}
+                wrapperCol={{ span: 5 }}
                 size = "small"              
             >   
                 <Form.Item label="Номер заказа">
@@ -49,6 +49,18 @@ const Step1: FC = () => {
                         value={party} 
                         onChange={ (value) => dispatch(setParty(value))}                        
                     />
+                </Form.Item>
+                
+                <Form.Item label="Количество дверей???">
+                    <InputNumber  value={""} onChange={(value)=> console.log(value)} />
+                </Form.Item>
+
+                <Form.Item label="Стоимость одной двери???">
+                    <InputNumber  value={""} onChange={(value)=> console.log(value)} />
+                </Form.Item>
+
+                <Form.Item label="Примечание???">
+                    <Input.TextArea rows = {8}  value={numberCustomer} onChange={(e)=> dispatch(setNumberCustomer(e.target.value))} />
                 </Form.Item>
             </Form>
         </Container>

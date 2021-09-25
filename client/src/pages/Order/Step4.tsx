@@ -33,8 +33,8 @@ const Step4: FC = () => {
         <Container>
             <Form
                 name="basic"
-                labelCol={{ span: 9 }}
-                wrapperCol={{ span: 7 }}   
+                labelCol={{ span: 10 }}
+                wrapperCol={{ span: 5 }}   
                 size = "small"              
             >  
                 <Divider>Наружная отделка</Divider>
@@ -99,7 +99,27 @@ const Step4: FC = () => {
                         disabled={!isPatinaInside}
                         onChange={ (value) => dispatch(setPatinaInside(value))}                        
                     />
-                </Form.Item>                
+                </Form.Item>  
+
+                <Divider>Наличник</Divider>
+
+                <Form.Item label="Наличник???">
+                    <Select 
+                        items={wraps} 
+                        value={wrapInside} 
+                        disabled={!isWrapInside}
+                        onChange={ (value) => dispatch(setWrapInside(value))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item label="Цвет пленки наличника???">
+                    <Select 
+                        items={wraps} 
+                        value={wrapInside} 
+                        disabled={!isWrapInside}
+                        onChange={ (value) => dispatch(setWrapInside(value))}                        
+                    />
+                </Form.Item>              
             </Form>
         </Container>
     )

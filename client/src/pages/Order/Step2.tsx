@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, Input, InputNumber } from 'antd';
+import { Form, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -28,8 +28,8 @@ const Step2: FC = () => {
         <Container>
             <Form
                 name="basic"
-                labelCol={{ span: 9 }}
-                wrapperCol={{ span: 6 }}
+                labelCol={{ span: 10 }}
+                wrapperCol={{ span: 5 }}
                 size = "small"             
             >   
                 <Form.Item label="Модель двери*">
@@ -55,7 +55,7 @@ const Step2: FC = () => {
                         onChange={ (value) => dispatch(setDoorThick(value))}                        
                     />
                 </Form.Item>
-
+                
                 <Form.Item label="Высота двери">
                     <InputNumber  value={height} onChange={(value)=> dispatch(setHeight(value))} />
                 </Form.Item>
@@ -89,6 +89,34 @@ const Step2: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Расположение петель">
+                    <Select 
+                        items={locationHinges} 
+                        value={locationHinge} 
+                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item label="3 петли???">
+                    <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} />
+                </Form.Item>
+
+                <Form.Item label="Тип петель???">
+                    <Select 
+                        items={locationHinges} 
+                        value={locationHinge} 
+                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                    />
+                </Form.Item>
+                
+                <Form.Item label="Толщина металла полотна???">
+                    <Select 
+                        items={locationHinges} 
+                        value={locationHinge} 
+                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item label="Толщина металла короба???">
                     <Select 
                         items={locationHinges} 
                         value={locationHinge} 

@@ -21,6 +21,8 @@ import { IColorTint } from '../../interfaces/IColorTint';
 import { IColorForge } from '../../interfaces/IColorForge';
 import { IPatinaForge } from '../../interfaces/IPatinaForge';
 import { ILocationHinge } from '../../interfaces/ILoacationHinge';
+import { ITypeHinge } from '../../interfaces/ITypeHinge';
+import { IThickMetal } from '../../interfaces/IThickMetal';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -55,6 +57,10 @@ interface OrderSate {
     colorForges: IColorForge[];
     patinaForges: IPatinaForge[];
     locationHinges: ILocationHinge[];
+    typeHinges: ITypeHinge[];
+    thickMetalLeafs: IThickMetal[],
+    thickMetalBoxes: IThickMetal[],
+
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -104,7 +110,9 @@ const initialState: OrderSate = {
     colorForges: [],
     patinaForges: [],
     locationHinges: [],
-
+    typeHinges: [],
+    thickMetalLeafs: [],
+    thickMetalBoxes: [],
 
     isLoading: false,
     isLockSpinner: false,
@@ -133,6 +141,8 @@ const initialState: OrderSate = {
         isDouble: false,
         widthDouble: "",
         locationHinge: "",
+        isThreeHinge: false,
+        typeHinge: "",
         baseLock: "",        
         lockSpinner: "нет",
         baseCylinder: "нет",
@@ -163,6 +173,11 @@ const initialState: OrderSate = {
         heightWindow: "",
         widthWindow: "",
         thickWindow: "",
+        countDoors: 0,
+        costDoor: 0,
+        note: "",
+        thickMetalLeaf: "",
+        thickMetalBox: "",
     }
 }
 
@@ -172,8 +187,8 @@ export const orderSlice = createSlice({
     reducers: {
         setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },        
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload},
-        setParties: (state, action: PayloadAction<[]>) => { state.parties = action.payload },
-        setModels: (state, action: PayloadAction<[]>) => { state.models = action.payload },
+        setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
+        setModels: (state, action: PayloadAction<IModel[]>) => { state.models = action.payload },
         setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.modelBoxes = action.payload },
         setOpeningTypes: (state, action: PayloadAction<IOpeningType[]>) => { state.openingTypes = action.payload },
         setBaseLoks: (state, action: PayloadAction<ILock[]>) => { state.baseLocks = action.payload },
@@ -202,6 +217,9 @@ export const orderSlice = createSlice({
         setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.colorForges = action.payload },
         setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.patinaForges = action.payload },
         setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.locationHinges = action.payload },
+        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.typeHinges = action.payload },
+        setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalLeafs = action.payload },
+        setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalBoxes = action.payload },
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -256,7 +274,14 @@ export const orderSlice = createSlice({
         setIsPatinaForge: (state, action: PayloadAction<boolean>) => { state.isPatinaForge = action.payload },       
         setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = action.payload },        
         setWidthWindow: (state, action: PayloadAction<number| string>) => {  state.order.widthWindow = action.payload },        
-        setThickWindow: (state, action: PayloadAction<number| string>) => {  state.order.thickWindow = action.payload },        
+        setThickWindow: (state, action: PayloadAction<number| string>) => {  state.order.thickWindow = action.payload },     
+        setCountDoors: (state, action: PayloadAction<number>) => {  state.order.countDoors = action.payload },     
+        setCostDoor: (state, action: PayloadAction<number>) => {  state.order.costDoor = action.payload },     
+        setNote: (state, action: PayloadAction<string>) => {  state.order.note = action.payload },     
+        setIsThreeHinge: (state, action: PayloadAction<boolean>) => {  state.order.isThreeHinge = action.payload },     
+        setTypeHinge: (state, action: PayloadAction<string>) => {  state.order.typeHinge = action.payload },    
+        setThickMetalLeaf: (state, action: PayloadAction<number>) => {  state.order.thickMetalLeaf = action.payload },   
+        setThickMetalBox: (state, action: PayloadAction<number>) => {  state.order.thickMetalBox = action.payload },   
     }
 })
 
@@ -269,6 +294,9 @@ export const {
     setDoorThick,
     setCustomers,
     setParties,
+    setCountDoors,
+    setCostDoor,
+    setNote,
     setModels,
     setContours,
     setDoorThicks,
@@ -284,6 +312,7 @@ export const {
     setOpeningType,
     setWidthDouble,
     setLocationHinge,
+    setIsThreeHinge,
     setIsDouble,
     setLoading,
     setBaseLoks,
@@ -347,6 +376,12 @@ export const {
     setIsPatinaForge,
     setIsColorForge,
     setLocationHinges,
+    setTypeHinges,
+    setTypeHinge,
+    setThickMetalLeafs,
+    setThickMetalLeaf,
+    setThickMetalBoxes,
+    setThickMetalBox,
 } = orderSlice.actions
 
 export default orderSlice.reducer

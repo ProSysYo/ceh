@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setContour, setDoorThick, setHeight, setLocationHinge, setModelBox, setOpeningType, setWidth, setWidthDouble 
+    setContour, setDoorThick, setHeight, setIsThreeHinge, setLocationHinge, setModelBox, setOpeningType, setThickMetalBox, setThickMetalLeaf, setTypeHinge, setWidth, setWidthDouble 
 } from '../../store/slices/orderSlice';
 import { changeModel, changeIsDouble } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
@@ -15,12 +15,14 @@ const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        models, contours, doorThicks, modelBoxes, openingTypes, locationHinges
+        models, contours, doorThicks, modelBoxes, openingTypes, locationHinges, typeHinges, thickMetalLeafs,
+        thickMetalBoxes
     } = useAppSelector(state => state.order)
     
     const {
         model, contour, doorThick, height, width,
-        modelBox, openingType, isDouble, widthDouble, locationHinge
+        modelBox, openingType, isDouble, widthDouble, locationHinge, isThreeHinge, typeHinge,
+        thickMetalLeaf, thickMetalBox
     } = useAppSelector(state => state.order.order)
 
 
@@ -96,31 +98,31 @@ const Step2: FC = () => {
                     />
                 </Form.Item>
 
-                <Form.Item label="3 петли???">
-                    <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} />
+                <Form.Item label="3 петли">
+                    <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Тип петель???">
+                <Form.Item label="Тип петель">
                     <Select 
-                        items={locationHinges} 
-                        value={locationHinge} 
-                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                        items={typeHinges} 
+                        value={typeHinge} 
+                        onChange={ (value) => dispatch(setTypeHinge(value))}                        
                     />
                 </Form.Item>
                 
-                <Form.Item label="Толщина металла полотна???">
+                <Form.Item label="Толщина металла полотна">
                     <Select 
-                        items={locationHinges} 
-                        value={locationHinge} 
-                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                        items={thickMetalLeafs} 
+                        value={thickMetalLeaf} 
+                        onChange={ (value) => dispatch(setThickMetalLeaf(value))}                        
                     />
                 </Form.Item>
 
-                <Form.Item label="Толщина металла короба???">
+                <Form.Item label="Толщина металла короба">
                     <Select 
-                        items={locationHinges} 
-                        value={locationHinge} 
-                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                        items={thickMetalBoxes} 
+                        value={thickMetalBox} 
+                        onChange={ (value) => dispatch(setThickMetalBox(value))}                        
                     />
                 </Form.Item>
             </Form>

@@ -74,7 +74,10 @@ import {
     setThickWindow,
     setIsColorForge,
     setIsPatinaForge,
-    setLocationHinges
+    setLocationHinges,
+    setTypeHinges,
+    setThickMetalLeafs,
+    setThickMetalBoxes
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -317,6 +320,39 @@ export const fetchLocationHinges = () => {
     }
 }
 
+export const fetchTypeHinges = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getTypeHinges()
+            dispatch(setTypeHinges(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchThickMetalLeafs = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getThickMetalLeafs()
+            dispatch(setThickMetalLeafs(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchThickMetalBoxes = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getThickMetalBoxes()
+            dispatch(setThickMetalBoxes(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -344,6 +380,9 @@ export const fetchAll = () => {
             await dispatch(fetchColorTints())
             await dispatch(fetchColorForges())
             await dispatch(fetchPatinaForges())
+            await dispatch(fetchTypeHinges())
+            await dispatch(fetchThickMetalLeafs())
+            await dispatch(fetchThickMetalBoxes())
 
             dispatch(setLoading(false))
         } catch (e) {

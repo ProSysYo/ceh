@@ -157,12 +157,23 @@ const Step3: FC = () => {
                 </Form.Item>
 
                 <Divider></Divider>
-                <Form.Item label="Глазок" {...formItemLayout}>
-                    <Select
-                        items={eyes}
-                        value={eye}
-                        onChange={(value) => dispatch(setEye(value))}
-                    />
+                <Form.Item label="Глазок???" {...formTailLayout}>
+                    <Row gutter={10}>
+                        <Col span={12}>
+                            <Select
+                                items={eyes}
+                                value={eye}
+                                onChange={(value) => dispatch(setEye(value))}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <Select
+                                items={eyes}
+                                value={eye}
+                                onChange={(value) => dispatch(setEye(value))}
+                            />
+                        </Col>
+                    </Row>
                 </Form.Item>
 
                 <Form.Item label="Ручка" {...formItemLayout}>

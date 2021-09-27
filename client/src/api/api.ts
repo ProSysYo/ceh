@@ -1,5 +1,5 @@
 import { IModel } from "../interfaces/IModel";
-import { IOpeningType } from "../interfaces/IOpeningType";
+import { IOpeningType } from '../interfaces/IOpeningType';
 import { ILock } from '../interfaces/ILock';
 import { ISpinner } from '../interfaces/ISpinner';
 import { ICylinder } from '../interfaces/ICylinder';
@@ -16,20 +16,25 @@ import { IColorTint } from '../interfaces/IColorTint';
 import { IColorForge } from '../interfaces/IColorForge';
 import { IPatinaForge } from '../interfaces/IPatinaForge';
 import { ILocationHinge } from '../interfaces/ILoacationHinge';
+import { ITypeHinge } from '../interfaces/ITypeHinge';
+import { IThickMetal } from '../interfaces/IThickMetal';
+import { IModelBox } from '../interfaces/IModelBox';
+import { IParty } from '../interfaces/IParty';
+import { ICustomer } from '../interfaces/ICustomer';
 
-const customers = [
-    { _id: 1, value: "D001", name: "Бункер" },
-    { _id: 2, value: "D002", name: "Волга-Бункер" },
-    { _id: 3, value: "D003", name: "Лабиринт" },
-    { _id: 4, value: "D004", name: "Красноярск" },
+const customers: ICustomer[] = [
+    { _id: "1", value: "D001", name: "Бункер" },
+    { _id: "2", value: "D002", name: "Волга-Бункер" },
+    { _id: "3", value: "D003", name: "Лабиринт" },
+    { _id: "4", value: "D004", name: "Красноярск" },
 ];
 
-const parties = [
-    { _id: 1, value: "заказная", name: "заказная" },
-    { _id: 2, value: "партия", name: "партия" },
-    { _id: 3, value: "партия-1", name: "партия-1" },
-    { _id: 4, value: "партия-2", name: "партия-2" },
-    { _id: 5, value: "партия-3", name: "партия-3" },
+const parties: IParty[] = [
+    { _id: "1", value: "заказная", name: "заказная" },
+    { _id: "2", value: "партия", name: "партия" },
+    { _id: "3", value: "партия-1", name: "партия-1" },
+    { _id: "4", value: "партия-2", name: "партия-2" },
+    { _id: "5", value: "партия-3", name: "партия-3" },
 ];
 
 const models: IModel[] = [
@@ -42,10 +47,10 @@ const models: IModel[] = [
     { _id: "7", value: "ППТ", name: "панель-панель термо", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель", isTermo: true },
 ];
 
-const modelBoxes = [
-    { _id: 1, value: "открытая", name: "открытая" },
-    { _id: 2, value: "закрытая", name: "закрытая" },    
-    { _id: 3, value: "закрытая утепленная", name: "закрытая утепленная" },    
+const modelBoxes: IModelBox[] = [
+    { _id: "1", value: "открытая", name: "открытая" },
+    { _id: "2", value: "закрытая", name: "закрытая" },    
+    { _id: "3", value: "закрытая утепленная", name: "закрытая утепленная" },    
 ];
 
 const openingTypes: IOpeningType[] = [
@@ -93,8 +98,8 @@ const covers: ICover[] = [
 const eyes: IEye[] = [
     { _id: "1", value: "нет", name: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим." },
-    { _id: "3", value: "хром центр", name: "хром центр" },
-    { _id: "4", value: "хром сбоку", name: "хром сбоку" },
+    { _id: "3", value: "хром", name: "хром" },
+    { _id: "4", value: "хром", name: "хром" },
 ];
 
 const handles: IHandle[] = [
@@ -192,58 +197,30 @@ const locationHinges: ILocationHinge[] = [
     { _id: "2", value: "правые", name: "правые" },       
 ];
 
+const typeHinges: ITypeHinge[] = [
+    { _id: "1", value: "капелька", name: "капелька" },
+    { _id: "2", value: "на подшипнике", name: "на подшипнике" },       
+    { _id: "3", value: "см. прим.", name: "см. прим." },       
+];
+
+const thickMetalLeafs: IThickMetal[] = [
+    { _id: "1", value: 1.0 , name: 1.0 },
+    { _id: "2", value: 1.2, name: 1.2 },       
+    { _id: "3", value: 1.4, name: 1.4 },       
+];
+
+const thickMetalBoxes: IThickMetal[] = [    
+    { _id: "1", value: 1.2, name: 1.2 },       
+    { _id: "2", value: 1.4, name: 1.4 },       
+];
+
 const deley = 50
 
-const getCustomers = () => new Promise<any>((resolve, reject) => {
-    if (!customers) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: customers}) , deley);
-});
-
-const getParties = () => new Promise<any>((resolve, reject) => {
-    if (!parties) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: parties}) , deley);
-});
-
-const getModels = () => new Promise<any>((resolve, reject) => {
-    if (!models) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: models}) , deley);
-});
-
-const getModelBoxes = () => new Promise<any>((resolve, reject) => {
-    if (!modelBoxes) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: modelBoxes}) , deley);
-});
-
-const getOpeningTypes = () => new Promise<any>((resolve, reject) => {
-    if (!openingTypes) {
-        return setTimeout(
-            () => reject(new Error('Users not found')),
-            250
-        );
-    }
-    setTimeout(() => resolve({data: openingTypes}) , deley);
-});
-
+const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
+const getParties = () => new Promise<{data:IParty[]}>((res) => { setTimeout(() => res({data: parties}), deley) })
+const getModels = () => new Promise<{data:IModel[]}>((res) => { setTimeout(() => res({data: models}), deley) })
+const getModelBoxes = () => new Promise<{data:IModelBox[]}>((res) => { setTimeout(() => res({data: modelBoxes}), deley) })
+const getOpeningTypes = () => new Promise<{data:IOpeningType[]}>((res) => { setTimeout(() => res({data: openingTypes}), deley) })
 const getLocks = () => new Promise<{data:ILock[]}>((res) => { setTimeout(() => res({data: locks}), deley) })
 const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => { setTimeout(() => res({data: spinners}), deley) })
 const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => { setTimeout(() => res({data: cylinders}), deley) })
@@ -260,6 +237,9 @@ const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeo
 const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
 const getPatinaForges = () => new Promise<{data: IPatinaForge[]}>((res) => { setTimeout(() => res({data: patinaForges}), deley) })
 const getLoacationHinges = () => new Promise<{data: ILocationHinge[]}>((res) => { setTimeout(() => res({data: locationHinges}), deley) })
+const getTypeHinges = () => new Promise<{data: ITypeHinge[]}>((res) => { setTimeout(() => res({data: typeHinges}), deley) })
+const getThickMetalLeafs = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalLeafs}), deley) })
+const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalBoxes}), deley) })
 
 export const api = {
     getCustomers,
@@ -282,5 +262,8 @@ export const api = {
     getColorTints,
     getColorForges,
     getPatinaForges,
-    getLoacationHinges
+    getLoacationHinges,
+    getTypeHinges,
+    getThickMetalLeafs,
+    getThickMetalBoxes
 }

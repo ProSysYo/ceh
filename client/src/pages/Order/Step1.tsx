@@ -5,7 +5,9 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setCustomer, setNumberCustomer, setParty 
+    setCostDoor,
+    setCountDoors,
+    setCustomer, setNote, setNumberCustomer, setParty 
 } from '../../store/slices/orderSlice';
 
 
@@ -17,7 +19,7 @@ const Step1: FC = () => {
     } = useAppSelector(state => state.order)
     
     const {
-        customer, numberCustomer, number, party
+        customer, numberCustomer, number, party, countDoors, costDoor, note
     } = useAppSelector(state => state.order.order)
 
 
@@ -51,16 +53,16 @@ const Step1: FC = () => {
                     />
                 </Form.Item>
                 
-                <Form.Item label="Количество дверей???">
-                    <InputNumber  value={""} onChange={(value)=> console.log(value)} />
+                <Form.Item label="Количество дверей">
+                    <InputNumber min={0} value={countDoors} onChange={(value)=> dispatch(setCountDoors(value))} />
                 </Form.Item>
 
-                <Form.Item label="Стоимость одной двери???">
-                    <InputNumber  value={""} onChange={(value)=> console.log(value)} />
+                <Form.Item label="Стоимость одной двери">
+                    <InputNumber min={0} value={costDoor} onChange={(value)=> dispatch(setCostDoor(value))} />
                 </Form.Item>
 
-                <Form.Item label="Примечание???">
-                    <Input.TextArea rows = {8}  value={numberCustomer} onChange={(e)=> dispatch(setNumberCustomer(e.target.value))} />
+                <Form.Item label="Примечание">
+                    <Input.TextArea rows = {8}  value={note} onChange={(e)=> dispatch(setNote(e.target.value))} />
                 </Form.Item>
             </Form>
         </Container>

@@ -13,7 +13,9 @@ export interface IOrder {
     openingType: string;
     isDouble: boolean;
     widthDouble: number | string;
-    locationHinge: string;
+    locationHinge: string; //Расположение петель
+    isThreeHinge: boolean; //Три петли
+    typeHinge: string;
     baseLock: string;    
     lockSpinner: string;
     baseCylinder: string;
@@ -44,4 +46,9 @@ export interface IOrder {
     heightWindow: number | string;
     widthWindow: number | string;
     thickWindow: number | string;
+    countDoors: number;
+    costDoor: number;
+    note: string;
+    thickMetalLeaf: number | string ;
+    thickMetalBox: number | string ;
 }

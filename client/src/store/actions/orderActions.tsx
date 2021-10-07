@@ -78,7 +78,16 @@ import {
     setTypeHinges,
     setThickMetalLeafs,
     setThickMetalBoxes,
-    setEyeLocations
+    setEyeLocations,
+    setJambs,
+    setCurrentJambs,
+    setJamb,
+    setIsJambWrap,
+    setJambWrap,
+    setLocationJambs,
+    setOpeningType,
+    setIsLocationJumb,
+    setLocationJumb
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -86,6 +95,7 @@ import { ICover } from "../../interfaces/ICover";
 import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
 import { IDecoration } from "../../interfaces/IDecoration";
 import { IWindow } from '../../interfaces/IWindow';
+import { IJamb } from "../../interfaces/IJamb";
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -365,6 +375,27 @@ export const fetchThickMetalBoxes = () => {
     }
 }
 
+export const fetchJambs = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getJambs()
+            dispatch(setJambs(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchLocationJumbs = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getLocationJambs()
+            dispatch(setLocationJambs(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -396,7 +427,8 @@ export const fetchAll = () => {
             await dispatch(fetchTypeHinges())
             await dispatch(fetchThickMetalLeafs())
             await dispatch(fetchThickMetalBoxes())
-            
+            await dispatch(fetchJambs())         
+            await dispatch(fetchLocationJumbs())         
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -410,12 +442,23 @@ export const changeModel = (model: string) => {
         try {
             let typeDecorationsOutside: ITypeDecoration[]
             let typeDecorationsInside: ITypeDecoration[]
+            let currentJumbs: IJamb[]
+            let isJambWrap: boolean = false
+            let jambWrap: string = "нет"
 
-            const { models, typeDecorations } = getState().order
-            const selectedModel = models.find(item=>item.value === model)
+            const { models, typeDecorations, jambs } = getState().order
+            const selectedModel = models.find(item=>item.value === model)!
             
-            typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel?.typeOutside || item.type === "нет" || item.type === "примечание")            
-            typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel?.typeInside || item.type === "нет" || item.type === "примечание")
+            typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel.typeOutside || item.type === "нет" || item.type === "примечание")            
+            typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel.typeInside || item.type === "нет" || item.type === "примечание")
+
+            currentJumbs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
+            
+            if (selectedModel.typeOutside === "панель") {
+                isJambWrap =  true
+                jambWrap = ""
+            }
+            
 
             dispatch(setModel(model))
 
@@ -431,6 +474,11 @@ export const changeModel = (model: string) => {
             dispatch(setTypeDecorationsInside(typeDecorationsInside))            
             dispatch(setTypeDecorationInside(""))
 
+            dispatch(setCurrentJambs(currentJumbs))
+            dispatch(setJamb(""))            
+            dispatch(setIsJambWrap(isJambWrap))
+            dispatch(setJambWrap(jambWrap))
+            
             dispatch(setDecorationOutside(""))
 
             dispatch(setIsWrapOutside(false))
@@ -862,6 +910,24 @@ export const changeWindow = (doorWindow: string) => {
             dispatch(setHeightWindow(selectedWindow.height))
             dispatch(setWidthWindow(selectedWindow.width))
             dispatch(setThickWindow(thickWindow))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const changeOpeningType = (openingType: string) => {
+    return (dispatch: Dispatch) => {        
+        let isLocationJamb: boolean = false
+        let locationJumb: string = "нет"
+        try {
+            if (openingType === "внутреннего") {
+                isLocationJamb = true
+                locationJumb = ""
+            }
+            dispatch(setOpeningType(openingType))
+            dispatch(setIsLocationJumb(isLocationJamb))
+            dispatch(setLocationJumb(locationJumb))
         } catch (e) {
             console.log(e)
         }

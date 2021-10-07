@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
     setContour, setDoorThick, setHeight, setIsThreeHinge, setLocationHinge, setModelBox, setOpeningType, setThickMetalBox, setThickMetalLeaf, setTypeHinge, setWidth, setWidthDouble 
 } from '../../store/slices/orderSlice';
-import { changeModel, changeIsDouble } from '../../store/actions/orderActions';
+import { changeModel, changeIsDouble, changeOpeningType } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 
@@ -74,11 +74,11 @@ const Step2: FC = () => {
                     />
                 </Form.Item>
 
-                <Form.Item label="Тип открывания">
+                <Form.Item label="Тип открывания*">
                     <Select 
                         items={openingTypes} 
                         value={openingType} 
-                        onChange={ (value) => dispatch(setOpeningType(value))}                        
+                        onChange={ (value) => dispatch(changeOpeningType(value))}                        
                     />
                 </Form.Item>
 

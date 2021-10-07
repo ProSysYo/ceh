@@ -22,6 +22,8 @@ import { IModelBox } from '../interfaces/IModelBox';
 import { IParty } from '../interfaces/IParty';
 import { ICustomer } from '../interfaces/ICustomer';
 import { IEyeLocation } from '../interfaces/IEyeLocation';
+import { IJamb } from '../interfaces/IJamb';
+import { ILocationJamb } from '../interfaces/ILocationJamb';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -221,6 +223,17 @@ const thickMetalBoxes: IThickMetal[] = [
     { _id: "2", value: 1.4, name: 1.4 },       
 ];
 
+const jambs: IJamb[] = [    
+    { _id: "1", value: "стандартный", name: "стандартный", type: "все" },           
+    { _id: "2", value: "фигурный", name: "фигурный", type: "металл" }, 
+    { _id: "3", value: "капитель", name: "капитель", type: "панель" },
+];
+
+const locationJambs: ILocationJamb[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "со стороны петель", name: "со стороны петель" },       
+    { _id: "3", value: "с противоп. стороны петель", name: "с противоп. стороны петель" },       
+];
 const deley = 50
 
 const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
@@ -248,6 +261,8 @@ const getLoacationHinges = () => new Promise<{data: ILocationHinge[]}>((res) => 
 const getTypeHinges = () => new Promise<{data: ITypeHinge[]}>((res) => { setTimeout(() => res({data: typeHinges}), deley) })
 const getThickMetalLeafs = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalLeafs}), deley) })
 const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalBoxes}), deley) })
+const getJambs = () => new Promise<{data: IJamb[]}>((res) => { setTimeout(() => res({data: jambs}), deley) })
+const getLocationJambs = () => new Promise<{data: ILocationJamb[]}>((res) => { setTimeout(() => res({data: locationJambs}), deley) })
 
 export const api = {
     getCustomers,
@@ -274,5 +289,7 @@ export const api = {
     getTypeHinges,
     getThickMetalLeafs,
     getThickMetalBoxes,
-    getEyeLocations
+    getEyeLocations,
+    getJambs,
+    getLocationJambs,
 }

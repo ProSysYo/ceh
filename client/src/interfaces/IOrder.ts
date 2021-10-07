@@ -52,4 +52,7 @@ export interface IOrder {
     note: string;
     thickMetalLeaf: number | string ;
     thickMetalBox: number | string ;
+    jamb: string;
+    jambWrap: string;
+    locationJumb: string;
 }

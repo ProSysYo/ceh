@@ -10,7 +10,10 @@ import {
     setWrapInside, 
     setWrapOutside,
     setDecorationInside,
-    setPatinaInside
+    setPatinaInside,
+    setJamb,
+    setJambWrap,
+    setLocationJumb
 } from '../../store/slices/orderSlice';
 import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
@@ -20,12 +23,12 @@ const Step4: FC = () => {
 
     const {
         typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
-        patinas, decorationsInside, isPatinaInside
+        patinas, decorationsInside, isPatinaInside, currentJambs, isJambWrap, locationJambs, isLocationJamb
     } = useAppSelector(state => state.order)
     
     const {
         typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside, 
-        decorationInside, patinaInside
+        decorationInside, patinaInside, jamb, jambWrap, locationJumb
     } = useAppSelector(state => state.order.order)
 
 
@@ -103,21 +106,29 @@ const Step4: FC = () => {
 
                 <Divider>Наличник</Divider>
 
-                <Form.Item label="Наличник???">
+                <Form.Item label="Расположение наличника (внутр. откр.)">
                     <Select 
-                        items={wraps} 
-                        value={wrapInside} 
-                        disabled={!isWrapInside}
-                        onChange={ (value) => dispatch(setWrapInside(value))}                        
+                        items={locationJambs} 
+                        value={locationJumb}
+                        disabled={!isLocationJamb}
+                        onChange={ (value) => dispatch(setLocationJumb(value))}                        
                     />
                 </Form.Item>
 
-                <Form.Item label="Цвет пленки наличника???">
+                <Form.Item label="Наличник">
+                    <Select 
+                        items={currentJambs} 
+                        value={jamb}
+                        onChange={ (value) => dispatch(setJamb(value))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item label="Цвет пленки наличника">
                     <Select 
                         items={wraps} 
-                        value={wrapInside} 
-                        disabled={!isWrapInside}
-                        onChange={ (value) => dispatch(setWrapInside(value))}                        
+                        value={jambWrap} 
+                        disabled={!isJambWrap}
+                        onChange={ (value) => dispatch(setJambWrap(value))}                        
                     />
                 </Form.Item>              
             </Form>

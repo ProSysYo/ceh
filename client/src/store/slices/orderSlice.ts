@@ -24,6 +24,8 @@ import { ILocationHinge } from '../../interfaces/ILoacationHinge';
 import { ITypeHinge } from '../../interfaces/ITypeHinge';
 import { IThickMetal } from '../../interfaces/IThickMetal';
 import { IEyeLocation } from '../../interfaces/IEyeLocation';
+import { IJamb } from '../../interfaces/IJamb';
+import { ILocationJamb } from '../../interfaces/ILocationJamb';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -62,7 +64,9 @@ interface OrderSate {
     typeHinges: ITypeHinge[];
     thickMetalLeafs: IThickMetal[],
     thickMetalBoxes: IThickMetal[],
-
+    jambs: IJamb[],
+    currentJambs: IJamb[],
+    locationJambs: ILocationJamb[],
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -75,6 +79,8 @@ interface OrderSate {
     isPatinaInside: boolean;
     isColorForge: boolean;
     isPatinaForge: boolean;
+    isJambWrap: boolean;
+    isLocationJamb: boolean;
 
     order: IOrder;
 }
@@ -116,6 +122,9 @@ const initialState: OrderSate = {
     typeHinges: [],
     thickMetalLeafs: [],
     thickMetalBoxes: [],
+    jambs: [],
+    currentJambs: [],
+    locationJambs: [],   
 
     isLoading: false,
     isLockSpinner: false,
@@ -128,6 +137,8 @@ const initialState: OrderSate = {
     isPatinaInside: false,
     isColorForge: false,
     isPatinaForge: false,
+    isJambWrap: false,
+    isLocationJamb: false,
 
     order: {
         customer: "",
@@ -182,6 +193,9 @@ const initialState: OrderSate = {
         note: "",
         thickMetalLeaf: "",
         thickMetalBox: "",
+        jamb: "",
+        jambWrap: "",
+        locationJumb: "",
     }
 }
 
@@ -225,6 +239,9 @@ export const orderSlice = createSlice({
         setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.typeHinges = action.payload },
         setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalLeafs = action.payload },
         setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalBoxes = action.payload },
+        setJambs: (state, action: PayloadAction<IJamb[]>) => { state.jambs = action.payload },
+        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.currentJambs = action.payload },
+        setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
         
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -287,7 +304,12 @@ export const orderSlice = createSlice({
         setIsThreeHinge: (state, action: PayloadAction<boolean>) => {  state.order.isThreeHinge = action.payload },     
         setTypeHinge: (state, action: PayloadAction<string>) => {  state.order.typeHinge = action.payload },    
         setThickMetalLeaf: (state, action: PayloadAction<number>) => {  state.order.thickMetalLeaf = action.payload },   
-        setThickMetalBox: (state, action: PayloadAction<number>) => {  state.order.thickMetalBox = action.payload },   
+        setThickMetalBox: (state, action: PayloadAction<number>) => {  state.order.thickMetalBox = action.payload }, 
+        setJamb: (state, action: PayloadAction<string>) => {  state.order.jamb = action.payload },
+        setJambWrap: (state, action: PayloadAction<string>) => {  state.order.jambWrap = action.payload },        
+        setIsJambWrap: (state, action: PayloadAction<boolean>) => {  state.isJambWrap = action.payload },        
+        setIsLocationJumb: (state, action: PayloadAction<boolean>) => {  state.isLocationJamb = action.payload },        
+        setLocationJumb: (state, action: PayloadAction<string>) => {  state.order.locationJumb = action.payload },        
     }
 })
 
@@ -389,7 +411,15 @@ export const {
     setThickMetalBoxes,
     setThickMetalBox,
     setEyeLocations,
-    setEyeLocation
+    setEyeLocation,
+    setJambs,
+    setJamb,
+    setCurrentJambs,
+    setJambWrap,
+    setIsJambWrap,
+    setLocationJambs,
+    setIsLocationJumb,
+    setLocationJumb,
 } = orderSlice.actions
 
 export default orderSlice.reducer

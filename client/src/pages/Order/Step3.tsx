@@ -11,6 +11,7 @@ import {
     setBaseCoverOutside2,
     setBaseCylinder,
     setEye,
+    setEyeLocation,
     setHandle,
     setIsOptonalCoverInside,
     setIsOptonalCoverOutside,
@@ -35,12 +36,12 @@ const Step3: FC = () => {
 
     const {
         baseLocks, optionalLocks, spinners, cylinders, baseCovers, baseCovers2, isLockSpinner, isBaseCylinder, isBaseCover2,
-        isOptionalCylinder, optionalCovers, eyes, handles
+        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations
     } = useAppSelector(state => state.order)
 
     const {
         baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside, baseCoverOutside2, baseCoverInside2, optionalLock,
-        optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner
+        optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation
     } = useAppSelector(state => state.order.order)
 
 
@@ -157,7 +158,7 @@ const Step3: FC = () => {
                 </Form.Item>
 
                 <Divider></Divider>
-                <Form.Item label="Глазок???" {...formTailLayout}>
+                <Form.Item label="Глазок" {...formTailLayout}>
                     <Row gutter={10}>
                         <Col span={12}>
                             <Select
@@ -168,9 +169,9 @@ const Step3: FC = () => {
                         </Col>
                         <Col span={12}>
                             <Select
-                                items={eyes}
-                                value={eye}
-                                onChange={(value) => dispatch(setEye(value))}
+                                items={eyeLocations}
+                                value={eyeLocation}
+                                onChange={(value) => dispatch(setEyeLocation(value))}
                             />
                         </Col>
                     </Row>

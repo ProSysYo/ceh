@@ -28,6 +28,7 @@ export interface IOrder {
     optionalCoverOutside: string,
     optionalCoverInside: string,
     eye: string;
+    eyeLocation: string;
     handle: string;
     spinner: string;
     typeDecorationOutside: string;    

@@ -77,7 +77,8 @@ import {
     setLocationHinges,
     setTypeHinges,
     setThickMetalLeafs,
-    setThickMetalBoxes
+    setThickMetalBoxes,
+    setEyeLocations
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -193,6 +194,17 @@ export const fetchEyes = () => {
         try {            
             const response = await api.getEyes()
             dispatch(setEyes(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
+
+export const fetchEyeLocations = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getEyeLocations()
+            dispatch(setEyeLocations(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -369,6 +381,7 @@ export const fetchAll = () => {
             await dispatch(fetchCylinders())
             await dispatch(fetchCovers())
             await dispatch(fetchEyes())
+            await dispatch(fetchEyeLocations())
             await dispatch(fetchHandles())
             await dispatch(fetchTypeDecorations())
             await dispatch(fetchDecorations())
@@ -383,6 +396,7 @@ export const fetchAll = () => {
             await dispatch(fetchTypeHinges())
             await dispatch(fetchThickMetalLeafs())
             await dispatch(fetchThickMetalBoxes())
+            
 
             dispatch(setLoading(false))
         } catch (e) {

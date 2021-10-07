@@ -21,6 +21,7 @@ import { IThickMetal } from '../interfaces/IThickMetal';
 import { IModelBox } from '../interfaces/IModelBox';
 import { IParty } from '../interfaces/IParty';
 import { ICustomer } from '../interfaces/ICustomer';
+import { IEyeLocation } from '../interfaces/IEyeLocation';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -100,6 +101,12 @@ const eyes: IEye[] = [
     { _id: "2", value: "см. прим.", name: "см. прим." },
     { _id: "3", value: "хром", name: "хром" },
     { _id: "4", value: "хром", name: "хром" },
+];
+
+const eyeLocations: IEyeLocation[] = [
+    { _id: "1", value: "нет", name: "нет" },    
+    { _id: "3", value: "центр", name: "центр" },
+    { _id: "4", value: "сбоку", name: "сбоку" },
 ];
 
 const handles: IHandle[] = [
@@ -226,6 +233,7 @@ const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => { setTimeout((
 const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => { setTimeout(() => res({data: cylinders}), deley) })
 const getCovers = () => new Promise<{data:ICover[]}>((res) => { setTimeout(() => res({data: covers}), deley) })
 const getEyes = () => new Promise<{data:IEye[]}>((res) => { setTimeout(() => res({data: eyes}), deley) })
+const getEyeLocations = () => new Promise<{data:IEyeLocation[]}>((res) => { setTimeout(() => res({data: eyeLocations}), deley) })
 const getHandles = () => new Promise<{data:IHandle[]}>((res) => { setTimeout(() => res({data: handles}), deley) })
 const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => { setTimeout(() => res({data: typeDecorations}), deley) })
 const getDecorations = () => new Promise<{data:IDecoration[]}>((res) => { setTimeout(() => res({data: decorations}), deley) })
@@ -265,5 +273,6 @@ export const api = {
     getLoacationHinges,
     getTypeHinges,
     getThickMetalLeafs,
-    getThickMetalBoxes
+    getThickMetalBoxes,
+    getEyeLocations
 }

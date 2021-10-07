@@ -23,6 +23,7 @@ import { IPatinaForge } from '../../interfaces/IPatinaForge';
 import { ILocationHinge } from '../../interfaces/ILoacationHinge';
 import { ITypeHinge } from '../../interfaces/ITypeHinge';
 import { IThickMetal } from '../../interfaces/IThickMetal';
+import { IEyeLocation } from '../../interfaces/IEyeLocation';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -41,6 +42,7 @@ interface OrderSate {
     baseCovers2: ICover[];
     optionalCovers: ICover[];
     eyes: IEye[];
+    eyeLocations: IEyeLocation[];
     handles: IHandle[];
     typeDecorations: ITypeDecoration[];
     typeDecorationsOutside: ITypeDecoration[];    
@@ -94,6 +96,7 @@ const initialState: OrderSate = {
     baseCovers2: [],
     optionalCovers: [],
     eyes: [],
+    eyeLocations: [],
     handles: [],
     typeDecorations: [],
     typeDecorationsOutside: [],
@@ -155,6 +158,7 @@ const initialState: OrderSate = {
         optionalCoverOutside: "",
         optionalCoverInside: "",
         eye: "",
+        eyeLocation: "",
         handle: "",
         spinner: "",
         typeDecorationOutside: "",        
@@ -200,6 +204,7 @@ export const orderSlice = createSlice({
         setBaseCovers2: (state, action: PayloadAction<ICover[]>) => { state.baseCovers2 = action.payload },
         setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.optionalCovers = action.payload },
         setEyes: (state, action: PayloadAction<IEye[]>) => { state.eyes = action.payload },
+        setEyeLocations: (state, action: PayloadAction<IEyeLocation[]>) => { state.eyeLocations = action.payload },
         setHandles: (state, action: PayloadAction<IHandle[]>) => { state.handles = action.payload },
         setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorations = action.payload },
         setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsOutside = action.payload },
@@ -250,6 +255,7 @@ export const orderSlice = createSlice({
         setIsOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
         setIsOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
         setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },
+        setEyeLocation: (state, action: PayloadAction<string>) => { state.order.eyeLocation = action.payload },
         setHandle: (state, action: PayloadAction<string>) => { state.order.handle = action.payload },
         setSpinner: (state, action: PayloadAction<string>) => { state.order.spinner = action.payload },
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
@@ -382,6 +388,8 @@ export const {
     setThickMetalLeaf,
     setThickMetalBoxes,
     setThickMetalBox,
+    setEyeLocations,
+    setEyeLocation
 } = orderSlice.actions
 
 export default orderSlice.reducer

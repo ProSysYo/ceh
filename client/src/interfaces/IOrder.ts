@@ -55,4 +55,10 @@ export interface IOrder {
     jamb: string;
     jambWrap: string;
     locationJumb: string;
+    isStainlessDoorStep: boolean //порог из нержавейки
+    isStreetDoor: boolean;
+    isEccentric: boolean;
+    isBackSheet: boolean;
+    isCloser: boolean; //доводчик
+    isEnhanceCloser: boolean; //Училение под доводчик
 }

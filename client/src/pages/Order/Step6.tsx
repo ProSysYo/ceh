@@ -5,6 +5,12 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
+    setIsBackSheet,
+    setIsCloser,
+    setIsEccentric,
+    setIsEnhanceCloser,
+    setIsStainlessDoorStep,
+    setIsStreetDoor,
     setLocationHinge 
 } from '../../store/slices/orderSlice';
 
@@ -17,7 +23,7 @@ const Step6: FC = () => {
     } = useAppSelector(state => state.order)
     
     const {
-        isDouble, locationHinge
+        isStainlessDoorStep, locationHinge, isDouble, isStreetDoor, isEccentric, isBackSheet, isCloser, isEnhanceCloser
     } = useAppSelector(state => state.order.order)
 
 
@@ -30,19 +36,19 @@ const Step6: FC = () => {
                 size = "small"              
             >   
                 <Form.Item label="Порог из нержавейки">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isStainlessDoorStep} onChange={(e)=> dispatch(setIsStainlessDoorStep(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Уличная дверь">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isStreetDoor} onChange={(e)=> dispatch(setIsStreetDoor(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Эксцентрик">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isEccentric} onChange={(e)=> dispatch(setIsEccentric(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Задний лист">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isBackSheet} onChange={(e)=> dispatch(setIsBackSheet(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Термокабель">
@@ -50,11 +56,11 @@ const Step6: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Доводчик">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isCloser} onChange={(e)=> dispatch(setIsCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Усиление под довочик">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                    <Checkbox checked={isEnhanceCloser} onChange={(e)=> dispatch(setIsEnhanceCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Электромагнит">

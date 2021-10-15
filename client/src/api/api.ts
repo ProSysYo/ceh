@@ -24,6 +24,8 @@ import { ICustomer } from '../interfaces/ICustomer';
 import { IEyeLocation } from '../interfaces/IEyeLocation';
 import { IJamb } from '../interfaces/IJamb';
 import { ILocationJamb } from '../interfaces/ILocationJamb';
+import { IOrder } from '../interfaces/IOrder';
+import { http } from '../commons/http';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -264,6 +266,14 @@ const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { s
 const getJambs = () => new Promise<{data: IJamb[]}>((res) => { setTimeout(() => res({data: jambs}), deley) })
 const getLocationJambs = () => new Promise<{data: ILocationJamb[]}>((res) => { setTimeout(() => res({data: locationJambs}), deley) })
 
+
+
+
+const createOrder = (data: IOrder) => {
+    return http.post("/orders", data);
+  };
+
+
 export const api = {
     getCustomers,
     getParties, 
@@ -292,4 +302,5 @@ export const api = {
     getEyeLocations,
     getJambs,
     getLocationJambs,
+    createOrder
 }

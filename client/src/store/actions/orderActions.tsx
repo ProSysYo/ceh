@@ -96,6 +96,7 @@ import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
 import { IDecoration } from "../../interfaces/IDecoration";
 import { IWindow } from '../../interfaces/IWindow';
 import { IJamb } from "../../interfaces/IJamb";
+import { IOrder } from '../../interfaces/IOrder';
 
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
@@ -930,6 +931,17 @@ export const changeOpeningType = (openingType: string) => {
             dispatch(setLocationJumb(locationJumb))
         } catch (e) {
             console.log(e)
+        }
+    }
+}
+
+export const addOrder = (data: IOrder) => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.createOrder(data)
+            console.log(response);                       
+        } catch (e) {            
+            
         }
     }
 }

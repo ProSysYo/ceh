@@ -14,6 +14,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
+import Step7 from './Step7';
 
 const renderStep = (step: number) => {
     switch (step) {
@@ -23,6 +24,7 @@ const renderStep = (step: number) => {
         case 3: return <Step4/>
         case 4: return <Step5/>
         case 5: return <Step6/>
+        case 6: return <Step7/>
     }
 }
 

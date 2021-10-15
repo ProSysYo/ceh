@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
-    setContour, setDoorThick, setHeight, setIsThreeHinge, setLocationHinge, setModelBox, setOpeningType, setThickMetalBox, setThickMetalLeaf, setTypeHinge, setWidth, setWidthDouble 
+    setContour, setDoorThick, setHeight, setIsThreeHinge, setLocationHinge, setModelBox, setThickMetalBox, setThickMetalLeaf, setTypeHinge, setWidth, setWidthDouble 
 } from '../../store/slices/orderSlice';
 import { changeModel, changeIsDouble, changeOpeningType } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';

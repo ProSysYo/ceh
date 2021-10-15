@@ -8,13 +8,13 @@ export class Order {
   @Prop({ unique: true, required: true })
   number: number;
   
-  @Prop()
+  @Prop({ required: true })
   customer: string;
 
-  @Prop()
+  @Prop({ required: true })
   height: number;
 
-  @Prop()
+  @Prop({ required: true })
   width: number;
 }
 

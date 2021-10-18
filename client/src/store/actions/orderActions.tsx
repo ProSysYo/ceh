@@ -87,7 +87,8 @@ import {
     setLocationJambs,
     setOpeningType,
     setIsLocationJumb,
-    setLocationJumb
+    setLocationJumb,
+    setValidateErrors
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -940,8 +941,18 @@ export const addOrder = (data: IOrder) => {
         try {            
             const response = await api.createOrder(data)
             console.log(response);                       
-        } catch (e) {            
-            
+        } catch (e: any) {            
+            if (e.isAxiosError){
+                if (e.response.status === 422) {
+                    dispatch(setValidateErrors(e.response.data))                                     
+                } 
+
+                if (!e.response) {
+                    console.log("Нет соединения с сервером")
+                }                              
+            } else {
+                console.log("other error", e);                
+            }          
         }
     }
 }

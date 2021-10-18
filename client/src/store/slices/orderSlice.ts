@@ -66,7 +66,7 @@ interface OrderSate {
     thickMetalBoxes: IThickMetal[],
     jambs: IJamb[],
     currentJambs: IJamb[],
-    locationJambs: ILocationJamb[],
+    locationJambs: ILocationJamb[],    
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -81,6 +81,8 @@ interface OrderSate {
     isPatinaForge: boolean;
     isJambWrap: boolean;
     isLocationJamb: boolean;
+
+    validateErrors: any;
 
     order: IOrder;
 }
@@ -139,6 +141,8 @@ const initialState: OrderSate = {
     isPatinaForge: false,
     isJambWrap: false,
     isLocationJamb: false,
+
+    validateErrors: {},
 
     order: {
         customer: "",
@@ -322,6 +326,8 @@ export const orderSlice = createSlice({
         setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.order.isBackSheet = action.payload },
         setIsCloser: (state, action: PayloadAction<boolean>) => { state.order.isCloser = action.payload },
         setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },
+
+        setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
     }
 })
 
@@ -438,6 +444,7 @@ export const {
     setIsBackSheet,
     setIsCloser,
     setIsEnhanceCloser,
+    setValidateErrors,
 } = orderSlice.actions
 
 export default orderSlice.reducer

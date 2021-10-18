@@ -15,7 +15,7 @@ const Step1: FC = () => {
     const dispatch = useAppDispatch()
 
     const {
-        customers, parties
+        customers, parties, validateErrors
     } = useAppSelector(state => state.order)
     
     const {
@@ -34,7 +34,11 @@ const Step1: FC = () => {
                 <Form.Item label="Номер заказа">
                     <Input  value={number} />
                 </Form.Item>
-                <Form.Item label="Заказчик">
+                <Form.Item 
+                    label="Заказчик" 
+                    validateStatus={validateErrors?.customer ? "error" : ""} 
+                    help={validateErrors?.customer ? validateErrors?.customer : ""}
+                >
                     <Select 
                         items={customers} 
                         value={customer} 

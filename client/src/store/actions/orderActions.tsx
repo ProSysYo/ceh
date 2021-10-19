@@ -943,13 +943,15 @@ export const addOrder = (data: IOrder) => {
             console.log(response);                       
         } catch (e: any) {            
             if (e.isAxiosError){
+                if (!e.response) {
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }
+                
                 if (e.response.status === 422) {
                     dispatch(setValidateErrors(e.response.data))                                     
-                } 
-
-                if (!e.response) {
-                    console.log("Нет соединения с сервером")
-                }                              
+                }
+                                          
             } else {
                 console.log("other error", e);                
             }          

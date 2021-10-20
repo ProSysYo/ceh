@@ -15,6 +15,7 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
+import SummaryInfo from './SummaryInfo';
 
 const renderStep = (step: number) => {
     switch (step) {
@@ -42,13 +43,18 @@ const NewOrder: React.FC = () => {
 
     return (
         <Container>
-            <Steps>
-                <OrderSteps step={step} changeStep={setStep}/>
-            </Steps>
-            
-            <StepControls>
-                {renderStep(step)}
-            </StepControls>    
+            <Criteries>
+                <Steps>
+                    <OrderSteps step={step} changeStep={setStep}/>
+                </Steps>
+                
+                <StepControls>
+                    {renderStep(step)}
+                </StepControls>  
+            </Criteries>
+            <Summary>
+                <SummaryInfo/>
+            </Summary>  
             
                     
         </Container>
@@ -58,7 +64,19 @@ const NewOrder: React.FC = () => {
 export default NewOrder
 
 const Container = styled.div`
-    
+    display: flex;
+    width: 100%;
+    justify-content: space-between;   
+`;
+
+const  Criteries = styled.div`
+    margin: 10px;
+    width: 70%;    
+`;
+
+const Summary = styled.div`
+    margin: 10px;
+    width: 30%;
 `;
 
 const StyledSpin = styled(Spin)`

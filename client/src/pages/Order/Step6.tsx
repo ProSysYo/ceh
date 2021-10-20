@@ -32,7 +32,7 @@ const Step6: FC = () => {
             <Form
                 name="basic"
                 labelCol={{ span: 10 }}
-                wrapperCol={{ span: 5 }}
+                wrapperCol={{ span: 6 }}
                 size = "small"              
             >   
                 <Form.Item label="Порог из нержавейки">

@@ -21,7 +21,7 @@ const OrderSteps: FC<IOrderSteps> = ({step, changeStep}) => {
             <Step title="Отделка" />
             <Step title="Окно" />            
             <Step title="Опции" />            
-            <Step title="Сводка" />
+            <Step title="Полка/Фрамуга" />
         </Steps>
     )
 }

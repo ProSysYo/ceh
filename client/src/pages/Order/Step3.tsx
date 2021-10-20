@@ -23,11 +23,11 @@ import { changeBaseLock, changeOptionalLock } from '../../store/actions/orderAct
 
 const formItemLayout = {
     labelCol: { span: 10 },
-    wrapperCol: { span: 5 },
+    wrapperCol: { span: 6 },
 };
 const formTailLayout = {
     labelCol: { span: 10 },
-    wrapperCol: { span: 10 },
+    wrapperCol: { span: 12 },
 };
 
 

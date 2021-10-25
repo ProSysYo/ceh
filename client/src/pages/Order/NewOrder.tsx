@@ -71,7 +71,7 @@ const Container = styled.div`
 
 const  Criteries = styled.div`
     margin: 10px;
-    width: 70%;    
+    width: 70%;      
 `;
 
 const Summary = styled.div`
@@ -91,4 +91,6 @@ const Steps = styled.div`
 
 const StepControls = styled.div`
     margin-top: 20px;
+    height: 75vh;
+    overflow-x: hidden; 
 `;

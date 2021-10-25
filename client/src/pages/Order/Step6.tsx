@@ -51,7 +51,7 @@ const Step6: FC = () => {
                     <Checkbox checked={isBackSheet} onChange={(e)=> dispatch(setIsBackSheet(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Термокабель">
+                <Form.Item label="Термокабель?">
                     <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
                 </Form.Item>
 
@@ -63,15 +63,15 @@ const Step6: FC = () => {
                     <Checkbox checked={isEnhanceCloser} onChange={(e)=> dispatch(setIsEnhanceCloser(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Электромагнит">
+                <Form.Item label="Электромагнит?">
                     <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
                 </Form.Item>
 
-                <Form.Item label="Подсветка">
+                <Form.Item label="Подсветка?">
                     <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
                 </Form.Item>
 
-                <Form.Item label="Уплотнитель">
+                <Form.Item label="Уплотнитель?">
                     <Select 
                         items={locationHinges} 
                         value={locationHinge} 

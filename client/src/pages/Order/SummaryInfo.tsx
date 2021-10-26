@@ -114,7 +114,7 @@ const SummaryInfo: React.FC = () => {
                     <SummaryItem title="Электромагнит?" value={order.isDouble ? "да" : "нет"}/>                     
                     <SummaryItem title="Подсветка?" value={order.isDouble ? "да" : "нет"}/>                     
                     <SummaryItem title="Уплотнитель?" value={order.isDouble ? "да" : "нет"}/>
-                </Group>                           
+                </Group>                                         
             </Items>
         </Container>
     )

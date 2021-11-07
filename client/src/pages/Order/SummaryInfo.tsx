@@ -9,8 +9,7 @@ const SummaryInfo: React.FC = () => {
     } = useAppSelector(state => state.order)
 
     return (
-        <Container>
-            <Title>Сводка</Title>            
+        <Container>                       
             <Items>
                 <Group>
                     <TitileGroup>Основное</TitileGroup>
@@ -125,14 +124,6 @@ export default SummaryInfo
 const Container = styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
-`;
-
-const Title = styled.p`
-    display: block;
-    width: 100%;
-    padding-right: 10px;
-    text-align: end;
-    font-weight: 700;
 `;
 
 const Items = styled.div`

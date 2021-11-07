@@ -30,7 +30,7 @@ const Step7: FC = () => {
                 name="basic"
                 labelCol={{ span: 10 }}
                 wrapperCol={{ span: 5 }}
-                size = "small"              
+                size = "middle"              
             >   
                 <Form.Item>
                     <Button  onClick={()=> dispatch(addOrder(order))} >Сохранить</Button>

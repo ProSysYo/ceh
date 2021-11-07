@@ -1,7 +1,8 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Spin } from 'antd';
+import { Button, Drawer, Spin } from 'antd';
+import { FullscreenOutlined } from '@ant-design/icons';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 
@@ -30,6 +31,14 @@ const renderStep = (step: number) => {
 }
 
 const NewOrder: React.FC = () => {
+    const [visible, setVisible] = useState(false);
+    const showDrawer = () => {
+        setVisible(true);
+    };
+    const onClose = () => {
+        setVisible(false);
+    };
+
     const dispatch = useAppDispatch()
     const { isLoading } = useAppSelector(state => state.order)
 
@@ -47,16 +56,17 @@ const NewOrder: React.FC = () => {
                 <Steps>
                     <OrderSteps step={step} changeStep={setStep}/>
                 </Steps>
-                
+                <StyledButton icon={<FullscreenOutlined />} onClick={showDrawer} size="large" type="dashed">Сводка</StyledButton>
                 <StepControls>
                     {renderStep(step)}
                 </StepControls>  
             </Criteries>
-            <Summary>
+
+
+
+            <Drawer title="Сводка" placement="right" width="500" onClose={onClose} visible={visible}>
                 <SummaryInfo/>
-            </Summary>  
-            
-                    
+            </Drawer>        
         </Container>
     )
 }
@@ -71,18 +81,19 @@ const Container = styled.div`
 
 const  Criteries = styled.div`
     margin: 10px;
-    width: 70%;      
-`;
-
-const Summary = styled.div`
-    margin: 10px;
-    width: 30%;
+    width: 100%;      
 `;
 
 const StyledSpin = styled(Spin)`
     position: absolute;
     top: 50%;
     left: 50%;    
+`;
+
+const StyledButton = styled(Button)`
+    position: absolute;
+    bottom: 5%;
+    right: 5%;    
 `;
 
 const Steps = styled.div`

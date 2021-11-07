@@ -22,12 +22,12 @@ import {
 import { changeBaseLock, changeOptionalLock } from '../../store/actions/orderActions';
 
 const formItemLayout = {
-    labelCol: { span: 10 },
-    wrapperCol: { span: 6 },
+    labelCol: { span: 9 },
+    wrapperCol: { span: 5 },
 };
 const formTailLayout = {
-    labelCol: { span: 10 },
-    wrapperCol: { span: 12 },
+    labelCol: { span: 9 },
+    wrapperCol: { span: 11 },
 };
 
 
@@ -49,7 +49,7 @@ const Step3: FC = () => {
         <Container>
             <Form
                 name="basic"
-                size = "small"  
+                size = "middle"  
             >
                 <Divider >Основной замок</Divider>
                 

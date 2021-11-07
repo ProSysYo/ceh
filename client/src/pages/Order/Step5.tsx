@@ -24,9 +24,9 @@ const Step5: FC = () => {
         <Container>
             <Form
                 name="basic"
-                labelCol={{ span: 10 }}
-                wrapperCol={{ span: 6 }}
-                size = "small"                 
+                labelCol={{ span: 9 }}
+                wrapperCol={{ span: 5 }}
+                size = "middle"                 
             >                   
                 <Form.Item label="Тип окна*">
                     <Select 

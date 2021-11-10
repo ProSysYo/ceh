@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, InputNumber } from 'antd';
+import { Col, Divider, Form, InputNumber, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -29,109 +29,132 @@ const Step2: FC = () => {
     return (
         <Container>
             <Form
-                name="basic"
-                labelCol={{ span: 9 }}
-                wrapperCol={{ span: 5 }}
-                size = "middle"             
-            >   
-                <Form.Item label="Модель двери*">
-                    <Select 
-                        items={models} 
-                        value={model} 
-                        onChange={ (value) => dispatch(changeModel(value))}                       
-                    />
-                </Form.Item>
+                name="basic"                
+                size = "middle"
+                labelCol={{ span: 12 }}
+                wrapperCol={{ span: 12 }}                                           
+            >
+            <Divider >Конфигураци модели</Divider>           
+            <Row gutter={24} >
+                <Col span={12}>                    
+                    <Form.Item label="Модель двери*">
+                        <Select 
+                            items={models} 
+                            value={model} 
+                            onChange={ (value) => dispatch(changeModel(value))}                       
+                        />
+                    </Form.Item>
 
-                <Form.Item label="Количество контуров">
-                    <Select 
-                        items={contours} 
-                        value={contour} 
-                        onChange={ (value) => dispatch(setContour(value))}                        
-                    />
-                </Form.Item>
+                    <Form.Item label="Количество контуров">
+                        <Select 
+                            items={contours} 
+                            value={contour} 
+                            onChange={ (value) => dispatch(setContour(value))}                        
+                        />
+                    </Form.Item>
 
-                <Form.Item label="Толщина полотна">
-                    <Select 
-                        items={doorThicks} 
-                        value={doorThick} 
-                        onChange={ (value) => dispatch(setDoorThick(value))}                        
-                    />
-                </Form.Item>
+                    <Form.Item label="Толщина полотна">
+                        <Select 
+                            items={doorThicks} 
+                            value={doorThick} 
+                            onChange={ (value) => dispatch(setDoorThick(value))}                        
+                        />
+                    </Form.Item>
+                    <Form.Item label="Модель коробки">
+                        <Select 
+                            items={modelBoxes} 
+                            value={modelBox} 
+                            onChange={ (value) => dispatch(setModelBox(value))}                        
+                        />
+                    </Form.Item>
+
+                    <Form.Item label="Тип открывания*">
+                        <Select 
+                            items={openingTypes} 
+                            value={openingType} 
+                            onChange={ (value) => dispatch(changeOpeningType(value))}                        
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}> 
+                    <Form.Item>                   
+                        <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
+                    </Form.Item>
+                    <Form.Item label="Высота двери">
+                        <InputNumber  value={height} onChange={(value)=> dispatch(setHeight(value))} />
+                    </Form.Item>
+
+                    <Form.Item label="Ширина двери">
+                        <InputNumber  value={width} onChange={(value)=> dispatch(setWidth(value))} />
+                    </Form.Item>
+                    <Form.Item label="Ширина раб. створки">
+                        <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(setWidthDouble(value))} />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Divider >Петли</Divider>                
+            <Row gutter={12}>
+                <Col span={8}>                
+                    <Form.Item label="Расположение петель">
+                        <Select 
+                            items={locationHinges} 
+                            value={locationHinge} 
+                            onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                        />
+                    </Form.Item>
+                </Col>
                 
-                <Form.Item label="Высота двери">
-                    <InputNumber  value={height} onChange={(value)=> dispatch(setHeight(value))} />
-                </Form.Item>
+                <Col span={8}> 
+                    <Form.Item label="Тип петель">
+                        <Select 
+                            items={typeHinges} 
+                            value={typeHinge} 
+                            onChange={ (value) => dispatch(setTypeHinge(value))}                        
+                        />
+                    </Form.Item>
+                </Col>
 
-                <Form.Item label="Ширина двери">
-                    <InputNumber  value={width} onChange={(value)=> dispatch(setWidth(value))} />
-                </Form.Item>
+                <Col span={8}> 
+                    <Form.Item label="Третья петля">
+                        <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))}/>
+                    </Form.Item>
+                </Col>
+            </Row> 
 
-                <Form.Item label="Модель коробки">
-                    <Select 
-                        items={modelBoxes} 
-                        value={modelBox} 
-                        onChange={ (value) => dispatch(setModelBox(value))}                        
-                    />
-                </Form.Item>
-
-                <Form.Item label="Тип открывания*">
-                    <Select 
-                        items={openingTypes} 
-                        value={openingType} 
-                        onChange={ (value) => dispatch(changeOpeningType(value))}                        
-                    />
-                </Form.Item>
-
-                <Form.Item label="Двустворчатая">
-                    <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} />
-                </Form.Item>
-
-                <Form.Item label="Ширина раб. створки">
-                    <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(setWidthDouble(value))} />
-                </Form.Item>
-
-                <Form.Item label="Расположение петель">
-                    <Select 
-                        items={locationHinges} 
-                        value={locationHinge} 
-                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
-                    />
-                </Form.Item>
-
-                <Form.Item label="3 петли">
-                    <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))} />
-                </Form.Item>
-
-                <Form.Item label="Тип петель">
-                    <Select 
-                        items={typeHinges} 
-                        value={typeHinge} 
-                        onChange={ (value) => dispatch(setTypeHinge(value))}                        
-                    />
-                </Form.Item>
-                
-                <Form.Item label="Толщина металла полотна">
-                    <Select 
-                        items={thickMetalLeafs} 
-                        value={thickMetalLeaf} 
-                        onChange={ (value) => dispatch(setThickMetalLeaf(value))}                        
-                    />
-                </Form.Item>
-
-                <Form.Item label="Толщина металла короба">
-                    <Select 
-                        items={thickMetalBoxes} 
-                        value={thickMetalBox} 
-                        onChange={ (value) => dispatch(setThickMetalBox(value))}                        
-                    />
-                </Form.Item>
-            </Form>
+            <Divider >Толщина металла</Divider>    
+            <Row gutter={24}>
+                <Col span={12}>
+                    <Form.Item label="Толщина металла полотна">
+                        <Select 
+                            items={thickMetalLeafs} 
+                            value={thickMetalLeaf} 
+                            onChange={ (value) => dispatch(setThickMetalLeaf(value))}                        
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item label="Толщина металла короба">
+                        <Select 
+                            items={thickMetalBoxes} 
+                            value={thickMetalBox} 
+                            onChange={ (value) => dispatch(setThickMetalBox(value))}                        
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>                 
+        </Form>    
         </Container>
     )
 }
 
 export default Step2
 
-const Container = styled.div`
-    
+const Container = styled.div`         
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    >*{
+        width: 90%;
+    }
 `;

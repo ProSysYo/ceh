@@ -19,7 +19,7 @@ export default SummaryItem
 const Title = styled.label<{value: any}>`
     font-size: 12px;
     transition: 0.5s linear;
-    color: ${props => (props.value ? 'blue' : 'black')}; 
+    color: ${props => (props.value ? 'black' : '#6b6d6d45')}; 
 `;
 
 const Value = styled.label`

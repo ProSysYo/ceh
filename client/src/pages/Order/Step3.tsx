@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Col, Divider, Form, Row } from 'antd';
+import { Col, Divider, Form, Input, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -21,16 +21,6 @@ import {
 } from '../../store/slices/orderSlice';
 import { changeBaseLock, changeOptionalLock } from '../../store/actions/orderActions';
 
-const formItemLayout = {
-    labelCol: { span: 9 },
-    wrapperCol: { span: 5 },
-};
-const formTailLayout = {
-    labelCol: { span: 9 },
-    wrapperCol: { span: 11 },
-};
-
-
 const Step3: FC = () => {
     const dispatch = useAppDispatch()
 
@@ -49,149 +39,179 @@ const Step3: FC = () => {
         <Container>
             <Form
                 name="basic"
-                size = "middle"  
+                size = "middle"
+                labelCol={{ span: 12 }}
+                wrapperCol={{ span: 12 }} 
             >
                 <Divider >Основной замок</Divider>
-                
-                <Form.Item label="Основной замок*" {...formItemLayout}>
-                    <Select
-                        items={baseLocks}
-                        value={baseLock}
-                        onChange={(value) => dispatch(changeBaseLock(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label={<Title>Вертушок основного замка</Title>} {...formItemLayout}>
-                    <Select
-                        items={spinners}
-                        value={lockSpinner}
-                        disabled={!isLockSpinner}
-                        onChange={(value) => dispatch(setLockSpinner(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Цилиндр основного замка" {...formItemLayout}>
-                    <Select
-                        items={cylinders}
-                        value={baseCylinder}
-                        disabled={!isBaseCylinder}
-                        onChange={(value) => dispatch(setBaseCylinder(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Накладки основного замка" {...formTailLayout}>
-                    <Row gutter={10}>
-                        <Col span={12}>
+                <Row gutter={1}>
+                    <Col span={12}>
+                        <Form.Item label="Основной замок*" >
                             <Select
-                                items={baseCovers}
-                                value={baseCoverOutside}
-                                onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                items={baseLocks}
+                                value={baseLock}
+                                onChange={(value) => dispatch(changeBaseLock(value))}
                             />
-                        </Col>
-                        <Col span={12}>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Цилиндр основного замка">
+                            <Select
+                                items={cylinders}
+                                value={baseCylinder}
+                                disabled={!isBaseCylinder}
+                                onChange={(value) => dispatch(setBaseCylinder(value))}
+                            />
+                        </Form.Item>
+                        <Form.Item label={<Title>Вертушок основного замка</Title>}>
+                            <Select
+                                items={spinners}
+                                value={lockSpinner}
+                                disabled={!isLockSpinner}
+                                onChange={(value) => dispatch(setLockSpinner(value))}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider >Накладки основного замка</Divider>  
+                <Row gutter={24}>
+                    <Col span={12}>                        
+                        <Form.Item label="Снаружи">
+                            <Input.Group compact>
+                                <Select 
+                                    items={baseCovers}
+                                    value={baseCoverOutside}
+                                    onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                />
+                                <Select 
+                                    items={baseCovers}
+                                    value={baseCoverOutside}
+                                    onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                />
+                            </Input.Group>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Внутри">
                             <Select
                                 items={baseCovers}
                                 value={baseCoverInside}
                                 onChange={(value) => dispatch(setBaseCoverInside(value))}
                             />
-                        </Col>
-                    </Row>
-                </Form.Item>
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Form.Item label="Накладки основного замка 2 (сувальда)" {...formTailLayout}>
-                    <Row gutter={10}>
-                        <Col span={12}>
+                <Divider >Накладки основного замка сувальда (если двухсистемный замок)</Divider>  
+                <Row gutter={24}>
+                    <Col span={12}>
+                        <Form.Item label="Снаружи">
                             <Select
                                 items={baseCovers2}
                                 value={baseCoverOutside2}
                                 disabled={!isBaseCover2}
                                 onChange={(value) => dispatch(setBaseCoverOutside2(value))}
                             />
-                        </Col>
-
-                        <Col span={12}>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Внутри">
                             <Select
                                 items={baseCovers2}
                                 value={baseCoverInside2}
                                 disabled={!isBaseCover2}
                                 onChange={(value) => dispatch(setBaseCoverInside2(value))}
                             />
-                        </Col>
-                    </Row>
-                </Form.Item>
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Divider >Дополнительный замок</Divider>
-                <Form.Item label="Дополнительный замок*" {...formItemLayout}>
-                    <Select
-                        items={optionalLocks}
-                        value={optionalLock}
-                        onChange={(value) => dispatch(changeOptionalLock(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Цилиндр дополнительного замка" {...formItemLayout}>
-                    <Select
-                        items={cylinders}
-                        value={optionalCylinder}
-                        disabled={!isOptionalCylinder}
-                        onChange={(value) => dispatch(setOptionalCylinder(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Накладки дополнительного замка" {...formTailLayout}>
-                    <Row gutter={10}>
-                        <Col span={12}>
+                <Divider >Дополнительный замок</Divider>  
+                <Row gutter={24}>
+                    <Col span={12}>
+                        <Form.Item label="Дополнительный замок*">
+                            <Select
+                                items={optionalLocks}
+                                value={optionalLock}
+                                onChange={(value) => dispatch(changeOptionalLock(value))}
+                            />
+                    </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Цилиндр дополнительного замка">
+                            <Select
+                                items={cylinders}
+                                value={optionalCylinder}
+                                disabled={!isOptionalCylinder}
+                                onChange={(value) => dispatch(setOptionalCylinder(value))}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider >Накладки дополнительного замка</Divider>  
+                <Row gutter={24}>
+                    <Col span={12}>
+                        <Form.Item label="Снаружи">
                             <Select
                                 items={optionalCovers}
                                 value={optionalCoverOutside}
                                 onChange={(value) => dispatch(setIsOptonalCoverOutside(value))}
                             />
-                        </Col>
-                        <Col span={12}>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Внутри">
                             <Select
                                 items={optionalCovers}
                                 value={optionalCoverInside}
                                 onChange={(value) => dispatch(setIsOptonalCoverInside(value))}
                             />
-                        </Col>
-                    </Row>
-                </Form.Item>
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Divider></Divider>
-                <Form.Item label="Глазок" {...formTailLayout}>
-                    <Row gutter={10}>
-                        <Col span={12}>
+                <Divider>Глазок</Divider>             
+                <Row gutter={24}>
+                    <Col span={12}>
+                        <Form.Item label="Глазок">
                             <Select
                                 items={eyes}
                                 value={eye}
                                 onChange={(value) => dispatch(setEye(value))}
                             />
-                        </Col>
-                        <Col span={12}>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Расположение глазка">
                             <Select
                                 items={eyeLocations}
                                 value={eyeLocation}
                                 onChange={(value) => dispatch(setEyeLocation(value))}
                             />
-                        </Col>
-                    </Row>
-                </Form.Item>
-
-                <Form.Item label="Ручка" {...formItemLayout}>
-                    <Select
-                        items={handles}
-                        value={handle}
-                        onChange={(value) => dispatch(setHandle(value))}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Вертушок" {...formItemLayout}>
-                    <Select
-                        items={spinners}
-                        value={spinner}
-                        onChange={(value) => dispatch(setSpinner(value))}
-                    />
-                </Form.Item>
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Divider/>
+                <Row gutter={24}>
+                    <Col span={12}>
+                        <Form.Item label="Ручка">
+                            <Select
+                                items={handles}
+                                value={handle}
+                                onChange={(value) => dispatch(setHandle(value))}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Вертушок">
+                            <Select
+                                items={spinners}
+                                value={spinner}
+                                onChange={(value) => dispatch(setSpinner(value))}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
             </Form>
         </Container>
     )
@@ -200,7 +220,12 @@ const Step3: FC = () => {
 export default Step3
 
 const Container = styled.div`
-    
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    >*{
+        width: 90%;
+    }
 `;
 
 const Title = styled.label`

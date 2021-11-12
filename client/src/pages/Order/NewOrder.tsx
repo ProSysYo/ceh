@@ -92,7 +92,7 @@ const StyledSpin = styled(Spin)`
 
 const StyledButton = styled(Button)`
     position: absolute;
-    bottom: 5%;
+    bottom: 7%;
     right: 5%;    
 `;
 

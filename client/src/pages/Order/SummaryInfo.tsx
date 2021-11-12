@@ -145,9 +145,9 @@ const Group = styled.div`
     width: 100%;
     font-size: 11px;
     margin-bottom:10px;
-    border: 1px solid #acafaf45;
-    border-radius:3px;
     > * {
-        margin-left: 5px;
+        margin-left: 5px;        
+        border-bottom: 1px solid #acafaf45;
+        width:100%;
     }    
 `

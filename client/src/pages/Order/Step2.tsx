@@ -21,7 +21,7 @@ const Step2: FC = () => {
     
     const {
         model, contour, doorThick, height, width,
-        modelBox, openingType, isDouble, widthDouble, locationHinge, isThreeHinge, typeHinge,
+        modelBox, openingType, isDouble, widthDouble, locationHinge, typeHinge,
         thickMetalLeaf, thickMetalBox
     } = useAppSelector(state => state.order.order)
 
@@ -115,10 +115,17 @@ const Step2: FC = () => {
                     </Form.Item>
                 </Col>
 
-                <Col span={8}> 
-                    <Form.Item label="Третья петля">
-                        <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))}/>
+                <Col span={8}>
+                    <Form.Item label="Количество петель?">
+                        <Select 
+                            items={typeHinges} 
+                            value={typeHinge} 
+                            onChange={ (value) => dispatch(setTypeHinge(value))}                        
+                        />
                     </Form.Item>
+                    {/* <Form.Item label="Третья петля">
+                        <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))}/>
+                    </Form.Item> */}
                 </Col>
             </Row> 
 
@@ -153,7 +160,7 @@ export default Step2
 const Container = styled.div`         
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     >*{
         width: 90%;
     }

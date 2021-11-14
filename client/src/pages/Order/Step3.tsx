@@ -44,9 +44,9 @@ const Step3: FC = () => {
                 wrapperCol={{ span: 12 }} 
             >
                 <Divider >Основной замок</Divider>
-                <Row gutter={1}>
-                    <Col span={12}>
-                        <Form.Item label="Основной замок*" >
+                <Row gutter={6}>
+                    <Col span={8}>
+                        <Form.Item label="Основной замок*" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
                             <Select
                                 items={baseLocks}
                                 value={baseLock}
@@ -54,16 +54,18 @@ const Step3: FC = () => {
                             />
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
-                        <Form.Item label="Цилиндр основного замка">
+                    <Col span={8}>
+                        <Form.Item label="Цилиндр" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
                             <Select
                                 items={cylinders}
                                 value={baseCylinder}
                                 disabled={!isBaseCylinder}
                                 onChange={(value) => dispatch(setBaseCylinder(value))}
                             />
-                        </Form.Item>
-                        <Form.Item label={<Title>Вертушок основного замка</Title>}>
+                        </Form.Item>                        
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item label={<Title>Вертушок</Title>} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
                             <Select
                                 items={spinners}
                                 value={lockSpinner}
@@ -75,30 +77,45 @@ const Step3: FC = () => {
                 </Row>
                 <Divider >Накладки основного замка</Divider>  
                 <Row gutter={24}>
-                    <Col span={12}>                        
-                        <Form.Item label="Снаружи">
-                            <Input.Group compact>
-                                <Select 
-                                    items={baseCovers}
-                                    value={baseCoverOutside}
-                                    onChange={(value) => dispatch(setBaseCoverOutside(value))}
-                                />
-                                <Select 
-                                    items={baseCovers}
-                                    value={baseCoverOutside}
-                                    onChange={(value) => dispatch(setBaseCoverOutside(value))}
-                                />
-                            </Input.Group>
-                        </Form.Item>
+                    <Col span={12}>       
+                        <Form.Item label="Снаружи" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select 
+                                        items={baseCovers}
+                                        value={baseCoverOutside}
+                                        onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={baseCovers}
+                                        value={baseCoverOutside}
+                                        onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                     <Col span={12}>
-                        <Form.Item label="Внутри">
-                            <Select
-                                items={baseCovers}
-                                value={baseCoverInside}
-                                onChange={(value) => dispatch(setBaseCoverInside(value))}
-                            />
-                        </Form.Item>
+                        <Form.Item label="Внутри" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select
+                                        items={baseCovers}
+                                        value={baseCoverInside}
+                                        onChange={(value) => dispatch(setBaseCoverInside(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={baseCovers}
+                                        value={baseCoverOutside}
+                                        onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                 </Row>
 
@@ -224,7 +241,7 @@ const Container = styled.div`
     justify-content: center;
     width: 90%;
     >*{
-        width: 90%;
+        width: 95%;
     }
 `;
 

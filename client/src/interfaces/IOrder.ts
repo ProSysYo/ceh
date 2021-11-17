@@ -19,10 +19,17 @@ export interface IOrder {
     baseLock: string;    
     lockSpinner: string;
     baseCylinder: string;
+
     baseCoverOutside: string;
+    baseCoverColorOutside: string;
     baseCoverInside: string;
+    baseCoverColorInside: string;
+
     baseCoverOutside2: string;
+    baseCoverColorOutside2: string;
     baseCoverInside2: string;
+    baseCoverColorInside2: string;
+
     optionalLock: string;
     optionalCylinder: string;
     optionalCoverOutside: string,

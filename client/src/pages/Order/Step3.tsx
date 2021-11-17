@@ -1,10 +1,14 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Col, Divider, Form, Input, Row } from 'antd';
+import { Col, Divider, Form, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import {
+    setBaseCoverColorInside,
+    setBaseCoverColorInside2,
+    setBaseCoverColorOutside,
+    setBaseCoverColorOutside2,
     setBaseCoverInside,
     setBaseCoverInside2,
     setBaseCoverOutside,
@@ -26,12 +30,13 @@ const Step3: FC = () => {
 
     const {
         baseLocks, optionalLocks, spinners, cylinders, baseCovers, baseCovers2, isLockSpinner, isBaseCylinder, isBaseCover2,
-        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations
+        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations, fittingColors
     } = useAppSelector(state => state.order)
 
     const {
         baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside, baseCoverOutside2, baseCoverInside2, optionalLock,
-        optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation
+        optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation, baseCoverColorInside, baseCoverColorOutside,
+        baseCoverColorOutside2, baseCoverColorInside2
     } = useAppSelector(state => state.order.order)
 
 
@@ -75,6 +80,7 @@ const Step3: FC = () => {
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Divider >Накладки основного замка</Divider>  
                 <Row gutter={24}>
                     <Col span={12}>       
@@ -89,9 +95,9 @@ const Step3: FC = () => {
                                 </Col>
                                 <Col span={9}>
                                     <Select 
-                                        items={baseCovers}
-                                        value={baseCoverOutside}
-                                        onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                        items={fittingColors}
+                                        value={baseCoverColorOutside}
+                                        onChange={(value) => dispatch(setBaseCoverColorOutside(value))}
                                     />
                                 </Col>
                             </Row>
@@ -109,9 +115,9 @@ const Step3: FC = () => {
                                 </Col>
                                 <Col span={9}>
                                     <Select 
-                                        items={baseCovers}
-                                        value={baseCoverOutside}
-                                        onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                        items={fittingColors}
+                                        value={baseCoverColorInside}
+                                        onChange={(value) => dispatch(setBaseCoverColorInside(value))}
                                     />
                                 </Col>
                             </Row>
@@ -119,29 +125,53 @@ const Step3: FC = () => {
                     </Col>
                 </Row>
 
-                <Divider >Накладки основного замка сувальда (если двухсистемный замок)</Divider>  
+                <Divider >Накладки основного замка сувальда (если двухсистемный замок)</Divider>
                 <Row gutter={24}>
-                    <Col span={12}>
-                        <Form.Item label="Снаружи">
-                            <Select
-                                items={baseCovers2}
-                                value={baseCoverOutside2}
-                                disabled={!isBaseCover2}
-                                onChange={(value) => dispatch(setBaseCoverOutside2(value))}
-                            />
-                        </Form.Item>
+                    <Col span={12}>       
+                        <Form.Item label="Снаружи" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select 
+                                        items={baseCovers2}
+                                        value={baseCoverOutside2}
+                                        disabled={!isBaseCover2}
+                                        onChange={(value) => dispatch(setBaseCoverOutside2(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={fittingColors}
+                                        value={baseCoverColorOutside2}
+                                        disabled={!isBaseCover2}
+                                        onChange={(value) => dispatch(setBaseCoverColorOutside2(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                     <Col span={12}>
-                        <Form.Item label="Внутри">
-                            <Select
-                                items={baseCovers2}
-                                value={baseCoverInside2}
-                                disabled={!isBaseCover2}
-                                onChange={(value) => dispatch(setBaseCoverInside2(value))}
-                            />
-                        </Form.Item>
+                        <Form.Item label="Внутри" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select
+                                        items={baseCovers2}
+                                        value={baseCoverInside2}
+                                        disabled={!isBaseCover2}
+                                        onChange={(value) => dispatch(setBaseCoverInside2(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={fittingColors}
+                                        value={baseCoverColorInside2}
+                                        disabled={!isBaseCover2}
+                                        onChange={(value) => dispatch(setBaseCoverColorInside2(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
-                </Row>
+                </Row>                
 
                 <Divider >Дополнительный замок</Divider>  
                 <Row gutter={24}>
@@ -208,6 +238,7 @@ const Step3: FC = () => {
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Divider/>
                 <Row gutter={24}>
                     <Col span={12}>

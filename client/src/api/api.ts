@@ -26,6 +26,7 @@ import { IJamb } from '../interfaces/IJamb';
 import { ILocationJamb } from '../interfaces/ILocationJamb';
 import { IOrder } from '../interfaces/IOrder';
 import { http } from '../commons/http';
+import { IFittingColor } from '../interfaces/IFittingColor';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -236,6 +237,13 @@ const locationJambs: ILocationJamb[] = [
     { _id: "2", value: "со стороны петель", name: "со стороны петель" },       
     { _id: "3", value: "с противоп. стороны петель", name: "с противоп. стороны петель" },       
 ];
+
+const fittingColors: IFittingColor[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "хром", name: "хром" },       
+    { _id: "3", value: "бронза", name: "бронза" },       
+];
+
 const deley = 50
 
 const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
@@ -265,6 +273,7 @@ const getThickMetalLeafs = () => new Promise<{data: IThickMetal[]}>((res) => { s
 const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalBoxes}), deley) })
 const getJambs = () => new Promise<{data: IJamb[]}>((res) => { setTimeout(() => res({data: jambs}), deley) })
 const getLocationJambs = () => new Promise<{data: ILocationJamb[]}>((res) => { setTimeout(() => res({data: locationJambs}), deley) })
+const getFittingColors = () => new Promise<{data: IFittingColor[]}>((res) => { setTimeout(() => res({data: fittingColors}), deley) })
 
 
 
@@ -302,5 +311,6 @@ export const api = {
     getEyeLocations,
     getJambs,
     getLocationJambs,
+    getFittingColors,
     createOrder
 }

@@ -26,6 +26,7 @@ import { IThickMetal } from '../../interfaces/IThickMetal';
 import { IEyeLocation } from '../../interfaces/IEyeLocation';
 import { IJamb } from '../../interfaces/IJamb';
 import { ILocationJamb } from '../../interfaces/ILocationJamb';
+import { IFittingColor } from '../../interfaces/IFittingColor';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -39,9 +40,12 @@ interface OrderSate {
     optionalLocks: ILock[];
     spinners: ISpinner[];
     cylinders: ICylinder[];
-    covers: ICover[];
+    fittingColors: IFittingColor[], 
+
+    covers: ICover[];       
     baseCovers: ICover[];
     baseCovers2: ICover[];
+
     optionalCovers: ICover[];
     eyes: IEye[];
     eyeLocations: IEyeLocation[];
@@ -66,7 +70,8 @@ interface OrderSate {
     thickMetalBoxes: IThickMetal[],
     jambs: IJamb[],
     currentJambs: IJamb[],
-    locationJambs: ILocationJamb[],    
+    locationJambs: ILocationJamb[],
+      
 
     isLoading: boolean;
     isLockSpinner: boolean;
@@ -127,6 +132,7 @@ const initialState: OrderSate = {
     jambs: [],
     currentJambs: [],
     locationJambs: [],
+    fittingColors: [],
 
     isLoading: false,
     isLockSpinner: false,
@@ -161,13 +167,22 @@ const initialState: OrderSate = {
         locationHinge: "",
         isThreeHinge: false,
         typeHinge: "",
+
         baseLock: "",
         lockSpinner: "нет",
+
         baseCylinder: "нет",
+
         baseCoverOutside: "",
+        baseCoverColorOutside: "",
         baseCoverInside: "",
+        baseCoverColorInside: "",
+
         baseCoverOutside2: "нет",
+        baseCoverColorOutside2: "нет",
         baseCoverInside2: "нет",
+        baseCoverColorInside2: "нет",
+
         optionalLock: "",
         optionalCylinder: "нет",
         optionalCoverOutside: "",
@@ -252,6 +267,7 @@ export const orderSlice = createSlice({
         setJambs: (state, action: PayloadAction<IJamb[]>) => { state.jambs = action.payload },
         setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.currentJambs = action.payload },
         setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
+        setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
 
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -271,10 +287,17 @@ export const orderSlice = createSlice({
         setIsLockSpinner: (state, action: PayloadAction<boolean>) => { state.isLockSpinner = action.payload },
         setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },
         setIsBaseCylinder: (state, action: PayloadAction<boolean>) => { state.isBaseCylinder = action.payload },
-        setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },
+        
+        setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },        
+        setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside = action.payload },        
         setBaseCoverInside: (state, action: PayloadAction<string>) => { state.order.baseCoverInside = action.payload },
+        setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside = action.payload },
+
         setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside2 = action.payload },
+        setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside2 = action.payload },        
         setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverInside2 = action.payload },
+        setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
+
         setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
         setOptionalLock: (state, action: PayloadAction<string>) => { state.order.optionalLock = action.payload },
         setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
@@ -445,6 +468,11 @@ export const {
     setIsCloser,
     setIsEnhanceCloser,
     setValidateErrors,
+    setFittingColors,
+    setBaseCoverColorOutside,
+    setBaseCoverColorInside,
+    setBaseCoverColorOutside2,
+    setBaseCoverColorInside2
 } = orderSlice.actions
 
 export default orderSlice.reducer

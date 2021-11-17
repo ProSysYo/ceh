@@ -88,7 +88,8 @@ import {
     setOpeningType,
     setIsLocationJumb,
     setLocationJumb,
-    setValidateErrors
+    setValidateErrors,
+    setFittingColors
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -99,6 +100,7 @@ import { IWindow } from '../../interfaces/IWindow';
 import { IJamb } from "../../interfaces/IJamb";
 import { IOrder } from '../../interfaces/IOrder';
 
+//fetch actions
 export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
         try {            
@@ -398,6 +400,17 @@ export const fetchLocationJumbs = () => {
         }
     }
 }
+
+export const fetchFittingColors = () => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getFittingColors()            
+            dispatch(setFittingColors(response.data))
+        } catch (e) {
+            console.log(e)            
+        }
+    }
+}
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
@@ -430,7 +443,8 @@ export const fetchAll = () => {
             await dispatch(fetchThickMetalLeafs())
             await dispatch(fetchThickMetalBoxes())
             await dispatch(fetchJambs())         
-            await dispatch(fetchLocationJumbs())         
+            await dispatch(fetchLocationJumbs()) 
+            await dispatch(fetchFittingColors())       
 
             dispatch(setLoading(false))
         } catch (e) {
@@ -438,6 +452,8 @@ export const fetchAll = () => {
         }
     }
 }
+
+//user handle actions
 
 export const changeModel = (model: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {

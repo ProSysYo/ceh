@@ -104,8 +104,8 @@ const covers: ICover[] = [
 const eyes: IEye[] = [
     { _id: "1", value: "нет", name: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим." },
-    { _id: "3", value: "хром", name: "хром" },
-    { _id: "4", value: "хром", name: "хром" },
+    { _id: "3", value: "Armadillo", name: "Armadillo" },
+    { _id: "4", value: "Fuaro", name: "Fuaro" },
 ];
 
 const eyeLocations: IEyeLocation[] = [

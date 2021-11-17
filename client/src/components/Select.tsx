@@ -5,10 +5,11 @@ interface SelectProps {
     items: any[];
     value: string | number;
     disabled?: boolean;    
-    onChange?: (value: any, e: any) => void;   
+    onChange?: (value: any, e: any) => void;
+    firstOption?: string;
 }
 
-const Select: FC<SelectProps> = ({items, value, onChange, disabled = false}) => {
+const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано"}) => {
     return (
         <SelectAnt
             value={value}
@@ -17,7 +18,7 @@ const Select: FC<SelectProps> = ({items, value, onChange, disabled = false}) => 
             disabled={disabled}            
             onChange={onChange}              
         >
-            <SelectAnt.Option value="" disabled>не выбрано</SelectAnt.Option>
+            <SelectAnt.Option value="" disabled>{firstOption}</SelectAnt.Option>
             {items.map((item, index) => 
                 <SelectAnt.Option 
                 key={item._id ? item._id : index} 

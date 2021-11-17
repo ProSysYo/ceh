@@ -32,8 +32,8 @@ import {
     setIsOptonalCylinder,
     setOptionalCylinder,
     setOptionalCovers,
-    setIsOptonalCoverOutside,
-    setIsOptonalCoverInside,
+    setOptonalCoverOutside,
+    setOptonalCoverInside,
     setEyes,
     setHandles,
     setTypeDecorations,
@@ -797,8 +797,8 @@ export const changeOptionalLock = (value: string) => {
             dispatch(setIsOptonalCylinder(isOptionalCylinder))
             dispatch(setOptionalCylinder(optionalCylinder)) 
             dispatch(setOptionalCovers(optionalCovers)) 
-            dispatch(setIsOptonalCoverOutside(optionalCoverOutside)) 
-            dispatch(setIsOptonalCoverInside(optionalCoverInside)) 
+            dispatch(setOptonalCoverOutside(optionalCoverOutside)) 
+            dispatch(setOptonalCoverInside(optionalCoverInside)) 
 
         } catch (e) {
             console.log(e);            

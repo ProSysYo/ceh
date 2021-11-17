@@ -186,10 +186,16 @@ const initialState: OrderSate = {
         optionalLock: "",
         optionalCylinder: "нет",
         optionalCoverOutside: "",
+        optionalCoverColorOutside: "",
         optionalCoverInside: "",
+        optionalCoverColorInside: "",
+
         eye: "",
+        colorEye: "",
         eyeLocation: "",
+
         handle: "",
+
         spinner: "",
         typeDecorationOutside: "",
         decorationOutside: "",
@@ -299,13 +305,19 @@ export const orderSlice = createSlice({
         setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
 
         setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
+
         setOptionalLock: (state, action: PayloadAction<string>) => { state.order.optionalLock = action.payload },
         setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
         setIsOptonalCylinder: (state, action: PayloadAction<boolean>) => { state.isOptionalCylinder = action.payload },
-        setIsOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
-        setIsOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
-        setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },
+        setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
+        setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorOutside = action.payload },
+        setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
+        setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorInside = action.payload },
+
+        setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },        
+        setColorEye: (state, action: PayloadAction<string>) => { state.order.colorEye = action.payload },        
         setEyeLocation: (state, action: PayloadAction<string>) => { state.order.eyeLocation = action.payload },
+
         setHandle: (state, action: PayloadAction<string>) => { state.order.handle = action.payload },
         setSpinner: (state, action: PayloadAction<string>) => { state.order.spinner = action.payload },
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
@@ -401,8 +413,8 @@ export const {
     setOptionalCylinder,
     setIsOptonalCylinder,
     setOptionalCovers,
-    setIsOptonalCoverOutside,
-    setIsOptonalCoverInside,
+    setOptonalCoverOutside,
+    setOptonalCoverInside,
     setEyes,
     setEye,
     setHandles,
@@ -472,7 +484,10 @@ export const {
     setBaseCoverColorOutside,
     setBaseCoverColorInside,
     setBaseCoverColorOutside2,
-    setBaseCoverColorInside2
+    setBaseCoverColorInside2,
+    setColorEye,
+    setOptonalCoverColorOutside,
+    setOptonalCoverColorInside
 } = orderSlice.actions
 
 export default orderSlice.reducer

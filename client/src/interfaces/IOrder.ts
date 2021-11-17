@@ -33,9 +33,14 @@ export interface IOrder {
     optionalLock: string;
     optionalCylinder: string;
     optionalCoverOutside: string,
+    optionalCoverColorOutside: string,
     optionalCoverInside: string,
+    optionalCoverColorInside: string,
+
     eye: string;
+    colorEye: string;
     eyeLocation: string;
+
     handle: string;
     spinner: string;
     typeDecorationOutside: string;    

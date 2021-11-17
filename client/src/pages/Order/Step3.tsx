@@ -14,14 +14,17 @@ import {
     setBaseCoverOutside,
     setBaseCoverOutside2,
     setBaseCylinder,
+    setColorEye,
     setEye,
     setEyeLocation,
     setHandle,
-    setIsOptonalCoverInside,
-    setIsOptonalCoverOutside,
+    setOptonalCoverInside,
+    setOptonalCoverOutside,
     setLockSpinner,
     setOptionalCylinder,
     setSpinner,
+    setOptonalCoverColorOutside,
+    setOptonalCoverColorInside,
 } from '../../store/slices/orderSlice';
 import { changeBaseLock, changeOptionalLock } from '../../store/actions/orderActions';
 
@@ -36,7 +39,7 @@ const Step3: FC = () => {
     const {
         baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside, baseCoverOutside2, baseCoverInside2, optionalLock,
         optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation, baseCoverColorInside, baseCoverColorOutside,
-        baseCoverColorOutside2, baseCoverColorInside2
+        baseCoverColorOutside2, baseCoverColorInside2, colorEye, optionalCoverColorOutside, optionalCoverColorInside
     } = useAppSelector(state => state.order.order)
 
 
@@ -97,6 +100,7 @@ const Step3: FC = () => {
                                     <Select 
                                         items={fittingColors}
                                         value={baseCoverColorOutside}
+                                        firstOption="выберите цвет"
                                         onChange={(value) => dispatch(setBaseCoverColorOutside(value))}
                                     />
                                 </Col>
@@ -117,6 +121,7 @@ const Step3: FC = () => {
                                     <Select 
                                         items={fittingColors}
                                         value={baseCoverColorInside}
+                                        firstOption="выберите цвет"
                                         onChange={(value) => dispatch(setBaseCoverColorInside(value))}
                                     />
                                 </Col>
@@ -143,6 +148,7 @@ const Step3: FC = () => {
                                         items={fittingColors}
                                         value={baseCoverColorOutside2}
                                         disabled={!isBaseCover2}
+                                        firstOption="выберите цвет"
                                         onChange={(value) => dispatch(setBaseCoverColorOutside2(value))}
                                     />
                                 </Col>
@@ -165,6 +171,7 @@ const Step3: FC = () => {
                                         items={fittingColors}
                                         value={baseCoverColorInside2}
                                         disabled={!isBaseCover2}
+                                        firstOption="выберите цвет"                                       
                                         onChange={(value) => dispatch(setBaseCoverColorInside2(value))}
                                     />
                                 </Col>
@@ -195,38 +202,75 @@ const Step3: FC = () => {
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Divider >Накладки дополнительного замка</Divider>  
                 <Row gutter={24}>
-                    <Col span={12}>
-                        <Form.Item label="Снаружи">
-                            <Select
-                                items={optionalCovers}
-                                value={optionalCoverOutside}
-                                onChange={(value) => dispatch(setIsOptonalCoverOutside(value))}
-                            />
-                        </Form.Item>
+                    <Col span={12}>       
+                        <Form.Item label="Снаружи" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select 
+                                        items={optionalCovers}
+                                        value={optionalCoverOutside}
+                                        onChange={(value) => dispatch(setOptonalCoverOutside(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={fittingColors}
+                                        value={optionalCoverColorOutside}
+                                        firstOption="выберите цвет"
+                                        onChange={(value) => dispatch(setOptonalCoverColorOutside(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                     <Col span={12}>
-                        <Form.Item label="Внутри">
-                            <Select
-                                items={optionalCovers}
-                                value={optionalCoverInside}
-                                onChange={(value) => dispatch(setIsOptonalCoverInside(value))}
-                            />
-                        </Form.Item>
+                        <Form.Item label="Внутри" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select
+                                        items={optionalCovers}
+                                        value={optionalCoverInside}
+                                        onChange={(value) => dispatch(setOptonalCoverInside(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={fittingColors}
+                                        value={optionalCoverColorInside}
+                                        firstOption="выберите цвет"
+                                        onChange={(value) => dispatch(setOptonalCoverColorInside(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                 </Row>
 
                 <Divider>Глазок</Divider>             
                 <Row gutter={24}>
                     <Col span={12}>
-                        <Form.Item label="Глазок">
-                            <Select
-                                items={eyes}
-                                value={eye}
-                                onChange={(value) => dispatch(setEye(value))}
-                            />
-                        </Form.Item>
+                        <Form.Item label="Глазок" labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+                            <Row>
+                                <Col span={15}>
+                                    <Select
+                                        items={eyes}
+                                        value={eye}
+                                        onChange={(value) => dispatch(setEye(value))}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Select 
+                                        items={fittingColors}
+                                        value={colorEye}
+                                        firstOption="выберите цвет"
+                                        onChange={(value) => dispatch(setColorEye(value))}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Item>                        
                     </Col>
                     <Col span={12}>
                         <Form.Item label="Расположение глазка">

@@ -76,6 +76,7 @@ interface OrderSate {
     isLoading: boolean;
     isLockSpinner: boolean;
     isBaseCylinder: boolean;
+    isBaseCover: boolean;
     isBaseCover2: boolean;
     isOptionalCylinder: boolean;
     isWrapOutside: boolean;
@@ -137,6 +138,7 @@ const initialState: OrderSate = {
     isLoading: false,
     isLockSpinner: false,
     isBaseCylinder: false,
+    isBaseCover: false,
     isBaseCover2: false,
     isOptionalCylinder: false,
     isWrapOutside: false,
@@ -294,17 +296,17 @@ export const orderSlice = createSlice({
         setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },
         setIsBaseCylinder: (state, action: PayloadAction<boolean>) => { state.isBaseCylinder = action.payload },
         
+        setIsBaseCover: (state, action: PayloadAction<boolean>) => { state.isBaseCover = action.payload },
         setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },        
         setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside = action.payload },        
         setBaseCoverInside: (state, action: PayloadAction<string>) => { state.order.baseCoverInside = action.payload },
         setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside = action.payload },
 
+        setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
         setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside2 = action.payload },
         setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside2 = action.payload },        
         setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverInside2 = action.payload },
         setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
-
-        setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
 
         setOptionalLock: (state, action: PayloadAction<string>) => { state.order.optionalLock = action.payload },
         setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
@@ -487,7 +489,8 @@ export const {
     setBaseCoverColorInside2,
     setColorEye,
     setOptonalCoverColorOutside,
-    setOptonalCoverColorInside
+    setOptonalCoverColorInside,
+    setIsBaseCover
 } = orderSlice.actions
 
 export default orderSlice.reducer

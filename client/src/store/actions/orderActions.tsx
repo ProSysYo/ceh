@@ -89,7 +89,12 @@ import {
     setIsLocationJumb,
     setLocationJumb,
     setValidateErrors,
-    setFittingColors
+    setFittingColors,
+    setBaseCoverColorOutside,
+    setBaseCoverColorInside,
+    setBaseCoverColorOutside2,
+    setBaseCoverColorInside2,
+    setIsBaseCover
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -685,64 +690,128 @@ export const changeBaseLock = (value: string) => {
             let baseCovers: ICover[] = []
             let baseCovers2: ICover[] = []
 
+            
             let isBaseCylinder: boolean = false
-            let baseCylinder: string = "" 
+            let baseCylinder: string = "нет" 
 
-            let baseCoverOutside: string = ""
-            let baseCoverInside: string = ""
+            let isBaseCover: boolean = false
+            let baseCoverOutside: string = "нет"
+            let baseCoverColorOutside: string = "нет"
+            let baseCoverInside: string = "нет"
+            let baseCoverColorInside: string = "нет"
 
             let isBaseCover2: boolean = false
             let baseCoverOutside2: string = "нет"
-            let baseCoverInside2: string = "нет"          
+            let baseCoverColorOutside2: string = "нет"
+            let baseCoverInside2: string = "нет"         
+            let baseCoverColorInside2: string = "нет"         
             
             switch (baseLock?.type) {
-                case "цилиндр":                
+                case "цилиндр":
+                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")               
+                    
                     isBaseCylinder = true                    
                     baseCylinder = ""
-                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    isBaseCover = true
+                    baseCoverOutside = ""
+                    baseCoverColorOutside = ""
+                    baseCoverInside= ""
+                    baseCoverColorInside = ""
+                    isBaseCover2 = false
+                    baseCoverOutside2 = "нет"
+                    baseCoverColorOutside2 = "нет"
+                    baseCoverInside2 = "нет"
+                    baseCoverColorInside2 = "нет"
                     break
                 case "двухсистемный":
-                    isBaseCylinder = true                    
-                    baseCylinder = ""
-                    isBaseCover2 = true
-                    baseCoverOutside2 = ""
-                    baseCoverInside2 = ""
                     baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
                     baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    
+                    isBaseCylinder = true                    
+                    baseCylinder = ""
+                    isBaseCover = true
+                    baseCoverOutside = ""
+                    baseCoverColorOutside = ""
+                    baseCoverInside= ""
+                    baseCoverColorInside = ""
+                    isBaseCover2 = true
+                    baseCoverOutside2 = ""
+                    baseCoverColorOutside2 = ""
+                    baseCoverInside2 = ""
+                    baseCoverColorInside2 = ""                    
                     break
                 case "сувальда":
+                    baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+
                     isBaseCylinder = false                    
                     baseCylinder = "нет"
-                    baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    isBaseCover = true
+                    baseCoverOutside = ""
+                    baseCoverColorOutside = ""
+                    baseCoverInside= ""
+                    baseCoverColorInside = ""
+                    isBaseCover2 = false
+                    baseCoverOutside2 = "нет"
+                    baseCoverColorOutside2 = "нет"
+                    baseCoverInside2 = "нет"
+                    baseCoverColorInside2 = "нет"                    
                     break
                 case "нет":
                 case "другое":
+                    baseCovers = covers.filter(cover => cover.type === "нет")
+
                     isBaseCylinder = false
                     baseCylinder = "нет"
+
+                    isBaseCover = false
                     baseCoverOutside = "нет"
-                    baseCoverInside = "нет"
-                    baseCovers = covers.filter(cover => cover.type === "нет")
-                    break
+                    baseCoverColorOutside = "нет"
+                    baseCoverInside= "нет"
+                    baseCoverColorInside = "нет"
+
+                    isBaseCover2 = false
+                    baseCoverOutside2 = "нет"
+                    baseCoverColorOutside2 = "нет"
+                    baseCoverInside2 = "нет"
+                    baseCoverColorInside2 = "нет" 
+                    break                
                 case "примечание":
+                    baseCovers = covers
+                    baseCovers2 = covers
+
                     isBaseCylinder = true
                     baseCylinder = ""
-                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+
+                    isBaseCover = true
+                    baseCoverOutside = ""
+                    baseCoverColorOutside = ""
+                    baseCoverInside= ""
+                    baseCoverColorInside = ""
+
                     isBaseCover2 = true
                     baseCoverOutside2 = ""
+                    baseCoverColorOutside2 = ""
                     baseCoverInside2 = ""
-                    baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    baseCoverColorInside2 = ""                    
                     break 
             }
 
             dispatch(setIsBaseCylinder(isBaseCylinder))
             dispatch(setBaseCylinder(baseCylinder))
+
+            dispatch(setIsBaseCover(isBaseCover))  
             dispatch(setBaseCovers(baseCovers))
             dispatch(setBaseCoverOutside(baseCoverOutside))
-            dispatch(setBaseCoverInside(baseCoverInside)) 
+            dispatch(setBaseCoverColorOutside(baseCoverColorOutside))
+            dispatch(setBaseCoverInside(baseCoverInside))
+            dispatch(setBaseCoverColorInside(baseCoverColorInside))
+
             dispatch(setBaseCovers2(baseCovers2))            
             dispatch(setIsBaseCover2(isBaseCover2))
             dispatch(setBaseCoverOutside2(baseCoverOutside2))
-            dispatch(setBaseCoverInside2(baseCoverInside2))            
+            dispatch(setBaseCoverColorOutside2(baseCoverColorOutside2))
+            dispatch(setBaseCoverInside2(baseCoverInside2))           
+            dispatch(setBaseCoverColorInside2(baseCoverColorInside2))           
                 
         } catch (e) {
             console.log(e);            

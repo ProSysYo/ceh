@@ -94,7 +94,10 @@ import {
     setBaseCoverColorInside,
     setBaseCoverColorOutside2,
     setBaseCoverColorInside2,
-    setIsBaseCover
+    setIsBaseCover,
+    setIsOptonalCover,
+    setOptonalCoverColorOutside,
+    setOptonalCoverColorInside
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -827,47 +830,65 @@ export const changeOptionalLock = (value: string) => {
             let isOptionalCylinder: boolean
             let optionalCylinder: string
             let optionalCovers: ICover[]
+            let isOptionalCover: boolean
             let optionalCoverOutside: string
+            let optionalCoverColorOutside: string
             let optionalCoverInside: string
+            let optionalCoverColorInside: string
 
             const { optionalLocks, covers } = getState().order                     
             const optionalLock = optionalLocks.find(lock => lock.value === value)
 
             switch (optionalLock?.type) {
                 case "цилиндр":
-                    isOptionalCylinder = true
-                    optionalCylinder = ""
                     optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    isOptionalCylinder = true
+                    isOptionalCover = true
+                    optionalCylinder = ""                    
                     optionalCoverOutside = ""
+                    optionalCoverColorOutside = ""
                     optionalCoverInside = ""
+                    optionalCoverColorInside = ""
                     break
                 case "сувальда":
-                    isOptionalCylinder = false
-                    optionalCylinder = "нет"
                     optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    isOptionalCylinder = false
+                    isOptionalCover = true
+                    optionalCylinder = "нет"                    
                     optionalCoverOutside = ""
+                    optionalCoverColorOutside = ""
                     optionalCoverInside = ""
+                    optionalCoverColorInside = ""
                     break  
                 case "примечание":
-                    isOptionalCylinder = true
-                    optionalCylinder = ""
                     optionalCovers = covers
+                    isOptionalCylinder = true
+                    isOptionalCover = true
+                    optionalCylinder = ""                    
                     optionalCoverOutside = ""
+                    optionalCoverColorOutside = ""
                     optionalCoverInside = ""
+                    optionalCoverColorInside = ""
                     break
-                default: 
-                    isOptionalCylinder = false
-                    optionalCylinder = "нет"
+                default:
                     optionalCovers = covers.filter(cover => cover.type === "нет")
+                    isOptionalCylinder = false
+                    isOptionalCover = false
+                    optionalCylinder = "нет"                    
                     optionalCoverOutside = "нет"
-                    optionalCoverInside = "нет"                   
+                    optionalCoverColorOutside = "нет"
+                    optionalCoverInside = "нет"
+                    optionalCoverColorInside = "нет"                  
             }           
             
             dispatch(setIsOptonalCylinder(isOptionalCylinder))
+            dispatch(setIsOptonalCover(isOptionalCover))
             dispatch(setOptionalCylinder(optionalCylinder)) 
             dispatch(setOptionalCovers(optionalCovers)) 
-            dispatch(setOptonalCoverOutside(optionalCoverOutside)) 
-            dispatch(setOptonalCoverInside(optionalCoverInside)) 
+            dispatch(setOptonalCoverOutside(optionalCoverOutside))
+            dispatch(setOptonalCoverColorOutside(optionalCoverColorOutside))
+            dispatch(setOptonalCoverInside(optionalCoverInside))
+            dispatch(setOptonalCoverColorInside(optionalCoverColorInside))
 
         } catch (e) {
             console.log(e);            

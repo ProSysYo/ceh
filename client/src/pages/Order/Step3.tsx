@@ -36,7 +36,7 @@ const Step3: FC = () => {
 
     const {
         baseLocks, optionalLocks, spinners, cylinders, baseCovers, baseCovers2, isLockSpinner, isBaseCylinder, isBaseCover2,
-        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations, fittingColors, isBaseCover
+        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations, fittingColors, isBaseCover, isOptionalCover
     } = useAppSelector(state => state.order)
 
     const {
@@ -195,6 +195,7 @@ const Step3: FC = () => {
                             <Select 
                                 items={optionalCovers}
                                 value={optionalCoverOutside}
+                                disabled={!isOptionalCover}
                                 onChange={(value) => dispatch(setOptonalCoverOutside(value))}
                             />
                         </Col>
@@ -202,6 +203,7 @@ const Step3: FC = () => {
                             <Select 
                                 items={fittingColors}
                                 value={optionalCoverColorOutside}
+                                disabled={!isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(setOptonalCoverColorOutside(value))}
                             />
@@ -215,6 +217,7 @@ const Step3: FC = () => {
                             <Select
                                 items={optionalCovers}
                                 value={optionalCoverInside}
+                                disabled={!isOptionalCover}
                                 onChange={(value) => dispatch(setOptonalCoverInside(value))}
                             />
                         </Col>
@@ -222,6 +225,7 @@ const Step3: FC = () => {
                             <Select 
                                 items={fittingColors}
                                 value={optionalCoverColorInside}
+                                disabled={!isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(setOptonalCoverColorInside(value))}
                             />

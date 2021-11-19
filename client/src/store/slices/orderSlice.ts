@@ -259,6 +259,7 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
+
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
         setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
         setModels: (state, action: PayloadAction<IModel[]>) => { state.models = action.payload },
@@ -358,7 +359,16 @@ export const orderSlice = createSlice({
         setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
         setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
-        setOpeningType: (state, action: PayloadAction<string>) => { state.order.openingType = action.payload },
+        setOpeningType: (state, action: PayloadAction<string>) => { 
+            state.order.openingType = action.payload
+            if (action.payload === "внутреннего") {
+                state.isLocationJamb = true
+                state.order.locationJumb = ""
+            } else {
+                state.isLocationJamb = false
+                state.order.locationJumb = "нет"
+            }
+        },
         
         setIsDouble: (state, action: PayloadAction<boolean>) => { 
             state.order.isDouble = action.payload
@@ -613,7 +623,45 @@ export const orderSlice = createSlice({
         setSpinnerColor: (state, action: PayloadAction<string>) => { state.order.spinnerColor = action.payload },
 
 
-        setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
+        setTypeDecorationOutside: (state, action: PayloadAction<string>) => { 
+            state.order.typeDecorationOutside = action.payload
+
+            const { typeDecorationsOutside, decorations } = state           
+
+            const selectedType = typeDecorationsOutside.find(item => item.value === action.payload)!
+            
+            switch (selectedType.variety) {
+                case "нет":
+                case "примечание":
+                    state.decorationsOutside = decorations.filter(item => item.variety === "нет")
+                    break
+                default: 
+                    state.decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+            }                        
+
+            switch (selectedType.type) {
+                case "панель":                                                      
+                    state.isWrapOutside = true
+                    state.isPatinaOutside = true
+                    state.order.wrapOutside = ""
+                    state.order.patinaOutside = ""
+                    break
+                case "металл":                                       
+                    state.isWrapOutside = false
+                    state.isPatinaOutside = false
+                    state.order.wrapOutside = "нет"
+                    state.order.patinaOutside = "нет"
+                    break
+                case "нет":
+                case "примечание":
+                    state.order.decorationOutside = "нет" 
+                    state.isWrapOutside = false
+                    state.isPatinaOutside = false
+                    state.order.wrapOutside = "нет"
+                    state.order.patinaOutside = "нет"
+                    break                
+            }
+        },
         setTypeDecorationInside: (state, action: PayloadAction<string>) => { state.order.typeDecorationInside = action.payload },
         setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },
         setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload },

@@ -361,69 +361,6 @@ export const fetchAll = () => {
 
 //user handle actions
 
-export const changeTypeDecorationOutside = (type: string) => {
-    return (dispatch: Dispatch, getState: () => RootState) => {
-        let decorationsOutside: IDecoration[] = []
-        let isWrapOutside: boolean = false
-        let isPatinaOutside: boolean = false
-        let wrapOutside: string = ""
-        let patinaOutside: string = ""
-        let decorationOutside: string = ""
-
-        try {            
-            dispatch(orderActions.setTypeDecorationOutside(type))
-
-            const { typeDecorationsOutside, decorations } = getState().order           
-
-            const selectedType = typeDecorationsOutside.find(item => item.value === type)!
-            
-            switch (selectedType.variety) {
-                case "нет":
-                case "примечание":
-                    decorationsOutside = decorations.filter(item => item.variety === "нет")
-                    break
-                default: 
-                    decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
-            }                        
-
-            switch (selectedType.type) {
-                case "панель":                                                      
-                    isWrapOutside = true
-                    isPatinaOutside = true
-                    wrapOutside = ""
-                    patinaOutside = ""
-                    break
-                case "металл":                                       
-                    isWrapOutside = false
-                    isPatinaOutside = false
-                    wrapOutside = "нет"
-                    patinaOutside = "нет"
-                    break
-                case "нет":
-                case "примечание":
-                    decorationOutside = "нет" 
-                    isWrapOutside = false
-                    isPatinaOutside = false
-                    wrapOutside = "нет"
-                    patinaOutside = "нет"
-                    break                
-            }
-            
-
-            dispatch(orderActions.setDecorationsOutside(decorationsOutside))            
-            dispatch(orderActions.setDecorationOutside(decorationOutside))            
-
-            dispatch(orderActions.setIsWrapOutside(isWrapOutside))                       
-            dispatch(orderActions.setWrapOutside(wrapOutside)) 
-
-            dispatch(orderActions.setIsPatinaOutside(isPatinaOutside))                     
-            dispatch(orderActions.setPatinaOutside(patinaOutside))          
-        } catch (e) {
-            console.log(e);            
-        }
-    }
-}
-
 export const changeTypeDecorationInside = (type: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {
         let decorationsInside: IDecoration[] = []
@@ -606,24 +543,6 @@ export const changeWindow = (doorWindow: string) => {
             dispatch(orderActions.setHeightWindow(selectedWindow.height))
             dispatch(orderActions.setWidthWindow(selectedWindow.width))
             dispatch(orderActions.setThickWindow(thickWindow))
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const changeOpeningType = (openingType: string) => {
-    return (dispatch: Dispatch) => {        
-        let isLocationJamb: boolean = false
-        let locationJumb: string = "нет"
-        try {
-            if (openingType === "внутреннего") {
-                isLocationJamb = true
-                locationJumb = ""
-            }
-            dispatch(orderActions.setOpeningType(openingType))
-            dispatch(orderActions.setIsLocationJumb(isLocationJamb))
-            dispatch(orderActions.setLocationJumb(locationJumb))
         } catch (e) {
             console.log(e)
         }

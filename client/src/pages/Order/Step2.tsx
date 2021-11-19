@@ -5,7 +5,6 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
-import { changeOpeningType } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 
@@ -70,7 +69,7 @@ const Step2: FC = () => {
                         <Select 
                             items={openingTypes} 
                             value={openingType} 
-                            onChange={ (value) => dispatch(changeOpeningType(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOpeningType(value))}                        
                         />
                     </Form.Item>
                 </Col>

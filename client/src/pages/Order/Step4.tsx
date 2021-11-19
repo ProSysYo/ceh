@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
-import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
+import { changeTypeDecorationInside } from '../../store/actions/orderActions';
 
 
 const Step4: FC = () => {
@@ -35,7 +35,7 @@ const Step4: FC = () => {
                     <Select 
                         items={typeDecorationsOutside} 
                         value={typeDecorationOutside} 
-                        onChange={ (value) => dispatch(changeTypeDecorationOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setTypeDecorationOutside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Элемент отделки / Фрезеровка">

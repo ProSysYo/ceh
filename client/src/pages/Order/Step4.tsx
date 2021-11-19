@@ -4,17 +4,7 @@ import { Divider, Form } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { 
-    setDecorationOutside,
-    setPatinaOutside,
-    setWrapInside, 
-    setWrapOutside,
-    setDecorationInside,
-    setPatinaInside,
-    setJamb,
-    setJambWrap,
-    setLocationJumb
-} from '../../store/slices/orderSlice';
+import { orderActions } from '../../store/slices/orderSlice';
 import { changeTypeDecorationInside, changeTypeDecorationOutside } from '../../store/actions/orderActions';
 
 
@@ -52,7 +42,7 @@ const Step4: FC = () => {
                     <Select 
                         items={decorationsOutside} 
                         value={decorationOutside} 
-                        onChange={ (value) => dispatch(setDecorationOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setDecorationOutside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">
@@ -60,7 +50,7 @@ const Step4: FC = () => {
                         items={wraps} 
                         value={wrapOutside}
                         disabled={!isWrapOutside} 
-                        onChange={ (value) => dispatch(setWrapOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setWrapOutside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Патина на панели">
@@ -68,7 +58,7 @@ const Step4: FC = () => {
                         items={patinas} 
                         value={patinaOutside} 
                         disabled={!isPatinaOutside} 
-                        onChange={ (value) => dispatch(setPatinaOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setPatinaOutside(value))}                        
                     />
                 </Form.Item>
 
@@ -84,7 +74,7 @@ const Step4: FC = () => {
                     <Select 
                         items={decorationsInside} 
                         value={decorationInside} 
-                        onChange={ (value) => dispatch(setDecorationInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">
@@ -92,7 +82,7 @@ const Step4: FC = () => {
                         items={wraps} 
                         value={wrapInside} 
                         disabled={!isWrapInside}
-                        onChange={ (value) => dispatch(setWrapInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setWrapInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Патина на панели">
@@ -100,7 +90,7 @@ const Step4: FC = () => {
                         items={patinas} 
                         value={patinaInside}
                         disabled={!isPatinaInside}
-                        onChange={ (value) => dispatch(setPatinaInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setPatinaInside(value))}                        
                     />
                 </Form.Item>  
 
@@ -111,7 +101,7 @@ const Step4: FC = () => {
                         items={locationJambs} 
                         value={locationJumb}
                         disabled={!isLocationJamb}
-                        onChange={ (value) => dispatch(setLocationJumb(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
                     />
                 </Form.Item>
 
@@ -119,7 +109,7 @@ const Step4: FC = () => {
                     <Select 
                         items={currentJambs} 
                         value={jamb}
-                        onChange={ (value) => dispatch(setJamb(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setJamb(value))}                        
                     />
                 </Form.Item>
 
@@ -128,7 +118,7 @@ const Step4: FC = () => {
                         items={wraps} 
                         value={jambWrap} 
                         disabled={!isJambWrap}
-                        onChange={ (value) => dispatch(setJambWrap(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setJambWrap(value))}                        
                     />
                 </Form.Item>              
             </Form>

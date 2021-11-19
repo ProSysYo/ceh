@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { changeTypeWindow, changeWindow } from '../../store/actions/orderActions';
-import { setColorForge, setColorTint, setHeightWindow, setPatinaForge, setThickWindow, setWidthWindow } from '../../store/slices/orderSlice';
+import { orderActions } from '../../store/slices/orderSlice';
 
 
 const Step5: FC = () => {
@@ -46,7 +46,7 @@ const Step5: FC = () => {
                     <Select 
                         items={colorTints} 
                         value={colorTint} 
-                        onChange={ (value) => dispatch(setColorTint(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setColorTint(value))}                        
                     />
                 </Form.Item> 
                 <Form.Item label="Цвет ковки">
@@ -54,7 +54,7 @@ const Step5: FC = () => {
                         items={colorForges} 
                         value={colorForge}
                         disabled={!isColorForge}
-                        onChange={ (value) => dispatch(setColorForge(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setColorForge(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Патина на ковке">
@@ -62,17 +62,17 @@ const Step5: FC = () => {
                         items={patinaForges} 
                         value={patinaForge}
                         disabled={!isPatinaForge}
-                        onChange={ (value) => dispatch(setPatinaForge(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setPatinaForge(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Высота стеклопакета">
-                    <InputNumber value={heightWindow} onChange={(value)=> dispatch(setHeightWindow(value))} />
+                    <InputNumber value={heightWindow} onChange={(value)=> dispatch(orderActions.setHeightWindow(value))} />
                 </Form.Item>
                 <Form.Item label="Ширина стеклопакета">
-                    <InputNumber  value={widthWindow} onChange={(value)=>  dispatch(setWidthWindow(value))} />
+                    <InputNumber  value={widthWindow} onChange={(value)=>  dispatch(orderActions.setWidthWindow(value))} />
                 </Form.Item>
                 <Form.Item label="Толщина стеклопакета">
-                    <InputNumber  value={thickWindow} onChange={(value)=> dispatch(setThickWindow(value))} />
+                    <InputNumber  value={thickWindow} onChange={(value)=> dispatch(orderActions.setThickWindow(value))} />
                 </Form.Item> 
             </Form>
         </Container>

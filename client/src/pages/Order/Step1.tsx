@@ -4,11 +4,7 @@ import { Form, Input, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { 
-    setCostDoor,
-    setCountDoors,
-    setCustomer, setNote, setNumberCustomer, setParty 
-} from '../../store/slices/orderSlice';
+import { orderActions } from '../../store/slices/orderSlice';
 
 
 const Step1: FC = () => {
@@ -42,31 +38,31 @@ const Step1: FC = () => {
                     <Select 
                         items={customers} 
                         value={customer} 
-                        onChange={ (value) => dispatch(setCustomer(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setCustomer(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Номер заказчика">
-                    <Input  value={numberCustomer} onChange={(e)=> dispatch(setNumberCustomer(e.target.value))} />
+                    <Input  value={numberCustomer} onChange={(e)=> dispatch(orderActions.setNumberCustomer(e.target.value))} />
                 </Form.Item>
 
                 <Form.Item label="Партийность">
                     <Select 
                         items={parties} 
                         value={party} 
-                        onChange={ (value) => dispatch(setParty(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setParty(value))}                        
                     />
                 </Form.Item>
                 
                 <Form.Item label="Количество дверей">
-                    <InputNumber min={0} value={countDoors} onChange={(value)=> dispatch(setCountDoors(value))} />
+                    <InputNumber min={0} value={countDoors} onChange={(value)=> dispatch(orderActions.setCountDoors(value))} />
                 </Form.Item>
 
                 <Form.Item label="Стоимость одной двери">
-                    <InputNumber min={0} value={costDoor} onChange={(value)=> dispatch(setCostDoor(value))} />
+                    <InputNumber min={0} value={costDoor} onChange={(value)=> dispatch(orderActions.setCostDoor(value))} />
                 </Form.Item>
 
                 <Form.Item label="Примечание">
-                    <Input.TextArea rows = {8}  value={note} onChange={(e)=> dispatch(setNote(e.target.value))} />
+                    <Input.TextArea rows = {8}  value={note} onChange={(e)=> dispatch(orderActions.setNote(e.target.value))} />
                 </Form.Item>
             </Form>
         </Container>

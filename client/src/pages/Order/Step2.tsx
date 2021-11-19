@@ -4,10 +4,8 @@ import { Col, Divider, Form, InputNumber, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { 
-    setContour, setDoorThick, setHeight, setLocationHinge, setModelBox, setThickMetalBox, setThickMetalLeaf, setTypeHinge, setWidth, setWidthDouble 
-} from '../../store/slices/orderSlice';
-import { changeModel, changeIsDouble, changeOpeningType } from '../../store/actions/orderActions';
+import { orderActions } from '../../store/slices/orderSlice';
+import { changeOpeningType } from '../../store/actions/orderActions';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 
@@ -41,7 +39,7 @@ const Step2: FC = () => {
                         <Select 
                             items={models} 
                             value={model} 
-                            onChange={ (value) => dispatch(changeModel(value))}                       
+                            onChange={ (value) => dispatch(orderActions.setModel(value))}                       
                         />
                     </Form.Item>
 
@@ -49,7 +47,7 @@ const Step2: FC = () => {
                         <Select 
                             items={contours} 
                             value={contour} 
-                            onChange={ (value) => dispatch(setContour(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setContour(value))}                        
                         />
                     </Form.Item>
 
@@ -57,14 +55,14 @@ const Step2: FC = () => {
                         <Select 
                             items={doorThicks} 
                             value={doorThick} 
-                            onChange={ (value) => dispatch(setDoorThick(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
                         />
                     </Form.Item>
                     <Form.Item label="Модель коробки">
                         <Select 
                             items={modelBoxes} 
                             value={modelBox} 
-                            onChange={ (value) => dispatch(setModelBox(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setModelBox(value))}                        
                         />
                     </Form.Item>
 
@@ -78,17 +76,17 @@ const Step2: FC = () => {
                 </Col>
                 <Col span={12}> 
                     <Form.Item>                   
-                        <Checkbox checked={isDouble} onChange={(e)=> dispatch(changeIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
+                        <Checkbox checked={isDouble} onChange={(e)=> dispatch(orderActions.setIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
                     </Form.Item>
                     <Form.Item label="Высота двери">
-                        <InputNumber  value={height} onChange={(value)=> dispatch(setHeight(value))} />
+                        <InputNumber  value={height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
                     </Form.Item>
 
                     <Form.Item label="Ширина двери">
-                        <InputNumber  value={width} onChange={(value)=> dispatch(setWidth(value))} />
+                        <InputNumber  value={width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
                     </Form.Item>
                     <Form.Item label="Ширина раб. створки">
-                        <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(setWidthDouble(value))} />
+                        <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -100,7 +98,7 @@ const Step2: FC = () => {
                         <Select 
                             items={locationHinges} 
                             value={locationHinge} 
-                            onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -110,7 +108,7 @@ const Step2: FC = () => {
                         <Select 
                             items={typeHinges} 
                             value={typeHinge} 
-                            onChange={ (value) => dispatch(setTypeHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -120,12 +118,9 @@ const Step2: FC = () => {
                         <Select 
                             items={typeHinges} 
                             value={typeHinge} 
-                            onChange={ (value) => dispatch(setTypeHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
                         />
-                    </Form.Item>
-                    {/* <Form.Item label="Третья петля">
-                        <Checkbox checked={isThreeHinge} onChange={(e)=> dispatch(setIsThreeHinge(e.target.checked))}/>
-                    </Form.Item> */}
+                    </Form.Item>                    
                 </Col>
             </Row> 
 
@@ -136,7 +131,7 @@ const Step2: FC = () => {
                         <Select 
                             items={thickMetalLeafs} 
                             value={thickMetalLeaf} 
-                            onChange={ (value) => dispatch(setThickMetalLeaf(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setThickMetalLeaf(value))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -145,7 +140,7 @@ const Step2: FC = () => {
                         <Select 
                             items={thickMetalBoxes} 
                             value={thickMetalBox} 
-                            onChange={ (value) => dispatch(setThickMetalBox(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setThickMetalBox(value))}                        
                         />
                     </Form.Item>
                 </Col>

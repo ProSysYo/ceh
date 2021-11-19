@@ -1,119 +1,9 @@
 import {Dispatch} from "redux";
-import { 
-    setContours, 
-    setCustomers, 
-    setDoorThicks, 
-    setModel, 
-    setModels, 
-    setParties, 
-    setModelBoxes,
-    setOpeningTypes,
-    setIsDouble,
-    setWidthDouble,
-    setLoading,
-    setBaseLoks,
-    setOptionalLocks,
-    setSpinners,
-    setBaseLock,
-    setLockSpinner,
-    setIsLockSpinner,
-    setCylinders,
-    setIsBaseCylinder,
-    setBaseCylinder,
-    setCovers,
-    setBaseCovers,
-    setBaseCoverOutside,
-    setBaseCoverInside,
-    setBaseCovers2,
-    setIsBaseCover2,
-    setBaseCoverOutside2,
-    setBaseCoverInside2,
-    setOptionalLock,
-    setIsOptonalCylinder,
-    setOptionalCylinder,
-    setOptionalCovers,
-    setOptonalCoverOutside,
-    setOptonalCoverInside,
-    setEyes,
-    setHandles,
-    setTypeDecorations,
-    setContour,
-    setDoorThick,
-    setTypeDecorationsInside,
-    setTypeDecorationsOutside,
-    setTypeDecorationOutside,
-    setTypeDecorationInside,
-    setDecorations,
-    setDecorationsOutside,
-    setDecorationOutside,
-    setWraps,
-    setWrapOutside,
-    setWrapInside,
-    setIsWrapOutside,
-    setPatinas,
-    setPatinaOutside,
-    setIsPatinaOutside,
-    setIsWrapInside,
-    setDecorationsInside,
-    setDecorationInside,
-    setIsPatinaInside,
-    setPatinaInside,
-    setTypeWindows,
-    setTypeWindow,
-    setWindows,
-    setCurrentWindows,
-    setDoorWindow,
-    setColorTints,
-    setColorTint,
-    setColorForges,
-    setColorForge,
-    setPatinaForges,
-    setPatinaForge,
-    setHeightWindow,
-    setWidthWindow,
-    setThickWindow,
-    setIsColorForge,
-    setIsPatinaForge,
-    setLocationHinges,
-    setTypeHinges,
-    setThickMetalLeafs,
-    setThickMetalBoxes,
-    setEyeLocations,
-    setJambs,
-    setCurrentJambs,
-    setJamb,
-    setIsJambWrap,
-    setJambWrap,
-    setLocationJambs,
-    setOpeningType,
-    setIsLocationJumb,
-    setLocationJumb,
-    setValidateErrors,
-    setFittingColors,
-    setBaseCoverColorOutside,
-    setBaseCoverColorInside,
-    setBaseCoverColorOutside2,
-    setBaseCoverColorInside2,
-    setIsBaseCover,
-    setIsOptonalCover,
-    setOptonalCoverColorOutside,
-    setOptonalCoverColorInside,
-    setLockSpinnerColor,
-    setHandle,
-    setHandleColor,
-    setSpinner,
-    setSpinnerColor,
-    setEye,
-    setColorEye,
-    setEyeLocation
-} from "../slices/orderSlice";
+import { orderActions } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
-import { ICover } from "../../interfaces/ICover";
-import { ITypeDecoration } from "../../interfaces/ITypeDecoration";
 import { IDecoration } from "../../interfaces/IDecoration";
 import { IWindow } from '../../interfaces/IWindow';
-import { IJamb } from "../../interfaces/IJamb";
 import { IOrder } from '../../interfaces/IOrder';
 
 //fetch actions
@@ -121,7 +11,7 @@ export const fetchCustomers = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getCustomers()
-            dispatch(setCustomers(response.data))
+            dispatch(orderActions.setCustomers(response.data))
         } catch (e) {
             
         }
@@ -132,7 +22,7 @@ export const fetchParties = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getParties()
-            dispatch(setParties(response.data))
+            dispatch(orderActions.setParties(response.data))
         } catch (e) {
             
         }
@@ -143,7 +33,7 @@ export const fetchModels = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getModels()
-            dispatch(setModels(response.data))
+            dispatch(orderActions.setModels(response.data))
         } catch (e) {
             
         }
@@ -154,7 +44,7 @@ export const fetchModelBoxes = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getModelBoxes()
-            dispatch(setModelBoxes(response.data))
+            dispatch(orderActions.setModelBoxes(response.data))
         } catch (e) {
             
         }
@@ -165,7 +55,7 @@ export const fetchOpeningTypes = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getOpeningTypes()
-            dispatch(setOpeningTypes(response.data))
+            dispatch(orderActions.setOpeningTypes(response.data))
         } catch (e) {
             
         }
@@ -178,8 +68,8 @@ export const fetchLocks = () => {
             const response = await api.getLocks()
             const baseLocks = response.data.filter(lock => lock.installation === "основной" || lock.installation === "нет" || lock.installation === "примечание")
             const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный" || lock.installation === "нет" || lock.installation === "примечание")
-            dispatch(setBaseLoks(baseLocks))
-            dispatch(setOptionalLocks(optionalLocks))
+            dispatch(orderActions.setBaseLoks(baseLocks))
+            dispatch(orderActions.setOptionalLocks(optionalLocks))
         } catch (e) {
             
         }
@@ -190,7 +80,7 @@ export const fetchSpinners = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getSpinners()
-            dispatch(setSpinners(response.data))
+            dispatch(orderActions.setSpinners(response.data))
         } catch (e) {
             
         }
@@ -201,7 +91,7 @@ export const fetchCylinders = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getCyliners()
-            dispatch(setCylinders(response.data))
+            dispatch(orderActions.setCylinders(response.data))
         } catch (e) {
             
         }
@@ -212,7 +102,7 @@ export const fetchCovers = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getCovers()
-            dispatch(setCovers(response.data))
+            dispatch(orderActions.setCovers(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -223,7 +113,7 @@ export const fetchEyes = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getEyes()
-            dispatch(setEyes(response.data))
+            dispatch(orderActions.setEyes(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -234,7 +124,7 @@ export const fetchEyeLocations = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getEyeLocations()
-            dispatch(setEyeLocations(response.data))
+            dispatch(orderActions.setEyeLocations(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -245,7 +135,7 @@ export const fetchHandles = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getHandles()
-            dispatch(setHandles(response.data))
+            dispatch(orderActions.setHandles(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -256,7 +146,7 @@ export const fetchTypeDecorations = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getTypeDecorations()
-            dispatch(setTypeDecorations(response.data))
+            dispatch(orderActions.setTypeDecorations(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -267,7 +157,7 @@ export const fetchDecorations = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getDecorations()
-            dispatch(setDecorations(response.data))
+            dispatch(orderActions.setDecorations(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -278,7 +168,7 @@ export const fetchWraps = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getWraps()
-            dispatch(setWraps(response.data))
+            dispatch(orderActions.setWraps(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -289,7 +179,7 @@ export const fetchPatinas = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getPatinas()
-            dispatch(setPatinas(response.data))
+            dispatch(orderActions.setPatinas(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -300,7 +190,7 @@ export const fetchTypeWindows = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getTypeWindows()
-            dispatch(setTypeWindows(response.data))
+            dispatch(orderActions.setTypeWindows(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -311,7 +201,7 @@ export const fetchWindows = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getWindows()
-            dispatch(setWindows(response.data))
+            dispatch(orderActions.setWindows(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -322,7 +212,7 @@ export const fetchColorTints = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getColorTints()
-            dispatch(setColorTints(response.data))
+            dispatch(orderActions.setColorTints(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -333,7 +223,7 @@ export const fetchColorForges = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getColorForges()
-            dispatch(setColorForges(response.data))
+            dispatch(orderActions.setColorForges(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -344,7 +234,7 @@ export const fetchPatinaForges = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getPatinaForges()
-            dispatch(setPatinaForges(response.data))
+            dispatch(orderActions.setPatinaForges(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -355,7 +245,7 @@ export const fetchLocationHinges = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getLoacationHinges()
-            dispatch(setLocationHinges(response.data))
+            dispatch(orderActions.setLocationHinges(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -366,7 +256,7 @@ export const fetchTypeHinges = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getTypeHinges()
-            dispatch(setTypeHinges(response.data))
+            dispatch(orderActions.setTypeHinges(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -377,7 +267,7 @@ export const fetchThickMetalLeafs = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getThickMetalLeafs()
-            dispatch(setThickMetalLeafs(response.data))
+            dispatch(orderActions.setThickMetalLeafs(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -388,7 +278,7 @@ export const fetchThickMetalBoxes = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getThickMetalBoxes()
-            dispatch(setThickMetalBoxes(response.data))
+            dispatch(orderActions.setThickMetalBoxes(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -399,7 +289,7 @@ export const fetchJambs = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getJambs()
-            dispatch(setJambs(response.data))
+            dispatch(orderActions.setJambs(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -410,7 +300,7 @@ export const fetchLocationJumbs = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getLocationJambs()
-            dispatch(setLocationJambs(response.data))
+            dispatch(orderActions.setLocationJambs(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -421,7 +311,7 @@ export const fetchFittingColors = () => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getFittingColors()            
-            dispatch(setFittingColors(response.data))
+            dispatch(orderActions.setFittingColors(response.data))
         } catch (e) {
             console.log(e)            
         }
@@ -430,7 +320,7 @@ export const fetchFittingColors = () => {
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
         try {            
-            dispatch(setLoading(true))
+            dispatch(orderActions.setLoading(true))
 
             await dispatch(fetchCustomers())
             await dispatch(fetchParties())
@@ -462,7 +352,7 @@ export const fetchAll = () => {
             await dispatch(fetchLocationJumbs()) 
             await dispatch(fetchFittingColors())       
 
-            dispatch(setLoading(false))
+            dispatch(orderActions.setLoading(false))
         } catch (e) {
             
         }
@@ -470,80 +360,6 @@ export const fetchAll = () => {
 }
 
 //user handle actions
-
-export const changeModel = (model: string) => {
-    return (dispatch: Dispatch, getState: () => RootState) => {
-        try {
-            let typeDecorationsOutside: ITypeDecoration[]
-            let typeDecorationsInside: ITypeDecoration[]
-            let currentJumbs: IJamb[]
-            let isJambWrap: boolean = false
-            let jambWrap: string = "нет"
-
-            const { models, typeDecorations, jambs } = getState().order
-            const selectedModel = models.find(item=>item.value === model)!
-            
-            typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel.typeOutside || item.type === "нет" || item.type === "примечание")            
-            typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel.typeInside || item.type === "нет" || item.type === "примечание")
-
-            currentJumbs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
-            
-            if (selectedModel.typeOutside === "панель") {
-                isJambWrap =  true
-                jambWrap = ""
-            }
-            
-
-            dispatch(setModel(model))
-
-            dispatch(setContours(selectedModel!.contours))
-            dispatch(setContour("")) 
-
-            dispatch(setDoorThicks(selectedModel!.doorThicks))
-            dispatch(setDoorThick(""))           
-            
-            dispatch(setTypeDecorationsOutside(typeDecorationsOutside))
-            dispatch(setTypeDecorationOutside(""))
-
-            dispatch(setTypeDecorationsInside(typeDecorationsInside))            
-            dispatch(setTypeDecorationInside(""))
-
-            dispatch(setCurrentJambs(currentJumbs))
-            dispatch(setJamb(""))            
-            dispatch(setIsJambWrap(isJambWrap))
-            dispatch(setJambWrap(jambWrap))
-            
-            dispatch(setDecorationOutside(""))
-
-            dispatch(setIsWrapOutside(false))
-            dispatch(setWrapOutside(""))
-
-            dispatch(setIsWrapInside(false))
-            dispatch(setWrapInside(""))
-
-            dispatch(setIsPatinaOutside(false))
-            dispatch(setPatinaOutside(""))
-
-            dispatch(setTypeWindow(""))
-
-            dispatch(setDoorWindow(""))
-
-            dispatch(setColorTint(""))
-
-            dispatch(setIsColorForge(false))
-            dispatch(setColorForge(""))
-
-            dispatch(setIsPatinaForge(false))
-            dispatch(setPatinaForge(""))
-            
-            dispatch(setHeightWindow(""))
-            dispatch(setWidthWindow(""))
-            dispatch(setThickWindow(""))
-        } catch (e) {
-            
-        }
-    }
-}
 
 export const changeTypeDecorationOutside = (type: string) => {
     return (dispatch: Dispatch, getState: () => RootState) => {
@@ -555,7 +371,7 @@ export const changeTypeDecorationOutside = (type: string) => {
         let decorationOutside: string = ""
 
         try {            
-            dispatch(setTypeDecorationOutside(type))
+            dispatch(orderActions.setTypeDecorationOutside(type))
 
             const { typeDecorationsOutside, decorations } = getState().order           
 
@@ -594,14 +410,14 @@ export const changeTypeDecorationOutside = (type: string) => {
             }
             
 
-            dispatch(setDecorationsOutside(decorationsOutside))            
-            dispatch(setDecorationOutside(decorationOutside))            
+            dispatch(orderActions.setDecorationsOutside(decorationsOutside))            
+            dispatch(orderActions.setDecorationOutside(decorationOutside))            
 
-            dispatch(setIsWrapOutside(isWrapOutside))                       
-            dispatch(setWrapOutside(wrapOutside)) 
+            dispatch(orderActions.setIsWrapOutside(isWrapOutside))                       
+            dispatch(orderActions.setWrapOutside(wrapOutside)) 
 
-            dispatch(setIsPatinaOutside(isPatinaOutside))                     
-            dispatch(setPatinaOutside(patinaOutside))          
+            dispatch(orderActions.setIsPatinaOutside(isPatinaOutside))                     
+            dispatch(orderActions.setPatinaOutside(patinaOutside))          
         } catch (e) {
             console.log(e);            
         }
@@ -620,7 +436,7 @@ export const changeTypeDecorationInside = (type: string) => {
         const { typeDecorationsInside, decorations } = getState().order 
 
         try {            
-            dispatch(setTypeDecorationInside(type))
+            dispatch(orderActions.setTypeDecorationInside(type))
             const selectedType = typeDecorationsInside.find(item => item.value === type)!
 
             switch (selectedType.variety) {
@@ -655,258 +471,14 @@ export const changeTypeDecorationInside = (type: string) => {
                     break                
             }
 
-            dispatch(setDecorationsInside(decorationsInside))
-            dispatch(setDecorationInside(decorationInside))            
+            dispatch(orderActions.setDecorationsInside(decorationsInside))
+            dispatch(orderActions.setDecorationInside(decorationInside))            
 
-            dispatch(setIsWrapInside(isWrapInside))                       
-            dispatch(setWrapInside(wrapInside)) 
+            dispatch(orderActions.setIsWrapInside(isWrapInside))                       
+            dispatch(orderActions.setWrapInside(wrapInside)) 
 
-            dispatch(setIsPatinaInside(isPatinaInside))                     
-            dispatch(setPatinaInside(patinaInside))
-
-        } catch (e) {
-            console.log(e);            
-        }
-    }
-}
-
-export const changeIsDouble = (value: boolean) => {
-    return (dispatch: Dispatch) => {
-        try {
-            dispatch(setIsDouble(value))
-            if (!value) {
-                dispatch(setWidthDouble(""))
-            }
-        } catch (e) {
-            
-        }
-    }
-}
-
-export const changeBaseLock = (value: string) => {
-    return (dispatch: Dispatch, getState: () => RootState) => {
-        try {
-            dispatch(setBaseLock(value))
-
-            const { baseLocks, covers } = getState().order
-            const baseLock = baseLocks.find(lock => lock.value === value)
-            
-            let baseCovers: ICover[] = []
-            let baseCovers2: ICover[] = []
-            
-            let isBaseCylinder: boolean = false
-            let baseCylinder: string = "нет"
-            
-            let isLockSpinner: boolean = false
-            let lockSpinner: string = "нет"
-            let lockSpinnerColor: string = "нет"
-
-            let isBaseCover: boolean = false
-            let baseCoverOutside: string = "нет"
-            let baseCoverColorOutside: string = "нет"
-            let baseCoverInside: string = "нет"
-            let baseCoverColorInside: string = "нет"
-
-            let isBaseCover2: boolean = false
-            let baseCoverOutside2: string = "нет"
-            let baseCoverColorOutside2: string = "нет"
-            let baseCoverInside2: string = "нет"         
-            let baseCoverColorInside2: string = "нет"
-            
-            if (baseLock?.isBolt) {
-                isLockSpinner = true
-                lockSpinner = ""
-                lockSpinnerColor = ""                
-            } else {
-                isLockSpinner = false
-                lockSpinner = "нет"
-                lockSpinnerColor = "нет"                 
-            }
-            
-            switch (baseLock?.type) {
-                case "цилиндр":
-                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")               
-                    
-                    isBaseCylinder = true                    
-                    baseCylinder = ""
-                    isBaseCover = true
-                    baseCoverOutside = ""
-                    baseCoverColorOutside = ""
-                    baseCoverInside= ""
-                    baseCoverColorInside = ""
-                    isBaseCover2 = false
-                    baseCoverOutside2 = "нет"
-                    baseCoverColorOutside2 = "нет"
-                    baseCoverInside2 = "нет"
-                    baseCoverColorInside2 = "нет"
-                    break
-                case "двухсистемный":
-                    baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
-                    baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-                    
-                    isBaseCylinder = true                    
-                    baseCylinder = ""
-                    isBaseCover = true
-                    baseCoverOutside = ""
-                    baseCoverColorOutside = ""
-                    baseCoverInside= ""
-                    baseCoverColorInside = ""
-                    isBaseCover2 = true
-                    baseCoverOutside2 = ""
-                    baseCoverColorOutside2 = ""
-                    baseCoverInside2 = ""
-                    baseCoverColorInside2 = ""                    
-                    break
-                case "сувальда":
-                    baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-
-                    isBaseCylinder = false                    
-                    baseCylinder = "нет"
-                    isBaseCover = true
-                    baseCoverOutside = ""
-                    baseCoverColorOutside = ""
-                    baseCoverInside= ""
-                    baseCoverColorInside = ""
-                    isBaseCover2 = false
-                    baseCoverOutside2 = "нет"
-                    baseCoverColorOutside2 = "нет"
-                    baseCoverInside2 = "нет"
-                    baseCoverColorInside2 = "нет"                    
-                    break
-                case "нет":
-                case "другое":
-                    baseCovers = covers.filter(cover => cover.type === "нет")
-
-                    isBaseCylinder = false
-                    baseCylinder = "нет"
-
-                    isBaseCover = false
-                    baseCoverOutside = "нет"
-                    baseCoverColorOutside = "нет"
-                    baseCoverInside= "нет"
-                    baseCoverColorInside = "нет"
-
-                    isBaseCover2 = false
-                    baseCoverOutside2 = "нет"
-                    baseCoverColorOutside2 = "нет"
-                    baseCoverInside2 = "нет"
-                    baseCoverColorInside2 = "нет" 
-                    break                
-                case "примечание":
-                    baseCovers = covers
-                    baseCovers2 = covers
-
-                    isBaseCylinder = true
-                    baseCylinder = ""
-
-                    isBaseCover = true
-                    baseCoverOutside = ""
-                    baseCoverColorOutside = ""
-                    baseCoverInside= ""
-                    baseCoverColorInside = ""
-
-                    isBaseCover2 = true
-                    baseCoverOutside2 = ""
-                    baseCoverColorOutside2 = ""
-                    baseCoverInside2 = ""
-                    baseCoverColorInside2 = ""                    
-                    break 
-            }
-
-            dispatch(setIsBaseCylinder(isBaseCylinder))
-            dispatch(setBaseCylinder(baseCylinder))
-
-            dispatch(setIsLockSpinner(isLockSpinner))
-            dispatch(setLockSpinner(lockSpinner))
-            dispatch(setLockSpinnerColor(lockSpinnerColor))
-
-            dispatch(setIsBaseCover(isBaseCover))  
-            dispatch(setBaseCovers(baseCovers))
-            dispatch(setBaseCoverOutside(baseCoverOutside))
-            dispatch(setBaseCoverColorOutside(baseCoverColorOutside))
-            dispatch(setBaseCoverInside(baseCoverInside))
-            dispatch(setBaseCoverColorInside(baseCoverColorInside))
-
-            dispatch(setBaseCovers2(baseCovers2))            
-            dispatch(setIsBaseCover2(isBaseCover2))
-            dispatch(setBaseCoverOutside2(baseCoverOutside2))
-            dispatch(setBaseCoverColorOutside2(baseCoverColorOutside2))
-            dispatch(setBaseCoverInside2(baseCoverInside2))           
-            dispatch(setBaseCoverColorInside2(baseCoverColorInside2))           
-                
-        } catch (e) {
-            console.log(e);            
-        }
-    }
-}
-
-export const changeOptionalLock = (value: string) => {
-    return (dispatch: Dispatch, getState: () => RootState) => {
-        try {
-            dispatch(setOptionalLock(value))
-
-            let isOptionalCylinder: boolean
-            let optionalCylinder: string
-            let optionalCovers: ICover[]
-            let isOptionalCover: boolean
-            let optionalCoverOutside: string
-            let optionalCoverColorOutside: string
-            let optionalCoverInside: string
-            let optionalCoverColorInside: string
-
-            const { optionalLocks, covers } = getState().order                     
-            const optionalLock = optionalLocks.find(lock => lock.value === value)
-
-            switch (optionalLock?.type) {
-                case "цилиндр":
-                    optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
-                    isOptionalCylinder = true
-                    isOptionalCover = true
-                    optionalCylinder = ""                    
-                    optionalCoverOutside = ""
-                    optionalCoverColorOutside = ""
-                    optionalCoverInside = ""
-                    optionalCoverColorInside = ""
-                    break
-                case "сувальда":
-                    optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-                    isOptionalCylinder = false
-                    isOptionalCover = true
-                    optionalCylinder = "нет"                    
-                    optionalCoverOutside = ""
-                    optionalCoverColorOutside = ""
-                    optionalCoverInside = ""
-                    optionalCoverColorInside = ""
-                    break  
-                case "примечание":
-                    optionalCovers = covers
-                    isOptionalCylinder = true
-                    isOptionalCover = true
-                    optionalCylinder = ""                    
-                    optionalCoverOutside = ""
-                    optionalCoverColorOutside = ""
-                    optionalCoverInside = ""
-                    optionalCoverColorInside = ""
-                    break
-                default:
-                    optionalCovers = covers.filter(cover => cover.type === "нет")
-                    isOptionalCylinder = false
-                    isOptionalCover = false
-                    optionalCylinder = "нет"                    
-                    optionalCoverOutside = "нет"
-                    optionalCoverColorOutside = "нет"
-                    optionalCoverInside = "нет"
-                    optionalCoverColorInside = "нет"                  
-            }           
-            
-            dispatch(setIsOptonalCylinder(isOptionalCylinder))
-            dispatch(setIsOptonalCover(isOptionalCover))
-            dispatch(setOptionalCylinder(optionalCylinder)) 
-            dispatch(setOptionalCovers(optionalCovers)) 
-            dispatch(setOptonalCoverOutside(optionalCoverOutside))
-            dispatch(setOptonalCoverColorOutside(optionalCoverColorOutside))
-            dispatch(setOptonalCoverInside(optionalCoverInside))
-            dispatch(setOptonalCoverColorInside(optionalCoverColorInside))
+            dispatch(orderActions.setIsPatinaInside(isPatinaInside))                     
+            dispatch(orderActions.setPatinaInside(patinaInside))
 
         } catch (e) {
             console.log(e);            
@@ -938,7 +510,7 @@ export const changeTypeWindow = (value: string) => {
         const { windows, typeWindows } = state                
 
         try {
-            dispatch(setTypeWindow(value))
+            dispatch(orderActions.setTypeWindow(value))
 
             const selectedType = typeWindows.find(item => item.value === value)!
 
@@ -981,16 +553,16 @@ export const changeTypeWindow = (value: string) => {
 
             currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")
 
-            dispatch(setCurrentWindows(currentWindows))
-            dispatch(setDoorWindow(doorWindow))
-            dispatch(setColorTint(colorTint))
-            dispatch(setIsColorForge(isColorForge))
-            dispatch(setColorForge(colorForge))
-            dispatch(setIsPatinaForge(isPatinaForge))
-            dispatch(setPatinaForge(patinaForge))
-            dispatch(setHeightWindow(heightWindow))
-            dispatch(setWidthWindow(widthWindow))
-            dispatch(setThickWindow(thickWindow))
+            dispatch(orderActions.setCurrentWindows(currentWindows))
+            dispatch(orderActions.setDoorWindow(doorWindow))
+            dispatch(orderActions.setColorTint(colorTint))
+            dispatch(orderActions.setIsColorForge(isColorForge))
+            dispatch(orderActions.setColorForge(colorForge))
+            dispatch(orderActions.setIsPatinaForge(isPatinaForge))
+            dispatch(orderActions.setPatinaForge(patinaForge))
+            dispatch(orderActions.setHeightWindow(heightWindow))
+            dispatch(orderActions.setWidthWindow(widthWindow))
+            dispatch(orderActions.setThickWindow(thickWindow))
         } catch (e) {
             console.log(e); 
         }
@@ -1028,14 +600,12 @@ export const changeWindow = (doorWindow: string) => {
                         thickWindow = selectedWindow.t100
                         break       
                 }
-            }
+            }            
 
-            
-
-            dispatch(setDoorWindow(doorWindow))
-            dispatch(setHeightWindow(selectedWindow.height))
-            dispatch(setWidthWindow(selectedWindow.width))
-            dispatch(setThickWindow(thickWindow))
+            dispatch(orderActions.setDoorWindow(doorWindow))
+            dispatch(orderActions.setHeightWindow(selectedWindow.height))
+            dispatch(orderActions.setWidthWindow(selectedWindow.width))
+            dispatch(orderActions.setThickWindow(thickWindow))
         } catch (e) {
             console.log(e)
         }
@@ -1051,65 +621,15 @@ export const changeOpeningType = (openingType: string) => {
                 isLocationJamb = true
                 locationJumb = ""
             }
-            dispatch(setOpeningType(openingType))
-            dispatch(setIsLocationJumb(isLocationJamb))
-            dispatch(setLocationJumb(locationJumb))
+            dispatch(orderActions.setOpeningType(openingType))
+            dispatch(orderActions.setIsLocationJumb(isLocationJamb))
+            dispatch(orderActions.setLocationJumb(locationJumb))
         } catch (e) {
             console.log(e)
         }
     }
 }
 
-export const changeHandle = (handle: string) => {
-    return (dispatch: Dispatch) => {
-        try {
-            if (handle === "нет") {
-                dispatch(setHandle(handle))
-                dispatch(setHandleColor("нет"))                
-            } else {
-                dispatch(setHandle(handle))
-                dispatch(setHandleColor("")) 
-            }
-        } catch (e) {
-            console.log(e)        
-        }
-    }    
-}
-
-
-export const changeSpinner = (spinner: string) => {
-    return (dispatch: Dispatch) => {
-        try {
-            if (spinner === "нет") {
-                dispatch(setSpinner(spinner))
-                dispatch(setSpinnerColor("нет"))                
-            } else {
-                dispatch(setSpinner(spinner))
-                dispatch(setSpinnerColor("")) 
-            }
-        } catch (e) {
-            console.log(e)        
-        }
-    }    
-}
-
-export const changeEye = (eye: string) => {
-    return (dispatch: Dispatch) => {
-        try {
-            if (eye === "нет") {
-                dispatch(setEye(eye))
-                dispatch(setColorEye("нет"))               
-                dispatch(setEyeLocation("нет"))               
-            } else {
-                dispatch(setEye(eye))
-                dispatch(setColorEye(""))
-                dispatch(setEyeLocation(""))   
-            }
-        } catch (e) {
-            console.log(e)        
-        }
-    }    
-}
 export const addOrder = (data: IOrder) => {
     return async (dispatch: Dispatch) => {
         try {            
@@ -1123,7 +643,7 @@ export const addOrder = (data: IOrder) => {
                 }
                 
                 if (e.response.status === 422) {
-                    dispatch(setValidateErrors(e.response.data))                                     
+                    dispatch(orderActions.setValidateErrors(e.response.data))                                     
                 }
                                           
             } else {

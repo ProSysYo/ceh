@@ -302,19 +302,198 @@ export const orderSlice = createSlice({
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
         setParty: (state, action: PayloadAction<string>) => { state.order.party = action.payload },
-        setModel: (state, action: PayloadAction<string>) => { state.order.model = action.payload },
+        
+        setModel: (state, action: PayloadAction<string>) => { 
+            state.order.model = action.payload            
+
+            const { models, typeDecorations, jambs } = state
+            const selectedModel = models.find(item=>item.value === action.payload)!
+            
+            state.typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel.typeOutside || item.type === "нет" || item.type === "примечание")
+            state.order.typeDecorationOutside = ""
+
+            state.typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel.typeInside || item.type === "нет" || item.type === "примечание")
+            state.order.typeDecorationInside = ""
+
+            state.currentJambs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
+            state.order.jamb = ""            
+            if (selectedModel.typeOutside === "панель") {
+                state.isJambWrap =  true
+                state.order.jambWrap = ""
+            } else {
+                state.isJambWrap =  false
+                state.order.jambWrap = "нет"
+            }
+
+            state.contours = selectedModel!.contours
+            state.order.contour = ""            
+
+            state.doorThicks = selectedModel!.doorThicks 
+            state.order.doorThick = ""
+
+            state.order.decorationOutside = ""
+
+            state.isWrapOutside = false
+            state.order.wrapOutside = "" 
+
+            state.isWrapInside = false
+            state.order.wrapInside = ""
+
+            state.isPatinaOutside = false
+            state.order.patinaOutside = ""
+
+            state.order.typeWindow = ""
+            state.order.doorWindow = ""
+            state.order.colorTint = ""
+            state.isColorForge = false
+            state.order.colorForge = ""
+            state.isPatinaForge = false
+            state.order.patinaForge = ""
+            state.order.heightWindow = ""
+            state.order.widthWindow = ""
+            state.order.thickWindow = ""
+        },
         setContour: (state, action: PayloadAction<string | number>) => { state.order.contour = action.payload },
         setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },
         setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
         setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
         setOpeningType: (state, action: PayloadAction<string>) => { state.order.openingType = action.payload },
-        setIsDouble: (state, action: PayloadAction<boolean>) => { state.order.isDouble = action.payload },
+        
+        setIsDouble: (state, action: PayloadAction<boolean>) => { 
+            state.order.isDouble = action.payload
+            if (!action.payload) {
+                state.order.widthDouble = ""                
+            }
+        },
         setWidthDouble: (state, action: PayloadAction<number | string>) => { state.order.widthDouble = action.payload },
+
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         
         //Основной замок
-        setBaseLock: (state, action: PayloadAction<string>) => { state.order.baseLock = action.payload },
+        setBaseLock: (state, action: PayloadAction<string>) => { 
+            state.order.baseLock = action.payload
+            
+            const { baseLocks, covers } = state
+            const baseLock = baseLocks.find(lock => lock.value === action.payload)
+            
+            if (baseLock?.isBolt) {
+                state.isLockSpinner = true
+                state.order.lockSpinner = ""
+                state.order.lockSpinnerColor = ""                
+            } else {
+                state.isLockSpinner = false
+                state.order.lockSpinner = "нет"
+                state.order.lockSpinnerColor = "нет"                 
+            }
+            
+            switch (baseLock?.type) {
+                case "цилиндр":
+                    state.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.isBaseCylinder = true                    
+                    state.order.baseCylinder = ""
+                    state.isBaseCover = true
+                    state.order.baseCoverOutside = ""
+                    state.order.baseCoverColorOutside = ""
+                    state.order.baseCoverInside= ""
+                    state.order.baseCoverColorInside = ""
+                    state.isBaseCover2 = false
+                    state.order.baseCoverOutside2 = "нет"
+                    state.order.baseCoverColorOutside2 = "нет"
+                    state.order.baseCoverInside2 = "нет"
+                    state.order.baseCoverColorInside2 = "нет"
+                    break
+                case "двухсистемный":
+                    state.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    
+                    state.isBaseCylinder = true                    
+                    state.order.baseCylinder = ""
+                    state.isBaseCover = true
+                    state.order.baseCoverOutside = ""
+                    state.order.baseCoverColorOutside = ""
+                    state.order.baseCoverInside= ""
+                    state.order.baseCoverColorInside = ""
+                    state.isBaseCover2 = true
+                    state.order.baseCoverOutside2 = ""
+                    state.order.baseCoverColorOutside2 = ""
+                    state.order.baseCoverInside2 = ""
+                    state.order.baseCoverColorInside2 = ""                    
+                    break
+                case "сувальда":
+                    state.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.isBaseCylinder = false                    
+                    state.order.baseCylinder = "нет"
+                    state.isBaseCover = true
+                    state.order.baseCoverOutside = ""
+                    state.order.baseCoverColorOutside = ""
+                    state.order.baseCoverInside= ""
+                    state.order.baseCoverColorInside = ""
+                    state.isBaseCover2 = false
+                    state.order.baseCoverOutside2 = "нет"
+                    state.order.baseCoverColorOutside2 = "нет"
+                    state.order.baseCoverInside2 = "нет"
+                    state.order.baseCoverColorInside2 = "нет"                    
+                    break
+                case "нет":
+                case "другое":
+                    state.baseCovers = covers.filter(cover => cover.type === "нет")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.isBaseCylinder = false
+                    state.order.baseCylinder = "нет"
+
+                    state.isBaseCover = false
+                    state.order.baseCoverOutside = "нет"
+                    state.order.baseCoverColorOutside = "нет"
+                    state.order.baseCoverInside= "нет"
+                    state.order.baseCoverColorInside = "нет"
+
+                    state.isBaseCover2 = false
+                    state.order.baseCoverOutside2 = "нет"
+                    state.order.baseCoverColorOutside2 = "нет"
+                    state.order.baseCoverInside2 = "нет"
+                    state.order.baseCoverColorInside2 = "нет" 
+                    break                
+                case "примечание":
+                    state.baseCovers = covers
+                    state.baseCovers2 = covers
+
+                    state.isBaseCylinder = true
+                    state.order.baseCylinder = ""
+
+                    state.isBaseCover = true
+                    state.order.baseCoverOutside = ""
+                    state.order.baseCoverColorOutside = ""
+                    state.order.baseCoverInside= ""
+                    state.order.baseCoverColorInside = ""
+
+                    state.isBaseCover2 = true
+                    state.order.baseCoverOutside2 = ""
+                    state.order.baseCoverColorOutside2 = ""
+                    state.order.baseCoverInside2 = ""
+                    state.order.baseCoverColorInside2 = ""                    
+                    break
+                default:
+                    state.baseCovers = covers.filter(cover => cover.type === "нет")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.isBaseCylinder = false
+                    state.order.baseCylinder = "нет"
+
+                    state.isBaseCover = false
+                    state.order.baseCoverOutside = "нет"
+                    state.order.baseCoverColorOutside = "нет"
+                    state.order.baseCoverInside= "нет"
+                    state.order.baseCoverColorInside = "нет"
+
+                    state.isBaseCover2 = false
+                    state.order.baseCoverOutside2 = "нет"
+                    state.order.baseCoverColorOutside2 = "нет"
+                    state.order.baseCoverInside2 = "нет"
+                    state.order.baseCoverColorInside2 = "нет"
+            }
+        },
         setLockSpinner: (state, action: PayloadAction<string>) => { state.order.lockSpinner = action.payload },
         setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.order.lockSpinnerColor = action.payload },
         setIsLockSpinner: (state, action: PayloadAction<boolean>) => { state.isLockSpinner = action.payload },
@@ -336,7 +515,54 @@ export const orderSlice = createSlice({
         setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
 
         //Дополнительный замок
-        setOptionalLock: (state, action: PayloadAction<string>) => { state.order.optionalLock = action.payload },
+        setOptionalLock: (state, action: PayloadAction<string>) => {             
+            state.order.optionalLock = action.payload            
+
+            const { optionalLocks, covers } = state                    
+            const optionalLock = optionalLocks.find(lock => lock.value === action.payload)
+
+            switch (optionalLock?.type) {
+                case "цилиндр":
+                    state.optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.isOptionalCylinder = true
+                    state.isOptionalCover = true
+                    state.order.optionalCylinder = ""                    
+                    state.order.optionalCoverOutside = ""
+                    state.order.optionalCoverColorOutside = ""
+                    state.order.optionalCoverInside = ""
+                    state.order.optionalCoverColorInside = ""
+                    break
+                case "сувальда":
+                    state.optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.isOptionalCylinder = false
+                    state.isOptionalCover = true
+                    state.order.optionalCylinder = "нет"                    
+                    state.order.optionalCoverOutside = ""
+                    state.order.optionalCoverColorOutside = ""
+                    state.order.optionalCoverInside = ""
+                    state.order.optionalCoverColorInside = ""
+                    break  
+                case "примечание":
+                    state.optionalCovers = covers
+                    state.isOptionalCylinder = true
+                    state.isOptionalCover = true
+                    state.order.optionalCylinder = ""                    
+                    state.order.optionalCoverOutside = ""
+                    state.order.optionalCoverColorOutside = ""
+                    state.order.optionalCoverInside = ""
+                    state.order.optionalCoverColorInside = ""
+                    break
+                default:
+                    state.optionalCovers = covers.filter(cover => cover.type === "нет")
+                    state.isOptionalCylinder = false
+                    state.isOptionalCover = false
+                    state.order.optionalCylinder = "нет"                    
+                    state.order.optionalCoverOutside = "нет"
+                    state.order.optionalCoverColorOutside = "нет"
+                    state.order.optionalCoverInside = "нет"
+                    state.order.optionalCoverColorInside = "нет"                  
+            } 
+        },
         setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
         setIsOptonalCylinder: (state, action: PayloadAction<boolean>) => { state.isOptionalCylinder = action.payload },
         
@@ -348,16 +574,42 @@ export const orderSlice = createSlice({
         setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorInside = action.payload },
 
         //Глазок
-        setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },        
+        setEye: (state, action: PayloadAction<string>) => { 
+            const eye: string  = action.payload
+            state.order.eye = eye
+            if (eye === "нет") {
+                state.order.colorEye = "нет"
+                state.order.eyeLocation = "нет"
+            } else {
+                state.order.colorEye = ""
+                state.order.eyeLocation = ""
+            }
+        },        
         setColorEye: (state, action: PayloadAction<string>) => { state.order.colorEye = action.payload },        
         setEyeLocation: (state, action: PayloadAction<string>) => { state.order.eyeLocation = action.payload },
 
         //Ручка
-        setHandle: (state, action: PayloadAction<string>) => { state.order.handle = action.payload },
+        setHandle: (state, action: PayloadAction<string>) => { 
+            const handle = action.payload
+            state.order.handle = handle
+            if (handle === "нет") {
+                state.order.handleColor = "нет"               
+            } else {
+                state.order.handleColor = ""  
+            }
+        },
         setHandleColor: (state, action: PayloadAction<string>) => { state.order.handleColor = action.payload },
 
         //Вертушок
-        setSpinner: (state, action: PayloadAction<string>) => { state.order.spinner = action.payload },
+        setSpinner: (state, action: PayloadAction<string>) => { 
+            const spinner: string = action.payload
+            state.order.spinner = spinner
+            if (spinner === "нет") {
+                state.order.spinnerColor = "нет"                              
+            } else {
+                state.order.spinnerColor = "" 
+            }
+        },
         setSpinnerColor: (state, action: PayloadAction<string>) => { state.order.spinnerColor = action.payload },
 
 
@@ -407,133 +659,6 @@ export const orderSlice = createSlice({
     }
 })
 
-export const {
-    setCustomer,
-    setNumberCustomer,
-    setParty,
-    setModel,
-    setContour,
-    setDoorThick,
-    setCustomers,
-    setParties,
-    setCountDoors,
-    setCostDoor,
-    setNote,
-    setModels,
-    setContours,
-    setDoorThicks,
-    setCylinders,
-    setCovers,
-    setBaseCovers,
-    setBaseCovers2,
-    setHeight,
-    setWidth,
-    setModelBox,
-    setModelBoxes,
-    setOpeningTypes,
-    setOpeningType,
-    setWidthDouble,
-    setLocationHinge,
-    setIsThreeHinge,
-    setIsDouble,
-    setLoading,
-    setBaseLoks,
-    setOptionalLocks,
-    setBaseLock,
-    setSpinners,
-    setLockSpinner,
-    setIsLockSpinner,
-    setBaseCylinder,
-    setIsBaseCylinder,
-    setBaseCoverOutside,
-    setBaseCoverInside,
-    setBaseCoverOutside2,
-    setBaseCoverInside2,
-    setIsBaseCover2,
-    setOptionalLock,
-    setOptionalCylinder,
-    setIsOptonalCylinder,
-    setOptionalCovers,
-    setOptonalCoverOutside,
-    setOptonalCoverInside,
-    setEyes,
-    setEye,
-    setHandles,
-    setHandle,
-    setSpinner,
-    setTypeDecorations,
-    setTypeDecorationsOutside,
-    setTypeDecorationsInside,
-    setTypeDecorationOutside,
-    setTypeDecorationInside,
-    setDecorations,
-    setDecorationsOutside,
-    setDecorationOutside,
-    setWraps,
-    setWrapOutside,
-    setWrapInside,
-    setIsWrapOutside,
-    setPatinas,
-    setIsPatinaOutside,
-    setPatinaOutside,
-    setIsWrapInside,
-    setDecorationInside,
-    setDecorationsInside,
-    setPatinaInside,
-    setIsPatinaInside,
-    setTypeWindows,
-    setTypeWindow,
-    setWindows,
-    setCurrentWindows,
-    setDoorWindow,
-    setColorTints,
-    setColorTint,
-    setColorForges,
-    setColorForge,
-    setPatinaForges,
-    setPatinaForge,
-    setHeightWindow,
-    setWidthWindow,
-    setThickWindow,
-    setIsPatinaForge,
-    setIsColorForge,
-    setLocationHinges,
-    setTypeHinges,
-    setTypeHinge,
-    setThickMetalLeafs,
-    setThickMetalLeaf,
-    setThickMetalBoxes,
-    setThickMetalBox,
-    setEyeLocations,
-    setEyeLocation,
-    setJambs,
-    setJamb,
-    setCurrentJambs,
-    setJambWrap,
-    setIsJambWrap,
-    setLocationJambs,
-    setIsLocationJumb,
-    setLocationJumb,
-    setIsStainlessDoorStep,
-    setIsStreetDoor,
-    setIsEccentric,
-    setIsBackSheet,
-    setIsCloser,
-    setIsEnhanceCloser,
-    setValidateErrors,
-    setFittingColors,
-    setBaseCoverColorOutside,
-    setBaseCoverColorInside,
-    setBaseCoverColorOutside2,
-    setBaseCoverColorInside2,
-    setColorEye,
-    setOptonalCoverColorOutside,
-    setOptonalCoverColorInside,
-    setIsBaseCover,
-    setIsOptonalCover,
-    setLockSpinnerColor,
-    setHandleColor,
-    setSpinnerColor
-} = orderSlice.actions
+export const orderActions = orderSlice.actions
 
 export default orderSlice.reducer

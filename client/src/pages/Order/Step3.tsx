@@ -4,29 +4,7 @@ import { Col, Divider, Form, Row } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import {
-    setBaseCoverColorInside,
-    setBaseCoverColorInside2,
-    setBaseCoverColorOutside,
-    setBaseCoverColorOutside2,
-    setBaseCoverInside,
-    setBaseCoverInside2,
-    setBaseCoverOutside,
-    setBaseCoverOutside2,
-    setBaseCylinder,
-    setColorEye,
-    setEyeLocation,
-    setOptonalCoverInside,
-    setOptonalCoverOutside,
-    setLockSpinner,
-    setOptionalCylinder,
-    setOptonalCoverColorOutside,
-    setOptonalCoverColorInside,
-    setLockSpinnerColor,
-    setHandleColor,
-    setSpinnerColor,
-} from '../../store/slices/orderSlice';
-import { changeBaseLock, changeOptionalLock, changeHandle, changeSpinner, changeEye } from '../../store/actions/orderActions';
+import { orderActions } from '../../store/slices/orderSlice';
 
 const layout1 = {labelCol:{ span: 8 }, wrapperCol:{ span: 6 }}
 const layout2 = {labelCol:{ span: 8 }, wrapperCol:{ span: 10 }}
@@ -59,7 +37,7 @@ const Step3: FC = () => {
                     <Select
                         items={baseLocks}
                         value={baseLock}
-                        onChange={(value) => dispatch(changeBaseLock(value))}
+                        onChange={(value) => dispatch(orderActions.setBaseLock(value))}
                     />
                 </Form.Item>
             
@@ -68,7 +46,7 @@ const Step3: FC = () => {
                         items={cylinders}
                         value={baseCylinder}
                         disabled={!isBaseCylinder}
-                        onChange={(value) => dispatch(setBaseCylinder(value))}
+                        onChange={(value) => dispatch(orderActions.setBaseCylinder(value))}
                     />
                 </Form.Item>
 
@@ -79,7 +57,7 @@ const Step3: FC = () => {
                                 items={spinners}
                                 value={lockSpinner}
                                 disabled={!isLockSpinner}
-                                onChange={(value) => dispatch(setLockSpinner(value))}
+                                onChange={(value) => dispatch(orderActions.setLockSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -88,7 +66,7 @@ const Step3: FC = () => {
                                 value={lockSpinnerColor}
                                 disabled={!isLockSpinner}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setLockSpinnerColor(value))}
+                                onChange={(value) => dispatch(orderActions.setLockSpinnerColor(value))}
                             />
                         </Col>
                     </Row>
@@ -102,7 +80,7 @@ const Step3: FC = () => {
                                 items={baseCovers}
                                 value={baseCoverOutside}
                                 disabled={!isBaseCover}
-                                onChange={(value) => dispatch(setBaseCoverOutside(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -111,7 +89,7 @@ const Step3: FC = () => {
                                 value={baseCoverColorOutside}
                                 disabled={!isBaseCover}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setBaseCoverColorOutside(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside(value))}
                             />
                         </Col>
                     </Row>
@@ -124,7 +102,7 @@ const Step3: FC = () => {
                                 items={baseCovers}
                                 value={baseCoverInside}
                                 disabled={!isBaseCover}
-                                onChange={(value) => dispatch(setBaseCoverInside(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -133,7 +111,7 @@ const Step3: FC = () => {
                                 value={baseCoverColorInside}
                                 disabled={!isBaseCover}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setBaseCoverColorInside(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverColorInside(value))}
                             />
                         </Col>
                     </Row>
@@ -147,7 +125,7 @@ const Step3: FC = () => {
                                 items={baseCovers2}
                                 value={baseCoverOutside2}
                                 disabled={!isBaseCover2}
-                                onChange={(value) => dispatch(setBaseCoverOutside2(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverOutside2(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -156,7 +134,7 @@ const Step3: FC = () => {
                                 value={baseCoverColorOutside2}
                                 disabled={!isBaseCover2}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setBaseCoverColorOutside2(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside2(value))}
                             />
                         </Col>
                     </Row>
@@ -169,7 +147,7 @@ const Step3: FC = () => {
                                 items={baseCovers2}
                                 value={baseCoverInside2}
                                 disabled={!isBaseCover2}
-                                onChange={(value) => dispatch(setBaseCoverInside2(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverInside2(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -178,7 +156,7 @@ const Step3: FC = () => {
                                 value={baseCoverColorInside2}
                                 disabled={!isBaseCover2}
                                 firstOption="выберите цвет"                                       
-                                onChange={(value) => dispatch(setBaseCoverColorInside2(value))}
+                                onChange={(value) => dispatch(orderActions.setBaseCoverColorInside2(value))}
                             />
                         </Col>
                     </Row>
@@ -189,7 +167,7 @@ const Step3: FC = () => {
                         <Select
                             items={optionalLocks}
                             value={optionalLock}
-                            onChange={(value) => dispatch(changeOptionalLock(value))}
+                            onChange={(value) => dispatch(orderActions.setOptionalLock(value))}
                         />
                 </Form.Item>                
                 
@@ -198,7 +176,7 @@ const Step3: FC = () => {
                         items={cylinders}
                         value={optionalCylinder}
                         disabled={!isOptionalCylinder}
-                        onChange={(value) => dispatch(setOptionalCylinder(value))}
+                        onChange={(value) => dispatch(orderActions.setOptionalCylinder(value))}
                     />
                 </Form.Item>
 
@@ -210,7 +188,7 @@ const Step3: FC = () => {
                                 items={optionalCovers}
                                 value={optionalCoverOutside}
                                 disabled={!isOptionalCover}
-                                onChange={(value) => dispatch(setOptonalCoverOutside(value))}
+                                onChange={(value) => dispatch(orderActions.setOptonalCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -219,7 +197,7 @@ const Step3: FC = () => {
                                 value={optionalCoverColorOutside}
                                 disabled={!isOptionalCover}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setOptonalCoverColorOutside(value))}
+                                onChange={(value) => dispatch(orderActions.setOptonalCoverColorOutside(value))}
                             />
                         </Col>
                     </Row>
@@ -232,7 +210,7 @@ const Step3: FC = () => {
                                 items={optionalCovers}
                                 value={optionalCoverInside}
                                 disabled={!isOptionalCover}
-                                onChange={(value) => dispatch(setOptonalCoverInside(value))}
+                                onChange={(value) => dispatch(orderActions.setOptonalCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -241,7 +219,7 @@ const Step3: FC = () => {
                                 value={optionalCoverColorInside}
                                 disabled={!isOptionalCover}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setOptonalCoverColorInside(value))}
+                                onChange={(value) => dispatch(orderActions.setOptonalCoverColorInside(value))}
                             />
                         </Col>
                     </Row>
@@ -254,7 +232,7 @@ const Step3: FC = () => {
                             <Select
                                 items={eyes}
                                 value={eye}
-                                onChange={(value) => dispatch(changeEye(value))}
+                                onChange={(value) => dispatch(orderActions.setEye(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -262,7 +240,7 @@ const Step3: FC = () => {
                                 items={fittingColors}
                                 value={colorEye}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setColorEye(value))}
+                                onChange={(value) => dispatch(orderActions.setColorEye(value))}
                             />
                         </Col>
                     </Row>
@@ -272,7 +250,7 @@ const Step3: FC = () => {
                     <Select
                         items={eyeLocations}
                         value={eyeLocation}
-                        onChange={(value) => dispatch(setEyeLocation(value))}
+                        onChange={(value) => dispatch(orderActions.setEyeLocation(value))}
                     />
                 </Form.Item>                    
 
@@ -284,7 +262,7 @@ const Step3: FC = () => {
                             <Select
                                 items={handles}
                                 value={handle}
-                                onChange={(value) => dispatch(changeHandle(value))}
+                                onChange={(value) => dispatch(orderActions.setHandle(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -292,7 +270,7 @@ const Step3: FC = () => {
                                 items={fittingColors}
                                 value={handleColor}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setHandleColor(value))}
+                                onChange={(value) => dispatch(orderActions.setHandleColor(value))}
                             />
                         </Col>
                     </Row>
@@ -304,7 +282,7 @@ const Step3: FC = () => {
                             <Select
                                 items={spinners}
                                 value={spinner}
-                                onChange={(value) => dispatch(changeSpinner(value))}
+                                onChange={(value) => dispatch(orderActions.setSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -312,7 +290,7 @@ const Step3: FC = () => {
                                 items={fittingColors}
                                 value={spinnerColor}
                                 firstOption="выберите цвет"
-                                onChange={(value) => dispatch(setSpinnerColor(value))}
+                                onChange={(value) => dispatch(orderActions.setSpinnerColor(value))}
                             />
                         </Col>
                     </Row>

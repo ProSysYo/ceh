@@ -4,15 +4,7 @@ import { Checkbox, Form } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { 
-    setIsBackSheet,
-    setIsCloser,
-    setIsEccentric,
-    setIsEnhanceCloser,
-    setIsStainlessDoorStep,
-    setIsStreetDoor,
-    setLocationHinge 
-} from '../../store/slices/orderSlice';
+import { orderActions } from '../../store/slices/orderSlice';
 
 
 const Step6: FC = () => {
@@ -36,19 +28,19 @@ const Step6: FC = () => {
                 size = "middle"              
             >   
                 <Form.Item label="Порог из нержавейки">
-                    <Checkbox checked={isStainlessDoorStep} onChange={(e)=> dispatch(setIsStainlessDoorStep(e.target.checked))} />
+                    <Checkbox checked={isStainlessDoorStep} onChange={(e)=> dispatch(orderActions.setIsStainlessDoorStep(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Уличная дверь">
-                    <Checkbox checked={isStreetDoor} onChange={(e)=> dispatch(setIsStreetDoor(e.target.checked))} />
+                    <Checkbox checked={isStreetDoor} onChange={(e)=> dispatch(orderActions.setIsStreetDoor(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Эксцентрик">
-                    <Checkbox checked={isEccentric} onChange={(e)=> dispatch(setIsEccentric(e.target.checked))} />
+                    <Checkbox checked={isEccentric} onChange={(e)=> dispatch(orderActions.setIsEccentric(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Задний лист">
-                    <Checkbox checked={isBackSheet} onChange={(e)=> dispatch(setIsBackSheet(e.target.checked))} />
+                    <Checkbox checked={isBackSheet} onChange={(e)=> dispatch(orderActions.setIsBackSheet(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Термокабель?">
@@ -56,11 +48,11 @@ const Step6: FC = () => {
                 </Form.Item>
 
                 <Form.Item label="Доводчик">
-                    <Checkbox checked={isCloser} onChange={(e)=> dispatch(setIsCloser(e.target.checked))} />
+                    <Checkbox checked={isCloser} onChange={(e)=> dispatch(orderActions.setIsCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Усиление под довочик">
-                    <Checkbox checked={isEnhanceCloser} onChange={(e)=> dispatch(setIsEnhanceCloser(e.target.checked))} />
+                    <Checkbox checked={isEnhanceCloser} onChange={(e)=> dispatch(orderActions.setIsEnhanceCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Электромагнит?">
@@ -75,7 +67,7 @@ const Step6: FC = () => {
                     <Select 
                         items={locationHinges} 
                         value={locationHinge} 
-                        onChange={ (value) => dispatch(setLocationHinge(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
                     />
                 </Form.Item>
             </Form>

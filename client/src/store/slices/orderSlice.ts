@@ -141,7 +141,7 @@ const initialState: OrderSate = {
 
     isLoading: false,
 
-    isLockSpinner: false,
+    isLockSpinner: false,//Вертушок замка
     isBaseCylinder: false,
     isBaseCover: false,
     isBaseCover2: false,
@@ -174,39 +174,53 @@ const initialState: OrderSate = {
         openingType: "",
         isDouble: false,
         widthDouble: "",
+        
+        //Петли
         locationHinge: "",
         isThreeHinge: false,
         typeHinge: "",
 
+        //Основной замок
         baseLock: "",
         lockSpinner: "нет",
-
+        lockSpinnerColor: "нет",
         baseCylinder: "нет",
 
-        baseCoverOutside: "",
-        baseCoverColorOutside: "",
-        baseCoverInside: "",
-        baseCoverColorInside: "",
+        //Накладки основного замка
+        baseCoverOutside: "нет",
+        baseCoverColorOutside: "нет",
+        baseCoverInside: "нет",
+        baseCoverColorInside: "нет",
 
+        //Накладки основного замка (если двухсистемный замок)
         baseCoverOutside2: "нет",
         baseCoverColorOutside2: "нет",
         baseCoverInside2: "нет",
         baseCoverColorInside2: "нет",
 
+        //Дополнительный замок
         optionalLock: "",
         optionalCylinder: "нет",
-        optionalCoverOutside: "",
-        optionalCoverColorOutside: "",
-        optionalCoverInside: "",
-        optionalCoverColorInside: "",
 
+        //Накладки дополнительного замка
+        optionalCoverOutside: "нет",
+        optionalCoverColorOutside: "нет",
+        optionalCoverInside: "нет",
+        optionalCoverColorInside: "нет",
+
+        //Глазок
         eye: "",
         colorEye: "",
         eyeLocation: "",
 
+        //Ручка
         handle: "",
+        handleColor: "",
 
+        //Вертушок двери(не замка)
         spinner: "",
+        spinnerColor: "",
+
         typeDecorationOutside: "",
         decorationOutside: "",
         wrapOutside: "",
@@ -298,39 +312,55 @@ export const orderSlice = createSlice({
         setIsDouble: (state, action: PayloadAction<boolean>) => { state.order.isDouble = action.payload },
         setWidthDouble: (state, action: PayloadAction<number | string>) => { state.order.widthDouble = action.payload },
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
+        
+        //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => { state.order.baseLock = action.payload },
         setLockSpinner: (state, action: PayloadAction<string>) => { state.order.lockSpinner = action.payload },
+        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.order.lockSpinnerColor = action.payload },
         setIsLockSpinner: (state, action: PayloadAction<boolean>) => { state.isLockSpinner = action.payload },
         setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },
         setIsBaseCylinder: (state, action: PayloadAction<boolean>) => { state.isBaseCylinder = action.payload },
         
+        //Накладки основного замка
         setIsBaseCover: (state, action: PayloadAction<boolean>) => { state.isBaseCover = action.payload },
         setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },        
         setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside = action.payload },        
         setBaseCoverInside: (state, action: PayloadAction<string>) => { state.order.baseCoverInside = action.payload },
         setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside = action.payload },
 
+        //Накладки основного замка 2
         setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
         setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside2 = action.payload },
         setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside2 = action.payload },        
         setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverInside2 = action.payload },
         setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
 
+        //Дополнительный замок
         setOptionalLock: (state, action: PayloadAction<string>) => { state.order.optionalLock = action.payload },
         setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
         setIsOptonalCylinder: (state, action: PayloadAction<boolean>) => { state.isOptionalCylinder = action.payload },
+        
+        //Накладки дополнительного замка
         setIsOptonalCover: (state, action: PayloadAction<boolean>) => { state.isOptionalCover = action.payload },
         setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
         setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorOutside = action.payload },
         setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
         setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorInside = action.payload },
 
+        //Глазок
         setEye: (state, action: PayloadAction<string>) => { state.order.eye = action.payload },        
         setColorEye: (state, action: PayloadAction<string>) => { state.order.colorEye = action.payload },        
         setEyeLocation: (state, action: PayloadAction<string>) => { state.order.eyeLocation = action.payload },
 
+        //Ручка
         setHandle: (state, action: PayloadAction<string>) => { state.order.handle = action.payload },
+        setHandleColor: (state, action: PayloadAction<string>) => { state.order.handleColor = action.payload },
+
+        //Вертушок
         setSpinner: (state, action: PayloadAction<string>) => { state.order.spinner = action.payload },
+        setSpinnerColor: (state, action: PayloadAction<string>) => { state.order.spinnerColor = action.payload },
+
+
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { state.order.typeDecorationOutside = action.payload },
         setTypeDecorationInside: (state, action: PayloadAction<string>) => { state.order.typeDecorationInside = action.payload },
         setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },
@@ -500,7 +530,10 @@ export const {
     setOptonalCoverColorOutside,
     setOptonalCoverColorInside,
     setIsBaseCover,
-    setIsOptonalCover
+    setIsOptonalCover,
+    setLockSpinnerColor,
+    setHandleColor,
+    setSpinnerColor
 } = orderSlice.actions
 
 export default orderSlice.reducer

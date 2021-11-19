@@ -97,7 +97,15 @@ import {
     setIsBaseCover,
     setIsOptonalCover,
     setOptonalCoverColorOutside,
-    setOptonalCoverColorInside
+    setOptonalCoverColorInside,
+    setLockSpinnerColor,
+    setHandle,
+    setHandleColor,
+    setSpinner,
+    setSpinnerColor,
+    setEye,
+    setColorEye,
+    setEyeLocation
 } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { RootState } from '../store';
@@ -682,20 +690,16 @@ export const changeBaseLock = (value: string) => {
 
             const { baseLocks, covers } = getState().order
             const baseLock = baseLocks.find(lock => lock.value === value)
-            if (baseLock?.isBolt) {
-                dispatch(setIsLockSpinner(true))
-                dispatch(setLockSpinner(""))                
-            } else {
-                dispatch(setIsLockSpinner(false))
-                dispatch(setLockSpinner("нет"))                
-            }
-
+            
             let baseCovers: ICover[] = []
             let baseCovers2: ICover[] = []
-
             
             let isBaseCylinder: boolean = false
-            let baseCylinder: string = "нет" 
+            let baseCylinder: string = "нет"
+            
+            let isLockSpinner: boolean = false
+            let lockSpinner: string = "нет"
+            let lockSpinnerColor: string = "нет"
 
             let isBaseCover: boolean = false
             let baseCoverOutside: string = "нет"
@@ -707,7 +711,17 @@ export const changeBaseLock = (value: string) => {
             let baseCoverOutside2: string = "нет"
             let baseCoverColorOutside2: string = "нет"
             let baseCoverInside2: string = "нет"         
-            let baseCoverColorInside2: string = "нет"         
+            let baseCoverColorInside2: string = "нет"
+            
+            if (baseLock?.isBolt) {
+                isLockSpinner = true
+                lockSpinner = ""
+                lockSpinnerColor = ""                
+            } else {
+                isLockSpinner = false
+                lockSpinner = "нет"
+                lockSpinnerColor = "нет"                 
+            }
             
             switch (baseLock?.type) {
                 case "цилиндр":
@@ -801,6 +815,10 @@ export const changeBaseLock = (value: string) => {
 
             dispatch(setIsBaseCylinder(isBaseCylinder))
             dispatch(setBaseCylinder(baseCylinder))
+
+            dispatch(setIsLockSpinner(isLockSpinner))
+            dispatch(setLockSpinner(lockSpinner))
+            dispatch(setLockSpinnerColor(lockSpinnerColor))
 
             dispatch(setIsBaseCover(isBaseCover))  
             dispatch(setBaseCovers(baseCovers))
@@ -1042,6 +1060,56 @@ export const changeOpeningType = (openingType: string) => {
     }
 }
 
+export const changeHandle = (handle: string) => {
+    return (dispatch: Dispatch) => {
+        try {
+            if (handle === "нет") {
+                dispatch(setHandle(handle))
+                dispatch(setHandleColor("нет"))                
+            } else {
+                dispatch(setHandle(handle))
+                dispatch(setHandleColor("")) 
+            }
+        } catch (e) {
+            console.log(e)        
+        }
+    }    
+}
+
+
+export const changeSpinner = (spinner: string) => {
+    return (dispatch: Dispatch) => {
+        try {
+            if (spinner === "нет") {
+                dispatch(setSpinner(spinner))
+                dispatch(setSpinnerColor("нет"))                
+            } else {
+                dispatch(setSpinner(spinner))
+                dispatch(setSpinnerColor("")) 
+            }
+        } catch (e) {
+            console.log(e)        
+        }
+    }    
+}
+
+export const changeEye = (eye: string) => {
+    return (dispatch: Dispatch) => {
+        try {
+            if (eye === "нет") {
+                dispatch(setEye(eye))
+                dispatch(setColorEye("нет"))               
+                dispatch(setEyeLocation("нет"))               
+            } else {
+                dispatch(setEye(eye))
+                dispatch(setColorEye(""))
+                dispatch(setEyeLocation(""))   
+            }
+        } catch (e) {
+            console.log(e)        
+        }
+    }    
+}
 export const addOrder = (data: IOrder) => {
     return async (dispatch: Dispatch) => {
         try {            

@@ -16,33 +16,48 @@ export interface IOrder {
     locationHinge: string; //Расположение петель
     isThreeHinge: boolean; //Три петли
     typeHinge: string;
+
+    //Основной замок
     baseLock: string;    
-    lockSpinner: string;
+    lockSpinner: string;//Вертушок замка
+    lockSpinnerColor: string;
     baseCylinder: string;
 
+    //Накладки основного замка
     baseCoverOutside: string;
     baseCoverColorOutside: string;
     baseCoverInside: string;
     baseCoverColorInside: string;
 
+    //Накладки основного замка 2
     baseCoverOutside2: string;
     baseCoverColorOutside2: string;
     baseCoverInside2: string;
     baseCoverColorInside2: string;
 
+    //Дополнительный замок
     optionalLock: string;
     optionalCylinder: string;
+
+    //Накладки дополнительного замка
     optionalCoverOutside: string,
     optionalCoverColorOutside: string,
     optionalCoverInside: string,
     optionalCoverColorInside: string,
 
+    //Глазок
     eye: string;
     colorEye: string;
     eyeLocation: string;
 
+    //Ручка
     handle: string;
+    handleColor: string;
+
+    //Вертушок
     spinner: string;
+    spinnerColor: string;
+
     typeDecorationOutside: string;    
     decorationOutside: string;
     wrapOutside: string;

@@ -10,7 +10,7 @@ import NewOrder from './pages/Order/NewOrder';
 const { Content } = Layout;
 
 const App: FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     const toggle = () => {
         setCollapsed(!collapsed);

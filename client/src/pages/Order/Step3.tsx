@@ -15,18 +15,18 @@ import {
     setBaseCoverOutside2,
     setBaseCylinder,
     setColorEye,
-    setEye,
     setEyeLocation,
-    setHandle,
     setOptonalCoverInside,
     setOptonalCoverOutside,
     setLockSpinner,
     setOptionalCylinder,
-    setSpinner,
     setOptonalCoverColorOutside,
     setOptonalCoverColorInside,
+    setLockSpinnerColor,
+    setHandleColor,
+    setSpinnerColor,
 } from '../../store/slices/orderSlice';
-import { changeBaseLock, changeOptionalLock } from '../../store/actions/orderActions';
+import { changeBaseLock, changeOptionalLock, changeHandle, changeSpinner, changeEye } from '../../store/actions/orderActions';
 
 const layout1 = {labelCol:{ span: 8 }, wrapperCol:{ span: 6 }}
 const layout2 = {labelCol:{ span: 8 }, wrapperCol:{ span: 10 }}
@@ -42,7 +42,8 @@ const Step3: FC = () => {
     const {
         baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside, baseCoverOutside2, baseCoverInside2, optionalLock,
         optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation, baseCoverColorInside, baseCoverColorOutside,
-        baseCoverColorOutside2, baseCoverColorInside2, colorEye, optionalCoverColorOutside, optionalCoverColorInside
+        baseCoverColorOutside2, baseCoverColorInside2, colorEye, optionalCoverColorOutside, optionalCoverColorInside, lockSpinnerColor, handleColor,
+        spinnerColor
     } = useAppSelector(state => state.order.order)
 
     
@@ -69,16 +70,29 @@ const Step3: FC = () => {
                         disabled={!isBaseCylinder}
                         onChange={(value) => dispatch(setBaseCylinder(value))}
                     />
-                </Form.Item> 
-            
-                <Form.Item label={<Title>Вертушок замка</Title>} {...layout1}>
-                    <Select
-                        items={spinners}
-                        value={lockSpinner}
-                        disabled={!isLockSpinner}
-                        onChange={(value) => dispatch(setLockSpinner(value))}
-                    />
                 </Form.Item>
+
+                <Form.Item label="Вертушок замка" {...layout2}>
+                    <Row>
+                        <Col span={14}>
+                            <Select 
+                                items={spinners}
+                                value={lockSpinner}
+                                disabled={!isLockSpinner}
+                                onChange={(value) => dispatch(setLockSpinner(value))}
+                            />
+                        </Col>
+                        <Col span={10}>
+                            <Select 
+                                items={fittingColors}
+                                value={lockSpinnerColor}
+                                disabled={!isLockSpinner}
+                                firstOption="выберите цвет"
+                                onChange={(value) => dispatch(setLockSpinnerColor(value))}
+                            />
+                        </Col>
+                    </Row>
+                </Form.Item>                
 
                 <Divider >Накладки основного замка</Divider> 
                 <Form.Item label="Снаружи" {...layout2}>
@@ -240,7 +254,7 @@ const Step3: FC = () => {
                             <Select
                                 items={eyes}
                                 value={eye}
-                                onChange={(value) => dispatch(setEye(value))}
+                                onChange={(value) => dispatch(changeEye(value))}
                             />
                         </Col>
                         <Col span={10}>
@@ -260,25 +274,49 @@ const Step3: FC = () => {
                         value={eyeLocation}
                         onChange={(value) => dispatch(setEyeLocation(value))}
                     />
-                </Form.Item>
-                    
-
-                <Divider/>               
-                <Form.Item label="Ручка" {...layout1}>
-                    <Select
-                        items={handles}
-                        value={handle}
-                        onChange={(value) => dispatch(setHandle(value))}
-                    />
-                </Form.Item>
-            
-                <Form.Item label="Вертушок" {...layout1}>
-                    <Select
-                        items={spinners}
-                        value={spinner}
-                        onChange={(value) => dispatch(setSpinner(value))}
-                    />
                 </Form.Item>                    
+
+                <Divider/>
+
+                <Form.Item label="Ручка" {...layout2}>
+                    <Row>
+                        <Col span={14}>
+                            <Select
+                                items={handles}
+                                value={handle}
+                                onChange={(value) => dispatch(changeHandle(value))}
+                            />
+                        </Col>
+                        <Col span={10}>
+                            <Select 
+                                items={fittingColors}
+                                value={handleColor}
+                                firstOption="выберите цвет"
+                                onChange={(value) => dispatch(setHandleColor(value))}
+                            />
+                        </Col>
+                    </Row>
+                </Form.Item>
+
+                <Form.Item label="Вертушок" {...layout2}>
+                    <Row>
+                        <Col span={14}>
+                            <Select
+                                items={spinners}
+                                value={spinner}
+                                onChange={(value) => dispatch(changeSpinner(value))}
+                            />
+                        </Col>
+                        <Col span={10}>
+                            <Select 
+                                items={fittingColors}
+                                value={spinnerColor}
+                                firstOption="выберите цвет"
+                                onChange={(value) => dispatch(setSpinnerColor(value))}
+                            />
+                        </Col>
+                    </Row>
+                </Form.Item>                                
             </Form>
         </Container>
     )
@@ -294,8 +332,3 @@ const Container = styled.div`
         width: 95%;
     }
 `;
-
-const Title = styled.label`
-    
-`;
-

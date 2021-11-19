@@ -117,8 +117,8 @@ const eyeLocations: IEyeLocation[] = [
 const handles: IHandle[] = [
     { _id: "1", value: "нет", name: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим." },
-    { _id: "3", value: "ручка хром", name: "ручка хром" },
-    { _id: "4", value: "ручка бронза", name: "ручка бронза" },
+    { _id: "3", value: "Ручка 26", name: "Ручка 26" },
+    { _id: "4", value: "Ручка Пирамида", name: "Ручка Пирамида" },
 ];
 
 const typeDecorations: ITypeDecoration[] = [

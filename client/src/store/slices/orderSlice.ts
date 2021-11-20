@@ -662,7 +662,51 @@ export const orderSlice = createSlice({
                     break                
             }
         },
-        setTypeDecorationInside: (state, action: PayloadAction<string>) => { state.order.typeDecorationInside = action.payload },
+        setTypeDecorationInside: (state, action: PayloadAction<string>) => { 
+            state.order.typeDecorationInside = action.payload
+
+            const { typeDecorationsInside, decorations } = state            
+            
+            const selectedType = typeDecorationsInside.find(item => item.value === action.payload)!
+
+            switch (selectedType.variety) {
+                case "нет":
+                case "примечание":
+                    state.decorationsInside = decorations.filter(item => item.variety === "нет")
+                    break
+                default: 
+                    state.decorationsInside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+            }
+            
+            switch (selectedType.type) {
+                case "панель":                                                      
+                    state.isWrapInside = true
+                    state.isPatinaInside = true
+                    state.order.wrapInside = ""
+                    state.order.patinaInside = ""
+                    break
+                case "металл":                                       
+                    state.isWrapInside = false
+                    state.isPatinaInside = false
+                    state.order.wrapInside = "нет"
+                    state.order.patinaInside = "нет"
+                    break
+                case "нет":
+                case "примечание":
+                    state.order.decorationInside = "нет" 
+                    state.isWrapInside = false
+                    state.isPatinaInside = false
+                    state.order.wrapInside = "нет"
+                    state.order.patinaInside = "нет"
+                    break
+                default:
+                    state.order.decorationInside = "нет" 
+                    state.isWrapInside = false
+                    state.isPatinaInside = false
+                    state.order.wrapInside = "нет"
+                    state.order.patinaInside = "нет"              
+            }
+        },
         setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },
         setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload },
         setWrapInside: (state, action: PayloadAction<string>) => { state.order.wrapInside = action.payload },
@@ -673,9 +717,103 @@ export const orderSlice = createSlice({
         setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload },
         setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload },
         setPatinaInside: (state, action: PayloadAction<string>) => { state.order.patinaInside = action.payload },
-        setIsPatinaInside: (state, action: PayloadAction<boolean>) => { state.isPatinaInside = action.payload },
-        setTypeWindow: (state, action: PayloadAction<string>) => { state.order.typeWindow = action.payload },
-        setDoorWindow: (state, action: PayloadAction<string>) => { state.order.doorWindow = action.payload },
+        setIsPatinaInside: (state, action: PayloadAction<boolean>) => { state.isPatinaInside = action.payload }, 
+        setTypeWindow: (state, action: PayloadAction<string>) => {
+            const { model, doorThick} = state.order           
+
+            if (model === "" || doorThick === "") {                
+                return alert("Сначала выберите модель двери и толщину")                
+            }
+
+            const { windows, typeWindows } = state
+
+            state.order.typeWindow = action.payload
+
+            const selectedType = typeWindows.find(item => item.value === action.payload)!
+
+            switch (selectedType.type) {
+                case "нет":
+                case "примечание":    
+                    state.order.doorWindow = "нет"
+                    state.order.colorTint = "нет"
+                    state.isColorForge = false
+                    state.order.colorForge = "нет"
+                    state.isPatinaForge = false
+                    state.order.patinaForge = "нет"
+                    state.order.heightWindow = ""
+                    state.order.widthWindow = ""
+                    state.order.thickWindow= ""  
+                    break
+                case "КС":
+                    state.order.doorWindow = ""
+                    state.order.colorTint = ""
+                    state.isColorForge = true
+                    state.order.colorForge = ""
+                    state.isPatinaForge = true
+                    state.order.patinaForge = ""
+                    state.order.heightWindow = ""
+                    state.order.widthWindow = ""
+                    state.order.thickWindow= "" 
+                    break 
+                case "С":
+                    state.order.doorWindow = ""
+                    state.order.colorTint = ""
+                    state.isColorForge = false
+                    state.order.colorForge = "нет"
+                    state.isPatinaForge = false
+                    state.order.patinaForge = "нет"
+                    state.order.heightWindow = ""
+                    state.order.widthWindow = ""
+                    state.order.thickWindow= "" 
+                    break
+                default:    
+                    state.order.doorWindow = "нет"
+                    state.order.colorTint = "нет"
+                    state.isColorForge = false
+                    state.order.colorForge = "нет"
+                    state.isPatinaForge = false
+                    state.order.patinaForge = "нет"
+                    state.order.heightWindow = "нет"
+                    state.order.widthWindow = "нет"
+                    state.order.thickWindow= "нет" 
+            }
+
+            state.currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")            
+        },
+        setDoorWindow: (state, action: PayloadAction<string>) => { 
+            state.order.doorWindow = action.payload
+
+            const {windows, models} = state
+            const { doorThick, model } = state.order
+
+            const selectedModel = models.find(item => item.value === model)!
+            const selectedWindow = windows.find(item => item.value === action.payload)!
+            
+            if (selectedModel.isTermo) {
+                state.order.thickWindow = selectedWindow.tTermo
+            } else {
+                switch (doorThick) {
+                    case 60:
+                        state.order.thickWindow = selectedWindow.t60
+                        break
+                    case 70:
+                        state.order.thickWindow = selectedWindow.t70
+                        break
+                    case 80:
+                        state.order.thickWindow = selectedWindow.t80
+                        break
+                    case 90:
+                        state.order.thickWindow = selectedWindow.t90
+                        break
+                    case 100:
+                        state.order.thickWindow = selectedWindow.t100
+                        break       
+                }
+            } 
+            
+            state.order.heightWindow = selectedWindow.height
+            state.order.widthWindow = selectedWindow.width            
+        },
         setColorTint: (state, action: PayloadAction<string>) => { state.order.colorTint = action.payload },
         setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },
         setIsColorForge: (state, action: PayloadAction<boolean>) => { state.isColorForge = action.payload },

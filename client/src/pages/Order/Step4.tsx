@@ -5,8 +5,6 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
-import { changeTypeDecorationInside } from '../../store/actions/orderActions';
-
 
 const Step4: FC = () => {
     const dispatch = useAppDispatch()
@@ -67,7 +65,7 @@ const Step4: FC = () => {
                     <Select 
                         items={typeDecorationsInside} 
                         value={typeDecorationInside} 
-                        onChange={ (value) => dispatch(changeTypeDecorationInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Элемент отделки / Фрезеровка">

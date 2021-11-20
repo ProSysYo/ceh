@@ -4,7 +4,6 @@ import { Form, InputNumber } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { changeTypeWindow, changeWindow } from '../../store/actions/orderActions';
 import { orderActions } from '../../store/slices/orderSlice';
 
 
@@ -32,14 +31,14 @@ const Step5: FC = () => {
                     <Select 
                         items={typeWindows} 
                         value={typeWindow} 
-                        onChange={ (value) => dispatch(changeTypeWindow(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setTypeWindow(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Окно*">
                     <Select 
                         items={currentWindows} 
                         value={doorWindow} 
-                        onChange={ (value) => dispatch(changeWindow(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setDoorWindow(value))}                       
                     />
                 </Form.Item>
                 <Form.Item label="Цвет тонировки">

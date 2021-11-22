@@ -258,7 +258,7 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
+        setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },        
 
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
         setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },

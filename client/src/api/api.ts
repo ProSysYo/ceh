@@ -27,6 +27,7 @@ import { ILocationJamb } from '../interfaces/ILocationJamb';
 import { IOrder } from '../interfaces/IOrder';
 import { http } from '../commons/http';
 import { IFittingColor } from '../interfaces/IFittingColor';
+import { IHingeCount } from "../interfaces/IHingeCount";
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -209,6 +210,11 @@ const locationHinges: ILocationHinge[] = [
     { _id: "2", value: "правые", name: "правые" },       
 ];
 
+const hingeCounts: IHingeCount[] = [
+    { _id: "1", value: 2, name: 2 },
+    { _id: "2", value: 3, name: 3 },       
+];
+
 const typeHinges: ITypeHinge[] = [
     { _id: "1", value: "капелька", name: "капелька" },
     { _id: "2", value: "на подшипнике", name: "на подшипнике" },       
@@ -268,6 +274,7 @@ const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeo
 const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
 const getPatinaForges = () => new Promise<{data: IPatinaForge[]}>((res) => { setTimeout(() => res({data: patinaForges}), deley) })
 const getLoacationHinges = () => new Promise<{data: ILocationHinge[]}>((res) => { setTimeout(() => res({data: locationHinges}), deley) })
+const getHingeCounts = () => new Promise<{data: IHingeCount[]}>((res) => { setTimeout(() => res({data: hingeCounts}), deley) })
 const getTypeHinges = () => new Promise<{data: ITypeHinge[]}>((res) => { setTimeout(() => res({data: typeHinges}), deley) })
 const getThickMetalLeafs = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalLeafs}), deley) })
 const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalBoxes}), deley) })
@@ -312,5 +319,6 @@ export const api = {
     getJambs,
     getLocationJambs,
     getFittingColors,
-    createOrder
+    createOrder,
+    getHingeCounts
 }

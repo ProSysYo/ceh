@@ -14,7 +14,7 @@ export interface IOrder {
     isDouble: boolean;
     widthDouble: number | string;
     locationHinge: string; //Расположение петель
-    isThreeHinge: boolean; //Три петли
+    countHinge: number|string;//Количество петель
     typeHinge: string;
 
     //Основной замок

@@ -83,6 +83,8 @@ export const fetchAll = () => {
 
             response = await api.getLoacationHinges()
             dispatch(orderActions.setLocationHinges(response.data))
+            response = await api.getHingeCounts()
+            dispatch(orderActions.setHingeCounts(response.data))
 
             response = await api.getTypeHinges()
             dispatch(orderActions.setTypeHinges(response.data))

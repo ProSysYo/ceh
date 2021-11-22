@@ -11,18 +11,8 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
-    const {
-        models, contours, doorThicks, modelBoxes, openingTypes, locationHinges, typeHinges, thickMetalLeafs,
-        thickMetalBoxes
-    } = useAppSelector(state => state.order)
-    
-    const {
-        model, contour, doorThick, height, width,
-        modelBox, openingType, isDouble, widthDouble, locationHinge, typeHinge,
-        thickMetalLeaf, thickMetalBox
-    } = useAppSelector(state => state.order.order)
-
-
+    const { order } = useAppSelector(state => state)
+        
     return (
         <Container>
             <Form
@@ -36,56 +26,56 @@ const Step2: FC = () => {
                 <Col span={12}>                    
                     <Form.Item label="Модель двери*">
                         <Select 
-                            items={models} 
-                            value={model} 
+                            items={order.models} 
+                            value={order.order.model} 
                             onChange={ (value) => dispatch(orderActions.setModel(value))}                       
                         />
                     </Form.Item>
 
                     <Form.Item label="Количество контуров">
                         <Select 
-                            items={contours} 
-                            value={contour} 
+                            items={order.contours} 
+                            value={order.order.contour} 
                             onChange={ (value) => dispatch(orderActions.setContour(value))}                        
                         />
                     </Form.Item>
 
                     <Form.Item label="Толщина полотна">
                         <Select 
-                            items={doorThicks} 
-                            value={doorThick} 
+                            items={order.doorThicks} 
+                            value={order.order.doorThick} 
                             onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
                         />
                     </Form.Item>
                     <Form.Item label="Модель коробки">
                         <Select 
-                            items={modelBoxes} 
-                            value={modelBox} 
+                            items={order.modelBoxes} 
+                            value={order.order.modelBox} 
                             onChange={ (value) => dispatch(orderActions.setModelBox(value))}                        
                         />
                     </Form.Item>
 
                     <Form.Item label="Тип открывания*">
                         <Select 
-                            items={openingTypes} 
-                            value={openingType} 
+                            items={order.openingTypes} 
+                            value={order.order.openingType} 
                             onChange={ (value) => dispatch(orderActions.setOpeningType(value))}                        
                         />
                     </Form.Item>
                 </Col>
                 <Col span={12}> 
                     <Form.Item>                   
-                        <Checkbox checked={isDouble} onChange={(e)=> dispatch(orderActions.setIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
+                        <Checkbox checked={order.order.isDouble} onChange={(e)=> dispatch(orderActions.setIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
                     </Form.Item>
                     <Form.Item label="Высота двери">
-                        <InputNumber  value={height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
+                        <InputNumber  value={order.order.height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
                     </Form.Item>
 
                     <Form.Item label="Ширина двери">
-                        <InputNumber  value={width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
+                        <InputNumber  value={order.order.width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
                     </Form.Item>
                     <Form.Item label="Ширина раб. створки">
-                        <InputNumber disabled={!isDouble} value={widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
+                        <InputNumber disabled={!order.order.isDouble} value={order.order.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -95,8 +85,8 @@ const Step2: FC = () => {
                 <Col span={8}>                
                     <Form.Item label="Расположение петель">
                         <Select 
-                            items={locationHinges} 
-                            value={locationHinge} 
+                            items={order.locationHinges} 
+                            value={order.order.locationHinge} 
                             onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
                         />
                     </Form.Item>
@@ -105,19 +95,19 @@ const Step2: FC = () => {
                 <Col span={8}> 
                     <Form.Item label="Тип петель">
                         <Select 
-                            items={typeHinges} 
-                            value={typeHinge} 
+                            items={order.typeHinges} 
+                            value={order.order.typeHinge} 
                             onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
                         />
                     </Form.Item>
                 </Col>
 
                 <Col span={8}>
-                    <Form.Item label="Количество петель?">
+                    <Form.Item label="Количество петель">
                         <Select 
-                            items={typeHinges} 
-                            value={typeHinge} 
-                            onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
+                            items={order.hingeCounts} 
+                            value={order.order.countHinge} 
+                            onChange={ (value) => dispatch(orderActions.setCountHinge(value))}                        
                         />
                     </Form.Item>                    
                 </Col>
@@ -128,8 +118,8 @@ const Step2: FC = () => {
                 <Col span={12}>
                     <Form.Item label="Толщина металла полотна">
                         <Select 
-                            items={thickMetalLeafs} 
-                            value={thickMetalLeaf} 
+                            items={order.thickMetalLeafs} 
+                            value={order.order.thickMetalLeaf} 
                             onChange={ (value) => dispatch(orderActions.setThickMetalLeaf(value))}                        
                         />
                     </Form.Item>
@@ -137,8 +127,8 @@ const Step2: FC = () => {
                 <Col span={12}>
                     <Form.Item label="Толщина металла короба">
                         <Select 
-                            items={thickMetalBoxes} 
-                            value={thickMetalBox} 
+                            items={order.thickMetalBoxes} 
+                            value={order.order.thickMetalBox} 
                             onChange={ (value) => dispatch(orderActions.setThickMetalBox(value))}                        
                         />
                     </Form.Item>

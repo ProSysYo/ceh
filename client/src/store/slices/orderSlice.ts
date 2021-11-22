@@ -27,6 +27,7 @@ import { IEyeLocation } from '../../interfaces/IEyeLocation';
 import { IJamb } from '../../interfaces/IJamb';
 import { ILocationJamb } from '../../interfaces/ILocationJamb';
 import { IFittingColor } from '../../interfaces/IFittingColor';
+import { IHingeCount } from '../../interfaces/IHingeCount';
 
 interface OrderSate {
     customers: ICustomer[];
@@ -64,7 +65,10 @@ interface OrderSate {
     colorTints: IColorTint[];
     colorForges: IColorForge[];
     patinaForges: IPatinaForge[];
+
     locationHinges: ILocationHinge[];
+    hingeCounts: IHingeCount[]
+
     typeHinges: ITypeHinge[];
     thickMetalLeafs: IThickMetal[],
     thickMetalBoxes: IThickMetal[],
@@ -131,6 +135,7 @@ const initialState: OrderSate = {
     colorForges: [],
     patinaForges: [],
     locationHinges: [],
+    hingeCounts: [],
     typeHinges: [],
     thickMetalLeafs: [],
     thickMetalBoxes: [],
@@ -176,9 +181,9 @@ const initialState: OrderSate = {
         widthDouble: "",
         
         //Петли
-        locationHinge: "",
-        isThreeHinge: false,
+        locationHinge: "",        
         typeHinge: "",
+        countHinge: "",
 
         //Основной замок
         baseLock: "",
@@ -291,8 +296,11 @@ export const orderSlice = createSlice({
         setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.colorTints = action.payload },
         setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.colorForges = action.payload },
         setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.patinaForges = action.payload },
+        
         setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.locationHinges = action.payload },
-        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.typeHinges = action.payload },
+        setHingeCounts: (state, action: PayloadAction<IHingeCount[]>) => { state.hingeCounts = action.payload },
+        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.typeHinges = action.payload },        
+
         setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalLeafs = action.payload },
         setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalBoxes = action.payload },
         setJambs: (state, action: PayloadAction<IJamb[]>) => { state.jambs = action.payload },
@@ -379,6 +387,8 @@ export const orderSlice = createSlice({
         setWidthDouble: (state, action: PayloadAction<number | string>) => { state.order.widthDouble = action.payload },
 
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
+        setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
+        setCountHinge: (state, action: PayloadAction<number|string>) => { state.order.countHinge = action.payload },
         
         //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => { 
@@ -825,8 +835,8 @@ export const orderSlice = createSlice({
         setCountDoors: (state, action: PayloadAction<number>) => { state.order.countDoors = action.payload },
         setCostDoor: (state, action: PayloadAction<number>) => { state.order.costDoor = action.payload },
         setNote: (state, action: PayloadAction<string>) => { state.order.note = action.payload },
-        setIsThreeHinge: (state, action: PayloadAction<boolean>) => { state.order.isThreeHinge = action.payload },
-        setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
+        
+        
         setThickMetalLeaf: (state, action: PayloadAction<number>) => { state.order.thickMetalLeaf = action.payload },
         setThickMetalBox: (state, action: PayloadAction<number>) => { state.order.thickMetalBox = action.payload },
         setJamb: (state, action: PayloadAction<string>) => { state.order.jamb = action.payload },

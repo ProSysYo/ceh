@@ -33,7 +33,7 @@ const SummaryInfo: React.FC = () => {
                     <SummaryItem title="Двустворчатая" value={order.isDouble ? "да" : "нет"}/>               
                     <SummaryItem title="Ширина раб. створки" value={order.widthDouble}/>               
                     <SummaryItem title="Расположение петель" value={order.locationHinge}/>
-                    <SummaryItem title="3 петли" value={order.isThreeHinge ? "да" : "нет"}/>
+                    <SummaryItem title="Количество петель" value={order.countHinge}/>
                     <SummaryItem title="Тип петель" value={order.typeHinge}/>              
                     <SummaryItem title="Толщина металла полотна" value={order.thickMetalLeaf}/>              
                     <SummaryItem title="Толщина металла короба" value={order.thickMetalBox}/>

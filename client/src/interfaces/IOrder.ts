@@ -1,9 +1,10 @@
 export interface IOrder {
     _id?: string;
     customer: string;
-    number?: string;
+    number: string;
     numberCustomer: string;
     party: string;
+    computedModel: string;
     model: string;
     contour: number | string;
     doorThick: number | string;
@@ -88,4 +89,7 @@ export interface IOrder {
     isBackSheet: boolean;
     isCloser: boolean; //доводчик
     isEnhanceCloser: boolean; //Училение под доводчик
+    isTermoCable: boolean; //Термокабель
+    isElectromagnet: boolean; //Электромагнит
+    isIllumination: boolean; //Подсветка
 }

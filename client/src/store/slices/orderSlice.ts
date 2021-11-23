@@ -30,6 +30,7 @@ import { IFittingColor } from '../../interfaces/IFittingColor';
 import { IHingeCount } from '../../interfaces/IHingeCount';
 
 interface OrderSate {
+    orders: IOrder[];
     customers: ICustomer[];
     parties: IParty[];
     models: IModel[];
@@ -102,6 +103,7 @@ interface OrderSate {
 }
 
 const initialState: OrderSate = {
+    orders: [],
     customers: [],
     parties: [],
     models: [],
@@ -170,7 +172,11 @@ const initialState: OrderSate = {
         number: "",
         numberCustomer: "",
         party: "",
+        
         model: "",
+
+        computedModel: "",
+
         contour: "",
         doorThick: "",
         height: "",
@@ -250,12 +256,16 @@ const initialState: OrderSate = {
         jamb: "",
         jambWrap: "",
         locationJumb: "",
+
         isStainlessDoorStep: false,
         isStreetDoor: false,
         isEccentric: false,
         isBackSheet: false,
         isCloser: false,
         isEnhanceCloser: false,
+        isTermoCable: false,
+        isElectromagnet: false,
+        isIllumination: false,
     }
 }
 
@@ -263,7 +273,9 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },        
+        setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
+
+        setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
 
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
         setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
@@ -312,6 +324,20 @@ export const orderSlice = createSlice({
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
         setParty: (state, action: PayloadAction<string>) => { state.order.party = action.payload },
         
+        setComputedModel: (state) => {
+            let insideOpening: string = ""
+            let double: string = ""
+            
+            if (state.order.openingType === "внутреннего") {
+                insideOpening = "В"
+            }
+            
+            if (state.order.isDouble) {
+                double = "Д"
+            }
+                state.order.computedModel = double + state.order.model + insideOpening + state.order.contour 
+            },
+
         setModel: (state, action: PayloadAction<string>) => { 
             state.order.model = action.payload            
 
@@ -850,6 +876,9 @@ export const orderSlice = createSlice({
         setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.order.isBackSheet = action.payload },
         setIsCloser: (state, action: PayloadAction<boolean>) => { state.order.isCloser = action.payload },
         setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },
+        setIsTermoCable: (state, action: PayloadAction<boolean>) => { state.order.isTermoCable = action.payload },
+        setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.order.isElectromagnet = action.payload },
+        setIsIllumination: (state, action: PayloadAction<boolean>) => { state.order.isIllumination = action.payload },
 
         setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
     }

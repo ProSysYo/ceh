@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order, OrderDocument } from './order.schema';
@@ -14,8 +14,8 @@ export class OrderService {
         return order
     }
 
-    async getAll(): Promise<Order[]> {
-        const orders = await this.orderModel.find()
+    async getAll(query): Promise<Order[]> {
+        const orders = await this.orderModel.find(query)
         return orders
     }
 }

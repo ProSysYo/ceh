@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
@@ -6,24 +6,20 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import styled from 'styled-components';
 import NewOrder from './pages/Order/NewOrder';
+import Orders from './pages/Order/Orders';
 
 const { Content } = Layout;
 
 const App: FC = () => {
-    const [collapsed, setCollapsed] = useState(true);
-
-    const toggle = () => {
-        setCollapsed(!collapsed);
-    };
-
     return (
         <BrowserRouter>
             <Layout>
-                <Sidebar collapsed={collapsed} toggle={toggle}/>
+                <Sidebar />
                 <StyledLayout>
                     <TopBar/>
                     <StyledContent>
                     <Switch>
+                        <Route exact path="/orders" component={Orders} />                        
                         <Route exact path="/neworder" component={NewOrder} />                        
                     </Switch>
                     </StyledContent>

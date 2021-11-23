@@ -6,12 +6,17 @@ import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { useEffect } from 'react';
 
 
 const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const { order } = useAppSelector(state => state)
+
+    useEffect(() => {        
+        dispatch(orderActions.setComputedModel())
+    }, [order.order.model, order.order.isDouble, order.order.openingType, order.order.contour, dispatch])
         
     return (
         <Container>

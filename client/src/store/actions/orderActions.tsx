@@ -133,3 +133,21 @@ export const addOrder = (data: IOrder) => {
         }
     }
 }
+
+export const getOrders = (filters: {}) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            const response = await api.getOrders(filters)
+            dispatch(orderActions.setOrders(response.data))                      
+        } catch (e: any) {            
+            if (e.isAxiosError){
+                if (!e.response) {
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }                         
+            } else {
+                console.log("other error", e);                
+            }          
+        }
+    }
+}

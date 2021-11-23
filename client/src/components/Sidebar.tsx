@@ -1,22 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Layout, Menu } from 'antd';
-import { FormOutlined, CopyOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, CopyOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 const { Sider } = Layout;
 
-interface ISider {
-    collapsed: boolean;
-    toggle: () => void; 
-}
 
-const Sidebar: React.FC<ISider> = ({collapsed, toggle}) => {
+
+const Sidebar: React.FC = () => {
     return (
-        <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
+        <Sider >
             <Logo/>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                <Menu.Item key="1" icon={<FormOutlined />}><Link to="/neworder">Новый заказ</Link></Menu.Item>
-                <Menu.Item key="2" icon={<CopyOutlined />}><Link to="/editorder">Редактировать заказ</Link></Menu.Item>               
+                <Menu.Item key="1" icon={<UnorderedListOutlined />}><Link to="/orders">Заказы</Link></Menu.Item>
+                <Menu.Item key="2" icon={<CopyOutlined />}><Link to="/neworder">Новый заказ</Link></Menu.Item>               
             </Menu>
         </Sider>
     )

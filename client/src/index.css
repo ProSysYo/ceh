@@ -33,3 +33,7 @@ code {
 /* .ant-form-item-label > label{
   font-size: 12px!important;
 } */
+
+.ant-table.ant-table-small {
+  font-size: 12px!important;
+}

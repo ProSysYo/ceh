@@ -287,7 +287,11 @@ const getFittingColors = () => new Promise<{data: IFittingColor[]}>((res) => { s
 
 const createOrder = (data: IOrder) => {
     return http.post("/orders", data);
-  };
+};
+
+const getOrders = (filters: {}) => {
+    return http.get("/orders", { params: filters });
+};
 
 
 export const api = {
@@ -320,5 +324,6 @@ export const api = {
     getLocationJambs,
     getFittingColors,
     createOrder,
-    getHingeCounts
+    getHingeCounts,
+    getOrders
 }

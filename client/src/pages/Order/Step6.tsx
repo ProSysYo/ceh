@@ -10,14 +10,7 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step6: FC = () => {
     const dispatch = useAppDispatch()
 
-    const {
-        locationHinges
-    } = useAppSelector(state => state.order)
-    
-    const {
-        isStainlessDoorStep, locationHinge, isDouble, isStreetDoor, isEccentric, isBackSheet, isCloser, isEnhanceCloser
-    } = useAppSelector(state => state.order.order)
-
+    const { order } = useAppSelector(state => state)
 
     return (
         <Container>
@@ -28,45 +21,45 @@ const Step6: FC = () => {
                 size = "middle"              
             >   
                 <Form.Item label="Порог из нержавейки">
-                    <Checkbox checked={isStainlessDoorStep} onChange={(e)=> dispatch(orderActions.setIsStainlessDoorStep(e.target.checked))} />
+                    <Checkbox checked={order.order.isStainlessDoorStep} onChange={(e)=> dispatch(orderActions.setIsStainlessDoorStep(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Уличная дверь">
-                    <Checkbox checked={isStreetDoor} onChange={(e)=> dispatch(orderActions.setIsStreetDoor(e.target.checked))} />
+                    <Checkbox checked={order.order.isStreetDoor} onChange={(e)=> dispatch(orderActions.setIsStreetDoor(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Эксцентрик">
-                    <Checkbox checked={isEccentric} onChange={(e)=> dispatch(orderActions.setIsEccentric(e.target.checked))} />
+                    <Checkbox checked={order.order.isEccentric} onChange={(e)=> dispatch(orderActions.setIsEccentric(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Задний лист">
-                    <Checkbox checked={isBackSheet} onChange={(e)=> dispatch(orderActions.setIsBackSheet(e.target.checked))} />
+                    <Checkbox checked={order.order.isBackSheet} onChange={(e)=> dispatch(orderActions.setIsBackSheet(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Термокабель?">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                <Form.Item label="Термокабель">
+                    <Checkbox checked={order.order.isTermoCable} onChange={(e)=> dispatch(orderActions.setIsTermoCable(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Доводчик">
-                    <Checkbox checked={isCloser} onChange={(e)=> dispatch(orderActions.setIsCloser(e.target.checked))} />
+                    <Checkbox checked={order.order.isCloser} onChange={(e)=> dispatch(orderActions.setIsCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Усиление под довочик">
-                    <Checkbox checked={isEnhanceCloser} onChange={(e)=> dispatch(orderActions.setIsEnhanceCloser(e.target.checked))} />
+                    <Checkbox checked={order.order.isEnhanceCloser} onChange={(e)=> dispatch(orderActions.setIsEnhanceCloser(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Электромагнит?">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                <Form.Item label="Электромагнит">
+                    <Checkbox checked={order.order.isElectromagnet} onChange={(e)=> dispatch(orderActions.setIsElectromagnet(e.target.checked))} />
                 </Form.Item>
 
-                <Form.Item label="Подсветка?">
-                    <Checkbox checked={isDouble} onChange={(e)=> console.log(e)} />
+                <Form.Item label="Подсветка">
+                    <Checkbox checked={order.order.isIllumination} onChange={(e)=> dispatch(orderActions.setIsIllumination(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Уплотнитель?">
                     <Select 
-                        items={locationHinges} 
-                        value={locationHinge} 
+                        items={order.locationHinges} 
+                        value={order.order.locationHinge} 
                         onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
                     />
                 </Form.Item>

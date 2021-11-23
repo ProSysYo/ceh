@@ -3,7 +3,7 @@ import { Select as SelectAnt } from 'antd';
 
 interface SelectProps {
     items: any[];
-    value: string | number;
+    value?: string | number;
     disabled?: boolean;    
     onChange?: (value: any, e: any) => void;
     firstOption?: string;

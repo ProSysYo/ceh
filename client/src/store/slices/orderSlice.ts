@@ -184,7 +184,7 @@ const initialState: OrderSate = {
         modelBox: "",
         openingType: "",
         isDouble: false,
-        widthDouble: "",
+        widthDouble: 0,
         
         //Петли
         locationHinge: "",        
@@ -407,10 +407,10 @@ export const orderSlice = createSlice({
         setIsDouble: (state, action: PayloadAction<boolean>) => { 
             state.order.isDouble = action.payload
             if (!action.payload) {
-                state.order.widthDouble = ""                
+                state.order.widthDouble = 0                
             }
         },
-        setWidthDouble: (state, action: PayloadAction<number | string>) => { state.order.widthDouble = action.payload },
+        setWidthDouble: (state, action: PayloadAction<number>) => { state.order.widthDouble = action.payload },
 
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },

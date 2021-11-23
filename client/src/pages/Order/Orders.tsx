@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Table, Drawer } from 'antd';
-import { FilterOutlined, FileAddOutlined } from '@ant-design/icons';
+import { FilterOutlined } from '@ant-design/icons';
 
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { getOrders } from '../../store/actions/orderActions';
 import OrdersFilter from '../../components/OrdersFilter';
 
 const columns = [
@@ -18,11 +16,10 @@ const columns = [
     { title: 'Количество', dataIndex: 'countDoors', width: 10 },   
     { title: 'Цена', dataIndex: 'costDoor', width: 10 },   
     { title: 'Запущен', dataIndex: '', width: 10 },   
-    { title: 'Действия', dataIndex: '', width: 20, render: () => <a>action</a> },   
+    { title: 'Действия', dataIndex: '', width: 20, render: () => <span>action</span> },   
   ];
 
-const Orders: React.FC = () => {
-    const dispatch = useAppDispatch()
+const Orders: React.FC = () => {    
     const { orders } = useAppSelector(state => state.order)
 
     const [visible, setVisible] = useState(false);

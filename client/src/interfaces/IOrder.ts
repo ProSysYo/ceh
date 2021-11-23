@@ -13,7 +13,7 @@ export interface IOrder {
     modelBox: string;
     openingType: string;
     isDouble: boolean;
-    widthDouble: number | string;
+    widthDouble: number;
     locationHinge: string; //Расположение петель
     countHinge: number|string;//Количество петель
     typeHinge: string;

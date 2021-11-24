@@ -7,16 +7,18 @@ interface SelectProps {
     disabled?: boolean;    
     onChange?: (value: any, e: any) => void;
     firstOption?: string;
+    defaultValue?: string|number;
 }
 
-const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано"}) => {
+const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано", defaultValue}) => {
     return (
         <SelectAnt
             value={value}
             showSearch
             optionFilterProp="children"
             disabled={disabled}            
-            onChange={onChange}              
+            onChange={onChange}
+            defaultValue={defaultValue}              
         >
             <SelectAnt.Option value="" disabled>{firstOption}</SelectAnt.Option>
             {items.map((item, index) => 

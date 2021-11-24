@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Button, Table, Drawer } from 'antd';
-import { FilterOutlined } from '@ant-design/icons';
+import { FilterOutlined, FileAddOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import OrdersFilter from '../../components/OrdersFilter';
+import { Link } from 'react-router-dom';
 
 const columns = [
     { title: 'Номер', dataIndex: 'number', width: 15 },
@@ -31,7 +32,8 @@ const Orders: React.FC = () => {
     };
     return (
         <>  
-            <div>                
+            <div>
+                <Button icon={<FileAddOutlined />}><Link to="/neworder"> Новый заказ</Link></Button>                
                 <Button icon={<FilterOutlined />}  onClick={showDrawer}>Фильтры</Button>
             </div>
             

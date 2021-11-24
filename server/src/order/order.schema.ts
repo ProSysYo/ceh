@@ -42,6 +42,7 @@ export class Order {
     @Prop({ required: true })
     openingType: string;  
 
+    @Prop()
     isDouble: boolean;
 
     @Prop({ required: true })

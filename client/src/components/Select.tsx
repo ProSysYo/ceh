@@ -8,9 +8,10 @@ interface SelectProps {
     onChange?: (value: any, e: any) => void;
     firstOption?: string;
     defaultValue?: string|number;
+    placeholder?: string;
 }
 
-const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано", defaultValue}) => {
+const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано", defaultValue, placeholder}) => {
     return (
         <SelectAnt
             value={value}
@@ -18,7 +19,8 @@ const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firs
             optionFilterProp="children"
             disabled={disabled}            
             onChange={onChange}
-            defaultValue={defaultValue}              
+            defaultValue={defaultValue}
+            placeholder = {placeholder}             
         >
             <SelectAnt.Option value="" disabled>{firstOption}</SelectAnt.Option>
             {items.map((item, index) => 

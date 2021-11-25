@@ -41,7 +41,7 @@ const Orders: React.FC = () => {
             <br/>
             <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 600 }} size="small" rowKey="number"/>
 
-            <Drawer title="Фильтры" placement="right" width="500" onClose={onClose} visible={visible}>
+            <Drawer title="Фильтры" placement="right" width="400" onClose={onClose} visible={visible}>
                 <OrdersFilter/>
             </Drawer> 
         </>

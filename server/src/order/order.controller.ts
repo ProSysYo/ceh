@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
+import ParamsWithId from 'src/util/ParamsWithId';
 
 @Controller('/orders')
 export class OrderController {
@@ -12,9 +13,13 @@ export class OrderController {
     }
 
     @Get()
-    getAll(@Query() query) {
-        console.log(query);
-        
+    getAll(@Query() query) { 
         return this.orderService.getAll(query)
     }
+
+    @Get(':id')
+    async getOrder(@Param() { id }: ParamsWithId) {
+        return this.orderService.findOne(id);
+    }
+
 }

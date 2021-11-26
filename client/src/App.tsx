@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import styled from 'styled-components';
-import NewOrder from './pages/Order/NewOrder';
+import OrderContainer from './pages/Order/OrderContainer';
 import Orders from './pages/Order/Orders';
 
 const { Content } = Layout;
@@ -20,7 +20,8 @@ const App: FC = () => {
                     <StyledContent>
                     <Switch>
                         <Route exact path="/orders" component={Orders} />                        
-                        <Route exact path="/neworder" component={NewOrder} />                        
+                        <Route exact path="/addorder" component={OrderContainer} />                        
+                        <Route exact path="/editorder/:id" component={OrderContainer} />                        
                     </Switch>
                     </StyledContent>
                 </StyledLayout>

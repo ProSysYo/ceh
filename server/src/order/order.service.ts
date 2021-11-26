@@ -1,4 +1,4 @@
-import { Injectable, Query } from '@nestjs/common';
+import { Injectable, NotFoundException, Query } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order, OrderDocument } from './order.schema';
@@ -18,4 +18,13 @@ export class OrderService {
         const orders = await this.orderModel.find(query)
         return orders
     }
+
+    async findOne(id: string) {
+        const order = await this.orderModel.findById(id)
+          
+        if (!order) {
+          throw new NotFoundException();
+        }
+        return order;
+      }
 }

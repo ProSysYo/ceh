@@ -293,6 +293,12 @@ const getOrders = (filters: {}) => {
     return http.get("/orders", { params: filters });
 };
 
+const getOrder = (id: string) => {
+    return http.get(`/orders/${id}`);
+};
+
+
+
 
 export const api = {
     getCustomers,
@@ -325,5 +331,6 @@ export const api = {
     getFittingColors,
     createOrder,
     getHingeCounts,
-    getOrders
+    getOrders,
+    getOrder
 }

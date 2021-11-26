@@ -881,6 +881,8 @@ export const orderSlice = createSlice({
         setIsIllumination: (state, action: PayloadAction<boolean>) => { state.order.isIllumination = action.payload },
 
         setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
+        setOrder: (state, action: PayloadAction<IOrder>) => { state.order = action.payload },
+        rebootState: state => initialState        
     }
 })
 

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Table, Drawer } from 'antd';
-import { FilterOutlined, FileAddOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
+import { FilterOutlined, FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import OrdersFilter from '../../components/OrdersFilter';
 import { Link } from 'react-router-dom';
+import { IOrder } from '../../interfaces/IOrder';
 
 const columns = [
     { title: 'Номер', dataIndex: 'number', width: 15 },
@@ -17,10 +19,21 @@ const columns = [
     { title: 'Количество', dataIndex: 'countDoors', width: 10 },   
     { title: 'Цена', dataIndex: 'costDoor', width: 10 },   
     { title: 'Запущен', dataIndex: '', width: 10 },   
-    { title: 'Действия', dataIndex: '', width: 20, render: () => <span>action</span> },   
+    { 
+        title: 'Действия', 
+        dataIndex: '', 
+        width: 20, 
+        render: (record: IOrder) => (
+            <>
+                <ActionButton icon={ <EyeOutlined/> } size="small"/>
+                <ActionLink to={`/editorder/${record._id}`}><EditOutlined/></ActionLink>
+                <ActionButton icon={ <DeleteOutlined/> } size="small"/>                
+            </>
+        )
+    },   
   ];
 
-const Orders: React.FC = () => {    
+const Orders: React.FC = () => { 
     const { orders } = useAppSelector(state => state.order)
 
     const [visible, setVisible] = useState(false);
@@ -33,7 +46,7 @@ const Orders: React.FC = () => {
     return (
         <>  
             <div>
-                <Button icon={<FileAddOutlined />}><Link to="/neworder"> Новый заказ</Link></Button>                
+                <Button icon={<FileAddOutlined />}><Link to="/addorder"> Новый заказ</Link></Button>                
                 <Button icon={<FilterOutlined />}  onClick={showDrawer}>Фильтры</Button>
             </div>
             
@@ -49,3 +62,12 @@ const Orders: React.FC = () => {
 }
 
 export default Orders
+
+const ActionButton = styled(Button)`
+    margin-right: 20px;
+`;
+
+const ActionLink = styled(Link)`
+    margin-right: 20px;
+    font-size: 14px;    
+`;

@@ -105,8 +105,15 @@ export const fetchAll = () => {
             dispatch(orderActions.setFittingColors(response.data))          
 
             dispatch(orderActions.setLoading(false))
-        } catch (e) {
-            console.log(e);            
+        } catch (e: any) {            
+            if (e.isAxiosError){
+                if (!e.response) {
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }                         
+            } else {
+                console.log("other error", e);                
+            }          
         }
     }
 }
@@ -151,3 +158,30 @@ export const getOrders = (filters: {}) => {
         }
     }
 }
+
+export const getOrder = (id: string) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            dispatch(orderActions.setLoading(true))      
+            const response = await api.getOrder(id)
+            dispatch(orderActions.setOrder(response.data))
+            dispatch(orderActions.setLoading(false))                      
+        } catch (e: any) { 
+            dispatch(orderActions.setLoading(false))            
+            if (e.isAxiosError){
+                if (!e.response) {
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }
+                
+                if (e.response.status === 422) {
+                    dispatch(orderActions.setValidateErrors(e.response.data))                                     
+                }
+                                          
+            } else {
+                console.log("other error", e);                
+            }          
+        }
+    }
+}
+

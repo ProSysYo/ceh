@@ -78,8 +78,8 @@ export interface IOrder {
     countDoors: number;
     costDoor: number;
     note: string;
-    thickMetalLeaf: number | string ;
-    thickMetalBox: number | string ;
+    thickMetalLeaf: number ;
+    thickMetalBox: number ;
     jamb: string;
     jambWrap: string;
     locationJumb: string;

@@ -251,8 +251,8 @@ const initialState: OrderSate = {
         countDoors: 0,
         costDoor: 0,
         note: "",
-        thickMetalLeaf: "",
-        thickMetalBox: "",
+        thickMetalLeaf: 0,
+        thickMetalBox: 0,
         jamb: "",
         jambWrap: "",
         locationJumb: "",
@@ -300,6 +300,7 @@ export const orderSlice = createSlice({
         setDoorThicks: (state, action: PayloadAction<number[]>) => { state.doorThicks = action.payload },
         setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.decorations = action.payload },
         setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsOutside = action.payload },
+        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload },
         setWraps: (state, action: PayloadAction<IWrap[]>) => { state.wraps = action.payload },
         setPatinas: (state, action: PayloadAction<IPatina[]>) => { state.patinas = action.payload },
         setTypeWindows: (state, action: PayloadAction<ITypeWindow[]>) => { state.typeWindows = action.payload },
@@ -320,24 +321,13 @@ export const orderSlice = createSlice({
         setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
         setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
 
-        setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
+        setNumber: (state, action: PayloadAction<string>) => { state.order.number = action.payload },        
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
+        setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setParty: (state, action: PayloadAction<string>) => { state.order.party = action.payload },
-        
-        setComputedModel: (state) => {
-            let insideOpening: string = ""
-            let double: string = ""
-            
-            if (state.order.openingType === "внутреннего") {
-                insideOpening = "В"
-            }
-            
-            if (state.order.isDouble) {
-                double = "Д"
-            }
-                state.order.computedModel = double + state.order.model + insideOpening + state.order.contour 
-            },
-
+        setCountDoors: (state, action: PayloadAction<number>) => { state.order.countDoors = action.payload },
+        setCostDoor: (state, action: PayloadAction<number>) => { state.order.costDoor = action.payload },
+        setNote: (state, action: PayloadAction<string>) => { state.order.note = action.payload }, 
         setModel: (state, action: PayloadAction<string>) => { 
             state.order.model = action.payload            
 
@@ -388,10 +378,10 @@ export const orderSlice = createSlice({
             state.order.widthWindow = ""
             state.order.thickWindow = ""
         },
+
+
         setContour: (state, action: PayloadAction<string | number>) => { state.order.contour = action.payload },
-        setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },
-        setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
-        setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
+        setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },        
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
         setOpeningType: (state, action: PayloadAction<string>) => { 
             state.order.openingType = action.payload
@@ -410,12 +400,35 @@ export const orderSlice = createSlice({
                 state.order.widthDouble = 0                
             }
         },
+
+        setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
+        setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
         setWidthDouble: (state, action: PayloadAction<number>) => { state.order.widthDouble = action.payload },
+
+        setComputedModel: (state) => {
+            let insideOpening: string = ""
+            let double: string = ""
+            
+            if (state.order.openingType === "внутреннего") {
+                insideOpening = "В"
+            }
+            
+            if (state.order.isDouble) {
+                double = "Д"
+            }
+
+            state.order.computedModel = double + state.order.model + insideOpening + state.order.contour 
+        },
+
+        loadComputedModel: (state, action: PayloadAction<string>) => { state.order.computedModel = action.payload },
 
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
         setCountHinge: (state, action: PayloadAction<number|string>) => { state.order.countHinge = action.payload },
         
+        setThickMetalLeaf: (state, action: PayloadAction<number>) => { state.order.thickMetalLeaf = action.payload },
+        setThickMetalBox: (state, action: PayloadAction<number>) => { state.order.thickMetalBox = action.payload },
+
         //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => { 
             state.order.baseLock = action.payload
@@ -540,21 +553,17 @@ export const orderSlice = createSlice({
                     state.order.baseCoverColorInside2 = "нет"
             }
         },
+        setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },        
         setLockSpinner: (state, action: PayloadAction<string>) => { state.order.lockSpinner = action.payload },
-        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.order.lockSpinnerColor = action.payload },
-        setIsLockSpinner: (state, action: PayloadAction<boolean>) => { state.isLockSpinner = action.payload },
-        setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },
-        setIsBaseCylinder: (state, action: PayloadAction<boolean>) => { state.isBaseCylinder = action.payload },
+        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.order.lockSpinnerColor = action.payload }, 
         
-        //Накладки основного замка
-        setIsBaseCover: (state, action: PayloadAction<boolean>) => { state.isBaseCover = action.payload },
+        //Накладки основного замка        
         setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },        
         setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside = action.payload },        
         setBaseCoverInside: (state, action: PayloadAction<string>) => { state.order.baseCoverInside = action.payload },
         setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside = action.payload },
 
-        //Накладки основного замка 2
-        setIsBaseCover2: (state, action: PayloadAction<boolean>) => { state.isBaseCover2 = action.payload },
+        //Накладки основного замка 2       
         setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside2 = action.payload },
         setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside2 = action.payload },        
         setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverInside2 = action.payload },
@@ -609,11 +618,9 @@ export const orderSlice = createSlice({
                     state.order.optionalCoverColorInside = "нет"                  
             } 
         },
-        setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },
-        setIsOptonalCylinder: (state, action: PayloadAction<boolean>) => { state.isOptionalCylinder = action.payload },
+        setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },        
         
-        //Накладки дополнительного замка
-        setIsOptonalCover: (state, action: PayloadAction<boolean>) => { state.isOptionalCover = action.payload },
+        //Накладки дополнительного замка       
         setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
         setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorOutside = action.payload },
         setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
@@ -658,7 +665,6 @@ export const orderSlice = createSlice({
         },
         setSpinnerColor: (state, action: PayloadAction<string>) => { state.order.spinnerColor = action.payload },
 
-
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { 
             state.order.typeDecorationOutside = action.payload
 
@@ -698,6 +704,10 @@ export const orderSlice = createSlice({
                     break                
             }
         },
+        setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },        
+        setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload },        
+        setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload },
+
         setTypeDecorationInside: (state, action: PayloadAction<string>) => { 
             state.order.typeDecorationInside = action.payload
 
@@ -743,17 +753,14 @@ export const orderSlice = createSlice({
                     state.order.patinaInside = "нет"              
             }
         },
-        setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },
-        setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload },
-        setWrapInside: (state, action: PayloadAction<string>) => { state.order.wrapInside = action.payload },
-        setIsWrapOutside: (state, action: PayloadAction<boolean>) => { state.isWrapOutside = action.payload },
-        setIsPatinaOutside: (state, action: PayloadAction<boolean>) => { state.isPatinaOutside = action.payload },
-        setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload },
-        setIsWrapInside: (state, action: PayloadAction<boolean>) => { state.isWrapInside = action.payload },
-        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload },
-        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload },
-        setPatinaInside: (state, action: PayloadAction<string>) => { state.order.patinaInside = action.payload },
-        setIsPatinaInside: (state, action: PayloadAction<boolean>) => { state.isPatinaInside = action.payload }, 
+        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload },        
+        setWrapInside: (state, action: PayloadAction<string>) => { state.order.wrapInside = action.payload }, 
+        setPatinaInside: (state, action: PayloadAction<string>) => { state.order.patinaInside = action.payload },        
+        
+        setLocationJumb: (state, action: PayloadAction<string>) => { state.order.locationJumb = action.payload },        
+        setJamb: (state, action: PayloadAction<string>) => { state.order.jamb = action.payload },
+        setJambWrap: (state, action: PayloadAction<string>) => { state.order.jambWrap = action.payload }, 
+
         setTypeWindow: (state, action: PayloadAction<string>) => {
             const { model, doorThick} = state.order           
 
@@ -851,32 +858,19 @@ export const orderSlice = createSlice({
             state.order.widthWindow = selectedWindow.width            
         },
         setColorTint: (state, action: PayloadAction<string>) => { state.order.colorTint = action.payload },
-        setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },
-        setIsColorForge: (state, action: PayloadAction<boolean>) => { state.isColorForge = action.payload },
-        setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },
-        setIsPatinaForge: (state, action: PayloadAction<boolean>) => { state.isPatinaForge = action.payload },
+        setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },        
+        setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },        
         setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = action.payload },
         setWidthWindow: (state, action: PayloadAction<number | string>) => { state.order.widthWindow = action.payload },
-        setThickWindow: (state, action: PayloadAction<number | string>) => { state.order.thickWindow = action.payload },
-        setCountDoors: (state, action: PayloadAction<number>) => { state.order.countDoors = action.payload },
-        setCostDoor: (state, action: PayloadAction<number>) => { state.order.costDoor = action.payload },
-        setNote: (state, action: PayloadAction<string>) => { state.order.note = action.payload },
+        setThickWindow: (state, action: PayloadAction<number | string>) => { state.order.thickWindow = action.payload }, 
         
-        
-        setThickMetalLeaf: (state, action: PayloadAction<number>) => { state.order.thickMetalLeaf = action.payload },
-        setThickMetalBox: (state, action: PayloadAction<number>) => { state.order.thickMetalBox = action.payload },
-        setJamb: (state, action: PayloadAction<string>) => { state.order.jamb = action.payload },
-        setJambWrap: (state, action: PayloadAction<string>) => { state.order.jambWrap = action.payload },
-        setIsJambWrap: (state, action: PayloadAction<boolean>) => { state.isJambWrap = action.payload },
-        setIsLocationJumb: (state, action: PayloadAction<boolean>) => { state.isLocationJamb = action.payload },
-        setLocationJumb: (state, action: PayloadAction<string>) => { state.order.locationJumb = action.payload },
         setIsStainlessDoorStep: (state, action: PayloadAction<boolean>) => { state.order.isStainlessDoorStep = action.payload },
         setIsStreetDoor: (state, action: PayloadAction<boolean>) => { state.order.isStreetDoor = action.payload },
         setIsEccentric: (state, action: PayloadAction<boolean>) => { state.order.isEccentric = action.payload },
         setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.order.isBackSheet = action.payload },
-        setIsCloser: (state, action: PayloadAction<boolean>) => { state.order.isCloser = action.payload },
-        setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },
         setIsTermoCable: (state, action: PayloadAction<boolean>) => { state.order.isTermoCable = action.payload },
+        setIsCloser: (state, action: PayloadAction<boolean>) => { state.order.isCloser = action.payload },
+        setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },       
         setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.order.isElectromagnet = action.payload },
         setIsIllumination: (state, action: PayloadAction<boolean>) => { state.order.isIllumination = action.payload },
 

@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { FullscreenOutlined } from '@ant-design/icons';
 
 import { orderActions } from '../../store/slices/orderSlice';
-import { fetchAll, getOrder } from '../../store/actions/orderActions';
+import { fetchAll, loadOrder } from '../../store/actions/orderActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { Button, Drawer, Spin } from 'antd';
@@ -35,7 +35,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
             await  dispatch(fetchAll())
             
             if (isEditMode) {
-                await dispatch(getOrder(match.params.id))
+                await dispatch(loadOrder(match.params.id))
             }
         }
 
@@ -44,7 +44,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
         return () => {
             dispatch(orderActions.rebootState())
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     }, [])     
 
     if (isLoading) return <StyledSpin size="large" tip="Загрузка данных..."/>

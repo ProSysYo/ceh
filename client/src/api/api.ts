@@ -294,7 +294,7 @@ const getOrders = (filters: {}) => {
 };
 
 const getOrder = (id: string) => {
-    return http.get(`/orders/${id}`);
+    return http.get<IOrder>(`/orders/${id}`);
 };
 
 

@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import { orderActions } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { IOrder } from '../../interfaces/IOrder';
+import { openNotification } from "../../commons/notification";
 
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {
@@ -104,7 +105,7 @@ export const fetchAll = () => {
             response = await api.getFittingColors()            
             dispatch(orderActions.setFittingColors(response.data))          
 
-            dispatch(orderActions.setLoading(false))
+            dispatch(orderActions.setLoading(false))            
         } catch (e: any) {            
             if (e.isAxiosError){
                 if (!e.response) {
@@ -121,20 +122,23 @@ export const fetchAll = () => {
 export const addOrder = (data: IOrder) => {
     return async (dispatch: Dispatch) => {
         try {            
-            const response = await api.createOrder(data)
-            console.log(response);                       
+            await api.createOrder(data)
+            openNotification("success", "Заказ был создан")                                  
         } catch (e: any) {            
             if (e.isAxiosError){
                 if (!e.response) {
+                    openNotification("error", "Нет соединения с сервером") 
                     console.log("Нет соединения с сервером")                    
                     return 
                 }
                 
                 if (e.response.status === 422) {
+                    openNotification("error", "Ошибка валидации, проверьте все поля") 
                     dispatch(orderActions.setValidateErrors(e.response.data))                                     
                 }
                                           
             } else {
+                openNotification("error", "Не известная ошибка") 
                 console.log("other error", e);                
             }          
         }
@@ -145,14 +149,17 @@ export const getOrders = (filters: {}) => {
     return async (dispatch: Dispatch) => {
         try {
             const response = await api.getOrders(filters)
-            dispatch(orderActions.setOrders(response.data))                      
+            dispatch(orderActions.setOrders(response.data))
+            openNotification("success", "Список заказов сформирован")                   
         } catch (e: any) {            
             if (e.isAxiosError){
-                if (!e.response) {
+                if (!e.response) {                    
+                    openNotification("error", "Нет соединения с сервером") 
                     console.log("Нет соединения с сервером")                    
                     return 
                 }                         
             } else {
+                openNotification("error", "Не известная ошибка") 
                 console.log("other error", e);                
             }          
         }
@@ -244,6 +251,8 @@ export const loadOrder = (id: string) => {
                 dispatch(orderActions.setIsEnhanceCloser(data.isEnhanceCloser))
                 dispatch(orderActions.setIsElectromagnet(data.isElectromagnet))
                 dispatch(orderActions.setIsIllumination(data.isIllumination))
+
+                openNotification("success", "Заказ загружен") 
             }
             
             dispatch(orderActions.setLoading(false))                      
@@ -251,15 +260,12 @@ export const loadOrder = (id: string) => {
             dispatch(orderActions.setLoading(false))            
             if (e.isAxiosError){
                 if (!e.response) {
+                    openNotification("error", "Нет соединения с сервером") 
                     console.log("Нет соединения с сервером")                    
                     return 
-                }
-                
-                if (e.response.status === 422) {
-                    dispatch(orderActions.setValidateErrors(e.response.data))                                     
-                }
-                                          
+                }                                          
             } else {
+                openNotification("error", "Не известная ошибка") 
                 console.log("other error", e);                
             }          
         }

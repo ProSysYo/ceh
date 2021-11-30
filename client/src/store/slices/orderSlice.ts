@@ -275,7 +275,9 @@ export const orderSlice = createSlice({
     reducers: {
         setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
 
-        setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
+        setValues: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
+
+        setOrders: (state, action: PayloadAction<any[]>) => { state.orders = action.payload },
 
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
         setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
@@ -320,7 +322,7 @@ export const orderSlice = createSlice({
         setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.currentJambs = action.payload },
         setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
         setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
-
+       
         setNumber: (state, action: PayloadAction<string>) => { state.order.number = action.payload },        
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
@@ -378,8 +380,6 @@ export const orderSlice = createSlice({
             state.order.widthWindow = ""
             state.order.thickWindow = ""
         },
-
-
         setContour: (state, action: PayloadAction<string | number>) => { state.order.contour = action.payload },
         setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },        
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },

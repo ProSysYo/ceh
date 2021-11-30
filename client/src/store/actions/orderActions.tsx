@@ -148,10 +148,13 @@ export const addOrder = (data: IOrder) => {
 export const getOrders = (filters: {}) => {
     return async (dispatch: Dispatch) => {
         try {
+            dispatch(orderActions.setLoading(true))
             const response = await api.getOrders(filters)
             dispatch(orderActions.setOrders(response.data))
-            openNotification("success", "Список заказов сформирован")                   
-        } catch (e: any) {            
+            openNotification("success", "Список заказов сформирован")
+            dispatch(orderActions.setLoading(false))                 
+        } catch (e: any) {    
+            dispatch(orderActions.setLoading(false))        
             if (e.isAxiosError){
                 if (!e.response) {                    
                     openNotification("error", "Нет соединения с сервером") 

@@ -1,12 +1,19 @@
 import React from 'react'
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import styled from 'styled-components';
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
-const TopBar: React.FC = () => {
+interface TopBarProps {
+    onMenuClick: () => void;
+}
+
+const TopBar: React.FC<TopBarProps> = ({onMenuClick}) => {
     return (
-        <MainHeader>Цех 2.0</MainHeader>
+        <MainHeader>
+            <Button onClick={onMenuClick} icon={<UnorderedListOutlined/>}></Button>
+        </MainHeader>
     )
 }
 

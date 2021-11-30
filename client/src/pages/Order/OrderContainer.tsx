@@ -57,7 +57,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
 
             <Drawer title="Сводка" placement="right" width="500" onClose={onClose} visible={visible}>
                 <SummaryInfo/>
-            </Drawer> 
+            </Drawer>            
         </>
     )
 }

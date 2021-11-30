@@ -53,7 +53,7 @@ const OrdersFilter: React.FC = () => {
     }   
 
     return (
-        <>
+        <Container>
             <Filters>
                 <Form form={form} onValuesChange={(val) => handleInputChange(val)}>
                     <Collapse  bordered={false} accordion ghost>                        
@@ -159,7 +159,7 @@ const OrdersFilter: React.FC = () => {
                 <Button icon={<FunnelPlotOutlined />}  onClick={() => dispatch(getOrders(filters))}>Подобрать</Button>
                 <Button icon={<ClearOutlined />} onClick={resetFilters}>Сброс</Button>
             </div>
-        </>
+        </Container>
 
     )
 }
@@ -167,6 +167,10 @@ const OrdersFilter: React.FC = () => {
 export default OrdersFilter
 
 const Filters = styled.div`
-    height: 85vh;        
+    height: 92%;        
     overflow-x: hidden;    
+`;
+
+const Container = styled.div`
+    height: 80vh;   
 `;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Button, Table, Drawer } from 'antd';
+import React from 'react'
+import { Button, Table, Spin } from 'antd';
 import styled from 'styled-components';
-import { FilterOutlined, FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import OrdersFilter from '../../components/OrdersFilter';
@@ -34,29 +34,27 @@ const columns = [
   ];
 
 const Orders: React.FC = () => { 
-    const { orders } = useAppSelector(state => state.order)
-
-    const [visible, setVisible] = useState(false);
-    const showDrawer = () => {
-        setVisible(true);
-    };
-    const onClose = () => {
-        setVisible(false);
-    };
+    const { orders, isLoading } = useAppSelector(state => state.order)   
+    
     return (
         <>  
             <div>
-                <Button icon={<FileAddOutlined />}><Link to="/addorder"> Новый заказ</Link></Button>                
-                <Button icon={<FilterOutlined />}  onClick={showDrawer}>Фильтры</Button>
+                <Button icon={<FileAddOutlined />}><Link to="/addorder"> Новый заказ</Link></Button>
             </div>
             
             <br/>
             <br/>
-            <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 600 }} size="small" rowKey="number"/>
-
-            <Drawer title="Фильтры" placement="right" width="400" onClose={onClose} visible={visible}>
-                <OrdersFilter/>
-            </Drawer> 
+            <Container>
+                <TableContainer>
+                    <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 650 }} size="small" rowKey="number"/>
+                </TableContainer>                                           
+                <FilterContainer>
+                    <OrdersFilter/>
+                </FilterContainer>
+            </Container>
+            
+            
+            <StyledSpin spinning={isLoading} size="large" tip="Загрузка данных..."/>
         </>
     )
 }
@@ -70,4 +68,24 @@ const ActionButton = styled(Button)`
 const ActionLink = styled(Link)`
     margin-right: 20px;
     font-size: 14px;    
+`;
+
+const StyledSpin = styled(Spin)`
+    position: absolute;
+    top: 50%;
+    left: 50%;    
+`;
+
+const Container = styled.div`
+    display: flex;
+    width: 100%;        
+`;
+
+const TableContainer = styled.div`
+    width: 80%;   
+`;
+
+const FilterContainer = styled.div`
+    width: 20%;
+    margin-left: 50px;        
 `;

@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Drawer, Layout } from 'antd';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import styled from 'styled-components';
@@ -11,12 +11,23 @@ import Orders from './pages/Order/Orders';
 const { Content } = Layout;
 
 const App: FC = () => {
+    const [visible, setVisible] = useState(false);
+    const showDrawer = () => {
+        setVisible(true);
+    };
+    const onClose = () => {
+        setVisible(false);
+    };
+
     return (
         <BrowserRouter>
             <Layout>
-                <Sidebar />
+                <Drawer title="Меню" placement="left" width="250" onClose={onClose} visible={visible}>
+                    <Sidebar />
+                </Drawer>
+                
                 <StyledLayout>
-                    <TopBar/>
+                    <TopBar onMenuClick={showDrawer}/>
                     <StyledContent>
                     <Switch>
                         <Route exact path="/orders" component={Orders} />                        
@@ -34,9 +45,9 @@ export default App
 
 const StyledContent = styled(Content)`
     background: #fff;
-    margin: 24px 16px;
+    margin: 10px;
     padding: 24px;
-    height: 86vh; 
+    height: 91vh;
 `;
 
 const StyledLayout = styled(Layout)`

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Button, Descriptions } from 'antd';
+import { Button, Descriptions, Divider } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -26,7 +26,7 @@ const Step7: FC = () => {
 
     return (
         <Container>             
-            <Descriptions title="Информация по заказу" column={1} bordered size="small">
+            <Descriptions title="Основное" column={1} bordered  size="small" labelStyle={{width: 300}}>
                 <Descriptions.Item label="Номер заказа">{order.number}</Descriptions.Item>
                 <Descriptions.Item label="Заказчик">{order.customer}</Descriptions.Item>
                 <Descriptions.Item label="Номер заказчика">{order.numberCustomer}</Descriptions.Item>
@@ -34,8 +34,14 @@ const Step7: FC = () => {
                 <Descriptions.Item label="Количество дверей">{order.countDoors}</Descriptions.Item>
                 <Descriptions.Item label="Стоимость одной двери">{order.costDoor}</Descriptions.Item>
                 <Descriptions.Item label="Примечание">{order.note}</Descriptions.Item>
-                
-            </Descriptions>    
+            </Descriptions>
+            
+            <Descriptions title="Конструктив" column={1} bordered  size="small"labelStyle={{width: 300}}>
+                <Descriptions.Item label="Модель двери">{order.model}</Descriptions.Item>
+                <Descriptions.Item label="Количество контуров">{order.contour}</Descriptions.Item>
+                <Descriptions.Item label="Толщина полотна">{order.doorThick}</Descriptions.Item>
+                <Descriptions.Item label="Модель коробки">{order.modelBox}</Descriptions.Item>
+            </Descriptions>      
             <Button  onClick={()=> dispatch(addOrder(order))} >Сохранить</Button>
         </Container>
     )
@@ -44,5 +50,8 @@ const Step7: FC = () => {
 export default Step7
 
 const Container = styled.div`
-    width: 50%;
+    width: 40%;
+    >* {
+        margin-bottom: 20px;
+    }
 `;

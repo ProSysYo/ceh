@@ -63,7 +63,7 @@ const Steps = styled.div`
 `;
 
 const StepControls = styled.div`
-    margin-top: 20px;
-    height: 75vh;
+    margin-top: 10px;
+    height: 82vh;
     overflow-x: hidden; 
 `;

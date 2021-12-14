@@ -36,14 +36,12 @@ const OrdersFilter: React.FC = () => {
         dispatch(fetchAll())
     }, [dispatch])
 
-    const handleInputChange = (value: any) => {
-        console.log("1:", value)
+    const handleInputChange = (value: any) => {       
         for ( var prop in value ) {
             if (value[prop] === "") {
                 value[prop] = null
             }
-        }
-        console.log("2:", value)
+        }        
          setFilters((prev) => ({ ...prev, ...value })) 
     }
     

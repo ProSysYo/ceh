@@ -1,153 +1,195 @@
-import React from 'react'
+import React, {FC} from 'react'
 import styled from 'styled-components';
-import SummaryItem from './SummaryItem';
+
 import { useAppSelector } from '../../hooks/useAppSelector';
 
+const Group: FC<{ title: string }> = ({ title, children }) => {
+    return (
+        <Rows>
+            <Title>{title}</Title>
+            {children}
+        </Rows>
+    )
+}
+
+const Rows = styled.div`    
+    width: 450px;    
+    display: flex;
+    flex-direction: column;     
+`;
+const Title = styled.div`
+    font-size: 16px;
+    padding-left: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+    font-weight: 700;        
+`;
+
+const Row: FC<{ title: string, value: any }> = ({ title, value }) => {
+    return (
+        <RowGroup>
+            <RowTitle>{title}</RowTitle>
+            <RowValue>{value}</RowValue>
+        </RowGroup>
+    )
+
+}
+const RowGroup = styled.div`
+    display: flex;
+    width: 100%;         
+`;
+
+const RowTitle = styled.div`
+    font-size: 12px;
+    width: 50%;
+    padding: 1px 10px;    
+    border-left: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;       
+    border-right: 1px solid #f0f0f0;       
+`;
+
+const RowValue = styled.div`
+    font-size: 12px;
+    width: 50%;
+    padding: 1px 10px; 
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    background-color: #fcfafa;      
+`;
 const SummaryInfo: React.FC = () => {
     const {
         order
     } = useAppSelector(state => state.order)
 
     return (
-        <Container>                       
-            <Items>
-                <Group>
-                    <TitileGroup>Основное</TitileGroup>
-                    <SummaryItem title="Номер заказа" value={order.number}/>
-                    <SummaryItem title="Заказчик" value={order.customer}/>
-                    <SummaryItem title="Номер заказчика" value={order.numberCustomer}/>
-                    <SummaryItem title="Партийность" value={order.party}/>               
-                    <SummaryItem title="Количество дверей" value={order.countDoors}/>               
-                    <SummaryItem title="Стоимость одной двери" value={order.costDoor}/>
+        <Container>
+            <Column>
+                <Group title="Основное">
+                    <Row title="Заказчика" value={order.customer} />
+                    <Row title="Номер заказа" value={order.number} />
+                    <Row title="Партийность" value={order.party} />
+                    <Row title="Количество дверей" value={order.countDoors} />
+                    <Row title="Стоимость одной двери" value={order.costDoor} />
+                    <Row title="Примечание" value={order.note} />
                 </Group>
-
-                <Group>
-                    <TitileGroup>Модель</TitileGroup>               
-                    <SummaryItem title="Модель двери" value={order.model}/>               
-                    <SummaryItem title="Количество контуров" value={order.contour}/>               
-                    <SummaryItem title="Толщина двери" value={order.doorThick}/>               
-                    <SummaryItem title="Высота двери" value={order.height}/>               
-                    <SummaryItem title="Ширина двери" value={order.width}/>               
-                    <SummaryItem title="Модель коробки" value={order.modelBox}/>               
-                    <SummaryItem title="Тип открывания" value={order.openingType}/>               
-                    <SummaryItem title="Двустворчатая" value={order.isDouble ? "да" : "нет"}/>               
-                    <SummaryItem title="Ширина раб. створки" value={order.widthDouble}/>               
-                    <SummaryItem title="Расположение петель" value={order.locationHinge}/>
-                    <SummaryItem title="Количество петель" value={order.countHinge}/>
-                    <SummaryItem title="Тип петель" value={order.typeHinge}/>              
-                    <SummaryItem title="Толщина металла полотна" value={order.thickMetalLeaf}/>              
-                    <SummaryItem title="Толщина металла короба" value={order.thickMetalBox}/>
+                <Group title="Конфигурация модели">
+                    <Row title="Модель двери" value={order.model} />
+                    <Row title="Количество контуров" value={order.contour} />
+                    <Row title="Толщина полотна" value={order.doorThick} />
+                    <Row title="Модель коробки" value={order.modelBox} />
+                    <Row title="Тип открывания" value={order.openingType} />
+                    <Row title="Двустворчатая" value={order.isDouble ? "да" : "нет"} />
+                    <Row title="Высота двери" value={order.height} />
+                    <Row title="Ширина двери" value={order.width} />
+                    <Row title="Ширина раб. створки" value={order.widthDouble} />
                 </Group>
-
-                <Group>
-                    <TitileGroup>Основной замок</TitileGroup>
-                    <SummaryItem title="Основной замок" value={order.baseLock}/>              
-                    <SummaryItem title="Вертушок основного замка" value={order.lockSpinner}/>              
-                    <SummaryItem title="Цилиндр основного замка" value={order.baseCylinder}/>              
-                    <SummaryItem title="Накладка осн. замка снаружи" value={order.baseCoverOutside}/>              
-                    <SummaryItem title="Накладка осн. замка внутри" value={order.baseCoverInside}/>             
-                    <SummaryItem title="Накладка осн. замка 2 (сув.) снаружи" value={order.baseCoverOutside2}/>            
-                    <SummaryItem title="Накладка осн. замка 2 (сув.) внутри" value={order.baseCoverInside2}/>
+                <Group title="Петли">
+                    <Row title="Расположение петель" value={order.locationHinge} />
+                    <Row title="Тип петель" value={order.typeHinge} />
+                    <Row title="Количество петель" value={order.countHinge} />
                 </Group>
-                
-                <Group>
-                    <TitileGroup>Дополнительный замок</TitileGroup>
-                    <SummaryItem title="Дополнительный замок" value={order.optionalLock}/> 
-                    <SummaryItem title="Цилиндр дополнительного замка" value={order.optionalCylinder}/> 
-                    <SummaryItem title="Накладка доп. замка снаружи" value={order.optionalCoverOutside}/>              
-                    <SummaryItem title="Накладка доп. замка внутри" value={order.optionalCoverInside}/>   
+                <Group title="Толщина металла">
+                    <Row title="Толщина металла полотна" value={order.thickMetalLeaf} />
+                    <Row title="Толщина металла короба" value={order.thickMetalBox} />
                 </Group>
-
-                <Group>
-                    <TitileGroup>Другая фурнитура</TitileGroup>
-                    <SummaryItem title="Глазок" value={order.eye}/> 
-                    <SummaryItem title="Расположение глазка" value={order.eyeLocation}/> 
-                    <SummaryItem title="Ручка" value={order.handle}/>              
-                    <SummaryItem title="Вертушок" value={order.spinner}/>
+                <Group title="Основной замок">
+                    <Row title="Основной замок" value={order.baseLock} />
+                    <Row title="Цилиндр" value={order.baseCylinder} />
+                    <Row title="Вертушок замка"
+                        value={order.lockSpinner + ((order.lockSpinnerColor !== "нет") ? " " + order.lockSpinnerColor : "")}
+                    />
+                    <Row title="Накладка осн. снаружи"
+                        value={order.baseCoverOutside + ((order.baseCoverColorOutside !== "нет") ? " " + order.baseCoverColorOutside : "")}
+                    />
+                    <Row title="Накладка осн. внутри"
+                        value={order.baseCoverInside + ((order.baseCoverColorInside !== "нет") ? " " + order.baseCoverColorInside : "")}
+                    />
+                    <Row title="Накладка осн. снаружи 2"
+                        value={order.baseCoverOutside2 + ((order.baseCoverColorOutside2 !== "нет") ? " " + order.baseCoverColorOutside2 : "")}
+                    />
+                    <Row title="Накладка осн. внутри 2"
+                        value={order.baseCoverInside2 + ((order.baseCoverColorInside2 !== "нет") ? " " + order.baseCoverColorInside2 : "")}
+                    />
                 </Group>
-                
-                <Group>
-                    <TitileGroup>Наружная отделка</TitileGroup>
-                    <SummaryItem title="Отделка / Тип панели" value={order.typeDecorationOutside}/>
-                    <SummaryItem title="Элемент отделки / Фрезеровка" value={order.decorationOutside}/>                  
-                    <SummaryItem title="Цвет пленки панели" value={order.wrapOutside}/>                  
-                    <SummaryItem title="Патина на панели" value={order.patinaOutside}/>
-                </Group> 
-
-                <Group>
-                    <TitileGroup>Внутренняя отделка</TitileGroup>
-                    <SummaryItem title="Отделка / Тип панели" value={order.typeDecorationInside}/>                    
-                    <SummaryItem title="Элемент отделки / Фрезеровка" value={order.decorationInside}/>                    
-                    <SummaryItem title="Цвет пленки панели" value={order.wrapInside}/>                    
-                    <SummaryItem title="Патина на панели" value={order.patinaInside}/>                    
+            </Column>
+            <Column>
+                <Group title="Дополнительный замок">
+                    <Row title="Дополнительный замок" value={order.optionalLock} />
+                    <Row title="Цилиндр дополнительного замка" value={order.optionalCylinder} />
+                    <Row title="Накладка доп. снаружи"
+                        value={order.optionalCoverOutside + ((order.optionalCoverColorOutside !== "нет") ? " " + order.optionalCoverColorOutside : "")}
+                    />
+                    <Row title="Накладка доп. внутри"
+                        value={order.optionalCoverInside + ((order.optionalCoverColorInside !== "нет") ? " " + order.optionalCoverColorInside : "")}
+                    />
                 </Group>
-
-                <Group>
-                    <TitileGroup>Наличник</TitileGroup>
-                    <SummaryItem title="Расположение наличника (внутр. откр.)" value={order.locationJumb}/>                     
-                    <SummaryItem title="ШаблНаличникон" value={order.jamb}/>                     
-                    <SummaryItem title="Цвет пленки наличника" value={order.jambWrap}/>                     
-                </Group> 
-
-                <Group>
-                    <TitileGroup>Окно</TitileGroup>
-                    <SummaryItem title="Тип окна" value={order.typeWindow}/>                     
-                    <SummaryItem title="Окно" value={order.doorWindow}/>                     
-                    <SummaryItem title="Цвет тонировки" value={order.colorTint}/>                     
-                    <SummaryItem title="Цвет ковки" value={order.colorForge}/>                     
-                    <SummaryItem title="Патина на ковке" value={order.patinaForge}/>                     
-                    <SummaryItem title="Высота стеклопакета" value={order.heightWindow}/>                     
-                    <SummaryItem title="Ширина стеклопакета" value={order.widthWindow}/>                     
-                    <SummaryItem title="Толщина стеклопакета" value={order.thickWindow}/>                     
+                <Group title="Другая фурнитура">
+                    <Row title="Глазок"
+                        value={order.eye + ((order.colorEye !== "нет") ? " " + order.colorEye : "")}
+                    />
+                    <Row title="Ручка"
+                        value={order.handle + ((order.handleColor !== "нет") ? " " + order.handleColor : "")}
+                    />
+                    <Row title="Вертушок"
+                        value={order.spinner + ((order.spinnerColor !== "нет") ? " " + order.spinnerColor : "")}
+                    />
                 </Group>
-
-                <Group>
-                    <TitileGroup>Опции</TitileGroup>
-                    <SummaryItem title="Порог из нержавейки" value={order.isStainlessDoorStep ? "да" : "нет"}/>                     
-                    <SummaryItem title="Уличная дверь" value={order.isStreetDoor ? "да" : "нет"}/>                     
-                    <SummaryItem title="Эксцентрик" value={order.isEccentric ? "да" : "нет"}/>                     
-                    <SummaryItem title="Задний лист" value={order.isBackSheet ? "да" : "нет"}/>                     
-                    <SummaryItem title="Термокабель?" value={order.isDouble ? "да" : "нет"}/>                     
-                    <SummaryItem title="Доводчик" value={order.isCloser ? "да" : "нет"}/>                     
-                    <SummaryItem title="Усиление под довочик" value={order.isEnhanceCloser ? "да" : "нет"}/>                     
-                    <SummaryItem title="Электромагнит?" value={order.isDouble ? "да" : "нет"}/>                     
-                    <SummaryItem title="Подсветка?" value={order.isDouble ? "да" : "нет"}/>                     
-                    <SummaryItem title="Уплотнитель?" value={order.isDouble ? "да" : "нет"}/>
-                </Group>                                         
-            </Items>
+                <Group title="Наружная отделка">
+                    <Row title="Отделка / Тип панели" value={order.typeDecorationOutside} />
+                    <Row title="Элемент отделки / Фрезеровка" value={order.decorationOutside} />
+                    <Row title="Цвет пленки панели" value={order.wrapOutside} />
+                    <Row title="Патина на панели" value={order.patinaOutside} />
+                </Group>
+                <Group title="Внутренняя отделка">
+                    <Row title="Отделка / Тип панели" value={order.typeDecorationInside} />
+                    <Row title="Элемент отделки / Фрезеровка" value={order.decorationInside} />
+                    <Row title="Цвет пленки панели" value={order.wrapInside} />
+                    <Row title="Патина на панели" value={order.patinaInside} />
+                </Group>
+                <Group title="Наличник">
+                    <Row title="Располож. налич. (внутр. откр.)" value={order.locationJumb} />
+                    <Row title="Наличник" value={order.jamb} />
+                    <Row title="Цвет пленки наличника" value={order.jambWrap} />
+                </Group>
+                <Group title="Окно">
+                    <Row title="Тип окна" value={order.typeWindow} />
+                    <Row title="Окно" value={order.doorWindow} />
+                    <Row title="Цвет тонировки" value={order.colorTint} />
+                    <Row title="Цвет ковки" value={order.colorForge} />
+                    <Row title="Патина на ковке" value={order.patinaForge} />
+                    <Row title="Высота стеклопакета" value={order.heightWindow} />
+                    <Row title="Ширина стеклопакета" value={order.widthWindow} />
+                    <Row title="Толщина стеклопакета" value={order.thickWindow} />
+                </Group>
+            </Column>
+            <Column>
+                <Group title="Опции">
+                    <Row title="Порог из нержавейки" value={order.isStainlessDoorStep ? "да" : "нет"} />
+                    <Row title="Эксцентрик" value={order.isEccentric ? "да" : "нет"} />
+                    <Row title="Задний лист" value={order.isBackSheet ? "да" : "нет"} />
+                    <Row title="Термокабель" value={order.isTermoCable ? "да" : "нет"} />
+                    <Row title="Доводчик" value={order.isCloser ? "да" : "нет"} />
+                    <Row title="Усиление под довочик" value={order.isEnhanceCloser ? "да" : "нет"} />
+                    <Row title="Электромагнит" value={order.isElectromagnet ? "да" : "нет"} />
+                    <Row title="Подсветка" value={order.isIllumination ? "да" : "нет"} />
+                </Group>
+            </Column>
         </Container>
+
     )
 }
 
 export default SummaryInfo
 
-const Container = styled.div`
-    margin-top: 20px;
-    margin-bottom: 20px;
-`;
-
-const Items = styled.div`
-    height: 75vh;
-    overflow-x: hidden;
-`;
-
-const TitileGroup = styled.span`
-    display: block;
-    font-weight: bold;
-    width: 100%;
-    text-align:center;
-`;
-
-const Group = styled.div`
+const Container = styled.div`   
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start;
-    width: 100%;
-    font-size: 11px;
-    margin-bottom:10px;
-    > * {
-        margin-left: 5px;        
-        border-bottom: 1px solid #acafaf45;
-        width:100%;
-    }    
-`
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;    
+`;
+
+const Column = styled.div`   
+    display: flex;
+    flex-direction: column;
+    margin: 5px;     
+`;

@@ -13,6 +13,7 @@ const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const { order } = useAppSelector(state => state)
+    const validateErrors = order.validateErrors
 
     useEffect(() => {        
         dispatch(orderActions.setComputedModel())
@@ -29,7 +30,10 @@ const Step2: FC = () => {
             <Divider >Конфигураци модели</Divider>           
             <Row gutter={24} >
                 <Col span={12}>                    
-                    <Form.Item label="Модель двери*">
+                    <Form.Item 
+                        label="Модель двери*"
+                        { ...validateErrors.model && { help: validateErrors.model, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.models} 
                             value={order.order.model} 
@@ -37,7 +41,10 @@ const Step2: FC = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item label="Количество контуров">
+                    <Form.Item 
+                        label="Количество контуров"
+                        { ...validateErrors.contour && { help: validateErrors.contour, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.contours} 
                             value={order.order.contour} 
@@ -45,14 +52,20 @@ const Step2: FC = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item label="Толщина полотна">
+                    <Form.Item 
+                        label="Толщина полотна"
+                        { ...validateErrors.doorThick && { help: validateErrors.doorThick, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.doorThicks} 
                             value={order.order.doorThick} 
                             onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
                         />
                     </Form.Item>
-                    <Form.Item label="Модель коробки">
+                    <Form.Item 
+                        label="Модель коробки"
+                        { ...validateErrors.modelBox && { help: validateErrors.modelBox, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.modelBoxes} 
                             value={order.order.modelBox} 
@@ -60,7 +73,10 @@ const Step2: FC = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item label="Тип открывания*">
+                    <Form.Item 
+                        label="Тип открывания*"
+                        { ...validateErrors.openingType && { help: validateErrors.openingType, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.openingTypes} 
                             value={order.order.openingType} 
@@ -69,17 +85,30 @@ const Step2: FC = () => {
                     </Form.Item>
                 </Col>
                 <Col span={12}> 
-                    <Form.Item>                   
+                    <Form.Item 
+                        { ...validateErrors.isDouble && { help: validateErrors.isDouble, validateStatus: 'error'}}
+                    >                   
                         <Checkbox checked={order.order.isDouble} onChange={(e)=> dispatch(orderActions.setIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
                     </Form.Item>
-                    <Form.Item label="Высота двери">
+
+                    <Form.Item 
+                        label="Высота двери"
+                        { ...validateErrors.height && { help: validateErrors.height, validateStatus: 'error'}}
+                    >
                         <InputNumber  value={order.order.height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
                     </Form.Item>
 
-                    <Form.Item label="Ширина двери">
+                    <Form.Item 
+                        label="Ширина двери"
+                        { ...validateErrors.width && { help: validateErrors.width, validateStatus: 'error'}}
+                    >
                         <InputNumber  value={order.order.width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
                     </Form.Item>
-                    <Form.Item label="Ширина раб. створки">
+                    
+                    <Form.Item 
+                        label="Ширина раб. створки"
+                        { ...validateErrors.widthDouble && { help: validateErrors.widthDouble, validateStatus: 'error'}}
+                    >
                         <InputNumber disabled={!order.order.isDouble} value={order.order.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
                     </Form.Item>
                 </Col>
@@ -88,7 +117,10 @@ const Step2: FC = () => {
             <Divider >Петли</Divider>                
             <Row gutter={12}>
                 <Col span={8}>                
-                    <Form.Item label="Расположение петель">
+                    <Form.Item 
+                        label="Расположение петель"
+                        { ...validateErrors.locationHinge && { help: validateErrors.locationHinge, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.locationHinges} 
                             value={order.order.locationHinge} 
@@ -98,7 +130,10 @@ const Step2: FC = () => {
                 </Col>
                 
                 <Col span={8}> 
-                    <Form.Item label="Тип петель">
+                    <Form.Item 
+                        label="Тип петель"
+                        { ...validateErrors.typeHinge && { help: validateErrors.typeHinge, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.typeHinges} 
                             value={order.order.typeHinge} 
@@ -108,7 +143,10 @@ const Step2: FC = () => {
                 </Col>
 
                 <Col span={8}>
-                    <Form.Item label="Количество петель">
+                    <Form.Item 
+                        label="Количество петель"
+                        { ...validateErrors.countHinge && { help: validateErrors.countHinge, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.hingeCounts} 
                             value={order.order.countHinge} 
@@ -121,7 +159,10 @@ const Step2: FC = () => {
             <Divider >Толщина металла</Divider>    
             <Row gutter={24}>
                 <Col span={12}>
-                    <Form.Item label="Толщина металла полотна">
+                    <Form.Item 
+                        label="Толщина металла полотна"
+                        { ...validateErrors.thickMetalLeaf && { help: validateErrors.thickMetalLeaf, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.thickMetalLeafs} 
                             value={order.order.thickMetalLeaf} 
@@ -130,7 +171,10 @@ const Step2: FC = () => {
                     </Form.Item>
                 </Col>
                 <Col span={12}>
-                    <Form.Item label="Толщина металла короба">
+                    <Form.Item 
+                        label="Толщина металла короба"
+                        { ...validateErrors.thickMetalBox && { help: validateErrors.thickMetalBox, validateStatus: 'error'}}
+                    >
                         <Select 
                             items={order.thickMetalBoxes} 
                             value={order.order.thickMetalBox} 

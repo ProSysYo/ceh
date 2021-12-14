@@ -117,7 +117,7 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item> 
 
-                <Divider >Накладки основного замка сувальда (если двухсистемный замок)</Divider>                      
+                <Divider >Накладки основного замка 2</Divider>                      
                 <Form.Item label="Снаружи" {...layout2}>
                     <Row>
                         <Col span={14}>

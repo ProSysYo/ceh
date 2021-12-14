@@ -42,8 +42,6 @@ const Orders: React.FC = () => {
                 <Button icon={<FileAddOutlined />}><Link to="/addorder"> Новый заказ</Link></Button>
             </div>
             
-            <br/>
-            <br/>
             <Container>
                 <TableContainer>
                     <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 650 }} size="small" rowKey="number"/>

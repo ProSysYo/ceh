@@ -65,21 +65,30 @@ const Step4: FC = () => {
                 </Form.Item>
 
                 <Divider>Внутренняя отделка</Divider>
-                <Form.Item label="Отделка / Тип панели*">
+                <Form.Item 
+                    label="Отделка / Тип панели*"
+                    { ...validateErrors.typeDecorationInside && { help: validateErrors.typeDecorationInside, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.typeDecorationsInside} 
                         value={order.order.typeDecorationInside} 
                         onChange={ (value) => dispatch(orderActions.setTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Элемент отделки / Фрезеровка">
+                <Form.Item 
+                    label="Элемент отделки / Фрезеровка"
+                    { ...validateErrors.decorationInside && { help: validateErrors.decorationInside, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.decorationsInside} 
                         value={order.order.decorationInside} 
                         onChange={ (value) => dispatch(orderActions.setDecorationInside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Цвет пленки панели">
+                <Form.Item 
+                    label="Цвет пленки панели"
+                    { ...validateErrors.wrapInside && { help: validateErrors.wrapInside, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.wraps} 
                         value={order.order.wrapInside} 
@@ -87,7 +96,10 @@ const Step4: FC = () => {
                         onChange={ (value) => dispatch(orderActions.setWrapInside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Патина на панели">
+                <Form.Item 
+                    label="Патина на панели"
+                    { ...validateErrors.patinaInside && { help: validateErrors.patinaInside, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.patinas} 
                         value={order.order.patinaInside}
@@ -98,7 +110,10 @@ const Step4: FC = () => {
 
                 <Divider>Наличник</Divider>
 
-                <Form.Item label="Расположение наличника (внутр. откр.)">
+                <Form.Item 
+                    label="Расположение наличника (внутр. откр.)"
+                    { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.locationJambs} 
                         value={order.order.locationJumb}
@@ -107,7 +122,10 @@ const Step4: FC = () => {
                     />
                 </Form.Item>
 
-                <Form.Item label="Наличник">
+                <Form.Item 
+                    label="Наличник"
+                    { ...validateErrors.jamb && { help: validateErrors.jamb, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.currentJambs} 
                         value={order.order.jamb}
@@ -115,7 +133,10 @@ const Step4: FC = () => {
                     />
                 </Form.Item>
 
-                <Form.Item label="Цвет пленки наличника">
+                <Form.Item 
+                    label="Цвет пленки наличника"
+                    { ...validateErrors.jambWrap && { help: validateErrors.jambWrap, validateStatus: 'error'}}
+                >
                     <Select 
                         items={order.wraps} 
                         value={order.order.jambWrap} 

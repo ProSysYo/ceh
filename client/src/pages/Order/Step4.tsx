@@ -9,16 +9,8 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step4: FC = () => {
     const dispatch = useAppDispatch()
 
-    const {
-        typeDecorationsOutside, typeDecorationsInside, decorationsOutside, wraps, isWrapInside, isWrapOutside, isPatinaOutside,
-        patinas, decorationsInside, isPatinaInside, currentJambs, isJambWrap, locationJambs, isLocationJamb
-    } = useAppSelector(state => state.order)
-    
-    const {
-        typeDecorationOutside, typeDecorationInside, decorationOutside, wrapOutside, wrapInside, patinaOutside, 
-        decorationInside, patinaInside, jamb, jambWrap, locationJumb
-    } = useAppSelector(state => state.order.order)
-
+    const { order } = useAppSelector(state => state)
+    const { validateErrors } = useAppSelector(state => state.order)
 
     return (
         <Container>
@@ -29,33 +21,45 @@ const Step4: FC = () => {
                 size = "middle"              
             >  
                 <Divider>Наружная отделка</Divider>
-                <Form.Item label="Отделка / Тип панели*">
+                <Form.Item 
+                    label="Отделка / Тип панели*"
+                    { ...validateErrors.typeDecorationOutside && { help: validateErrors.typeDecorationOutside, validateStatus: 'error'}}
+                >
                     <Select 
-                        items={typeDecorationsOutside} 
-                        value={typeDecorationOutside} 
+                        items={order.typeDecorationsOutside} 
+                        value={order.order.typeDecorationOutside} 
                         onChange={ (value) => dispatch(orderActions.setTypeDecorationOutside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Элемент отделки / Фрезеровка">
+                <Form.Item 
+                    label="Элемент отделки / Фрезеровка"
+                    { ...validateErrors.decorationOutside && { help: validateErrors.decorationOutside, validateStatus: 'error'}}
+                >
                     <Select 
-                        items={decorationsOutside} 
-                        value={decorationOutside} 
+                        items={order.decorationsOutside} 
+                        value={order.order.decorationOutside} 
                         onChange={ (value) => dispatch(orderActions.setDecorationOutside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Цвет пленки панели">
+                <Form.Item 
+                    label="Цвет пленки панели"
+                    { ...validateErrors.wrapOutside && { help: validateErrors.wrapOutside, validateStatus: 'error'}}
+                >
                     <Select 
-                        items={wraps} 
-                        value={wrapOutside}
-                        disabled={!isWrapOutside} 
+                        items={order.wraps} 
+                        value={order.order.wrapOutside}
+                        disabled={!order.isWrapOutside} 
                         onChange={ (value) => dispatch(orderActions.setWrapOutside(value))}                        
                     />
                 </Form.Item>
-                <Form.Item label="Патина на панели">
+                <Form.Item 
+                    label="Патина на панели"
+                    { ...validateErrors.patinaOutside && { help: validateErrors.patinaOutside, validateStatus: 'error'}}
+                >
                     <Select 
-                        items={patinas} 
-                        value={patinaOutside} 
-                        disabled={!isPatinaOutside} 
+                        items={order.patinas} 
+                        value={order.order.patinaOutside} 
+                        disabled={!order.isPatinaOutside} 
                         onChange={ (value) => dispatch(orderActions.setPatinaOutside(value))}                        
                     />
                 </Form.Item>
@@ -63,31 +67,31 @@ const Step4: FC = () => {
                 <Divider>Внутренняя отделка</Divider>
                 <Form.Item label="Отделка / Тип панели*">
                     <Select 
-                        items={typeDecorationsInside} 
-                        value={typeDecorationInside} 
+                        items={order.typeDecorationsInside} 
+                        value={order.order.typeDecorationInside} 
                         onChange={ (value) => dispatch(orderActions.setTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Элемент отделки / Фрезеровка">
                     <Select 
-                        items={decorationsInside} 
-                        value={decorationInside} 
+                        items={order.decorationsInside} 
+                        value={order.order.decorationInside} 
                         onChange={ (value) => dispatch(orderActions.setDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Цвет пленки панели">
                     <Select 
-                        items={wraps} 
-                        value={wrapInside} 
-                        disabled={!isWrapInside}
+                        items={order.wraps} 
+                        value={order.order.wrapInside} 
+                        disabled={!order.isWrapInside}
                         onChange={ (value) => dispatch(orderActions.setWrapInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item label="Патина на панели">
                     <Select 
-                        items={patinas} 
-                        value={patinaInside}
-                        disabled={!isPatinaInside}
+                        items={order.patinas} 
+                        value={order.order.patinaInside}
+                        disabled={!order.isPatinaInside}
                         onChange={ (value) => dispatch(orderActions.setPatinaInside(value))}                        
                     />
                 </Form.Item>  
@@ -96,26 +100,26 @@ const Step4: FC = () => {
 
                 <Form.Item label="Расположение наличника (внутр. откр.)">
                     <Select 
-                        items={locationJambs} 
-                        value={locationJumb}
-                        disabled={!isLocationJamb}
+                        items={order.locationJambs} 
+                        value={order.order.locationJumb}
+                        disabled={!order.isLocationJamb}
                         onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
                     />
                 </Form.Item>
 
                 <Form.Item label="Наличник">
                     <Select 
-                        items={currentJambs} 
-                        value={jamb}
+                        items={order.currentJambs} 
+                        value={order.order.jamb}
                         onChange={ (value) => dispatch(orderActions.setJamb(value))}                        
                     />
                 </Form.Item>
 
                 <Form.Item label="Цвет пленки наличника">
                     <Select 
-                        items={wraps} 
-                        value={jambWrap} 
-                        disabled={!isJambWrap}
+                        items={order.wraps} 
+                        value={order.order.jambWrap} 
+                        disabled={!order.isJambWrap}
                         onChange={ (value) => dispatch(orderActions.setJambWrap(value))}                        
                     />
                 </Form.Item>              

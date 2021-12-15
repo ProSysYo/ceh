@@ -12,19 +12,8 @@ const layout2 = {labelCol:{ span: 8 }, wrapperCol:{ span: 10 }}
 const Step3: FC = () => {
     const dispatch = useAppDispatch()
 
-    const {
-        baseLocks, optionalLocks, spinners, cylinders, baseCovers, baseCovers2, isLockSpinner, isBaseCylinder, isBaseCover2,
-        isOptionalCylinder, optionalCovers, eyes, handles, eyeLocations, fittingColors, isBaseCover, isOptionalCover
-    } = useAppSelector(state => state.order)
-
-    const {
-        baseLock, lockSpinner, baseCylinder, baseCoverOutside, baseCoverInside, baseCoverOutside2, baseCoverInside2, optionalLock,
-        optionalCylinder, optionalCoverOutside, optionalCoverInside, eye, handle, spinner, eyeLocation, baseCoverColorInside, baseCoverColorOutside,
-        baseCoverColorOutside2, baseCoverColorInside2, colorEye, optionalCoverColorOutside, optionalCoverColorInside, lockSpinnerColor, handleColor,
-        spinnerColor
-    } = useAppSelector(state => state.order.order)
-
-    
+    const { order } = useAppSelector(state => state)
+    const { validateErrors } = useAppSelector(state => state.order)
 
     return (
         <Container>
@@ -33,38 +22,50 @@ const Step3: FC = () => {
                 size = "middle"                 
             >
                 <Divider >Основной замок</Divider>                
-                <Form.Item label="Основной замок*" {...layout1}>
+                <Form.Item 
+                    label="Основной замок*" {...layout1}
+                    { ...validateErrors.baseLock && { help: validateErrors.baseLock, validateStatus: 'error'}}
+                >
                     <Select
-                        items={baseLocks}
-                        value={baseLock}
+                        items={order.baseLocks}
+                        value={order.order.baseLock}
                         onChange={(value) => dispatch(orderActions.setBaseLock(value))}
                     />
                 </Form.Item>
             
-                <Form.Item label="Цилиндр" {...layout1}>
+                <Form.Item 
+                    label="Цилиндр" 
+                    {...layout1}
+                    { ...validateErrors.baseCylinder && { help: validateErrors.baseCylinder, validateStatus: 'error'}}
+                >
                     <Select
-                        items={cylinders}
-                        value={baseCylinder}
-                        disabled={!isBaseCylinder}
+                        items={order.cylinders}
+                        value={order.order.baseCylinder}
+                        disabled={!order.isBaseCylinder}
                         onChange={(value) => dispatch(orderActions.setBaseCylinder(value))}
                     />
                 </Form.Item>
 
-                <Form.Item label="Вертушок замка" {...layout2}>
+                <Form.Item 
+                    label="Вертушок замка" 
+                    {...layout2}
+                    { ...validateErrors.lockSpinner && { help: validateErrors.lockSpinner, validateStatus: 'error'}}
+                    { ...validateErrors.lockSpinnerColor && { help: validateErrors.lockSpinnerColor, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={spinners}
-                                value={lockSpinner}
-                                disabled={!isLockSpinner}
+                                items={order.spinners}
+                                value={order.order.lockSpinner}
+                                disabled={!order.isLockSpinner}
                                 onChange={(value) => dispatch(orderActions.setLockSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={lockSpinnerColor}
-                                disabled={!isLockSpinner}
+                                items={order.fittingColors}
+                                value={order.order.lockSpinnerColor}
+                                disabled={!order.isLockSpinner}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setLockSpinnerColor(value))}
                             />
@@ -73,21 +74,26 @@ const Step3: FC = () => {
                 </Form.Item>                
 
                 <Divider >Накладки основного замка</Divider> 
-                <Form.Item label="Снаружи" {...layout2}>
+                <Form.Item 
+                    label="Снаружи" 
+                    {...layout2}
+                    { ...validateErrors.baseCoverOutside && { help: validateErrors.baseCoverOutside, validateStatus: 'error'}}
+                    { ...validateErrors.baseCoverColorOutside && { help: validateErrors.baseCoverColorOutside, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={baseCovers}
-                                value={baseCoverOutside}
-                                disabled={!isBaseCover}
+                                items={order.baseCovers}
+                                value={order.order.baseCoverOutside}
+                                disabled={!order.isBaseCover}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={baseCoverColorOutside}
-                                disabled={!isBaseCover}
+                                items={order.fittingColors}
+                                value={order.order.baseCoverColorOutside}
+                                disabled={!order.isBaseCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside(value))}
                             />
@@ -95,21 +101,26 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item> 
                     
-                <Form.Item label="Внутри" {...layout2}>
+                <Form.Item 
+                    label="Внутри" 
+                    {...layout2}
+                    { ...validateErrors.baseCoverInside && { help: validateErrors.baseCoverInside, validateStatus: 'error'}}
+                    { ...validateErrors.baseCoverColorInside && { help: validateErrors.baseCoverColorInside, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={baseCovers}
-                                value={baseCoverInside}
-                                disabled={!isBaseCover}
+                                items={order.baseCovers}
+                                value={order.order.baseCoverInside}
+                                disabled={!order.isBaseCover}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={baseCoverColorInside}
-                                disabled={!isBaseCover}
+                                items={order.fittingColors}
+                                value={order.order.baseCoverColorInside}
+                                disabled={!order.isBaseCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorInside(value))}
                             />
@@ -118,21 +129,26 @@ const Step3: FC = () => {
                 </Form.Item> 
 
                 <Divider >Накладки основного замка 2</Divider>                      
-                <Form.Item label="Снаружи" {...layout2}>
+                <Form.Item 
+                    label="Снаружи" 
+                    {...layout2}
+                    { ...validateErrors.baseCoverOutside2 && { help: validateErrors.baseCoverOutside2, validateStatus: 'error'}}
+                    { ...validateErrors.baseCoverColorOutside2 && { help: validateErrors.baseCoverColorOutside2, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={baseCovers2}
-                                value={baseCoverOutside2}
-                                disabled={!isBaseCover2}
+                                items={order.baseCovers2}
+                                value={order.order.baseCoverOutside2}
+                                disabled={!order.isBaseCover2}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverOutside2(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={baseCoverColorOutside2}
-                                disabled={!isBaseCover2}
+                                items={order.fittingColors}
+                                value={order.order.baseCoverColorOutside2}
+                                disabled={!order.isBaseCover2}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside2(value))}
                             />
@@ -140,21 +156,26 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>                        
             
-                <Form.Item label="Внутри" {...layout2}>
+                <Form.Item 
+                    label="Внутри" 
+                    {...layout2}
+                    { ...validateErrors.baseCoverInside2 && { help: validateErrors.baseCoverInside2, validateStatus: 'error'}}
+                    { ...validateErrors.baseCoverColorInside2 && { help: validateErrors.baseCoverColorInside2, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={baseCovers2}
-                                value={baseCoverInside2}
-                                disabled={!isBaseCover2}
+                                items={order.baseCovers2}
+                                value={order.order.baseCoverInside2}
+                                disabled={!order.isBaseCover2}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverInside2(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={baseCoverColorInside2}
-                                disabled={!isBaseCover2}
+                                items={order.fittingColors}
+                                value={order.order.baseCoverColorInside2}
+                                disabled={!order.isBaseCover2}
                                 firstOption="выберите цвет"                                       
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorInside2(value))}
                             />
@@ -163,39 +184,53 @@ const Step3: FC = () => {
                 </Form.Item>    
 
                 <Divider >Дополнительный замок</Divider>                
-                <Form.Item label="Дополнительный замок*" {...layout1}>
+                <Form.Item 
+                    label="Дополнительный замок*" 
+                    {...layout1}
+                    { ...validateErrors.optionalLock && { help: validateErrors.optionalLock, validateStatus: 'error'}}
+                >
                         <Select
-                            items={optionalLocks}
-                            value={optionalLock}
+                            items={order.optionalLocks}
+                            value={order.order.optionalLock}
                             onChange={(value) => dispatch(orderActions.setOptionalLock(value))}
                         />
                 </Form.Item>                
                 
-                <Form.Item label="Цилиндр дополнительного замка" {...layout1}>
+                <Form.Item 
+                    label="Цилиндр дополнительного замка" 
+                    {...layout1}
+                    { ...validateErrors.optionalCylinder && { help: validateErrors.optionalCylinder, validateStatus: 'error'}}
+                    
+                >
                     <Select
-                        items={cylinders}
-                        value={optionalCylinder}
-                        disabled={!isOptionalCylinder}
+                        items={order.cylinders}
+                        value={order.order.optionalCylinder}
+                        disabled={!order.isOptionalCylinder}
                         onChange={(value) => dispatch(orderActions.setOptionalCylinder(value))}
                     />
                 </Form.Item>
 
                 <Divider >Накладки дополнительного замка</Divider>
-                <Form.Item label="Снаружи" {...layout2}>
+                <Form.Item 
+                    label="Снаружи" 
+                    {...layout2}
+                    { ...validateErrors.optionalCoverOutside && { help: validateErrors.optionalCoverOutside, validateStatus: 'error'}}
+                    { ...validateErrors.optionalCoverColorOutside && { help: validateErrors.optionalCoverColorOutside, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={optionalCovers}
-                                value={optionalCoverOutside}
-                                disabled={!isOptionalCover}
+                                items={order.optionalCovers}
+                                value={order.order.optionalCoverOutside}
+                                disabled={!order.isOptionalCover}
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={optionalCoverColorOutside}
-                                disabled={!isOptionalCover}
+                                items={order.fittingColors}
+                                value={order.order.optionalCoverColorOutside}
+                                disabled={!order.isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverColorOutside(value))}
                             />
@@ -203,21 +238,26 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>                        
             
-                <Form.Item label="Внутри" {...layout2}>
+                <Form.Item 
+                    label="Внутри" 
+                    {...layout2}
+                    { ...validateErrors.optionalCoverInside && { help: validateErrors.optionalCoverInside, validateStatus: 'error'}}
+                    { ...validateErrors.optionalCoverColorInside && { help: validateErrors.optionalCoverColorInside, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={optionalCovers}
-                                value={optionalCoverInside}
-                                disabled={!isOptionalCover}
+                                items={order.optionalCovers}
+                                value={order.order.optionalCoverInside}
+                                disabled={!order.isOptionalCover}
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={optionalCoverColorInside}
-                                disabled={!isOptionalCover}
+                                items={order.fittingColors}
+                                value={order.order.optionalCoverColorInside}
+                                disabled={!order.isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverColorInside(value))}
                             />
@@ -226,19 +266,24 @@ const Step3: FC = () => {
                 </Form.Item> 
 
                 <Divider>Глазок</Divider>
-                <Form.Item label="Глазок" {...layout2}>
+                <Form.Item 
+                    label="Глазок" 
+                    {...layout2}
+                    { ...validateErrors.eye && { help: validateErrors.eye, validateStatus: 'error'}}
+                    { ...validateErrors.colorEye && { help: validateErrors.colorEye, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={eyes}
-                                value={eye}
+                                items={order.eyes}
+                                value={order.order.eye}
                                 onChange={(value) => dispatch(orderActions.setEye(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={colorEye}
+                                items={order.fittingColors}
+                                value={order.order.colorEye}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setColorEye(value))}
                             />
@@ -246,29 +291,38 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>                        
             
-                <Form.Item label="Расположение глазка" {...layout1}>
+                <Form.Item 
+                    label="Расположение глазка" 
+                    {...layout1}
+                    { ...validateErrors.eyeLocation && { help: validateErrors.eyeLocation, validateStatus: 'error'}}
+                >
                     <Select
-                        items={eyeLocations}
-                        value={eyeLocation}
+                        items={order.eyeLocations}
+                        value={order.order.eyeLocation}
                         onChange={(value) => dispatch(orderActions.setEyeLocation(value))}
                     />
                 </Form.Item>                    
 
                 <Divider/>
 
-                <Form.Item label="Ручка" {...layout2}>
+                <Form.Item 
+                    label="Ручка" 
+                    {...layout2}
+                    { ...validateErrors.handle && { help: validateErrors.handle, validateStatus: 'error'}}
+                    { ...validateErrors.handleColor && { help: validateErrors.handleColor, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={handles}
-                                value={handle}
+                                items={order.handles}
+                                value={order.order.handle}
                                 onChange={(value) => dispatch(orderActions.setHandle(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={handleColor}
+                                items={order.fittingColors}
+                                value={order.order.handleColor}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setHandleColor(value))}
                             />
@@ -276,19 +330,24 @@ const Step3: FC = () => {
                     </Row>
                 </Form.Item>
 
-                <Form.Item label="Вертушок" {...layout2}>
+                <Form.Item 
+                    label="Вертушок" 
+                    {...layout2}
+                    { ...validateErrors.spinner && { help: validateErrors.spinner, validateStatus: 'error'}}
+                    { ...validateErrors.spinnerColor && { help: validateErrors.spinnerColor, validateStatus: 'error'}}
+                >
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={spinners}
-                                value={spinner}
+                                items={order.spinners}
+                                value={order.order.spinner}
                                 onChange={(value) => dispatch(orderActions.setSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={fittingColors}
-                                value={spinnerColor}
+                                items={order.fittingColors}
+                                value={order.order.spinnerColor}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setSpinnerColor(value))}
                             />

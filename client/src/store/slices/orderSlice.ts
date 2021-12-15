@@ -29,7 +29,7 @@ import { ILocationJamb } from '../../interfaces/ILocationJamb';
 import { IFittingColor } from '../../interfaces/IFittingColor';
 import { IHingeCount } from '../../interfaces/IHingeCount';
 
-interface OrderSate {
+export interface OrderSate {
     orders: IOrder[];
     customers: ICustomer[];
     parties: IParty[];

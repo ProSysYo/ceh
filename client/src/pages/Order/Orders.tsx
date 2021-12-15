@@ -44,7 +44,7 @@ const Orders: React.FC = () => {
             
             <Container>
                 <TableContainer>
-                    <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 650 }} size="small" rowKey="number"/>
+                    <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 680 }} size="small" rowKey="number"/>
                 </TableContainer>                                           
                 <FilterContainer>
                     <OrdersFilter/>
@@ -80,6 +80,7 @@ const Container = styled.div`
 `;
 
 const TableContainer = styled.div`
+    margin-top: 10px;
     width: 80%;   
 `;
 

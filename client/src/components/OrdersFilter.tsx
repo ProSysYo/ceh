@@ -45,10 +45,14 @@ const OrdersFilter: React.FC = () => {
          setFilters((prev) => ({ ...prev, ...value })) 
     }
     
+    const loadByFilter  = () => {
+        dispatch(getOrders(filters))        
+    }
+
     const resetFilters = () => {        
         form.resetFields()
         setFilters({})
-    }   
+    }  
 
     return (
         <Container>
@@ -154,7 +158,7 @@ const OrdersFilter: React.FC = () => {
             </Filters>
             
             <div>
-                <Button icon={<FunnelPlotOutlined />}  onClick={() => dispatch(getOrders(filters))}>Подобрать</Button>
+                <Button icon={<FunnelPlotOutlined />}  onClick={loadByFilter}>Загрузить</Button>
                 <Button icon={<ClearOutlined />} onClick={resetFilters}>Сброс</Button>
             </div>
         </Container>

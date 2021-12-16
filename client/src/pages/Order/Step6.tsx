@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Checkbox, Form } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
 
@@ -10,7 +9,7 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step6: FC = () => {
     const dispatch = useAppDispatch()
 
-    const { order } = useAppSelector(state => state)
+    const { order } = useAppSelector(state => state)    
 
     return (
         <Container>
@@ -54,15 +53,7 @@ const Step6: FC = () => {
 
                 <Form.Item label="Подсветка">
                     <Checkbox checked={order.order.isIllumination} onChange={(e)=> dispatch(orderActions.setIsIllumination(e.target.checked))} />
-                </Form.Item>
-
-                <Form.Item label="Уплотнитель?">
-                    <Select 
-                        items={order.locationHinges} 
-                        value={order.order.locationHinge} 
-                        onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
-                    />
-                </Form.Item>
+                </Form.Item>                
             </Form>
         </Container>
     )

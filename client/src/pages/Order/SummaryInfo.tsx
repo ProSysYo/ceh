@@ -73,15 +73,14 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Примечание" value={order.note} />
                 </Group>
                 <Group title="Конфигурация модели">
-                    <Row title="Модель двери" value={order.model} />
-                    <Row title="Количество контуров" value={order.contour} />
+                    <Row title="Модель двери" value={order.model} />                    
                     <Row title="Толщина полотна" value={order.doorThick} />
                     <Row title="Модель коробки" value={order.modelBox} />
-                    <Row title="Тип открывания" value={order.openingType} />
-                    <Row title="Двустворчатая" value={order.isDouble ? "да" : "нет"} />
                     <Row title="Высота двери" value={order.height} />
                     <Row title="Ширина двери" value={order.width} />
                     <Row title="Ширина раб. створки" value={order.widthDouble} />
+                    <Row title="Уплотнитель" value={order.sealer} />
+                    <Row title="Располож. налич. (внутр. откр.)" value={order.locationJumb} />
                 </Group>
                 <Group title="Петли">
                     <Row title="Расположение петель" value={order.locationHinge} />
@@ -146,11 +145,12 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Цвет пленки панели" value={order.wrapInside} />
                     <Row title="Патина на панели" value={order.patinaInside} />
                 </Group>
-                <Group title="Наличник">
-                    <Row title="Располож. налич. (внутр. откр.)" value={order.locationJumb} />
+                <Group title="Наличник">                    
                     <Row title="Наличник" value={order.jamb} />
                     <Row title="Цвет пленки наличника" value={order.jambWrap} />
-                </Group>
+                </Group>                
+            </Column>
+            <Column>
                 <Group title="Окно">
                     <Row title="Тип окна" value={order.typeWindow} />
                     <Row title="Окно" value={order.doorWindow} />
@@ -161,8 +161,6 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Ширина стеклопакета" value={order.widthWindow} />
                     <Row title="Толщина стеклопакета" value={order.thickWindow} />
                 </Group>
-            </Column>
-            <Column>
                 <Group title="Опции">
                     <Row title="Порог из нержавейки" value={order.isStainlessDoorStep ? "да" : "нет"} />
                     <Row title="Эксцентрик" value={order.isEccentric ? "да" : "нет"} />

@@ -45,9 +45,9 @@ export default App
 
 const StyledContent = styled(Content)`
     background: #fff;
-    margin: 10px;
-    padding: 24px;
-    height: 91vh;
+    margin: 5px 10px;
+    padding: 5px 20px;
+    height: 94vh;
 `;
 
 const StyledLayout = styled(Layout)`

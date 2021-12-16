@@ -21,4 +21,7 @@ export default TopBar
 
 const MainHeader = styled(Header)`
     background: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
 `;

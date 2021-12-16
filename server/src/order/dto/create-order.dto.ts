@@ -8,16 +8,10 @@ export class CreateOrderDto {
     readonly numberCustomer: string;
 
     @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly party: string;
+    readonly party: string;    
 
     @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly computedModel: string;
-
-    @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly model: string;
-
-    @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly contour: number;
+    readonly model: string;    
 
     @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
     readonly doorThick: number;
@@ -29,10 +23,7 @@ export class CreateOrderDto {
     readonly width: number;
 
     @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly modelBox: string;
-
-    @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
-    readonly openingType: string;
+    readonly modelBox: string;    
     
     readonly isDouble: boolean;
 
@@ -207,6 +198,8 @@ export class CreateOrderDto {
     @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
     readonly locationJumb: string;
 
+    @IsNotEmpty({message: 'Поле не должно быть пустым'}) 
+    readonly sealer: string; //Уплотнитель
     
     readonly isStainlessDoorStep: boolean //порог из нержавейки
     readonly isStreetDoor: boolean;
@@ -217,4 +210,5 @@ export class CreateOrderDto {
     readonly isTermoCable: boolean; //Термокабель
     readonly isElectromagnet: boolean; //Электромагнит
     readonly isIllumination: boolean; //Подсветка
+    
 }

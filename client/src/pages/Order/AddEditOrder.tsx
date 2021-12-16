@@ -13,6 +13,10 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
+import { Button } from 'antd';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { addOrder } from '../../store/actions/orderActions';
 
 const renderStep = (step: number) => {
     switch (step) {
@@ -30,6 +34,10 @@ const AddEditOrder: React.FC = () => {
     
     const [step, setStep] = useState(0)
 
+    const dispatch = useAppDispatch()
+
+    const { order } = useAppSelector(state => state.order)
+
     return (
         <Container>
             <Criteries>
@@ -39,8 +47,12 @@ const AddEditOrder: React.FC = () => {
                
                 <StepControls>
                     {renderStep(step)}
-                </StepControls>  
-            </Criteries>                   
+                </StepControls>                 
+            </Criteries>
+            <Buttons>
+                <Button onClick={() => dispatch(addOrder(order))} >Сохранить</Button>
+                <Button >Отмена</Button>
+            </Buttons>                  
         </Container>
     )
 }
@@ -50,7 +62,8 @@ export default AddEditOrder
 const Container = styled.div`
     display: flex;
     width: 100%;
-    justify-content: space-between;   
+    flex-direction: column;
+    align-items: flex-end;
 `;
 
 const  Criteries = styled.div`
@@ -64,6 +77,12 @@ const Steps = styled.div`
 
 const StepControls = styled.div`
     margin-top: 10px;
-    height: 82vh;
+    height: 78vh;
     overflow-x: hidden; 
+`;
+
+const Buttons = styled.div`    
+    > * {
+        margin: 0 10px;
+    }
 `;

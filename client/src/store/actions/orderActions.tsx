@@ -20,10 +20,7 @@ export const fetchAll = () => {
             dispatch(orderActions.setModels(response.data))
 
             response = await api.getModelBoxes()
-            dispatch(orderActions.setModelBoxes(response.data))
-
-            response = await api.getOpeningTypes()
-            dispatch(orderActions.setOpeningTypes(response.data))
+            dispatch(orderActions.setModelBoxes(response.data))            
 
             response = await api.getLocks()
             const baseLocks = response.data.filter(lock => lock.installation === "основной" || lock.installation === "нет" || lock.installation === "примечание")
@@ -103,7 +100,10 @@ export const fetchAll = () => {
             dispatch(orderActions.setLocationJambs(response.data))
 
             response = await api.getFittingColors()            
-            dispatch(orderActions.setFittingColors(response.data))          
+            dispatch(orderActions.setFittingColors(response.data))
+            
+            response = await api.getSealers()            
+            dispatch(orderActions.setSealers(response.data))
 
             dispatch(orderActions.setLoading(false))            
         } catch (e: any) {            
@@ -124,7 +124,9 @@ export const addOrder = (data: IOrder) => {
         try {            
             await api.createOrder(data)
             openNotification("success", "Заказ был создан")                                  
-        } catch (e: any) {            
+        } catch (e: any) { 
+            console.log(e);
+                       
             if (e.isAxiosError){
                 if (!e.response) {
                     openNotification("error", "Нет соединения с сервером") 
@@ -135,6 +137,10 @@ export const addOrder = (data: IOrder) => {
                 if (e.response.status === 422) {
                     openNotification("error", "Ошибка валидации, проверьте все поля") 
                     dispatch(orderActions.setValidateErrors(e.response.data))                                     
+                } else {
+                    console.log(e.response);
+                    
+                    openNotification("error", e.response.data.errors)
                 }
                                           
             } else {
@@ -184,17 +190,13 @@ export const loadOrder = (id: string) => {
                 dispatch(orderActions.setCountDoors(data.countDoors))
                 dispatch(orderActions.setCostDoor(data.costDoor))
                 dispatch(orderActions.setNote(data.note))
-                dispatch(orderActions.setModel(data.model))
-                dispatch(orderActions.setContour(data.contour))
+                dispatch(orderActions.setModel(data.model))                
                 dispatch(orderActions.setDoorThick(data.doorThick))
                 dispatch(orderActions.setModelBox(data.modelBox))
-                dispatch(orderActions.setOpeningType(data.openingType))
-                dispatch(orderActions.setIsDouble(data.isDouble))
                 dispatch(orderActions.setHeight(data.height))
                 dispatch(orderActions.setHeight(data.height))
                 dispatch(orderActions.setWidth(data.width))
-                dispatch(orderActions.setWidthDouble(data.widthDouble))
-                dispatch(orderActions.loadComputedModel(data.computedModel))
+                dispatch(orderActions.setWidthDouble(data.widthDouble))                
                 dispatch(orderActions.setLocationHinge(data.locationHinge))
                 dispatch(orderActions.setTypeHinge(data.typeHinge))
                 dispatch(orderActions.setCountHinge(data.countHinge))
@@ -254,6 +256,7 @@ export const loadOrder = (id: string) => {
                 dispatch(orderActions.setIsEnhanceCloser(data.isEnhanceCloser))
                 dispatch(orderActions.setIsElectromagnet(data.isElectromagnet))
                 dispatch(orderActions.setIsIllumination(data.isIllumination))
+                dispatch(orderActions.setSealer(data.sealer))
 
                 openNotification("success", "Заказ загружен") 
             }

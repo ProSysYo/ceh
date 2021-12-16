@@ -5,19 +5,12 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
-import { useEffect } from 'react';
-
 
 const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
     const { order } = useAppSelector(state => state)
-    const validateErrors = order.validateErrors
-
-    useEffect(() => {        
-        dispatch(orderActions.setComputedModel())
-    }, [order.order.model, order.order.isDouble, order.order.openingType, order.order.contour, dispatch])
+    const validateErrors = order.validateErrors    
         
     return (
         <Container>
@@ -39,18 +32,7 @@ const Step2: FC = () => {
                             value={order.order.model} 
                             onChange={ (value) => dispatch(orderActions.setModel(value))}                       
                         />
-                    </Form.Item>
-
-                    <Form.Item 
-                        label="Количество контуров"
-                        { ...validateErrors.contour && { help: validateErrors.contour, validateStatus: 'error'}}
-                    >
-                        <Select 
-                            items={order.contours} 
-                            value={order.order.contour} 
-                            onChange={ (value) => dispatch(orderActions.setContour(value))}                        
-                        />
-                    </Form.Item>
+                    </Form.Item>                    
 
                     <Form.Item 
                         label="Толщина полотна"
@@ -74,23 +56,29 @@ const Step2: FC = () => {
                     </Form.Item>
 
                     <Form.Item 
-                        label="Тип открывания*"
-                        { ...validateErrors.openingType && { help: validateErrors.openingType, validateStatus: 'error'}}
+                    label="Расположение наличника (внутр. откр.)"
+                    { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
+                >
+                    <Select 
+                        items={order.locationJambs} 
+                        value={order.order.locationJumb}
+                        disabled={!order.isLocationJamb}
+                        onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
+                    />
+                </Form.Item>
+
+                    <Form.Item 
+                        label="Уплотнитель"
+                        { ...validateErrors.sealer && { help: validateErrors.sealer, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.openingTypes} 
-                            value={order.order.openingType} 
-                            onChange={ (value) => dispatch(orderActions.setOpeningType(value))}                        
+                            items={order.sealers} 
+                            value={order.order.sealer} 
+                            onChange={ (value) => dispatch(orderActions.setSealer(value))}                        
                         />
                     </Form.Item>
                 </Col>
                 <Col span={12}> 
-                    <Form.Item 
-                        { ...validateErrors.isDouble && { help: validateErrors.isDouble, validateStatus: 'error'}}
-                    >                   
-                        <Checkbox checked={order.order.isDouble} onChange={(e)=> dispatch(orderActions.setIsDouble(e.target.checked))} >Двустворчатая</Checkbox>
-                    </Form.Item>
-
                     <Form.Item 
                         label="Высота двери"
                         { ...validateErrors.height && { help: validateErrors.height, validateStatus: 'error'}}
@@ -109,7 +97,7 @@ const Step2: FC = () => {
                         label="Ширина раб. створки"
                         { ...validateErrors.widthDouble && { help: validateErrors.widthDouble, validateStatus: 'error'}}
                     >
-                        <InputNumber disabled={!order.order.isDouble} value={order.order.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
+                        <InputNumber disabled={!order.isDouble} value={order.order.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
                     </Form.Item>
                 </Col>
             </Row>

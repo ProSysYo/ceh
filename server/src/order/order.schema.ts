@@ -16,16 +16,10 @@ export class Order {
     numberCustomer: string;
 
     @Prop({ required: true })
-    party: string;
+    party: string;   
 
     @Prop({ required: true })
-    computedModel: string;
-
-    @Prop({ required: true })
-    model: string;
-
-    @Prop({ required: true })
-    contour: number
+    model: string;    
 
     @Prop({ required: true })
     doorThick: number
@@ -38,12 +32,6 @@ export class Order {
 
     @Prop({ required: true })
     modelBox: string;
-
-    @Prop({ required: true })
-    openingType: string;  
-
-    @Prop()
-    isDouble: boolean;
 
     @Prop({ required: true })
     widthDouble: number;
@@ -242,6 +230,9 @@ export class Order {
 
     @Prop()
     isIllumination: boolean;
+
+    @Prop()
+    sealer: string;
 }
 
 export const OrdreSchema = SchemaFactory.createForClass(Order);

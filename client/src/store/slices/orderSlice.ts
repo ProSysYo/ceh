@@ -4,7 +4,6 @@ import { IOrder } from '../../interfaces/IOrder';
 import { IParty } from '../../interfaces/IParty';
 import { IModel } from '../../interfaces/IModel';
 import { IModelBox } from '../../interfaces/IModelBox';
-import { IOpeningType } from '../../interfaces/IOpeningType';
 import { ILock } from '../../interfaces/ILock';
 import { ISpinner } from '../../interfaces/ISpinner';
 import { ICylinder } from '../../interfaces/ICylinder';
@@ -28,16 +27,15 @@ import { IJamb } from '../../interfaces/IJamb';
 import { ILocationJamb } from '../../interfaces/ILocationJamb';
 import { IFittingColor } from '../../interfaces/IFittingColor';
 import { IHingeCount } from '../../interfaces/IHingeCount';
+import { ISealer } from '../../interfaces/ISealer';
 
 export interface OrderSate {
     orders: IOrder[];
     customers: ICustomer[];
     parties: IParty[];
-    models: IModel[];
-    contours: number[];
+    models: IModel[];    
     doorThicks: number[];
-    modelBoxes: IModelBox[]
-    openingTypes: IOpeningType[];
+    modelBoxes: IModelBox[]    
     baseLocks: ILock[];
     optionalLocks: ILock[];
     spinners: ISpinner[];
@@ -76,10 +74,12 @@ export interface OrderSate {
     jambs: IJamb[],
     currentJambs: IJamb[],
     locationJambs: ILocationJamb[],
+    sealers: ISealer[],
       
 
     isLoading: boolean;
 
+    isDouble: boolean;
     isLockSpinner: boolean;
     isBaseCylinder: boolean;
     isBaseCover: boolean;
@@ -106,11 +106,9 @@ const initialState: OrderSate = {
     orders: [],
     customers: [],
     parties: [],
-    models: [],
-    contours: [],
+    models: [],    
     doorThicks: [],
-    modelBoxes: [],
-    openingTypes: [],
+    modelBoxes: [],   
     baseLocks: [],
     optionalLocks: [],
     spinners: [],
@@ -145,9 +143,11 @@ const initialState: OrderSate = {
     currentJambs: [],
     locationJambs: [],
     fittingColors: [],
+    sealers: [],
 
     isLoading: false,
 
+    isDouble: false,
     isLockSpinner: false,//Вертушок замка
     isBaseCylinder: false,
     isBaseCover: false,
@@ -175,15 +175,11 @@ const initialState: OrderSate = {
         
         model: "",
 
-        computedModel: "",
-
-        contour: "",
+        computedModel: "",        
         doorThick: "",
         height: "",
         width: "",
         modelBox: "",
-        openingType: "",
-        isDouble: false,
         widthDouble: 0,
         
         //Петли
@@ -255,7 +251,7 @@ const initialState: OrderSate = {
         thickMetalBox: 0,
         jamb: "",
         jambWrap: "",
-        locationJumb: "",
+        locationJumb: "нет",
 
         isStainlessDoorStep: false,
         isStreetDoor: false,
@@ -266,6 +262,7 @@ const initialState: OrderSate = {
         isTermoCable: false,
         isElectromagnet: false,
         isIllumination: false,
+        sealer: "",
     }
 }
 
@@ -282,8 +279,7 @@ export const orderSlice = createSlice({
         setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
         setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
         setModels: (state, action: PayloadAction<IModel[]>) => { state.models = action.payload },
-        setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.modelBoxes = action.payload },
-        setOpeningTypes: (state, action: PayloadAction<IOpeningType[]>) => { state.openingTypes = action.payload },
+        setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.modelBoxes = action.payload },        
         setBaseLoks: (state, action: PayloadAction<ILock[]>) => { state.baseLocks = action.payload },
         setOptionalLocks: (state, action: PayloadAction<ILock[]>) => { state.optionalLocks = action.payload },
         setSpinners: (state, action: PayloadAction<ISpinner[]>) => { state.spinners = action.payload },
@@ -297,8 +293,7 @@ export const orderSlice = createSlice({
         setHandles: (state, action: PayloadAction<IHandle[]>) => { state.handles = action.payload },
         setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorations = action.payload },
         setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsOutside = action.payload },
-        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsInside = action.payload },
-        setContours: (state, action: PayloadAction<number[]>) => { state.contours = action.payload },
+        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsInside = action.payload },        
         setDoorThicks: (state, action: PayloadAction<number[]>) => { state.doorThicks = action.payload },
         setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.decorations = action.payload },
         setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsOutside = action.payload },
@@ -322,6 +317,8 @@ export const orderSlice = createSlice({
         setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.currentJambs = action.payload },
         setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
         setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
+
+        setSealers: (state, action: PayloadAction<ISealer[]>) => { state.sealers = action.payload },
        
         setNumber: (state, action: PayloadAction<string>) => { state.order.number = action.payload },        
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
@@ -344,25 +341,38 @@ export const orderSlice = createSlice({
 
             state.currentJambs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
             state.order.jamb = ""            
+            
             if (selectedModel.typeOutside === "панель") {
                 state.isJambWrap =  true
                 state.order.jambWrap = ""
             } else {
                 state.isJambWrap =  false
                 state.order.jambWrap = "нет"
+            }                    
+
+            state.isLocationJamb = selectedModel.isInside
+            if (selectedModel.isInside === false) {
+                state.order.locationJumb = "нет"            
+            } else {
+                state.order.locationJumb = ""
             }
 
-            state.contours = selectedModel!.contours
-            state.order.contour = ""            
+            state.isDouble = selectedModel.isDouble
+            if (!selectedModel.isDouble) {
+                state.order.widthDouble = 0
+            }
 
             state.doorThicks = selectedModel!.doorThicks 
             state.order.doorThick = ""
+
+            state.order.sealer = ""
 
             state.order.decorationOutside = ""
 
             state.isWrapOutside = false
             state.order.wrapOutside = "" 
 
+            state.order.decorationInside = ""
             state.isWrapInside = false
             state.order.wrapInside = ""
 
@@ -379,49 +389,12 @@ export const orderSlice = createSlice({
             state.order.heightWindow = ""
             state.order.widthWindow = ""
             state.order.thickWindow = ""
-        },
-        setContour: (state, action: PayloadAction<string | number>) => { state.order.contour = action.payload },
+        },        
         setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },        
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
-        setOpeningType: (state, action: PayloadAction<string>) => { 
-            state.order.openingType = action.payload
-            if (action.payload === "внутреннего") {
-                state.isLocationJamb = true
-                state.order.locationJumb = ""
-            } else {
-                state.isLocationJamb = false
-                state.order.locationJumb = "нет"
-            }
-        },
-        
-        setIsDouble: (state, action: PayloadAction<boolean>) => { 
-            state.order.isDouble = action.payload
-            if (!action.payload) {
-                state.order.widthDouble = 0                
-            }
-        },
-
         setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
         setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
         setWidthDouble: (state, action: PayloadAction<number>) => { state.order.widthDouble = action.payload },
-
-        setComputedModel: (state) => {
-            let insideOpening: string = ""
-            let double: string = ""
-            
-            if (state.order.openingType === "внутреннего") {
-                insideOpening = "В"
-            }
-            
-            if (state.order.isDouble) {
-                double = "Д"
-            }
-
-            state.order.computedModel = double + state.order.model + insideOpening + state.order.contour 
-        },
-
-        loadComputedModel: (state, action: PayloadAction<string>) => { state.order.computedModel = action.payload },
-
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
         setCountHinge: (state, action: PayloadAction<number|string>) => { state.order.countHinge = action.payload },
@@ -463,7 +436,24 @@ export const orderSlice = createSlice({
                     state.order.baseCoverInside2 = "нет"
                     state.order.baseCoverColorInside2 = "нет"
                     break
-                case "двухсистемный":
+                case "цилиндр-сувальда":
+                    state.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.baseCovers2 = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    
+                    state.isBaseCylinder = true                    
+                    state.order.baseCylinder = ""
+                    state.isBaseCover = true
+                    state.order.baseCoverOutside = ""
+                    state.order.baseCoverColorOutside = ""
+                    state.order.baseCoverInside= ""
+                    state.order.baseCoverColorInside = ""
+                    state.isBaseCover2 = true
+                    state.order.baseCoverOutside2 = ""
+                    state.order.baseCoverColorOutside2 = ""
+                    state.order.baseCoverInside2 = ""
+                    state.order.baseCoverColorInside2 = ""                    
+                    break
+                case "сувальда-цилиндр":
                     state.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
                     state.baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
                     
@@ -783,9 +773,9 @@ export const orderSlice = createSlice({
                     state.order.colorForge = "нет"
                     state.isPatinaForge = false
                     state.order.patinaForge = "нет"
-                    state.order.heightWindow = ""
-                    state.order.widthWindow = ""
-                    state.order.thickWindow= ""  
+                    state.order.heightWindow = 0
+                    state.order.widthWindow = 0
+                    state.order.thickWindow= 0  
                     break
                 case "КС":
                     state.order.doorWindow = ""
@@ -816,9 +806,9 @@ export const orderSlice = createSlice({
                     state.order.colorForge = "нет"
                     state.isPatinaForge = false
                     state.order.patinaForge = "нет"
-                    state.order.heightWindow = "нет"
-                    state.order.widthWindow = "нет"
-                    state.order.thickWindow= "нет" 
+                    state.order.heightWindow = 0
+                    state.order.widthWindow = 0
+                    state.order.thickWindow= 0 
             }
 
             state.currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")            
@@ -873,6 +863,8 @@ export const orderSlice = createSlice({
         setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },       
         setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.order.isElectromagnet = action.payload },
         setIsIllumination: (state, action: PayloadAction<boolean>) => { state.order.isIllumination = action.payload },
+
+        setSealer: (state, action: PayloadAction<string>) => { state.order.sealer = action.payload },
 
         setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
         setOrder: (state, action: PayloadAction<IOrder>) => { state.order = action.payload },

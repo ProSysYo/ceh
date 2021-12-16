@@ -5,14 +5,11 @@ export interface IOrder {
     numberCustomer: string;
     party: string;
     computedModel: string;
-    model: string;
-    contour: number | string;
+    model: string;    
     doorThick: number | string;
     height: number | string;
     width: number | string;
     modelBox: string;
-    openingType: string;
-    isDouble: boolean;
     widthDouble: number;
     locationHinge: string; //Расположение петель
     countHinge: number|string;//Количество петель
@@ -92,4 +89,5 @@ export interface IOrder {
     isTermoCable: boolean; //Термокабель
     isElectromagnet: boolean; //Электромагнит
     isIllumination: boolean; //Подсветка
+    sealer: string;//Уплотнитель
 }

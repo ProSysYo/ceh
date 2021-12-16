@@ -12,7 +12,7 @@ const columns = [
     { title: 'Номер', dataIndex: 'number', width: 15 },
     { title: 'Заказчик', dataIndex: 'customer', width: 10 },    
     { title: 'Номер заказчика', dataIndex: 'numberCustomer', width: 15 },    
-    { title: 'Модель', dataIndex: 'computedModel', width: 10 }, 
+    { title: 'Модель', dataIndex: 'model', width: 10 }, 
     { title: 'Высота', dataIndex: 'height', width: 10 },    
     { title: 'Ширина', dataIndex: 'width', width: 10 },    
     { title: 'Окно', dataIndex: 'doorWindow', width: 10 },    
@@ -81,10 +81,10 @@ const Container = styled.div`
 
 const TableContainer = styled.div`
     margin-top: 10px;
-    width: 80%;   
+    width: 85%;   
 `;
 
 const FilterContainer = styled.div`
-    width: 20%;
-    margin-left: 50px;        
+    width: 15%;
+    margin-left: 10px;        
 `;

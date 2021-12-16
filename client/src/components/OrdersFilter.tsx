@@ -5,17 +5,11 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useEffect } from 'react';
 import { fetchAll, getOrders } from '../store/actions/orderActions';
-import { Button, Collapse, Divider, Form, Input, InputNumber } from 'antd';
+import { Button, Collapse, Form, Input, InputNumber } from 'antd';
 import Select from './Select';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 const {Item} = Form
 const { Panel } = Collapse
-
-const contours = [
-    {value: 1, name: 1},
-    {value: 2, name: 2},
-    {value: 3, name: 3},
-]
 
 const doorThicks = [
     {value: 60, name: 60},
@@ -68,11 +62,9 @@ const OrdersFilter: React.FC = () => {
                         
                         <Panel header="Модель" key="2">                        
                             <Item name="model"><Select items={order.models} placeholder="Модель двери"/></Item>
-                            <Item name="isDouble" valuePropName="checked"><Checkbox>Двустворчатая</Checkbox></Item>
-                            <Item name="contour"><Select items={contours} placeholder="Количество контуров"/></Item>
                             <Item name="doorThick"><Select items={doorThicks} placeholder="Толщина двери"/></Item>
                             <Item name="modelBox"><Select items={order.modelBoxes} placeholder="Модель коробки"/></Item>
-                            <Item name="openingType"><Select items={order.openingTypes} placeholder="Тип открывания"/></Item>
+                            <Item name="locationJumb" ><Select items={order.locationJambs} placeholder="Наличника (внутр. откр.)"/></Item>                            
                             <Item name="height"><InputNumber placeholder="Высота двери" style={{ width: 200 }}/></Item>
                             <Item name="width" ><InputNumber placeholder="Ширина двери" style={{ width: 200 }}/></Item>
                             <Item name="widthDouble"><InputNumber placeholder="Ширина доп. створки" style={{ width: 200 }}/></Item>
@@ -91,18 +83,14 @@ const OrdersFilter: React.FC = () => {
 
                         <Panel header="Основной замок" key="5">                            
                             <Item name="baseLock"><Select items={order.baseLocks} placeholder="Основной замок"/></Item>
-                            
-                            <Divider plain>Накладки основного замка</Divider>
-                            <Item name="baseCoverOutside"><Select items={order.covers} placeholder="Снаружи"/></Item>
-                            <Item name="baseCoverInside"><Select items={order.covers} placeholder="Внутри"/></Item>
+                            <Item name="baseCoverOutside"><Select items={order.covers} placeholder="Накладка снаружи"/></Item>
+                            <Item name="baseCoverInside"><Select items={order.covers} placeholder="Накладка внутри"/></Item>
                         </Panel>
 
                         <Panel header="Дополнительный замок" key="6">                        
-                            <Item name="optionalLock"><Select items={order.optionalLocks} placeholder="Доп. замок"/></Item>
-
-                            <Divider plain>Накладки дополнительного замка</Divider>
-                            <Item name="optionalCoverOutside"><Select items={order.covers} placeholder="Снаружи"/></Item>
-                            <Item name="optionalCoverInside"><Select items={order.covers} placeholder="Внутри"/></Item>
+                            <Item name="optionalLock"><Select items={order.optionalLocks} placeholder="Доп. замок"/></Item>                            
+                            <Item name="optionalCoverOutside"><Select items={order.covers} placeholder="Накладка снаружи"/></Item>
+                            <Item name="optionalCoverInside"><Select items={order.covers} placeholder="Накладка внутри"/></Item>
                         </Panel>
 
                         <Panel header="Другая фурнитура" key="7">
@@ -125,8 +113,7 @@ const OrdersFilter: React.FC = () => {
                             <Item name="patinaInside" ><Select items={order.patinas} placeholder="Цвет патины панели"/></Item>
                         </Panel>
 
-                        <Panel header="Наличник" key="10">                        
-                            <Item name="locationJumb" ><Select items={order.locationJambs} placeholder="Наличника (внутр. откр.)"/></Item>
+                        <Panel header="Наличник" key="10">
                             <Item name="jamb" ><Select items={order.jambs} placeholder="Наличник"/></Item>
                             <Item name="jambWrap" ><Select items={order.wraps} placeholder="Цвет пленки наличника"/></Item>                           
                         </Panel>
@@ -151,7 +138,7 @@ const OrdersFilter: React.FC = () => {
                             <Item name="isCloser" valuePropName="checked"><Checkbox>Доводчик</Checkbox></Item>
                             <Item name="isEnhanceCloser" valuePropName="checked"><Checkbox>Усиление под довочик</Checkbox></Item>
                             <Item name="isElectromagnet" valuePropName="checked"><Checkbox>Электромагнит</Checkbox></Item>
-                            <Item name="isIllumination" valuePropName="checked"><Checkbox>Подсветка</Checkbox></Item>                            
+                            <Item name="isIllumination" valuePropName="checked"><Checkbox>Подсветка</Checkbox></Item>                                                       
                         </Panel>
                     </Collapse>
                 </Form>  
@@ -174,5 +161,5 @@ const Filters = styled.div`
 `;
 
 const Container = styled.div`
-    height: 80vh;   
+    height: 85vh;   
 `;

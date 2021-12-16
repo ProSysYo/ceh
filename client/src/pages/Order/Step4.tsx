@@ -108,20 +108,7 @@ const Step4: FC = () => {
                     />
                 </Form.Item>  
 
-                <Divider>Наличник</Divider>
-
-                <Form.Item 
-                    label="Расположение наличника (внутр. откр.)"
-                    { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
-                >
-                    <Select 
-                        items={order.locationJambs} 
-                        value={order.order.locationJumb}
-                        disabled={!order.isLocationJamb}
-                        onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
-                    />
-                </Form.Item>
-
+                <Divider>Наличник</Divider> 
                 <Form.Item 
                     label="Наличник"
                     { ...validateErrors.jamb && { help: validateErrors.jamb, validateStatus: 'error'}}

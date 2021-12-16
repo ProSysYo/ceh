@@ -1,5 +1,4 @@
 import { IModel } from "../interfaces/IModel";
-import { IOpeningType } from '../interfaces/IOpeningType';
 import { ILock } from '../interfaces/ILock';
 import { ISpinner } from '../interfaces/ISpinner';
 import { ICylinder } from '../interfaces/ICylinder';
@@ -28,10 +27,11 @@ import { IOrder } from '../interfaces/IOrder';
 import { http } from '../commons/http';
 import { IFittingColor } from '../interfaces/IFittingColor';
 import { IHingeCount } from "../interfaces/IHingeCount";
+import { ISealer } from '../interfaces/ISealer';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
-    { _id: "2", value: "D002", name: "Волга-Бункер" },
+    { _id: "2", value: "D002", name: "Ижевск" },
     { _id: "3", value: "D003", name: "Лабиринт" },
     { _id: "4", value: "D004", name: "Красноярск" },
 ];
@@ -45,13 +45,54 @@ const parties: IParty[] = [
 ];
 
 const models: IModel[] = [
-    { _id: "1", value: "ММ", name: "металл-металл", contours: [1], doorThicks: [60], typeOutside: "металл", typeInside: "металл", isTermo: false},
-    { _id: "2", value: "МП", name: "металл-панель", contours: [1, 2], doorThicks: [60, 70], typeOutside: "металл", typeInside: "панель", isTermo: false},
-    { _id: "3", value: "ПП", name: "панель-панель", contours: [1, 2, 3], doorThicks: [60, 70, 80], typeOutside: "панель", typeInside: "панель", isTermo: false },
-    { _id: "4", value: "МП_Пена", name: "металл-панель пенопласт", contours: [3], doorThicks: [60, 70, 80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false },
-    { _id: "5", value: "ПП_Пена", name: "панель-панель пенопласт", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false },
-    { _id: "6", value: "МПТ", name: "металл-панель термо", contours: [2, 3], doorThicks: [90, 100], typeOutside: "металл", typeInside: "панель", isTermo: true },
-    { _id: "7", value: "ППТ", name: "панель-панель термо", contours: [2, 3], doorThicks: [90, 100], typeOutside: "панель", typeInside: "панель", isTermo: true },
+    { _id: "1", value: "ММ2", name: "ММ2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: false, isPena: false},
+    { _id: "2", value: "ММ3", name: "ММ3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: false,  isPena: false},
+    { _id: "3", value: "МП2", name: "МП2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: false},
+    { _id: "4", value: "МП3", name: "МП3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: false},
+    { _id: "5", value: "ПП2", name: "ПП2", doorThicks: [60, 70, 80, 90], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: false},
+    { _id: "6", value: "ПП3", name: "ПП3", doorThicks: [80, 90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: false},
+
+    { _id: "7", value: "ММ_Пена2", name: "ММ_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: false, isPena: true},
+    { _id: "8", value: "ММ_Пена3", name: "ММ_Пена3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: false, isPena: true},
+    { _id: "9", value: "МП_Пена2", name: "МП_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: true},
+    { _id: "10", value: "МП_Пена3", name: "МП_Пена3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: true},
+    { _id: "11", value: "ПП_Пена2", name: "ПП_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: true},
+    { _id: "12", value: "ПП_Пена3", name: "ПП_Пена3", doorThicks: [80, 90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: false, isPena: true},    
+
+    { _id: "13", value: "ММТ2", name: "ММТ2", doorThicks: [100], typeOutside: "металл", typeInside: "металл", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    { _id: "14", value: "ММТ3", name: "ММТ3", doorThicks: [100], typeOutside: "металл", typeInside: "металл", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    { _id: "15", value: "МПТ2", name: "МПТ2", doorThicks: [100], typeOutside: "металл", typeInside: "панель", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    { _id: "16", value: "МПТ3", name: "МПТ3", doorThicks: [100], typeOutside: "металл", typeInside: "панель", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    { _id: "17", value: "ППТ2", name: "ППТ2", doorThicks: [100], typeOutside: "панель", typeInside: "панель", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    { _id: "18", value: "ППТ3", name: "ППТ3", doorThicks: [100], typeOutside: "панель", typeInside: "панель", isTermo: true, isDouble: false, isInside: false, isPena: false},
+    
+    { _id: "19", value: "ДММ2", name: "ДММ2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: true, isInside: false, isPena: false},
+    { _id: "20", value: "ДММ3", name: "ДММ3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: true, isInside: false, isPena: false},
+    { _id: "21", value: "ДМП2", name: "ДМП2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: false},
+    { _id: "22", value: "ДМП3", name: "ДМП3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: false},
+    { _id: "23", value: "ДПП2", name: "ДПП2", doorThicks: [60, 70, 80, 90], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: false},
+    { _id: "24", value: "ДПП3", name: "ДПП3", doorThicks: [80, 90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: false},
+
+    { _id: "25", value: "ДММ_Пена2", name: "ДММ_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: true, isInside: false, isPena: true},
+    { _id: "26", value: "ДММ_Пена3", name: "ДММ_Пена3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: true, isInside: false, isPena: true},
+    { _id: "27", value: "ДМП_Пена2", name: "ДМП_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: true},
+    { _id: "28", value: "ДМП_Пена3", name: "ДМП_Пена3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: true},
+    { _id: "29", value: "ДПП_Пена2", name: "ДПП_Пена2", doorThicks: [60, 70, 80, 90], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: true},
+    { _id: "30", value: "ДПП_Пена3", name: "ДПП_Пена3", doorThicks: [80, 90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: true, isInside: false, isPena: true},
+
+    { _id: "31", value: "ДММТ2", name: "ДММТ2", doorThicks: [100], typeOutside: "металл", typeInside: "металл", isTermo: true, isDouble: true, isInside: false, isPena: false},
+    { _id: "32", value: "ДММТ3", name: "ДММТ3", doorThicks: [100], typeOutside: "металл", typeInside: "металл", isTermo: true, isDouble: true, isInside: false, isPena: false},
+    { _id: "33", value: "ДМПТ2", name: "ДМПТ2", doorThicks: [100], typeOutside: "металл", typeInside: "панель", isTermo: true, isDouble: true, isInside: false, isPena: false},
+    { _id: "34", value: "ДМПТ3", name: "ДМПТ3", doorThicks: [100], typeOutside: "металл", typeInside: "панель", isTermo: true, isDouble: true, isInside: false, isPena: false},
+    { _id: "35", value: "ДППТ2", name: "ДППТ2", doorThicks: [100], typeOutside: "панель", typeInside: "панель", isTermo: true, isDouble: true, isInside: false, isPena: false},
+    { _id: "36", value: "ДППТ3", name: "ДППТ3", doorThicks: [100], typeOutside: "панель", typeInside: "панель", isTermo: true, isDouble: true, isInside: false, isPena: false},
+
+    { _id: "37", value: "ММВ2", name: "ММВ2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: true, isPena: false},
+    { _id: "38", value: "ММВ3", name: "ММВ3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "металл", isTermo: false, isDouble: false, isInside: true,  isPena: false},
+    { _id: "39", value: "МПВ2", name: "МПВ2", doorThicks: [60, 70, 80, 90], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: true, isPena: false},
+    { _id: "40", value: "МПВ3", name: "МПВ3", doorThicks: [80, 90, 100], typeOutside: "металл", typeInside: "панель", isTermo: false, isDouble: false, isInside: true, isPena: false},
+    { _id: "41", value: "ППВ2", name: "ППВ2", doorThicks: [60, 70, 80, 90], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: true, isPena: false},
+    { _id: "42", value: "ППВ3", name: "ППВ3", doorThicks: [80, 90, 100], typeOutside: "панель", typeInside: "панель", isTermo: false, isDouble: false, isInside: true, isPena: false},
 ];
 
 const modelBoxes: IModelBox[] = [
@@ -60,24 +101,19 @@ const modelBoxes: IModelBox[] = [
     { _id: "3", value: "закрытая утепленная", name: "закрытая утепленная" },    
 ];
 
-const openingTypes: IOpeningType[] = [
-    { _id: "1", value: "наружного", name: "наружного" },
-    { _id: "2", value: "внутреннего", name: "внутреннего" },
-];
-
 const locks: ILock[] = [
-    { _id: "1", value: "осн сув без верт", name: "осн сув без верт", installation: "основной", type: "сувальда", isBolt: false },
-    { _id: "2", value: "осн сув с верт", name: "осн сув с верт", installation: "основной", type: "сувальда", isBolt: true },
-    { _id: "3", value: "осн цил без верт", name: "осн цил без верт", installation: "основной", type: "цилиндр", isBolt: false },
-    { _id: "4", value: "осн цил c верт", name: "осн цил c верт", installation: "основной", type: "цилиндр", isBolt: true },
-    { _id: "5", value: "осн цил-сув без верт", name: "осн двухсистемный без верт", installation: "основной", type: "двухсистемный", isBolt: false },
-    { _id: "6", value: "осн цил-сув c верт", name: "осн двухсистемный c верт", installation: "основной", type: "двухсистемный", isBolt: true },
-    { _id: "7", value: "осн сув-цил без верт", name: "осн двухсистемный без верт", installation: "основной", type: "двухсистемный", isBolt: false },
-    { _id: "8", value: "осн сув-цил с верт", name: "осн двухсистемный с верт", installation: "основной", type: "двухсистемный", isBolt: true },
-    { _id: "9", value: "осн другое без верт", name: "осн другое без верт", installation: "основной", type: "другое", isBolt: false },
-    { _id: "10", value: "осн другое с верт", name: "осн другое с верт", installation: "основной", type: "другое", isBolt: true },
-    { _id: "11", value: "доп цил", name: "доп цил", installation: "дополнительный", type: "цилиндр", isBolt: false },
-    { _id: "12", value: "доп сув", name: "доп сув", installation: "дополнительный", type: "сувальда", isBolt: false },
+    { _id: "1", value: "Г30.11 ОС", name: "Г30.11 ОС", installation: "основной", type: "сувальда", isBolt: false },
+    { _id: "2", value: "Г30.15 ОСВ", name: "Г30.15 ОСВ", installation: "основной", type: "сувальда", isBolt: true },
+    { _id: "3", value: "Г32.11 ОЦ", name: "Г32.11 ОЦ", installation: "основной", type: "цилиндр", isBolt: false },
+    { _id: "4", value: "Г32.15 ОЦВ", name: "Г32.15 ОЦВ", installation: "основной", type: "цилиндр", isBolt: true },
+    { _id: "5", value: "Г25.12 ОЦС", name: "Г25.12 ОЦС", installation: "основной", type: "цилиндр-сувальда", isBolt: false },
+    { _id: "6", value: "Г25.12 Т ОЦСВ", name: "Г25.12 Т ОЦСВ", installation: "основной", type: "цилиндр-сувальда", isBolt: true },
+    { _id: "7", value: "Г75.14 Т ОСЦ", name: "Г75.14 Т ОСЦ", installation: "основной", type: "сувальда-цилиндр", isBolt: false },
+    { _id: "8", value: "Г25.14 ОСЦВ", name: "Г25.14 ОСЦВ", installation: "основной", type: "сувальда-цилиндр", isBolt: true },
+    { _id: "9", value: "MoliLock U761 ОБ", name: "MoliLock U761 ОБ", installation: "основной", type: "другое", isBolt: false },
+    { _id: "10", value: "Меттэм-ЗКП-2 О", name: "Меттэм-ЗКП-2 О", installation: "основной", type: "другое", isBolt: false },
+    { _id: "11", value: "Cisa 56.525 ДЦ", name: "Cisa 56.525 ДЦ", installation: "дополнительный", type: "цилиндр", isBolt: false },
+    { _id: "12", value: "Г30.11 ДС", name: "Г30.11 ДС", installation: "дополнительный", type: "сувальда", isBolt: false },
     { _id: "13", value: "нет", name: "нет", installation: "нет", type: "нет", isBolt: false },
     { _id: "14", value: "см. прим.", name: "см. прим.", installation: "примечание", type: "примечание", isBolt: true },    
 ]
@@ -85,21 +121,24 @@ const locks: ILock[] = [
 const spinners: ISpinner[] = [
     { _id: "1", value: "нет", name: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим." },
-    { _id: "3", value: "вертушок 1", name: "вертушок 1" },
-    { _id: "4", value: "вертушок 2", name: "вертушок 2" },
+    { _id: "3", value: "Apecs", name: "Apecs" },
+    { _id: "4", value: "Rezident", name: "Rezident" },
+    { _id: "5", value: "Fuaro", name: "Fuaro" },
 ];
 
 const cylinders: ICylinder[] = [
     { _id: "1", value: "нет", name: "нет" },
-    { _id: "2", value: "Цилиндр 1", name: "Цилиндр 1" },
-    { _id: "3", value: "Цилиндр 2", name: "Цилиндр 2" },
+    { _id: "2", value: "Kale BN ключ-ключ", name: "Kale BN ключ-ключ" },
+    { _id: "3", value: "Securemme K2 ключ-шток", name: "Securemme K2 ключ-шток" },
 ];
 
 const covers: ICover[] = [
     { _id: "1", value: "нет", name: "нет", type: "нет" },
     { _id: "2", value: "см. прим.", name: "см. прим.", type: "примечание" },
-    { _id: "3", value: "накладка 1 цил", name: "накладка 1 цил" , type: "цилиндр"},
-    { _id: "4", value: "накладка 2 сув", name: "накладка 2 сув" , type: "сувальда"},
+    { _id: "3", value: "МОН-31", name: "МОН-31" , type: "цилиндр"},
+    { _id: "4", value: "КВ-31", name: "КВ-31" , type: "цилиндр"},
+    { _id: "5", value: "СХ-21", name: "СХ-21" , type: "сувальда"},
+    { _id: "6", value: "АН-21", name: "АН-21" , type: "сувальда"},
 ];
 
 const eyes: IEye[] = [
@@ -250,13 +289,19 @@ const fittingColors: IFittingColor[] = [
     { _id: "3", value: "бронза", name: "бронза" },       
 ];
 
+const sealers: ISealer[] = [
+    { _id: "1", value: "стандартный", name: "стандартный" },
+    { _id: "2", value: "1-резина 2-шлегель", name: "1-резина 2-шлегель" },       
+    { _id: "3", value: "1-шлегель 2-шлегель", name: "1-шлегель 2-шлегель" },    
+    { _id: "4", value: "1-шлегель 2-шлегель 3-магнит", name: "1-шлегель 2-шлегель 3-магнит" },    
+];
+
 const deley = 50
 
 const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
 const getParties = () => new Promise<{data:IParty[]}>((res) => { setTimeout(() => res({data: parties}), deley) })
 const getModels = () => new Promise<{data:IModel[]}>((res) => { setTimeout(() => res({data: models}), deley) })
 const getModelBoxes = () => new Promise<{data:IModelBox[]}>((res) => { setTimeout(() => res({data: modelBoxes}), deley) })
-const getOpeningTypes = () => new Promise<{data:IOpeningType[]}>((res) => { setTimeout(() => res({data: openingTypes}), deley) })
 const getLocks = () => new Promise<{data:ILock[]}>((res) => { setTimeout(() => res({data: locks}), deley) })
 const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => { setTimeout(() => res({data: spinners}), deley) })
 const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => { setTimeout(() => res({data: cylinders}), deley) })
@@ -281,6 +326,7 @@ const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { s
 const getJambs = () => new Promise<{data: IJamb[]}>((res) => { setTimeout(() => res({data: jambs}), deley) })
 const getLocationJambs = () => new Promise<{data: ILocationJamb[]}>((res) => { setTimeout(() => res({data: locationJambs}), deley) })
 const getFittingColors = () => new Promise<{data: IFittingColor[]}>((res) => { setTimeout(() => res({data: fittingColors}), deley) })
+const getSealers = () => new Promise<{data: ISealer[]}>((res) => { setTimeout(() => res({data: sealers}), deley) })
 
 
 
@@ -305,7 +351,6 @@ export const api = {
     getParties, 
     getModels,
     getModelBoxes,
-    getOpeningTypes,
     getLocks,
     getSpinners,
     getCyliners,
@@ -332,5 +377,6 @@ export const api = {
     createOrder,
     getHingeCounts,
     getOrders,
-    getOrder
+    getOrder,
+    getSealers
 }

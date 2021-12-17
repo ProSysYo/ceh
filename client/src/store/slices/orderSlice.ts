@@ -78,6 +78,8 @@ export interface OrderSate {
       
 
     isLoading: boolean;
+    isFetching: boolean;
+    isSuccess: boolean;
 
     isDouble: boolean;
     isLockSpinner: boolean;
@@ -146,6 +148,8 @@ const initialState: OrderSate = {
     sealers: [],
 
     isLoading: false,
+    isFetching: false,
+    isSuccess: false,
 
     isDouble: false,
     isLockSpinner: false,//Вертушок замка
@@ -167,7 +171,7 @@ const initialState: OrderSate = {
 
     validateErrors: {},
 
-    order: {
+    order: {        
         customer: "",
         number: "",
         numberCustomer: "",
@@ -176,11 +180,11 @@ const initialState: OrderSate = {
         model: "",
 
         computedModel: "",        
-        doorThick: "",
-        height: "",
-        width: "",
+        doorThick: undefined,
+        height: undefined,
+        width: undefined,
         modelBox: "",
-        widthDouble: 0,
+        widthDouble: undefined,
         
         //Петли
         locationHinge: "",        
@@ -241,14 +245,14 @@ const initialState: OrderSate = {
         colorTint: "",
         colorForge: "",
         patinaForge: "",
-        heightWindow: "",
-        widthWindow: "",
-        thickWindow: "",
-        countDoors: 0,
-        costDoor: 0,
+        heightWindow: undefined,
+        widthWindow: undefined,
+        thickWindow: undefined,
+        countDoors: "",
+        costDoor: "",
         note: "",
-        thickMetalLeaf: 0,
-        thickMetalBox: 0,
+        thickMetalLeaf: undefined,
+        thickMetalBox: undefined,
         jamb: "",
         jambWrap: "",
         locationJumb: "нет",
@@ -263,6 +267,8 @@ const initialState: OrderSate = {
         isElectromagnet: false,
         isIllumination: false,
         sealer: "",
+
+        dateCreate: undefined,
     }
 }
 
@@ -271,6 +277,8 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
+        setFetching: (state, action: PayloadAction<boolean>) => { state.isFetching = action.payload },
+        setSuccess: (state, action: PayloadAction<boolean>) => { state.isSuccess = action.payload },
 
         setValues: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
 
@@ -319,13 +327,14 @@ export const orderSlice = createSlice({
         setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
 
         setSealers: (state, action: PayloadAction<ISealer[]>) => { state.sealers = action.payload },
-       
+        
+        setId: (state, action: PayloadAction<string>) => { state.order._id = action.payload },
         setNumber: (state, action: PayloadAction<string>) => { state.order.number = action.payload },        
         setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
         setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
         setParty: (state, action: PayloadAction<string>) => { state.order.party = action.payload },
-        setCountDoors: (state, action: PayloadAction<number>) => { state.order.countDoors = action.payload },
-        setCostDoor: (state, action: PayloadAction<number>) => { state.order.costDoor = action.payload },
+        setCountDoors: (state, action: PayloadAction<number | string>) => { state.order.countDoors = action.payload },
+        setCostDoor: (state, action: PayloadAction<number | string>) => { state.order.costDoor = action.payload },
         setNote: (state, action: PayloadAction<string>) => { state.order.note = action.payload }, 
         setModel: (state, action: PayloadAction<string>) => { 
             state.order.model = action.payload            
@@ -360,10 +369,12 @@ export const orderSlice = createSlice({
             state.isDouble = selectedModel.isDouble
             if (!selectedModel.isDouble) {
                 state.order.widthDouble = 0
+            } else {
+                state.order.widthDouble = undefined
             }
 
             state.doorThicks = selectedModel!.doorThicks 
-            state.order.doorThick = ""
+            state.order.doorThick = undefined
 
             state.order.sealer = ""
 
@@ -386,21 +397,21 @@ export const orderSlice = createSlice({
             state.order.colorForge = ""
             state.isPatinaForge = false
             state.order.patinaForge = ""
-            state.order.heightWindow = ""
-            state.order.widthWindow = ""
-            state.order.thickWindow = ""
+            state.order.heightWindow = undefined
+            state.order.widthWindow = undefined
+            state.order.thickWindow = undefined
         },        
-        setDoorThick: (state, action: PayloadAction<string | number>) => { state.order.doorThick = action.payload },        
+        setDoorThick: (state, action: PayloadAction<number | undefined>) => { state.order.doorThick = action.payload },        
         setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
-        setHeight: (state, action: PayloadAction<string | number>) => { state.order.height = action.payload },
-        setWidth: (state, action: PayloadAction<string | number>) => { state.order.width = action.payload },
-        setWidthDouble: (state, action: PayloadAction<number>) => { state.order.widthDouble = action.payload },
+        setHeight: (state, action: PayloadAction<number | undefined>) => { state.order.height = action.payload },
+        setWidth: (state, action: PayloadAction<number | undefined>) => { state.order.width = action.payload },
+        setWidthDouble: (state, action: PayloadAction<number | undefined>) => { state.order.widthDouble = action.payload },
         setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
         setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
         setCountHinge: (state, action: PayloadAction<number|string>) => { state.order.countHinge = action.payload },
         
-        setThickMetalLeaf: (state, action: PayloadAction<number>) => { state.order.thickMetalLeaf = action.payload },
-        setThickMetalBox: (state, action: PayloadAction<number>) => { state.order.thickMetalBox = action.payload },
+        setThickMetalLeaf: (state, action: PayloadAction<number | undefined>) => { state.order.thickMetalLeaf = action.payload },
+        setThickMetalBox: (state, action: PayloadAction<number | undefined>) => { state.order.thickMetalBox = action.payload },
 
         //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => { 
@@ -754,7 +765,7 @@ export const orderSlice = createSlice({
         setTypeWindow: (state, action: PayloadAction<string>) => {
             const { model, doorThick} = state.order           
 
-            if (model === "" || doorThick === "") {                
+            if (model === "" || doorThick === undefined) {                
                 return alert("Сначала выберите модель двери и толщину")                
             }
 
@@ -784,9 +795,9 @@ export const orderSlice = createSlice({
                     state.order.colorForge = ""
                     state.isPatinaForge = true
                     state.order.patinaForge = ""
-                    state.order.heightWindow = ""
-                    state.order.widthWindow = ""
-                    state.order.thickWindow= "" 
+                    state.order.heightWindow = undefined
+                    state.order.widthWindow = undefined
+                    state.order.thickWindow= undefined 
                     break 
                 case "С":
                     state.order.doorWindow = ""
@@ -795,9 +806,9 @@ export const orderSlice = createSlice({
                     state.order.colorForge = "нет"
                     state.isPatinaForge = false
                     state.order.patinaForge = "нет"
-                    state.order.heightWindow = ""
-                    state.order.widthWindow = ""
-                    state.order.thickWindow= "" 
+                    state.order.heightWindow = undefined
+                    state.order.widthWindow = undefined
+                    state.order.thickWindow= undefined 
                     break
                 default:    
                     state.order.doorWindow = "нет"
@@ -850,9 +861,9 @@ export const orderSlice = createSlice({
         setColorTint: (state, action: PayloadAction<string>) => { state.order.colorTint = action.payload },
         setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },        
         setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },        
-        setHeightWindow: (state, action: PayloadAction<number | string>) => { state.order.heightWindow = action.payload },
-        setWidthWindow: (state, action: PayloadAction<number | string>) => { state.order.widthWindow = action.payload },
-        setThickWindow: (state, action: PayloadAction<number | string>) => { state.order.thickWindow = action.payload }, 
+        setHeightWindow: (state, action: PayloadAction<number | undefined>) => { state.order.heightWindow = action.payload },
+        setWidthWindow: (state, action: PayloadAction<number | undefined>) => { state.order.widthWindow = action.payload },
+        setThickWindow: (state, action: PayloadAction<number | undefined>) => { state.order.thickWindow = action.payload }, 
         
         setIsStainlessDoorStep: (state, action: PayloadAction<boolean>) => { state.order.isStainlessDoorStep = action.payload },
         setIsStreetDoor: (state, action: PayloadAction<boolean>) => { state.order.isStreetDoor = action.payload },

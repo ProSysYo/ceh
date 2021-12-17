@@ -121,11 +121,49 @@ export const fetchAll = () => {
 
 export const addOrder = (data: IOrder) => {
     return async (dispatch: Dispatch) => {
-        try {            
+        try {
+            dispatch(orderActions.setFetching(true))
             await api.createOrder(data)
-            openNotification("success", "Заказ был создан")                                  
+            openNotification("success", "Заказ был создан")
+            dispatch(orderActions.setFetching(false))
+            dispatch(orderActions.setSuccess(true))                                  
         } catch (e: any) { 
-            console.log(e);
+            dispatch(orderActions.setFetching(false))  
+                       
+            if (e.isAxiosError){
+                if (!e.response) {
+                    openNotification("error", "Нет соединения с сервером") 
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }
+                
+                if (e.response.status === 422) {
+                    openNotification("error", "Ошибка валидации, проверьте все поля") 
+                    dispatch(orderActions.setValidateErrors(e.response.data))                                     
+                } else {
+                    console.log(e.response);
+                    
+                    openNotification("error", e.response.data.errors)
+                }
+                                          
+            } else {
+                openNotification("error", "Не известная ошибка") 
+                console.log("other error", e);                
+            }          
+        }
+    }
+}
+
+export const updateOrder = (data: IOrder) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            dispatch(orderActions.setFetching(true))
+            await api.updateOrder(data)
+            openNotification("success", "Заказ был изменен")
+            dispatch(orderActions.setFetching(false))
+            dispatch(orderActions.setSuccess(true))                                  
+        } catch (e: any) { 
+            dispatch(orderActions.setFetching(false))  
                        
             if (e.isAxiosError){
                 if (!e.response) {
@@ -183,6 +221,7 @@ export const loadOrder = (id: string) => {
             const data = response.data
             if (data) {
                 //Порядок вызова важен, т.к. нижестоящий action может зависет от вышестоящего
+                dispatch(orderActions.setId(data._id!))
                 dispatch(orderActions.setNumber(data.number))
                 dispatch(orderActions.setCustomer(data.customer))
                 dispatch(orderActions.setNumberCustomer(data.numberCustomer))
@@ -258,7 +297,7 @@ export const loadOrder = (id: string) => {
                 dispatch(orderActions.setIsIllumination(data.isIllumination))
                 dispatch(orderActions.setSealer(data.sealer))
 
-                openNotification("success", "Заказ загружен") 
+                openNotification("success", "Заказ загружен")
             }
             
             dispatch(orderActions.setLoading(false))                      

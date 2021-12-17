@@ -40,7 +40,7 @@ const Step2: FC = () => {
                     >
                         <Select 
                             items={order.doorThicks} 
-                            value={order.order.doorThick} 
+                            value={order.order.doorThick}                            
                             onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
                         />
                     </Form.Item>

@@ -233,6 +233,9 @@ export class Order {
 
     @Prop()
     sealer: string;
+
+    @Prop()
+    dateCreate: Date;
 }
 
 export const OrdreSchema = SchemaFactory.createForClass(Order);

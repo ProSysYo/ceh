@@ -335,6 +335,10 @@ const createOrder = (data: IOrder) => {
     return http.post("/orders", data);
 };
 
+const updateOrder = (data: IOrder) => {
+    return http.patch(`/orders/${data._id}`, data);
+};
+
 const getOrders = (filters: {}) => {
     return http.get("/orders", { params: filters });
 };
@@ -378,5 +382,6 @@ export const api = {
     getHingeCounts,
     getOrders,
     getOrder,
-    getSealers
+    getSealers,
+    updateOrder
 }

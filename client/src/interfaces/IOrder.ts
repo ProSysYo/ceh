@@ -6,11 +6,11 @@ export interface IOrder {
     party: string;
     computedModel: string;
     model: string;    
-    doorThick: number | string;
-    height: number | string;
-    width: number | string;
+    doorThick: number | undefined;
+    height: number | undefined;
+    width: number | undefined;
     modelBox: string;
-    widthDouble: number;
+    widthDouble: number | undefined;
     locationHinge: string; //Расположение петель
     countHinge: number|string;//Количество петель
     typeHinge: string;
@@ -64,19 +64,21 @@ export interface IOrder {
     patinaInside: string;
     typeDecorationInside: string;
     decorationInside: string;
+    
     typeWindow: string;
     doorWindow: string;
     colorTint: string;
     colorForge: string;
     patinaForge: string;
-    heightWindow: number | string;
-    widthWindow: number | string;
-    thickWindow: number | string;
-    countDoors: number;
-    costDoor: number;
+    heightWindow: number | undefined;
+    widthWindow: number | undefined;
+    thickWindow: number | undefined;
+
+    countDoors: number | string;
+    costDoor: number | string;
     note: string;
-    thickMetalLeaf: number ;
-    thickMetalBox: number ;
+    thickMetalLeaf: number | undefined;
+    thickMetalBox: number | undefined;
     jamb: string;
     jambWrap: string;
     locationJumb: string;
@@ -90,4 +92,6 @@ export interface IOrder {
     isElectromagnet: boolean; //Электромагнит
     isIllumination: boolean; //Подсветка
     sealer: string;//Уплотнитель
+
+    dateCreate: Date | undefined;
 }

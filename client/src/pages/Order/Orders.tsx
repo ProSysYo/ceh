@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Table, Spin } from 'antd';
 import styled from 'styled-components';
+import { format} from 'date-fns'
 import { FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -18,7 +19,13 @@ const columns = [
     { title: 'Окно', dataIndex: 'doorWindow', width: 10 },    
     { title: 'Количество', dataIndex: 'countDoors', width: 10 },   
     { title: 'Цена', dataIndex: 'costDoor', width: 10 },   
-    { title: 'Запущен', dataIndex: '', width: 10 },   
+    { title: 'Запущен', dataIndex: '', width: 10 },
+    { 
+        title: 'Дата создания',
+        dataIndex: 'dateCreate',        
+        width: 10, 
+        render: ((date: Date) => format(new Date(date), "dd.MM.yyyy") )
+    },
     { 
         title: 'Действия', 
         dataIndex: '', 

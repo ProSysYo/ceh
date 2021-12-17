@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components';
-import { RouteComponentProps } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 
 import { orderActions } from '../../store/slices/orderSlice';
 import { fetchAll, loadOrder } from '../../store/actions/orderActions';
@@ -17,7 +17,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
        
 
     const dispatch = useAppDispatch()
-    const { isLoading } = useAppSelector(state => state.order)    
+    const { isLoading, isSuccess} = useAppSelector(state => state.order)    
     
     useEffect(() => {
         const loadData = async () => {
@@ -40,7 +40,8 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
 
     return (
         <>  
-            <AddEditOrder/>
+            <AddEditOrder isEditMode={isEditMode} id={match.params.id}/>
+            {isSuccess && <Redirect to="/orders" />}           
         </>
     )
 }

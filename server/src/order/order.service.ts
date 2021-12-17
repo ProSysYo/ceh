@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order, OrderDocument } from './order.schema';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -10,15 +11,23 @@ export class OrderService {
 
     async create(dto: CreateOrderDto): Promise<Order> {
 
-        if (dto.widthDouble === 0) {
-            throw new HttpException({ 
-                status: HttpStatus.FORBIDDEN, 
-                errors: 'Ширина доп створки болжна быть больше 0'
-            }, HttpStatus.FORBIDDEN);
-        }        
+        // if (dto.widthDouble === 0) {
+        //     throw new HttpException({ 
+        //         status: HttpStatus.FORBIDDEN, 
+        //         errors: 'Ширина доп створки болжна быть больше 0'
+        //     }, HttpStatus.FORBIDDEN);
+        // }        
 
         const number: Number = new Date().valueOf()
-        const order = await this.orderModel.create({ ...dto, number })
+        const dateCreate: Date = new Date()
+        const order = await this.orderModel.create({ ...dto, number, dateCreate })
+        return order
+    }
+
+    async update(dto: UpdateOrderDto): Promise<Order> {  
+        console.log(dto._id);
+              
+        const order = await this.orderModel.findOneAndUpdate({ _id: dto._id }, dto, {new: true})
         return order
     }
 

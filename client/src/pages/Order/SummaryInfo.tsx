@@ -148,9 +148,7 @@ const SummaryInfo: React.FC = () => {
                 <Group title="Наличник">                    
                     <Row title="Наличник" value={order.jamb} />
                     <Row title="Цвет пленки наличника" value={order.jambWrap} />
-                </Group>                
-            </Column>
-            <Column>
+                </Group>
                 <Group title="Окно">
                     <Row title="Тип окна" value={order.typeWindow} />
                     <Row title="Окно" value={order.doorWindow} />
@@ -160,7 +158,9 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Высота стеклопакета" value={order.heightWindow} />
                     <Row title="Ширина стеклопакета" value={order.widthWindow} />
                     <Row title="Толщина стеклопакета" value={order.thickWindow} />
-                </Group>
+                </Group>               
+            </Column>
+            <Column>                
                 <Group title="Опции">
                     <Row title="Порог из нержавейки" value={order.isStainlessDoorStep ? "да" : "нет"} />
                     <Row title="Эксцентрик" value={order.isEccentric ? "да" : "нет"} />

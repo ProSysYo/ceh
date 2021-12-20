@@ -57,119 +57,118 @@ const RowValue = styled.div`
     background-color: #fcfafa;      
 `;
 const SummaryInfo: React.FC = () => {
-    const {
-        order
-    } = useAppSelector(state => state.order)
+    const { currentOrder } = useAppSelector(state => state.order)
 
     return (
         <Container>
             <Column>
                 <Group title="Основное">
-                    <Row title="Заказчика" value={order.customer} />
-                    <Row title="Номер заказа" value={order.number} />
-                    <Row title="Партийность" value={order.party} />
-                    <Row title="Количество дверей" value={order.countDoors} />
-                    <Row title="Стоимость одной двери" value={order.costDoor} />
-                    <Row title="Примечание" value={order.note} />
+                    <Row title="Заказчика" value={currentOrder.customer} />
+                    <Row title="Номер заказчика" value={currentOrder.numberCustomer} />
+                    <Row title="Номер заказа" value={currentOrder.number} />
+                    <Row title="Партийность" value={currentOrder.party} />
+                    <Row title="Количество дверей" value={currentOrder.countDoors} />
+                    <Row title="Стоимость одной двери" value={currentOrder.costDoor} />
+                    <Row title="Примечание" value={currentOrder.note} />
                 </Group>
                 <Group title="Конфигурация модели">
-                    <Row title="Модель двери" value={order.model} />                    
-                    <Row title="Толщина полотна" value={order.doorThick} />
-                    <Row title="Модель коробки" value={order.modelBox} />
-                    <Row title="Высота двери" value={order.height} />
-                    <Row title="Ширина двери" value={order.width} />
-                    <Row title="Ширина раб. створки" value={order.widthDouble} />
-                    <Row title="Уплотнитель" value={order.sealer} />
-                    <Row title="Располож. налич. (внутр. откр.)" value={order.locationJumb} />
+                    <Row title="Модель двери" value={currentOrder.model} />                    
+                    <Row title="Толщина полотна" value={currentOrder.doorThick} />
+                    <Row title="Модель коробки" value={currentOrder.modelBox} />
+                    <Row title="Высота двери" value={currentOrder.height} />
+                    <Row title="Ширина двери" value={currentOrder.width} />
+                    <Row title="Ширина раб. створки" value={currentOrder.widthDouble} />
+                    <Row title="Уплотнитель" value={currentOrder.sealer} />
+                    <Row title="Располож. налич. (внутр. откр.)" value={currentOrder.locationJumb} />
                 </Group>
                 <Group title="Петли">
-                    <Row title="Расположение петель" value={order.locationHinge} />
-                    <Row title="Тип петель" value={order.typeHinge} />
-                    <Row title="Количество петель" value={order.countHinge} />
+                    <Row title="Расположение петель" value={currentOrder.locationHinge} />
+                    <Row title="Тип петель" value={currentOrder.typeHinge} />
+                    <Row title="Количество петель" value={currentOrder.countHinge} />
                 </Group>
                 <Group title="Толщина металла">
-                    <Row title="Толщина металла полотна" value={order.thickMetalLeaf} />
-                    <Row title="Толщина металла короба" value={order.thickMetalBox} />
+                    <Row title="Толщина металла полотна" value={currentOrder.thickMetalLeaf} />
+                    <Row title="Толщина металла короба" value={currentOrder.thickMetalBox} />
                 </Group>
                 <Group title="Основной замок">
-                    <Row title="Основной замок" value={order.baseLock} />
-                    <Row title="Цилиндр" value={order.baseCylinder} />
+                    <Row title="Основной замок" value={currentOrder.baseLock} />
+                    <Row title="Цилиндр" value={currentOrder.baseCylinder} />
                     <Row title="Вертушок замка"
-                        value={order.lockSpinner + ((order.lockSpinnerColor !== "нет") ? " " + order.lockSpinnerColor : "")}
+                        value={currentOrder.lockSpinner + ((currentOrder.lockSpinnerColor !== "нет") ? " " + currentOrder.lockSpinnerColor : "")}
                     />
                     <Row title="Накладка осн. снаружи"
-                        value={order.baseCoverOutside + ((order.baseCoverColorOutside !== "нет") ? " " + order.baseCoverColorOutside : "")}
+                        value={currentOrder.baseCoverOutside + ((currentOrder.baseCoverColorOutside !== "нет") ? " " + currentOrder.baseCoverColorOutside : "")}
                     />
                     <Row title="Накладка осн. внутри"
-                        value={order.baseCoverInside + ((order.baseCoverColorInside !== "нет") ? " " + order.baseCoverColorInside : "")}
+                        value={currentOrder.baseCoverInside + ((currentOrder.baseCoverColorInside !== "нет") ? " " + currentOrder.baseCoverColorInside : "")}
                     />
                     <Row title="Накладка осн. снаружи 2"
-                        value={order.baseCoverOutside2 + ((order.baseCoverColorOutside2 !== "нет") ? " " + order.baseCoverColorOutside2 : "")}
+                        value={currentOrder.baseCoverOutside2 + ((currentOrder.baseCoverColorOutside2 !== "нет") ? " " + currentOrder.baseCoverColorOutside2 : "")}
                     />
                     <Row title="Накладка осн. внутри 2"
-                        value={order.baseCoverInside2 + ((order.baseCoverColorInside2 !== "нет") ? " " + order.baseCoverColorInside2 : "")}
+                        value={currentOrder.baseCoverInside2 + ((currentOrder.baseCoverColorInside2 !== "нет") ? " " + currentOrder.baseCoverColorInside2 : "")}
                     />
                 </Group>
             </Column>
             <Column>
                 <Group title="Дополнительный замок">
-                    <Row title="Дополнительный замок" value={order.optionalLock} />
-                    <Row title="Цилиндр дополнительного замка" value={order.optionalCylinder} />
+                    <Row title="Дополнительный замок" value={currentOrder.optionalLock} />
+                    <Row title="Цилиндр дополнительного замка" value={currentOrder.optionalCylinder} />
                     <Row title="Накладка доп. снаружи"
-                        value={order.optionalCoverOutside + ((order.optionalCoverColorOutside !== "нет") ? " " + order.optionalCoverColorOutside : "")}
+                        value={currentOrder.optionalCoverOutside + ((currentOrder.optionalCoverColorOutside !== "нет") ? " " + currentOrder.optionalCoverColorOutside : "")}
                     />
                     <Row title="Накладка доп. внутри"
-                        value={order.optionalCoverInside + ((order.optionalCoverColorInside !== "нет") ? " " + order.optionalCoverColorInside : "")}
+                        value={currentOrder.optionalCoverInside + ((currentOrder.optionalCoverColorInside !== "нет") ? " " + currentOrder.optionalCoverColorInside : "")}
                     />
                 </Group>
                 <Group title="Другая фурнитура">
                     <Row title="Глазок"
-                        value={order.eye + ((order.colorEye !== "нет") ? " " + order.colorEye : "")}
+                        value={currentOrder.eye + ((currentOrder.colorEye !== "нет") ? " " + currentOrder.colorEye : "")}
                     />
                     <Row title="Ручка"
-                        value={order.handle + ((order.handleColor !== "нет") ? " " + order.handleColor : "")}
+                        value={currentOrder.handle + ((currentOrder.handleColor !== "нет") ? " " + currentOrder.handleColor : "")}
                     />
                     <Row title="Вертушок"
-                        value={order.spinner + ((order.spinnerColor !== "нет") ? " " + order.spinnerColor : "")}
+                        value={currentOrder.spinner + ((currentOrder.spinnerColor !== "нет") ? " " + currentOrder.spinnerColor : "")}
                     />
                 </Group>
                 <Group title="Наружная отделка">
-                    <Row title="Отделка / Тип панели" value={order.typeDecorationOutside} />
-                    <Row title="Элемент отделки / Фрезеровка" value={order.decorationOutside} />
-                    <Row title="Цвет пленки панели" value={order.wrapOutside} />
-                    <Row title="Патина на панели" value={order.patinaOutside} />
+                    <Row title="Отделка / Тип панели" value={currentOrder.typeDecorationOutside} />
+                    <Row title="Элемент отделки / Фрезеровка" value={currentOrder.decorationOutside} />
+                    <Row title="Цвет пленки панели" value={currentOrder.wrapOutside} />
+                    <Row title="Патина на панели" value={currentOrder.patinaOutside} />
                 </Group>
                 <Group title="Внутренняя отделка">
-                    <Row title="Отделка / Тип панели" value={order.typeDecorationInside} />
-                    <Row title="Элемент отделки / Фрезеровка" value={order.decorationInside} />
-                    <Row title="Цвет пленки панели" value={order.wrapInside} />
-                    <Row title="Патина на панели" value={order.patinaInside} />
+                    <Row title="Отделка / Тип панели" value={currentOrder.typeDecorationInside} />
+                    <Row title="Элемент отделки / Фрезеровка" value={currentOrder.decorationInside} />
+                    <Row title="Цвет пленки панели" value={currentOrder.wrapInside} />
+                    <Row title="Патина на панели" value={currentOrder.patinaInside} />
                 </Group>
                 <Group title="Наличник">                    
-                    <Row title="Наличник" value={order.jamb} />
-                    <Row title="Цвет пленки наличника" value={order.jambWrap} />
+                    <Row title="Наличник" value={currentOrder.jamb} />
+                    <Row title="Цвет пленки наличника" value={currentOrder.jambWrap} />
                 </Group>
                 <Group title="Окно">
-                    <Row title="Тип окна" value={order.typeWindow} />
-                    <Row title="Окно" value={order.doorWindow} />
-                    <Row title="Цвет тонировки" value={order.colorTint} />
-                    <Row title="Цвет ковки" value={order.colorForge} />
-                    <Row title="Патина на ковке" value={order.patinaForge} />
-                    <Row title="Высота стеклопакета" value={order.heightWindow} />
-                    <Row title="Ширина стеклопакета" value={order.widthWindow} />
-                    <Row title="Толщина стеклопакета" value={order.thickWindow} />
+                    <Row title="Тип окна" value={currentOrder.typeWindow} />
+                    <Row title="Окно" value={currentOrder.doorWindow} />
+                    <Row title="Цвет тонировки" value={currentOrder.colorTint} />
+                    <Row title="Цвет ковки" value={currentOrder.colorForge} />
+                    <Row title="Патина на ковке" value={currentOrder.patinaForge} />
+                    <Row title="Высота стеклопакета" value={currentOrder.heightWindow} />
+                    <Row title="Ширина стеклопакета" value={currentOrder.widthWindow} />
+                    <Row title="Толщина стеклопакета" value={currentOrder.thickWindow} />
                 </Group>               
             </Column>
             <Column>                
                 <Group title="Опции">
-                    <Row title="Порог из нержавейки" value={order.isStainlessDoorStep ? "да" : "нет"} />
-                    <Row title="Эксцентрик" value={order.isEccentric ? "да" : "нет"} />
-                    <Row title="Задний лист" value={order.isBackSheet ? "да" : "нет"} />
-                    <Row title="Термокабель" value={order.isTermoCable ? "да" : "нет"} />
-                    <Row title="Доводчик" value={order.isCloser ? "да" : "нет"} />
-                    <Row title="Усиление под довочик" value={order.isEnhanceCloser ? "да" : "нет"} />
-                    <Row title="Электромагнит" value={order.isElectromagnet ? "да" : "нет"} />
-                    <Row title="Подсветка" value={order.isIllumination ? "да" : "нет"} />
+                    <Row title="Порог из нержавейки" value={currentOrder.isStainlessDoorStep ? "да" : "нет"} />
+                    <Row title="Эксцентрик" value={currentOrder.isEccentric ? "да" : "нет"} />
+                    <Row title="Задний лист" value={currentOrder.isBackSheet ? "да" : "нет"} />
+                    <Row title="Термокабель" value={currentOrder.isTermoCable ? "да" : "нет"} />
+                    <Row title="Доводчик" value={currentOrder.isCloser ? "да" : "нет"} />
+                    <Row title="Усиление под довочик" value={currentOrder.isEnhanceCloser ? "да" : "нет"} />
+                    <Row title="Электромагнит" value={currentOrder.isElectromagnet ? "да" : "нет"} />
+                    <Row title="Подсветка" value={currentOrder.isIllumination ? "да" : "нет"} />
                 </Group>
             </Column>
         </Container>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Table, Spin } from 'antd';
 import styled from 'styled-components';
 import { format} from 'date-fns'
@@ -8,40 +8,27 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import OrdersFilter from '../../components/OrdersFilter';
 import { Link } from 'react-router-dom';
 import { IOrder } from '../../interfaces/IOrder';
+import Column from 'antd/lib/table/Column';
 
-const columns = [
-    { title: 'Номер', dataIndex: 'number', width: 15 },
-    { title: 'Заказчик', dataIndex: 'customer', width: 10 },    
-    { title: 'Номер заказчика', dataIndex: 'numberCustomer', width: 15 },    
-    { title: 'Модель', dataIndex: 'model', width: 10 }, 
-    { title: 'Высота', dataIndex: 'height', width: 10 },    
-    { title: 'Ширина', dataIndex: 'width', width: 10 },    
-    { title: 'Окно', dataIndex: 'doorWindow', width: 10 },    
-    { title: 'Количество', dataIndex: 'countDoors', width: 10 },   
-    { title: 'Цена', dataIndex: 'costDoor', width: 10 },   
-    { title: 'Запущен', dataIndex: '', width: 10 },
-    { 
-        title: 'Дата создания',
-        dataIndex: 'dateCreate',        
-        width: 10, 
-        render: ((date: Date) => format(new Date(date), "dd.MM.yyyy") )
-    },
-    { 
-        title: 'Действия', 
-        dataIndex: '', 
-        width: 20, 
-        render: (record: IOrder) => (
-            <>
-                <ActionButton icon={ <EyeOutlined/> } size="small"/>
-                <ActionLink to={`/editorder/${record._id}`}><EditOutlined/></ActionLink>
-                <ActionButton icon={ <DeleteOutlined/> } size="small"/>                
-            </>
-        )
-    },   
-  ];
+import ShowOrder from './ShowOrder';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { getOrder } from '../../store/actions/orderActions';
+import { orderActions } from '../../store/slices/orderSlice';
 
 const Orders: React.FC = () => { 
-    const { orders, isLoading } = useAppSelector(state => state.order)   
+    const { orders, isLoading } = useAppSelector(state => state.order)
+    const [visible, setVisible] = useState(false)     
+    
+    const dispatch = useAppDispatch()
+
+    const showDrawer = async (id: string) => {
+        await dispatch(getOrder(id))
+        setVisible(true);
+    };
+    const onClose = async () => {
+        await dispatch(orderActions.rebootCurrentOrder())
+        setVisible(false);
+    };   
     
     return (
         <>  
@@ -51,11 +38,38 @@ const Orders: React.FC = () => {
             
             <Container>
                 <TableContainer>
-                    <Table columns={columns} dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 680 }} size="small" rowKey="number"/>
+                    <Table dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 680 }} size="small" rowKey="number">
+                        <Column title="Номер" dataIndex="number" width={15} />
+                        <Column title="Заказчик" dataIndex="customer" width={10} />
+                        <Column title="Номер заказчика" dataIndex="numberCustomer" width={15} />
+                        <Column title="Модель" dataIndex="model" width={10} />
+                        <Column title="Высота" dataIndex="height" width={10} />
+                        <Column title="Ширина" dataIndex="width" width={10} />
+                        <Column title="Окно" dataIndex="doorWindow" width={10} />
+                        <Column title="Цена" dataIndex="costDoor" width={10} />
+                        <Column
+                            title = 'Дата создания'
+                            dataIndex = 'dateCreate'       
+                            width = {10} 
+                            render = {((date: Date) => format(new Date(date), "dd.MM.yyyy") )} 
+                        />
+                        <Column
+                            title = 'Действия'                                  
+                            width = {20} 
+                            render = {(record: IOrder) => (
+                                <>
+                                    <ActionButton icon={ <EyeOutlined/> } onClick={() => showDrawer(record._id!)} size="small"/>
+                                    <ActionLink to={`/editorder/${record._id}`}><EditOutlined/></ActionLink>
+                                    <ActionButton icon={ <DeleteOutlined/> } size="small"/>                
+                                </>
+                            )}
+                        />
+                    </Table>
                 </TableContainer>                                           
                 <FilterContainer>
                     <OrdersFilter/>
                 </FilterContainer>
+                <ShowOrder onClose={onClose} visible={visible}/>
             </Container>
             
             

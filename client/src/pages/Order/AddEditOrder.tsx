@@ -17,6 +17,7 @@ import { Button } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { addOrder, updateOrder } from '../../store/actions/orderActions';
+import { orderActions } from '../../store/slices/orderSlice';
 
 const renderStep = (step: number) => {
     switch (step) {
@@ -50,9 +51,9 @@ const AddEditOrder: React.FC<{isEditMode: boolean, id: string}> = ({isEditMode, 
                 </StepControls>                 
             </Criteries>
             <Buttons>
-                {isEditMode && <Button disabled={order.isFetching} loading={order.isFetching} onClick={() => dispatch(updateOrder(order.order))} >Изменить</Button>}
-                {!isEditMode && <Button disabled={order.isFetching} loading={order.isFetching} onClick={() => dispatch(addOrder(order.order))} >Сохранить</Button>}                
-                <Button disabled={order.isFetching}>Отмена</Button>
+                {isEditMode && <Button disabled={order.isFetching} loading={order.isFetching} onClick={() => dispatch(updateOrder(order.currentOrder))} >Изменить</Button>}
+                {!isEditMode && <Button disabled={order.isFetching} loading={order.isFetching} onClick={() => dispatch(addOrder(order.currentOrder))} >Сохранить</Button>}                
+                <Button disabled={order.isFetching} onClick={() => dispatch(orderActions.setCancel(true))}>Отмена</Button>
             </Buttons>                  
         </Container>
     )

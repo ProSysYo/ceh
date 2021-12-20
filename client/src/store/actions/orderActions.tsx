@@ -317,3 +317,22 @@ export const loadOrder = (id: string) => {
     }
 }
 
+export const getOrder = (id: string) => {
+    return async (dispatch: Dispatch) => {
+        try {            
+            const response = await api.getOrder(id)
+            dispatch(orderActions.setOrder(response.data))                                        
+        } catch (e: any) {                      
+            if (e.isAxiosError){
+                if (!e.response) {                    
+                    openNotification("error", "Нет соединения с сервером") 
+                    console.log("Нет соединения с сервером")                    
+                    return 
+                }                         
+            } else {
+                openNotification("error", "Не известная ошибка") 
+                console.log("other error", e);                
+            }          
+        }
+    }
+}

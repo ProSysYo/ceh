@@ -3,8 +3,7 @@ export interface IOrder {
     customer: string;
     number: string;
     numberCustomer: string;
-    party: string;
-    computedModel: string;
+    party: string;    
     model: string;    
     doorThick: number | undefined;
     height: number | undefined;

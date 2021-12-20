@@ -9,7 +9,10 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step4: FC = () => {
     const dispatch = useAppDispatch()
 
-    const { order } = useAppSelector(state => state)
+    const { currentOrder } = useAppSelector(state => state.order)
+    const { staticTables } = useAppSelector(state => state.order)
+    const { computedTables } = useAppSelector(state => state.order)
+    const { block } = useAppSelector(state => state.order)
     const { validateErrors } = useAppSelector(state => state.order)
 
     return (
@@ -26,8 +29,8 @@ const Step4: FC = () => {
                     { ...validateErrors.typeDecorationOutside && { help: validateErrors.typeDecorationOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.typeDecorationsOutside} 
-                        value={order.order.typeDecorationOutside} 
+                        items={computedTables.typeDecorationsOutside} 
+                        value={currentOrder.typeDecorationOutside} 
                         onChange={ (value) => dispatch(orderActions.setTypeDecorationOutside(value))}                        
                     />
                 </Form.Item>
@@ -36,8 +39,8 @@ const Step4: FC = () => {
                     { ...validateErrors.decorationOutside && { help: validateErrors.decorationOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.decorationsOutside} 
-                        value={order.order.decorationOutside} 
+                        items={computedTables.decorationsOutside} 
+                        value={currentOrder.decorationOutside} 
                         onChange={ (value) => dispatch(orderActions.setDecorationOutside(value))}                        
                     />
                 </Form.Item>
@@ -46,9 +49,9 @@ const Step4: FC = () => {
                     { ...validateErrors.wrapOutside && { help: validateErrors.wrapOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.wraps} 
-                        value={order.order.wrapOutside}
-                        disabled={!order.isWrapOutside} 
+                        items={staticTables.wraps} 
+                        value={currentOrder.wrapOutside}
+                        disabled={!block.isWrapOutside} 
                         onChange={ (value) => dispatch(orderActions.setWrapOutside(value))}                        
                     />
                 </Form.Item>
@@ -57,9 +60,9 @@ const Step4: FC = () => {
                     { ...validateErrors.patinaOutside && { help: validateErrors.patinaOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.patinas} 
-                        value={order.order.patinaOutside} 
-                        disabled={!order.isPatinaOutside} 
+                        items={staticTables.patinas} 
+                        value={currentOrder.patinaOutside} 
+                        disabled={!block.isPatinaOutside} 
                         onChange={ (value) => dispatch(orderActions.setPatinaOutside(value))}                        
                     />
                 </Form.Item>
@@ -70,8 +73,8 @@ const Step4: FC = () => {
                     { ...validateErrors.typeDecorationInside && { help: validateErrors.typeDecorationInside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.typeDecorationsInside} 
-                        value={order.order.typeDecorationInside} 
+                        items={computedTables.typeDecorationsInside} 
+                        value={currentOrder.typeDecorationInside} 
                         onChange={ (value) => dispatch(orderActions.setTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
@@ -80,8 +83,8 @@ const Step4: FC = () => {
                     { ...validateErrors.decorationInside && { help: validateErrors.decorationInside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.decorationsInside} 
-                        value={order.order.decorationInside} 
+                        items={computedTables.decorationsInside} 
+                        value={currentOrder.decorationInside} 
                         onChange={ (value) => dispatch(orderActions.setDecorationInside(value))}                        
                     />
                 </Form.Item>
@@ -90,9 +93,9 @@ const Step4: FC = () => {
                     { ...validateErrors.wrapInside && { help: validateErrors.wrapInside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.wraps} 
-                        value={order.order.wrapInside} 
-                        disabled={!order.isWrapInside}
+                        items={staticTables.wraps} 
+                        value={currentOrder.wrapInside} 
+                        disabled={!block.isWrapInside}
                         onChange={ (value) => dispatch(orderActions.setWrapInside(value))}                        
                     />
                 </Form.Item>
@@ -101,9 +104,9 @@ const Step4: FC = () => {
                     { ...validateErrors.patinaInside && { help: validateErrors.patinaInside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.patinas} 
-                        value={order.order.patinaInside}
-                        disabled={!order.isPatinaInside}
+                        items={staticTables.patinas} 
+                        value={currentOrder.patinaInside}
+                        disabled={!block.isPatinaInside}
                         onChange={ (value) => dispatch(orderActions.setPatinaInside(value))}                        
                     />
                 </Form.Item>  
@@ -114,8 +117,8 @@ const Step4: FC = () => {
                     { ...validateErrors.jamb && { help: validateErrors.jamb, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.currentJambs} 
-                        value={order.order.jamb}
+                        items={computedTables.currentJambs} 
+                        value={currentOrder.jamb}
                         onChange={ (value) => dispatch(orderActions.setJamb(value))}                        
                     />
                 </Form.Item>
@@ -125,9 +128,9 @@ const Step4: FC = () => {
                     { ...validateErrors.jambWrap && { help: validateErrors.jambWrap, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.wraps} 
-                        value={order.order.jambWrap} 
-                        disabled={!order.isJambWrap}
+                        items={staticTables.wraps} 
+                        value={currentOrder.jambWrap} 
+                        disabled={!block.isJambWrap}
                         onChange={ (value) => dispatch(orderActions.setJambWrap(value))}                        
                     />
                 </Form.Item>              

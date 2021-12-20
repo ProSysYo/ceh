@@ -12,7 +12,10 @@ const layout2 = {labelCol:{ span: 8 }, wrapperCol:{ span: 10 }}
 const Step3: FC = () => {
     const dispatch = useAppDispatch()
 
-    const { order } = useAppSelector(state => state)
+    const { staticTables } = useAppSelector(state => state.order)
+    const { computedTables } = useAppSelector(state => state.order)
+    const { block } = useAppSelector(state => state.order)
+    const { currentOrder } = useAppSelector(state => state.order)
     const { validateErrors } = useAppSelector(state => state.order)
 
     return (
@@ -27,8 +30,8 @@ const Step3: FC = () => {
                     { ...validateErrors.baseLock && { help: validateErrors.baseLock, validateStatus: 'error'}}
                 >
                     <Select
-                        items={order.baseLocks}
-                        value={order.order.baseLock}
+                        items={staticTables.baseLocks}
+                        value={currentOrder.baseLock}
                         onChange={(value) => dispatch(orderActions.setBaseLock(value))}
                     />
                 </Form.Item>
@@ -39,9 +42,9 @@ const Step3: FC = () => {
                     { ...validateErrors.baseCylinder && { help: validateErrors.baseCylinder, validateStatus: 'error'}}
                 >
                     <Select
-                        items={order.cylinders}
-                        value={order.order.baseCylinder}
-                        disabled={!order.isBaseCylinder}
+                        items={staticTables.cylinders}
+                        value={currentOrder.baseCylinder}
+                        disabled={!block.isBaseCylinder}
                         onChange={(value) => dispatch(orderActions.setBaseCylinder(value))}
                     />
                 </Form.Item>
@@ -55,17 +58,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={order.spinners}
-                                value={order.order.lockSpinner}
-                                disabled={!order.isLockSpinner}
+                                items={staticTables.spinners}
+                                value={currentOrder.lockSpinner}
+                                disabled={!block.isLockSpinner}
                                 onChange={(value) => dispatch(orderActions.setLockSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.lockSpinnerColor}
-                                disabled={!order.isLockSpinner}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.lockSpinnerColor}
+                                disabled={!block.isLockSpinner}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setLockSpinnerColor(value))}
                             />
@@ -83,17 +86,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={order.baseCovers}
-                                value={order.order.baseCoverOutside}
-                                disabled={!order.isBaseCover}
+                                items={computedTables.baseCovers}
+                                value={currentOrder.baseCoverOutside}
+                                disabled={!block.isBaseCover}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.baseCoverColorOutside}
-                                disabled={!order.isBaseCover}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.baseCoverColorOutside}
+                                disabled={!block.isBaseCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside(value))}
                             />
@@ -110,17 +113,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.baseCovers}
-                                value={order.order.baseCoverInside}
-                                disabled={!order.isBaseCover}
+                                items={computedTables.baseCovers}
+                                value={currentOrder.baseCoverInside}
+                                disabled={!block.isBaseCover}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.baseCoverColorInside}
-                                disabled={!order.isBaseCover}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.baseCoverColorInside}
+                                disabled={!block.isBaseCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorInside(value))}
                             />
@@ -138,17 +141,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={order.baseCovers2}
-                                value={order.order.baseCoverOutside2}
-                                disabled={!order.isBaseCover2}
+                                items={computedTables.baseCovers2}
+                                value={currentOrder.baseCoverOutside2}
+                                disabled={!block.isBaseCover2}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverOutside2(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.baseCoverColorOutside2}
-                                disabled={!order.isBaseCover2}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.baseCoverColorOutside2}
+                                disabled={!block.isBaseCover2}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorOutside2(value))}
                             />
@@ -165,17 +168,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.baseCovers2}
-                                value={order.order.baseCoverInside2}
-                                disabled={!order.isBaseCover2}
+                                items={computedTables.baseCovers2}
+                                value={currentOrder.baseCoverInside2}
+                                disabled={!block.isBaseCover2}
                                 onChange={(value) => dispatch(orderActions.setBaseCoverInside2(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.baseCoverColorInside2}
-                                disabled={!order.isBaseCover2}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.baseCoverColorInside2}
+                                disabled={!block.isBaseCover2}
                                 firstOption="выберите цвет"                                       
                                 onChange={(value) => dispatch(orderActions.setBaseCoverColorInside2(value))}
                             />
@@ -190,8 +193,8 @@ const Step3: FC = () => {
                     { ...validateErrors.optionalLock && { help: validateErrors.optionalLock, validateStatus: 'error'}}
                 >
                         <Select
-                            items={order.optionalLocks}
-                            value={order.order.optionalLock}
+                            items={staticTables.optionalLocks}
+                            value={currentOrder.optionalLock}
                             onChange={(value) => dispatch(orderActions.setOptionalLock(value))}
                         />
                 </Form.Item>                
@@ -203,9 +206,9 @@ const Step3: FC = () => {
                     
                 >
                     <Select
-                        items={order.cylinders}
-                        value={order.order.optionalCylinder}
-                        disabled={!order.isOptionalCylinder}
+                        items={staticTables.cylinders}
+                        value={currentOrder.optionalCylinder}
+                        disabled={!block.isOptionalCylinder}
                         onChange={(value) => dispatch(orderActions.setOptionalCylinder(value))}
                     />
                 </Form.Item>
@@ -220,17 +223,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select 
-                                items={order.optionalCovers}
-                                value={order.order.optionalCoverOutside}
-                                disabled={!order.isOptionalCover}
+                                items={computedTables.optionalCovers}
+                                value={currentOrder.optionalCoverOutside}
+                                disabled={!block.isOptionalCover}
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverOutside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.optionalCoverColorOutside}
-                                disabled={!order.isOptionalCover}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.optionalCoverColorOutside}
+                                disabled={!block.isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverColorOutside(value))}
                             />
@@ -247,17 +250,17 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.optionalCovers}
-                                value={order.order.optionalCoverInside}
-                                disabled={!order.isOptionalCover}
+                                items={computedTables.optionalCovers}
+                                value={currentOrder.optionalCoverInside}
+                                disabled={!block.isOptionalCover}
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverInside(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.optionalCoverColorInside}
-                                disabled={!order.isOptionalCover}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.optionalCoverColorInside}
+                                disabled={!block.isOptionalCover}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setOptonalCoverColorInside(value))}
                             />
@@ -275,15 +278,15 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.eyes}
-                                value={order.order.eye}
+                                items={staticTables.eyes}
+                                value={currentOrder.eye}
                                 onChange={(value) => dispatch(orderActions.setEye(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.colorEye}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.colorEye}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setColorEye(value))}
                             />
@@ -297,8 +300,8 @@ const Step3: FC = () => {
                     { ...validateErrors.eyeLocation && { help: validateErrors.eyeLocation, validateStatus: 'error'}}
                 >
                     <Select
-                        items={order.eyeLocations}
-                        value={order.order.eyeLocation}
+                        items={staticTables.eyeLocations}
+                        value={currentOrder.eyeLocation}
                         onChange={(value) => dispatch(orderActions.setEyeLocation(value))}
                     />
                 </Form.Item>                    
@@ -314,15 +317,15 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.handles}
-                                value={order.order.handle}
+                                items={staticTables.handles}
+                                value={currentOrder.handle}
                                 onChange={(value) => dispatch(orderActions.setHandle(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.handleColor}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.handleColor}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setHandleColor(value))}
                             />
@@ -339,15 +342,15 @@ const Step3: FC = () => {
                     <Row>
                         <Col span={14}>
                             <Select
-                                items={order.spinners}
-                                value={order.order.spinner}
+                                items={staticTables.spinners}
+                                value={currentOrder.spinner}
                                 onChange={(value) => dispatch(orderActions.setSpinner(value))}
                             />
                         </Col>
                         <Col span={10}>
                             <Select 
-                                items={order.fittingColors}
-                                value={order.order.spinnerColor}
+                                items={staticTables.fittingColors}
+                                value={currentOrder.spinnerColor}
                                 firstOption="выберите цвет"
                                 onChange={(value) => dispatch(orderActions.setSpinnerColor(value))}
                             />

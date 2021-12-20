@@ -9,8 +9,11 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step2: FC = () => {
     const dispatch = useAppDispatch()
 
-    const { order } = useAppSelector(state => state)
-    const validateErrors = order.validateErrors    
+    const { currentOrder } = useAppSelector(state => state.order)
+    const { staticTables } = useAppSelector(state => state.order)
+    const { computedTables } = useAppSelector(state => state.order)
+    const { block } = useAppSelector(state => state.order)
+    const { validateErrors } = useAppSelector(state => state.order)   
         
     return (
         <Container>
@@ -28,8 +31,8 @@ const Step2: FC = () => {
                         { ...validateErrors.model && { help: validateErrors.model, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.models} 
-                            value={order.order.model} 
+                            items={staticTables.models} 
+                            value={currentOrder.model} 
                             onChange={ (value) => dispatch(orderActions.setModel(value))}                       
                         />
                     </Form.Item>                    
@@ -39,8 +42,8 @@ const Step2: FC = () => {
                         { ...validateErrors.doorThick && { help: validateErrors.doorThick, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.doorThicks} 
-                            value={order.order.doorThick}                            
+                            items={computedTables.doorThicks} 
+                            value={currentOrder.doorThick}                            
                             onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
                         />
                     </Form.Item>
@@ -49,8 +52,8 @@ const Step2: FC = () => {
                         { ...validateErrors.modelBox && { help: validateErrors.modelBox, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.modelBoxes} 
-                            value={order.order.modelBox} 
+                            items={staticTables.modelBoxes} 
+                            value={currentOrder.modelBox} 
                             onChange={ (value) => dispatch(orderActions.setModelBox(value))}                        
                         />
                     </Form.Item>
@@ -60,9 +63,9 @@ const Step2: FC = () => {
                     { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={order.locationJambs} 
-                        value={order.order.locationJumb}
-                        disabled={!order.isLocationJamb}
+                        items={staticTables.locationJambs} 
+                        value={currentOrder.locationJumb}
+                        disabled={!block.isLocationJamb}
                         onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
                     />
                 </Form.Item>
@@ -72,8 +75,8 @@ const Step2: FC = () => {
                         { ...validateErrors.sealer && { help: validateErrors.sealer, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.sealers} 
-                            value={order.order.sealer} 
+                            items={staticTables.sealers} 
+                            value={currentOrder.sealer} 
                             onChange={ (value) => dispatch(orderActions.setSealer(value))}                        
                         />
                     </Form.Item>
@@ -83,21 +86,21 @@ const Step2: FC = () => {
                         label="Высота двери"
                         { ...validateErrors.height && { help: validateErrors.height, validateStatus: 'error'}}
                     >
-                        <InputNumber  value={order.order.height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
+                        <InputNumber  value={currentOrder.height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
                     </Form.Item>
 
                     <Form.Item 
                         label="Ширина двери"
                         { ...validateErrors.width && { help: validateErrors.width, validateStatus: 'error'}}
                     >
-                        <InputNumber  value={order.order.width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
+                        <InputNumber  value={currentOrder.width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
                     </Form.Item>
                     
                     <Form.Item 
                         label="Ширина раб. створки"
                         { ...validateErrors.widthDouble && { help: validateErrors.widthDouble, validateStatus: 'error'}}
                     >
-                        <InputNumber disabled={!order.isDouble} value={order.order.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
+                        <InputNumber disabled={!block.isDouble} value={currentOrder.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -110,8 +113,8 @@ const Step2: FC = () => {
                         { ...validateErrors.locationHinge && { help: validateErrors.locationHinge, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.locationHinges} 
-                            value={order.order.locationHinge} 
+                            items={staticTables.locationHinges} 
+                            value={currentOrder.locationHinge} 
                             onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
                         />
                     </Form.Item>
@@ -123,8 +126,8 @@ const Step2: FC = () => {
                         { ...validateErrors.typeHinge && { help: validateErrors.typeHinge, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.typeHinges} 
-                            value={order.order.typeHinge} 
+                            items={staticTables.typeHinges} 
+                            value={currentOrder.typeHinge} 
                             onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
                         />
                     </Form.Item>
@@ -136,8 +139,8 @@ const Step2: FC = () => {
                         { ...validateErrors.countHinge && { help: validateErrors.countHinge, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.hingeCounts} 
-                            value={order.order.countHinge} 
+                            items={staticTables.hingeCounts} 
+                            value={currentOrder.countHinge} 
                             onChange={ (value) => dispatch(orderActions.setCountHinge(value))}                        
                         />
                     </Form.Item>                    
@@ -152,8 +155,8 @@ const Step2: FC = () => {
                         { ...validateErrors.thickMetalLeaf && { help: validateErrors.thickMetalLeaf, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.thickMetalLeafs} 
-                            value={order.order.thickMetalLeaf} 
+                            items={staticTables.thickMetalLeafs} 
+                            value={currentOrder.thickMetalLeaf} 
                             onChange={ (value) => dispatch(orderActions.setThickMetalLeaf(value))}                        
                         />
                     </Form.Item>
@@ -164,8 +167,8 @@ const Step2: FC = () => {
                         { ...validateErrors.thickMetalBox && { help: validateErrors.thickMetalBox, validateStatus: 'error'}}
                     >
                         <Select 
-                            items={order.thickMetalBoxes} 
-                            value={order.order.thickMetalBox} 
+                            items={staticTables.thickMetalBoxes} 
+                            value={currentOrder.thickMetalBox} 
                             onChange={ (value) => dispatch(orderActions.setThickMetalBox(value))}                        
                         />
                     </Form.Item>

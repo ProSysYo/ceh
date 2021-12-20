@@ -10,13 +10,12 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step1: FC = () => {
     const dispatch = useAppDispatch()
 
-    const {
-        customers, parties, validateErrors
-    } = useAppSelector(state => state.order)
+    const { validateErrors } = useAppSelector(state => state.order)
+    const { staticTables } = useAppSelector(state => state.order)
     
     const {
         customer, numberCustomer, number, party, countDoors, costDoor, note
-    } = useAppSelector(state => state.order.order)
+    } = useAppSelector(state => state.order.currentOrder)
 
 
     return (
@@ -35,7 +34,7 @@ const Step1: FC = () => {
                     { ...validateErrors.customer && { help: validateErrors.customer, validateStatus: 'error'}}                    
                 >
                     <Select 
-                        items={customers} 
+                        items={staticTables.customers} 
                         value={customer} 
                         onChange={ (value) => dispatch(orderActions.setCustomer(value))}                       
                     />
@@ -52,7 +51,7 @@ const Step1: FC = () => {
                     { ...validateErrors.party && { help: validateErrors.party, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={parties} 
+                        items={staticTables.parties} 
                         value={party} 
                         onChange={ (value) => dispatch(orderActions.setParty(value))}                        
                     />

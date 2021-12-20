@@ -17,7 +17,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
        
 
     const dispatch = useAppDispatch()
-    const { isLoading, isSuccess} = useAppSelector(state => state.order)    
+    const { isLoading, isSuccess, isCancel} = useAppSelector(state => state.order)    
     
     useEffect(() => {
         const loadData = async () => {
@@ -31,7 +31,10 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
         loadData()
 
         return () => {
-            dispatch(orderActions.rebootState())
+            dispatch(orderActions.rebootCurrentOrder())
+            dispatch(orderActions.rebootComputedTables())
+            dispatch(orderActions.rebootBlock())
+            dispatch(orderActions.rebootOtherState())
         }
     // eslint-disable-next-line
     }, [])     
@@ -41,7 +44,8 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
     return (
         <>  
             <AddEditOrder isEditMode={isEditMode} id={match.params.id}/>
-            {isSuccess && <Redirect to="/orders" />}           
+            {isSuccess && <Redirect to="/orders" />}          
+            {isCancel && <Redirect to="/orders" />}          
         </>
     )
 }

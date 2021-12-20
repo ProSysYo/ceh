@@ -9,7 +9,7 @@ import { orderActions } from '../../store/slices/orderSlice';
 const Step6: FC = () => {
     const dispatch = useAppDispatch()
 
-    const { order } = useAppSelector(state => state)    
+    const { currentOrder } = useAppSelector(state => state.order)    
 
     return (
         <Container>
@@ -20,39 +20,39 @@ const Step6: FC = () => {
                 size = "middle"              
             >   
                 <Form.Item label="Порог из нержавейки">
-                    <Checkbox checked={order.order.isStainlessDoorStep} onChange={(e)=> dispatch(orderActions.setIsStainlessDoorStep(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isStainlessDoorStep} onChange={(e)=> dispatch(orderActions.setIsStainlessDoorStep(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Уличная дверь">
-                    <Checkbox checked={order.order.isStreetDoor} onChange={(e)=> dispatch(orderActions.setIsStreetDoor(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isStreetDoor} onChange={(e)=> dispatch(orderActions.setIsStreetDoor(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Эксцентрик">
-                    <Checkbox checked={order.order.isEccentric} onChange={(e)=> dispatch(orderActions.setIsEccentric(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isEccentric} onChange={(e)=> dispatch(orderActions.setIsEccentric(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Задний лист">
-                    <Checkbox checked={order.order.isBackSheet} onChange={(e)=> dispatch(orderActions.setIsBackSheet(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isBackSheet} onChange={(e)=> dispatch(orderActions.setIsBackSheet(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Термокабель">
-                    <Checkbox checked={order.order.isTermoCable} onChange={(e)=> dispatch(orderActions.setIsTermoCable(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isTermoCable} onChange={(e)=> dispatch(orderActions.setIsTermoCable(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Доводчик">
-                    <Checkbox checked={order.order.isCloser} onChange={(e)=> dispatch(orderActions.setIsCloser(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isCloser} onChange={(e)=> dispatch(orderActions.setIsCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Усиление под довочик">
-                    <Checkbox checked={order.order.isEnhanceCloser} onChange={(e)=> dispatch(orderActions.setIsEnhanceCloser(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isEnhanceCloser} onChange={(e)=> dispatch(orderActions.setIsEnhanceCloser(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Электромагнит">
-                    <Checkbox checked={order.order.isElectromagnet} onChange={(e)=> dispatch(orderActions.setIsElectromagnet(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isElectromagnet} onChange={(e)=> dispatch(orderActions.setIsElectromagnet(e.target.checked))} />
                 </Form.Item>
 
                 <Form.Item label="Подсветка">
-                    <Checkbox checked={order.order.isIllumination} onChange={(e)=> dispatch(orderActions.setIsIllumination(e.target.checked))} />
+                    <Checkbox checked={currentOrder.isIllumination} onChange={(e)=> dispatch(orderActions.setIsIllumination(e.target.checked))} />
                 </Form.Item>                
             </Form>
         </Container>

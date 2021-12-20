@@ -29,67 +29,61 @@ import { IFittingColor } from '../../interfaces/IFittingColor';
 import { IHingeCount } from '../../interfaces/IHingeCount';
 import { ISealer } from '../../interfaces/ISealer';
 
-export interface OrderSate {
-    orders: IOrder[];
+
+interface IStaticTables {   
     customers: ICustomer[];
     parties: IParty[];
-    models: IModel[];    
-    doorThicks: number[];
+    models: IModel[];
     modelBoxes: IModelBox[]    
     baseLocks: ILock[];
     optionalLocks: ILock[];
     spinners: ISpinner[];
     cylinders: ICylinder[];
-    fittingColors: IFittingColor[], 
-
-    covers: ICover[];       
-    baseCovers: ICover[];
-    baseCovers2: ICover[];
-
-    optionalCovers: ICover[];
+    fittingColors: IFittingColor[];
+    covers: ICover[];
     eyes: IEye[];
     eyeLocations: IEyeLocation[];
     handles: IHandle[];
-    typeDecorations: ITypeDecoration[];
-    typeDecorationsOutside: ITypeDecoration[];
-    decorations: IDecoration[];
-    decorationsOutside: IDecoration[];
     wraps: IWrap[];
     patinas: IPatina[];
-    typeDecorationsInside: ITypeDecoration[];
-    decorationsInside: IDecoration[];
+    typeDecorations: ITypeDecoration[];
+    decorations: IDecoration[];
     typeWindows: ITypeWindow[];
     windows: IWindow[];
-    currentWindows: IWindow[];
-    colorTints: IColorTint[];
-    colorForges: IColorForge[];
-    patinaForges: IPatinaForge[];
-
     locationHinges: ILocationHinge[];
-    hingeCounts: IHingeCount[]
-
+    hingeCounts: IHingeCount[];
     typeHinges: ITypeHinge[];
     thickMetalLeafs: IThickMetal[],
     thickMetalBoxes: IThickMetal[],
     jambs: IJamb[],
-    currentJambs: IJamb[],
     locationJambs: ILocationJamb[],
     sealers: ISealer[],
-      
+    colorTints: IColorTint[];
+    colorForges: IColorForge[];
+    patinaForges: IPatinaForge[];    
+}
 
-    isLoading: boolean;
-    isFetching: boolean;
-    isSuccess: boolean;
+interface IComputedTables {
+    doorThicks: number[];
+    baseCovers: ICover[];
+    baseCovers2: ICover[];
+    optionalCovers: ICover[]; 
+    typeDecorationsOutside: ITypeDecoration[];
+    typeDecorationsInside: ITypeDecoration[];
+    decorationsOutside: IDecoration[];
+    decorationsInside: IDecoration[];    
+    currentWindows: IWindow[];    
+    currentJambs: IJamb[],
+}
 
+interface IBlock {
     isDouble: boolean;
     isLockSpinner: boolean;
     isBaseCylinder: boolean;
     isBaseCover: boolean;
     isBaseCover2: boolean;
-
     isOptionalCylinder: boolean;
     isOptionalCover: boolean;
-
     isWrapOutside: boolean;
     isWrapInside: boolean;
     isPatinaOutside: boolean;
@@ -98,41 +92,41 @@ export interface OrderSate {
     isPatinaForge: boolean;
     isJambWrap: boolean;
     isLocationJamb: boolean;
-
-    validateErrors: any;
-
-    order: IOrder;
 }
 
-const initialState: OrderSate = {
-    orders: [],
+export interface OrderSate {
+    isLoading: boolean;
+    isFetching: boolean;
+    isSuccess: boolean;
+    isCancel: boolean;
+    validateErrors: any;    
+    orders: IOrder[];
+    staticTables: IStaticTables;
+    computedTables: IComputedTables;
+    block: IBlock 
+    currentOrder: IOrder;
+}
+
+const initialStaticTables: IStaticTables = {
     customers: [],
     parties: [],
-    models: [],    
-    doorThicks: [],
+    models: [], 
     modelBoxes: [],   
     baseLocks: [],
     optionalLocks: [],
     spinners: [],
     cylinders: [],
     covers: [],
-    baseCovers: [],
-    baseCovers2: [],
-    optionalCovers: [],
     eyes: [],
     eyeLocations: [],
     handles: [],
     typeDecorations: [],
-    typeDecorationsOutside: [],
-    typeDecorationsInside: [],
     decorations: [],
-    decorationsOutside: [],
+
     wraps: [],
     patinas: [],
-    decorationsInside: [],
     typeWindows: [],
     windows: [],
-    currentWindows: [],
     colorTints: [],
     colorForges: [],
     patinaForges: [],
@@ -142,24 +136,32 @@ const initialState: OrderSate = {
     thickMetalLeafs: [],
     thickMetalBoxes: [],
     jambs: [],
-    currentJambs: [],
     locationJambs: [],
     fittingColors: [],
-    sealers: [],
+    sealers: []       
+}
 
-    isLoading: false,
-    isFetching: false,
-    isSuccess: false,
+const initialComputedTables: IComputedTables = {
+    doorThicks: [],
+    baseCovers: [],
+    baseCovers2: [],
+    optionalCovers: [],    
+    typeDecorationsOutside: [],
+    typeDecorationsInside: [],    
+    decorationsOutside: [],    
+    decorationsInside: [],    
+    currentWindows: [],
+    currentJambs: [],
+}
 
+const initialBlock: IBlock = {
     isDouble: false,
-    isLockSpinner: false,//Вертушок замка
+    isLockSpinner: false,
     isBaseCylinder: false,
     isBaseCover: false,
     isBaseCover2: false,
-
     isOptionalCylinder: false,
     isOptionalCover: false,
-
     isWrapOutside: false,
     isWrapInside: false,
     isPatinaOutside: false,
@@ -167,109 +169,118 @@ const initialState: OrderSate = {
     isColorForge: false,
     isPatinaForge: false,
     isJambWrap: false,
-    isLocationJamb: false,
+    isLocationJamb: false
+}
 
+const initialCurrentOrder: IOrder = {        
+    customer: "",
+    number: "",
+    numberCustomer: "",
+    party: "",
+    
+    model: "",         
+    doorThick: undefined,
+    height: undefined,
+    width: undefined,
+    modelBox: "",
+    widthDouble: undefined,
+    
+    //Петли
+    locationHinge: "",        
+    typeHinge: "",
+    countHinge: "",
+
+    //Основной замок
+    baseLock: "",
+    lockSpinner: "нет",
+    lockSpinnerColor: "нет",
+    baseCylinder: "нет",
+
+    //Накладки основного замка
+    baseCoverOutside: "нет",
+    baseCoverColorOutside: "нет",
+    baseCoverInside: "нет",
+    baseCoverColorInside: "нет",
+
+    //Накладки основного замка (если двухсистемный замок)
+    baseCoverOutside2: "нет",
+    baseCoverColorOutside2: "нет",
+    baseCoverInside2: "нет",
+    baseCoverColorInside2: "нет",
+
+    //Дополнительный замок
+    optionalLock: "",
+    optionalCylinder: "нет",
+
+    //Накладки дополнительного замка
+    optionalCoverOutside: "нет",
+    optionalCoverColorOutside: "нет",
+    optionalCoverInside: "нет",
+    optionalCoverColorInside: "нет",
+
+    //Глазок
+    eye: "",
+    colorEye: "",
+    eyeLocation: "",
+
+    //Ручка
+    handle: "",
+    handleColor: "",
+
+    //Вертушок двери(не замка)
+    spinner: "",
+    spinnerColor: "",
+
+    typeDecorationOutside: "",
+    decorationOutside: "",
+    wrapOutside: "",
+    patinaOutside: "",
+    typeDecorationInside: "",
+    decorationInside: "",
+    wrapInside: "",
+    patinaInside: "",
+    typeWindow: "",
+    doorWindow: "",
+    colorTint: "",
+    colorForge: "",
+    patinaForge: "",
+    heightWindow: undefined,
+    widthWindow: undefined,
+    thickWindow: undefined,
+    countDoors: "",
+    costDoor: "",
+    note: "",
+    thickMetalLeaf: undefined,
+    thickMetalBox: undefined,
+    jamb: "",
+    jambWrap: "",
+    locationJumb: "нет",
+
+    isStainlessDoorStep: false,
+    isStreetDoor: false,
+    isEccentric: false,
+    isBackSheet: false,
+    isCloser: false,
+    isEnhanceCloser: false,
+    isTermoCable: false,
+    isElectromagnet: false,
+    isIllumination: false,
+    sealer: "",
+
+    dateCreate: undefined,
+}
+
+const initialState: OrderSate = {
+    isLoading: false,
+    isFetching: false,
+    isSuccess: false,
+    isCancel: false,
     validateErrors: {},
-
-    order: {        
-        customer: "",
-        number: "",
-        numberCustomer: "",
-        party: "",
-        
-        model: "",
-
-        computedModel: "",        
-        doorThick: undefined,
-        height: undefined,
-        width: undefined,
-        modelBox: "",
-        widthDouble: undefined,
-        
-        //Петли
-        locationHinge: "",        
-        typeHinge: "",
-        countHinge: "",
-
-        //Основной замок
-        baseLock: "",
-        lockSpinner: "нет",
-        lockSpinnerColor: "нет",
-        baseCylinder: "нет",
-
-        //Накладки основного замка
-        baseCoverOutside: "нет",
-        baseCoverColorOutside: "нет",
-        baseCoverInside: "нет",
-        baseCoverColorInside: "нет",
-
-        //Накладки основного замка (если двухсистемный замок)
-        baseCoverOutside2: "нет",
-        baseCoverColorOutside2: "нет",
-        baseCoverInside2: "нет",
-        baseCoverColorInside2: "нет",
-
-        //Дополнительный замок
-        optionalLock: "",
-        optionalCylinder: "нет",
-
-        //Накладки дополнительного замка
-        optionalCoverOutside: "нет",
-        optionalCoverColorOutside: "нет",
-        optionalCoverInside: "нет",
-        optionalCoverColorInside: "нет",
-
-        //Глазок
-        eye: "",
-        colorEye: "",
-        eyeLocation: "",
-
-        //Ручка
-        handle: "",
-        handleColor: "",
-
-        //Вертушок двери(не замка)
-        spinner: "",
-        spinnerColor: "",
-
-        typeDecorationOutside: "",
-        decorationOutside: "",
-        wrapOutside: "",
-        patinaOutside: "",
-        typeDecorationInside: "",
-        decorationInside: "",
-        wrapInside: "",
-        patinaInside: "",
-        typeWindow: "",
-        doorWindow: "",
-        colorTint: "",
-        colorForge: "",
-        patinaForge: "",
-        heightWindow: undefined,
-        widthWindow: undefined,
-        thickWindow: undefined,
-        countDoors: "",
-        costDoor: "",
-        note: "",
-        thickMetalLeaf: undefined,
-        thickMetalBox: undefined,
-        jamb: "",
-        jambWrap: "",
-        locationJumb: "нет",
-
-        isStainlessDoorStep: false,
-        isStreetDoor: false,
-        isEccentric: false,
-        isBackSheet: false,
-        isCloser: false,
-        isEnhanceCloser: false,
-        isTermoCable: false,
-        isElectromagnet: false,
-        isIllumination: false,
-        sealer: "",
-
-        dateCreate: undefined,
-    }
+    orders: [],
+    staticTables: initialStaticTables,    
+    computedTables: initialComputedTables,
+    block: initialBlock,
+    currentOrder: initialCurrentOrder
 }
 
 export const orderSlice = createSlice({
@@ -278,608 +289,619 @@ export const orderSlice = createSlice({
     reducers: {
         setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
         setFetching: (state, action: PayloadAction<boolean>) => { state.isFetching = action.payload },
-        setSuccess: (state, action: PayloadAction<boolean>) => { state.isSuccess = action.payload },
-
-        setValues: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
-
-        setOrders: (state, action: PayloadAction<any[]>) => { state.orders = action.payload },
-
-        setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.customers = action.payload },
-        setParties: (state, action: PayloadAction<IParty[]>) => { state.parties = action.payload },
-        setModels: (state, action: PayloadAction<IModel[]>) => { state.models = action.payload },
-        setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.modelBoxes = action.payload },        
-        setBaseLoks: (state, action: PayloadAction<ILock[]>) => { state.baseLocks = action.payload },
-        setOptionalLocks: (state, action: PayloadAction<ILock[]>) => { state.optionalLocks = action.payload },
-        setSpinners: (state, action: PayloadAction<ISpinner[]>) => { state.spinners = action.payload },
-        setCylinders: (state, action: PayloadAction<ICylinder[]>) => { state.cylinders = action.payload },
-        setCovers: (state, action: PayloadAction<ICover[]>) => { state.covers = action.payload },
-        setBaseCovers: (state, action: PayloadAction<ICover[]>) => { state.baseCovers = action.payload },
-        setBaseCovers2: (state, action: PayloadAction<ICover[]>) => { state.baseCovers2 = action.payload },
-        setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.optionalCovers = action.payload },
-        setEyes: (state, action: PayloadAction<IEye[]>) => { state.eyes = action.payload },
-        setEyeLocations: (state, action: PayloadAction<IEyeLocation[]>) => { state.eyeLocations = action.payload },
-        setHandles: (state, action: PayloadAction<IHandle[]>) => { state.handles = action.payload },
-        setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorations = action.payload },
-        setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsOutside = action.payload },
-        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.typeDecorationsInside = action.payload },        
-        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.doorThicks = action.payload },
-        setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.decorations = action.payload },
-        setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsOutside = action.payload },
-        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.decorationsInside = action.payload },
-        setWraps: (state, action: PayloadAction<IWrap[]>) => { state.wraps = action.payload },
-        setPatinas: (state, action: PayloadAction<IPatina[]>) => { state.patinas = action.payload },
-        setTypeWindows: (state, action: PayloadAction<ITypeWindow[]>) => { state.typeWindows = action.payload },
-        setWindows: (state, action: PayloadAction<IWindow[]>) => { state.windows = action.payload },
-        setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.currentWindows = action.payload },
-        setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.colorTints = action.payload },
-        setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.colorForges = action.payload },
-        setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.patinaForges = action.payload },
+        setSuccess: (state, action: PayloadAction<boolean>) => { state.isSuccess = action.payload },       
+        setCancel: (state, action: PayloadAction<boolean>) => { state.isCancel = action.payload },       
         
-        setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.locationHinges = action.payload },
-        setHingeCounts: (state, action: PayloadAction<IHingeCount[]>) => { state.hingeCounts = action.payload },
-        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.typeHinges = action.payload },        
+        setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
 
-        setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalLeafs = action.payload },
-        setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.thickMetalBoxes = action.payload },
-        setJambs: (state, action: PayloadAction<IJamb[]>) => { state.jambs = action.payload },
-        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.currentJambs = action.payload },
-        setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.locationJambs = action.payload },
-        setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.fittingColors = action.payload },
-
-        setSealers: (state, action: PayloadAction<ISealer[]>) => { state.sealers = action.payload },
+        setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.staticTables.customers = action.payload },
+        setParties: (state, action: PayloadAction<IParty[]>) => { state.staticTables.parties = action.payload },
+        setModels: (state, action: PayloadAction<IModel[]>) => { state.staticTables.models = action.payload },
+        setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.staticTables.modelBoxes = action.payload },        
+        setBaseLoks: (state, action: PayloadAction<ILock[]>) => { state.staticTables.baseLocks = action.payload },
+        setOptionalLocks: (state, action: PayloadAction<ILock[]>) => { state.staticTables.optionalLocks = action.payload },
+        setSpinners: (state, action: PayloadAction<ISpinner[]>) => { state.staticTables.spinners = action.payload },
+        setCylinders: (state, action: PayloadAction<ICylinder[]>) => { state.staticTables.cylinders = action.payload },
+        setCovers: (state, action: PayloadAction<ICover[]>) => { state.staticTables.covers = action.payload },
+        setBaseCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers = action.payload },
+        setBaseCovers2: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers2 = action.payload },
+        setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.optionalCovers = action.payload },
+        setEyes: (state, action: PayloadAction<IEye[]>) => { state.staticTables.eyes = action.payload },
+        setEyeLocations: (state, action: PayloadAction<IEyeLocation[]>) => { state.staticTables.eyeLocations = action.payload },
+        setHandles: (state, action: PayloadAction<IHandle[]>) => { state.staticTables.handles = action.payload },
+        setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.staticTables.typeDecorations = action.payload },
+        setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsOutside = action.payload },
+        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsInside = action.payload },        
+        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.computedTables.doorThicks = action.payload },
+        setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.staticTables.decorations = action.payload },
+        setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsOutside = action.payload },
+        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsInside = action.payload },
+        setWraps: (state, action: PayloadAction<IWrap[]>) => { state.staticTables.wraps = action.payload },
+        setPatinas: (state, action: PayloadAction<IPatina[]>) => { state.staticTables.patinas = action.payload },
+        setTypeWindows: (state, action: PayloadAction<ITypeWindow[]>) => { state.staticTables.typeWindows = action.payload },
+        setWindows: (state, action: PayloadAction<IWindow[]>) => { state.staticTables.windows = action.payload },
+        setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.computedTables.currentWindows = action.payload },
+        setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.staticTables.colorTints = action.payload },
+        setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.staticTables.colorForges = action.payload },
+        setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.staticTables.patinaForges = action.payload },
         
-        setId: (state, action: PayloadAction<string>) => { state.order._id = action.payload },
-        setNumber: (state, action: PayloadAction<string>) => { state.order.number = action.payload },        
-        setCustomer: (state, action: PayloadAction<string>) => { state.order.customer = action.payload },
-        setNumberCustomer: (state, action: PayloadAction<string>) => { state.order.numberCustomer = action.payload },
-        setParty: (state, action: PayloadAction<string>) => { state.order.party = action.payload },
-        setCountDoors: (state, action: PayloadAction<number | string>) => { state.order.countDoors = action.payload },
-        setCostDoor: (state, action: PayloadAction<number | string>) => { state.order.costDoor = action.payload },
-        setNote: (state, action: PayloadAction<string>) => { state.order.note = action.payload }, 
+        setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.staticTables.locationHinges = action.payload },
+        setHingeCounts: (state, action: PayloadAction<IHingeCount[]>) => { state.staticTables.hingeCounts = action.payload },
+        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.staticTables.typeHinges = action.payload },        
+
+        setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.staticTables.thickMetalLeafs = action.payload },
+        setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.staticTables.thickMetalBoxes = action.payload },
+        setJambs: (state, action: PayloadAction<IJamb[]>) => { state.staticTables.jambs = action.payload },
+        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.computedTables.currentJambs = action.payload },
+        setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.staticTables.locationJambs = action.payload },
+        setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.staticTables.fittingColors = action.payload },
+
+        setSealers: (state, action: PayloadAction<ISealer[]>) => { state.staticTables.sealers = action.payload },
+        
+        setId: (state, action: PayloadAction<string>) => { state.currentOrder._id = action.payload },
+        setNumber: (state, action: PayloadAction<string>) => { state.currentOrder.number = action.payload },        
+        setCustomer: (state, action: PayloadAction<string>) => { state.currentOrder.customer = action.payload },
+        setNumberCustomer: (state, action: PayloadAction<string>) => { state.currentOrder.numberCustomer = action.payload },
+        setParty: (state, action: PayloadAction<string>) => { state.currentOrder.party = action.payload },
+        setCountDoors: (state, action: PayloadAction<number | string>) => { state.currentOrder.countDoors = action.payload },
+        setCostDoor: (state, action: PayloadAction<number | string>) => { state.currentOrder.costDoor = action.payload },
+        setNote: (state, action: PayloadAction<string>) => { state.currentOrder.note = action.payload }, 
         setModel: (state, action: PayloadAction<string>) => { 
-            state.order.model = action.payload            
+            state.currentOrder.model = action.payload            
 
-            const { models, typeDecorations, jambs } = state
+            const { models, typeDecorations, jambs } = state.staticTables
             const selectedModel = models.find(item=>item.value === action.payload)!
             
-            state.typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel.typeOutside || item.type === "нет" || item.type === "примечание")
-            state.order.typeDecorationOutside = ""
+            state.computedTables.typeDecorationsOutside = typeDecorations.filter(item => item.type === selectedModel.typeOutside || item.type === "нет" || item.type === "примечание")
+            state.currentOrder.typeDecorationOutside = ""
 
-            state.typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel.typeInside || item.type === "нет" || item.type === "примечание")
-            state.order.typeDecorationInside = ""
+            state.computedTables.typeDecorationsInside = typeDecorations.filter(item => item.type === selectedModel.typeInside || item.type === "нет" || item.type === "примечание")
+            state.currentOrder.typeDecorationInside = ""
 
-            state.currentJambs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
-            state.order.jamb = ""            
+            state.computedTables.currentJambs = jambs.filter(item => item.type === selectedModel.typeOutside || item.type === "все" )
+            state.currentOrder.jamb = ""            
             
             if (selectedModel.typeOutside === "панель") {
-                state.isJambWrap =  true
-                state.order.jambWrap = ""
+                state.block.isJambWrap =  true
+                state.currentOrder.jambWrap = ""
             } else {
-                state.isJambWrap =  false
-                state.order.jambWrap = "нет"
+                state.block.isJambWrap =  false
+                state.currentOrder.jambWrap = "нет"
             }                    
 
-            state.isLocationJamb = selectedModel.isInside
+            state.block.isLocationJamb = selectedModel.isInside
             if (selectedModel.isInside === false) {
-                state.order.locationJumb = "нет"            
+                state.currentOrder.locationJumb = "нет"            
             } else {
-                state.order.locationJumb = ""
+                state.currentOrder.locationJumb = ""
             }
 
-            state.isDouble = selectedModel.isDouble
+            state.block.isDouble = selectedModel.isDouble
             if (!selectedModel.isDouble) {
-                state.order.widthDouble = 0
+                state.currentOrder.widthDouble = 0
             } else {
-                state.order.widthDouble = undefined
+                state.currentOrder.widthDouble = undefined
             }
 
-            state.doorThicks = selectedModel!.doorThicks 
-            state.order.doorThick = undefined
+            state.computedTables.doorThicks = selectedModel!.doorThicks 
+            state.currentOrder.doorThick = undefined
 
-            state.order.sealer = ""
+            state.currentOrder.sealer = ""
 
-            state.order.decorationOutside = ""
+            state.currentOrder.decorationOutside = ""
 
-            state.isWrapOutside = false
-            state.order.wrapOutside = "" 
+            state.block.isWrapOutside = false
+            state.currentOrder.wrapOutside = "" 
 
-            state.order.decorationInside = ""
-            state.isWrapInside = false
-            state.order.wrapInside = ""
+            state.currentOrder.decorationInside = ""
+            state.block.isWrapInside = false
+            state.currentOrder.wrapInside = ""
 
-            state.isPatinaOutside = false
-            state.order.patinaOutside = ""
+            state.block.isPatinaOutside = false
+            state.currentOrder.patinaOutside = ""
 
-            state.order.typeWindow = ""
-            state.order.doorWindow = ""
-            state.order.colorTint = ""
-            state.isColorForge = false
-            state.order.colorForge = ""
-            state.isPatinaForge = false
-            state.order.patinaForge = ""
-            state.order.heightWindow = undefined
-            state.order.widthWindow = undefined
-            state.order.thickWindow = undefined
+            state.currentOrder.typeWindow = ""
+            state.currentOrder.doorWindow = ""
+            state.currentOrder.colorTint = ""
+            state.block.isColorForge = false
+            state.currentOrder.colorForge = ""
+            state.block.isPatinaForge = false
+            state.currentOrder.patinaForge = ""
+            state.currentOrder.heightWindow = undefined
+            state.currentOrder.widthWindow = undefined
+            state.currentOrder.thickWindow = undefined
         },        
-        setDoorThick: (state, action: PayloadAction<number | undefined>) => { state.order.doorThick = action.payload },        
-        setModelBox: (state, action: PayloadAction<string>) => { state.order.modelBox = action.payload },
-        setHeight: (state, action: PayloadAction<number | undefined>) => { state.order.height = action.payload },
-        setWidth: (state, action: PayloadAction<number | undefined>) => { state.order.width = action.payload },
-        setWidthDouble: (state, action: PayloadAction<number | undefined>) => { state.order.widthDouble = action.payload },
-        setLocationHinge: (state, action: PayloadAction<string>) => { state.order.locationHinge = action.payload },
-        setTypeHinge: (state, action: PayloadAction<string>) => { state.order.typeHinge = action.payload },
-        setCountHinge: (state, action: PayloadAction<number|string>) => { state.order.countHinge = action.payload },
+        setDoorThick: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.doorThick = action.payload },        
+        setModelBox: (state, action: PayloadAction<string>) => { state.currentOrder.modelBox = action.payload },
+        setHeight: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.height = action.payload },
+        setWidth: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.width = action.payload },
+        setWidthDouble: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.widthDouble = action.payload },
+        setLocationHinge: (state, action: PayloadAction<string>) => { state.currentOrder.locationHinge = action.payload },
+        setTypeHinge: (state, action: PayloadAction<string>) => { state.currentOrder.typeHinge = action.payload },
+        setCountHinge: (state, action: PayloadAction<number|string>) => { state.currentOrder.countHinge = action.payload },
         
-        setThickMetalLeaf: (state, action: PayloadAction<number | undefined>) => { state.order.thickMetalLeaf = action.payload },
-        setThickMetalBox: (state, action: PayloadAction<number | undefined>) => { state.order.thickMetalBox = action.payload },
+        setThickMetalLeaf: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickMetalLeaf = action.payload },
+        setThickMetalBox: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickMetalBox = action.payload },
 
         //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => { 
-            state.order.baseLock = action.payload
+            state.currentOrder.baseLock = action.payload
             
-            const { baseLocks, covers } = state
+            const { baseLocks, covers } = state.staticTables
             const baseLock = baseLocks.find(lock => lock.value === action.payload)
             
             if (baseLock?.isBolt) {
-                state.isLockSpinner = true
-                state.order.lockSpinner = ""
-                state.order.lockSpinnerColor = ""                
+                state.block.isLockSpinner = true
+                state.currentOrder.lockSpinner = ""
+                state.currentOrder.lockSpinnerColor = ""                
             } else {
-                state.isLockSpinner = false
-                state.order.lockSpinner = "нет"
-                state.order.lockSpinnerColor = "нет"                 
+                state.block.isLockSpinner = false
+                state.currentOrder.lockSpinner = "нет"
+                state.currentOrder.lockSpinnerColor = "нет"                 
             }
             
             switch (baseLock?.type) {
                 case "цилиндр":
-                    state.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
-                    state.isBaseCylinder = true                    
-                    state.order.baseCylinder = ""
-                    state.isBaseCover = true
-                    state.order.baseCoverOutside = ""
-                    state.order.baseCoverColorOutside = ""
-                    state.order.baseCoverInside= ""
-                    state.order.baseCoverColorInside = ""
-                    state.isBaseCover2 = false
-                    state.order.baseCoverOutside2 = "нет"
-                    state.order.baseCoverColorOutside2 = "нет"
-                    state.order.baseCoverInside2 = "нет"
-                    state.order.baseCoverColorInside2 = "нет"
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.block.isBaseCylinder = true                    
+                    state.currentOrder.baseCylinder = ""
+                    state.block.isBaseCover = true
+                    state.currentOrder.baseCoverOutside = ""
+                    state.currentOrder.baseCoverColorOutside = ""
+                    state.currentOrder.baseCoverInside= ""
+                    state.currentOrder.baseCoverColorInside = ""
+                    state.block.isBaseCover2 = false
+                    state.currentOrder.baseCoverOutside2 = "нет"
+                    state.currentOrder.baseCoverColorOutside2 = "нет"
+                    state.currentOrder.baseCoverInside2 = "нет"
+                    state.currentOrder.baseCoverColorInside2 = "нет"
                     break
                 case "цилиндр-сувальда":
-                    state.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
                     
-                    state.isBaseCylinder = true                    
-                    state.order.baseCylinder = ""
-                    state.isBaseCover = true
-                    state.order.baseCoverOutside = ""
-                    state.order.baseCoverColorOutside = ""
-                    state.order.baseCoverInside= ""
-                    state.order.baseCoverColorInside = ""
-                    state.isBaseCover2 = true
-                    state.order.baseCoverOutside2 = ""
-                    state.order.baseCoverColorOutside2 = ""
-                    state.order.baseCoverInside2 = ""
-                    state.order.baseCoverColorInside2 = ""                    
+                    state.block.isBaseCylinder = true                    
+                    state.currentOrder.baseCylinder = ""
+                    state.block.isBaseCover = true
+                    state.currentOrder.baseCoverOutside = ""
+                    state.currentOrder.baseCoverColorOutside = ""
+                    state.currentOrder.baseCoverInside= ""
+                    state.currentOrder.baseCoverColorInside = ""
+                    state.block.isBaseCover2 = true
+                    state.currentOrder.baseCoverOutside2 = ""
+                    state.currentOrder.baseCoverColorOutside2 = ""
+                    state.currentOrder.baseCoverInside2 = ""
+                    state.currentOrder.baseCoverColorInside2 = ""                    
                     break
                 case "сувальда-цилиндр":
-                    state.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
                     
-                    state.isBaseCylinder = true                    
-                    state.order.baseCylinder = ""
-                    state.isBaseCover = true
-                    state.order.baseCoverOutside = ""
-                    state.order.baseCoverColorOutside = ""
-                    state.order.baseCoverInside= ""
-                    state.order.baseCoverColorInside = ""
-                    state.isBaseCover2 = true
-                    state.order.baseCoverOutside2 = ""
-                    state.order.baseCoverColorOutside2 = ""
-                    state.order.baseCoverInside2 = ""
-                    state.order.baseCoverColorInside2 = ""                    
+                    state.block.isBaseCylinder = true                    
+                    state.currentOrder.baseCylinder = ""
+                    state.block.isBaseCover = true
+                    state.currentOrder.baseCoverOutside = ""
+                    state.currentOrder.baseCoverColorOutside = ""
+                    state.currentOrder.baseCoverInside= ""
+                    state.currentOrder.baseCoverColorInside = ""
+                    state.block.isBaseCover2 = true
+                    state.currentOrder.baseCoverOutside2 = ""
+                    state.currentOrder.baseCoverColorOutside2 = ""
+                    state.currentOrder.baseCoverInside2 = ""
+                    state.currentOrder.baseCoverColorInside2 = ""                    
                     break
                 case "сувальда":
-                    state.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
-                    state.isBaseCylinder = false                    
-                    state.order.baseCylinder = "нет"
-                    state.isBaseCover = true
-                    state.order.baseCoverOutside = ""
-                    state.order.baseCoverColorOutside = ""
-                    state.order.baseCoverInside= ""
-                    state.order.baseCoverColorInside = ""
-                    state.isBaseCover2 = false
-                    state.order.baseCoverOutside2 = "нет"
-                    state.order.baseCoverColorOutside2 = "нет"
-                    state.order.baseCoverInside2 = "нет"
-                    state.order.baseCoverColorInside2 = "нет"                    
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.block.isBaseCylinder = false                    
+                    state.currentOrder.baseCylinder = "нет"
+                    state.block.isBaseCover = true
+                    state.currentOrder.baseCoverOutside = ""
+                    state.currentOrder.baseCoverColorOutside = ""
+                    state.currentOrder.baseCoverInside= ""
+                    state.currentOrder.baseCoverColorInside = ""
+                    state.block.isBaseCover2 = false
+                    state.currentOrder.baseCoverOutside2 = "нет"
+                    state.currentOrder.baseCoverColorOutside2 = "нет"
+                    state.currentOrder.baseCoverInside2 = "нет"
+                    state.currentOrder.baseCoverColorInside2 = "нет"                    
                     break
                 case "нет":
                 case "другое":
-                    state.baseCovers = covers.filter(cover => cover.type === "нет")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
-                    state.isBaseCylinder = false
-                    state.order.baseCylinder = "нет"
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "нет")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.block.isBaseCylinder = false
+                    state.currentOrder.baseCylinder = "нет"
 
-                    state.isBaseCover = false
-                    state.order.baseCoverOutside = "нет"
-                    state.order.baseCoverColorOutside = "нет"
-                    state.order.baseCoverInside= "нет"
-                    state.order.baseCoverColorInside = "нет"
+                    state.block.isBaseCover = false
+                    state.currentOrder.baseCoverOutside = "нет"
+                    state.currentOrder.baseCoverColorOutside = "нет"
+                    state.currentOrder.baseCoverInside= "нет"
+                    state.currentOrder.baseCoverColorInside = "нет"
 
-                    state.isBaseCover2 = false
-                    state.order.baseCoverOutside2 = "нет"
-                    state.order.baseCoverColorOutside2 = "нет"
-                    state.order.baseCoverInside2 = "нет"
-                    state.order.baseCoverColorInside2 = "нет" 
+                    state.block.isBaseCover2 = false
+                    state.currentOrder.baseCoverOutside2 = "нет"
+                    state.currentOrder.baseCoverColorOutside2 = "нет"
+                    state.currentOrder.baseCoverInside2 = "нет"
+                    state.currentOrder.baseCoverColorInside2 = "нет" 
                     break                
                 case "примечание":
-                    state.baseCovers = covers
-                    state.baseCovers2 = covers
+                    state.computedTables.baseCovers = covers
+                    state.computedTables.baseCovers2 = covers
 
-                    state.isBaseCylinder = true
-                    state.order.baseCylinder = ""
+                    state.block.isBaseCylinder = true
+                    state.currentOrder.baseCylinder = ""
 
-                    state.isBaseCover = true
-                    state.order.baseCoverOutside = ""
-                    state.order.baseCoverColorOutside = ""
-                    state.order.baseCoverInside= ""
-                    state.order.baseCoverColorInside = ""
+                    state.block.isBaseCover = true
+                    state.currentOrder.baseCoverOutside = ""
+                    state.currentOrder.baseCoverColorOutside = ""
+                    state.currentOrder.baseCoverInside= ""
+                    state.currentOrder.baseCoverColorInside = ""
 
-                    state.isBaseCover2 = true
-                    state.order.baseCoverOutside2 = ""
-                    state.order.baseCoverColorOutside2 = ""
-                    state.order.baseCoverInside2 = ""
-                    state.order.baseCoverColorInside2 = ""                    
+                    state.block.isBaseCover2 = true
+                    state.currentOrder.baseCoverOutside2 = ""
+                    state.currentOrder.baseCoverColorOutside2 = ""
+                    state.currentOrder.baseCoverInside2 = ""
+                    state.currentOrder.baseCoverColorInside2 = ""                    
                     break
                 default:
-                    state.baseCovers = covers.filter(cover => cover.type === "нет")
-                    state.baseCovers2 = covers.filter(cover => cover.type === "нет")
-                    state.isBaseCylinder = false
-                    state.order.baseCylinder = "нет"
+                    state.computedTables.baseCovers = covers.filter(cover => cover.type === "нет")
+                    state.computedTables.baseCovers2 = covers.filter(cover => cover.type === "нет")
+                    state.block.isBaseCylinder = false
+                    state.currentOrder.baseCylinder = "нет"
 
-                    state.isBaseCover = false
-                    state.order.baseCoverOutside = "нет"
-                    state.order.baseCoverColorOutside = "нет"
-                    state.order.baseCoverInside= "нет"
-                    state.order.baseCoverColorInside = "нет"
+                    state.block.isBaseCover = false
+                    state.currentOrder.baseCoverOutside = "нет"
+                    state.currentOrder.baseCoverColorOutside = "нет"
+                    state.currentOrder.baseCoverInside= "нет"
+                    state.currentOrder.baseCoverColorInside = "нет"
 
-                    state.isBaseCover2 = false
-                    state.order.baseCoverOutside2 = "нет"
-                    state.order.baseCoverColorOutside2 = "нет"
-                    state.order.baseCoverInside2 = "нет"
-                    state.order.baseCoverColorInside2 = "нет"
+                    state.block.isBaseCover2 = false
+                    state.currentOrder.baseCoverOutside2 = "нет"
+                    state.currentOrder.baseCoverColorOutside2 = "нет"
+                    state.currentOrder.baseCoverInside2 = "нет"
+                    state.currentOrder.baseCoverColorInside2 = "нет"
             }
         },
-        setBaseCylinder: (state, action: PayloadAction<string>) => { state.order.baseCylinder = action.payload },        
-        setLockSpinner: (state, action: PayloadAction<string>) => { state.order.lockSpinner = action.payload },
-        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.order.lockSpinnerColor = action.payload }, 
+        setBaseCylinder: (state, action: PayloadAction<string>) => { state.currentOrder.baseCylinder = action.payload },        
+        setLockSpinner: (state, action: PayloadAction<string>) => { state.currentOrder.lockSpinner = action.payload },
+        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.currentOrder.lockSpinnerColor = action.payload }, 
         
         //Накладки основного замка        
-        setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside = action.payload },        
-        setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside = action.payload },        
-        setBaseCoverInside: (state, action: PayloadAction<string>) => { state.order.baseCoverInside = action.payload },
-        setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside = action.payload },
+        setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverOutside = action.payload },        
+        setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorOutside = action.payload },        
+        setBaseCoverInside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverInside = action.payload },
+        setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorInside = action.payload },
 
         //Накладки основного замка 2       
-        setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverOutside2 = action.payload },
-        setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorOutside2 = action.payload },        
-        setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverInside2 = action.payload },
-        setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.order.baseCoverColorInside2 = action.payload },
+        setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverOutside2 = action.payload },
+        setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorOutside2 = action.payload },        
+        setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverInside2 = action.payload },
+        setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorInside2 = action.payload },
 
         //Дополнительный замок
         setOptionalLock: (state, action: PayloadAction<string>) => {             
-            state.order.optionalLock = action.payload            
+            state.currentOrder.optionalLock = action.payload            
 
-            const { optionalLocks, covers } = state                    
+            const { optionalLocks, covers } = state.staticTables                    
             const optionalLock = optionalLocks.find(lock => lock.value === action.payload)
 
             switch (optionalLock?.type) {
                 case "цилиндр":
-                    state.optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
-                    state.isOptionalCylinder = true
-                    state.isOptionalCover = true
-                    state.order.optionalCylinder = ""                    
-                    state.order.optionalCoverOutside = ""
-                    state.order.optionalCoverColorOutside = ""
-                    state.order.optionalCoverInside = ""
-                    state.order.optionalCoverColorInside = ""
+                    state.computedTables.optionalCovers = covers.filter(cover => cover.type === "цилиндр" || cover.type === "нет" || cover.type === "примечание")
+                    state.block.isOptionalCylinder = true
+                    state.block.isOptionalCover = true
+                    state.currentOrder.optionalCylinder = ""                    
+                    state.currentOrder.optionalCoverOutside = ""
+                    state.currentOrder.optionalCoverColorOutside = ""
+                    state.currentOrder.optionalCoverInside = ""
+                    state.currentOrder.optionalCoverColorInside = ""
                     break
                 case "сувальда":
-                    state.optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
-                    state.isOptionalCylinder = false
-                    state.isOptionalCover = true
-                    state.order.optionalCylinder = "нет"                    
-                    state.order.optionalCoverOutside = ""
-                    state.order.optionalCoverColorOutside = ""
-                    state.order.optionalCoverInside = ""
-                    state.order.optionalCoverColorInside = ""
+                    state.computedTables.optionalCovers = covers.filter(cover => cover.type === "сувальда" || cover.type === "нет" || cover.type === "примечание")
+                    state.block.isOptionalCylinder = false
+                    state.block.isOptionalCover = true
+                    state.currentOrder.optionalCylinder = "нет"                    
+                    state.currentOrder.optionalCoverOutside = ""
+                    state.currentOrder.optionalCoverColorOutside = ""
+                    state.currentOrder.optionalCoverInside = ""
+                    state.currentOrder.optionalCoverColorInside = ""
                     break  
                 case "примечание":
-                    state.optionalCovers = covers
-                    state.isOptionalCylinder = true
-                    state.isOptionalCover = true
-                    state.order.optionalCylinder = ""                    
-                    state.order.optionalCoverOutside = ""
-                    state.order.optionalCoverColorOutside = ""
-                    state.order.optionalCoverInside = ""
-                    state.order.optionalCoverColorInside = ""
+                    state.computedTables.optionalCovers = covers
+                    state.block.isOptionalCylinder = true
+                    state.block.isOptionalCover = true
+                    state.currentOrder.optionalCylinder = ""                    
+                    state.currentOrder.optionalCoverOutside = ""
+                    state.currentOrder.optionalCoverColorOutside = ""
+                    state.currentOrder.optionalCoverInside = ""
+                    state.currentOrder.optionalCoverColorInside = ""
                     break
                 default:
-                    state.optionalCovers = covers.filter(cover => cover.type === "нет")
-                    state.isOptionalCylinder = false
-                    state.isOptionalCover = false
-                    state.order.optionalCylinder = "нет"                    
-                    state.order.optionalCoverOutside = "нет"
-                    state.order.optionalCoverColorOutside = "нет"
-                    state.order.optionalCoverInside = "нет"
-                    state.order.optionalCoverColorInside = "нет"                  
+                    state.computedTables.optionalCovers = covers.filter(cover => cover.type === "нет")
+                    state.block.isOptionalCylinder = false
+                    state.block.isOptionalCover = false
+                    state.currentOrder.optionalCylinder = "нет"                    
+                    state.currentOrder.optionalCoverOutside = "нет"
+                    state.currentOrder.optionalCoverColorOutside = "нет"
+                    state.currentOrder.optionalCoverInside = "нет"
+                    state.currentOrder.optionalCoverColorInside = "нет"                  
             } 
         },
-        setOptionalCylinder: (state, action: PayloadAction<string>) => { state.order.optionalCylinder = action.payload },        
+        setOptionalCylinder: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCylinder = action.payload },        
         
         //Накладки дополнительного замка       
-        setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverOutside = action.payload },
-        setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorOutside = action.payload },
-        setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverInside = action.payload },
-        setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.order.optionalCoverColorInside = action.payload },
+        setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverOutside = action.payload },
+        setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverColorOutside = action.payload },
+        setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverInside = action.payload },
+        setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverColorInside = action.payload },
 
         //Глазок
         setEye: (state, action: PayloadAction<string>) => { 
             const eye: string  = action.payload
-            state.order.eye = eye
+            state.currentOrder.eye = eye
             if (eye === "нет") {
-                state.order.colorEye = "нет"
-                state.order.eyeLocation = "нет"
+                state.currentOrder.colorEye = "нет"
+                state.currentOrder.eyeLocation = "нет"
             } else {
-                state.order.colorEye = ""
-                state.order.eyeLocation = ""
+                state.currentOrder.colorEye = ""
+                state.currentOrder.eyeLocation = ""
             }
         },        
-        setColorEye: (state, action: PayloadAction<string>) => { state.order.colorEye = action.payload },        
-        setEyeLocation: (state, action: PayloadAction<string>) => { state.order.eyeLocation = action.payload },
+        setColorEye: (state, action: PayloadAction<string>) => { state.currentOrder.colorEye = action.payload },        
+        setEyeLocation: (state, action: PayloadAction<string>) => { state.currentOrder.eyeLocation = action.payload },
 
         //Ручка
         setHandle: (state, action: PayloadAction<string>) => { 
             const handle = action.payload
-            state.order.handle = handle
+            state.currentOrder.handle = handle
             if (handle === "нет") {
-                state.order.handleColor = "нет"               
+                state.currentOrder.handleColor = "нет"               
             } else {
-                state.order.handleColor = ""  
+                state.currentOrder.handleColor = ""  
             }
         },
-        setHandleColor: (state, action: PayloadAction<string>) => { state.order.handleColor = action.payload },
+        setHandleColor: (state, action: PayloadAction<string>) => { state.currentOrder.handleColor = action.payload },
 
         //Вертушок
         setSpinner: (state, action: PayloadAction<string>) => { 
             const spinner: string = action.payload
-            state.order.spinner = spinner
+            state.currentOrder.spinner = spinner
             if (spinner === "нет") {
-                state.order.spinnerColor = "нет"                              
+                state.currentOrder.spinnerColor = "нет"                              
             } else {
-                state.order.spinnerColor = "" 
+                state.currentOrder.spinnerColor = "" 
             }
         },
-        setSpinnerColor: (state, action: PayloadAction<string>) => { state.order.spinnerColor = action.payload },
+        setSpinnerColor: (state, action: PayloadAction<string>) => { state.currentOrder.spinnerColor = action.payload },
 
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => { 
-            state.order.typeDecorationOutside = action.payload
+            state.currentOrder.typeDecorationOutside = action.payload
 
-            const { typeDecorationsOutside, decorations } = state           
+            const {  decorations } = state.staticTables          
+            const { typeDecorationsOutside } = state.computedTables         
 
             const selectedType = typeDecorationsOutside.find(item => item.value === action.payload)!
             
             switch (selectedType.variety) {
                 case "нет":
                 case "примечание":
-                    state.decorationsOutside = decorations.filter(item => item.variety === "нет")
+                    state.computedTables.decorationsOutside = decorations.filter(item => item.variety === "нет")
                     break
                 default: 
-                    state.decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+                    state.computedTables.decorationsOutside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
             }                        
 
             switch (selectedType.type) {
                 case "панель":                                                      
-                    state.isWrapOutside = true
-                    state.isPatinaOutside = true
-                    state.order.wrapOutside = ""
-                    state.order.patinaOutside = ""
+                    state.block.isWrapOutside = true
+                    state.block.isPatinaOutside = true
+                    state.currentOrder.wrapOutside = ""
+                    state.currentOrder.patinaOutside = ""
                     break
                 case "металл":                                       
-                    state.isWrapOutside = false
-                    state.isPatinaOutside = false
-                    state.order.wrapOutside = "нет"
-                    state.order.patinaOutside = "нет"
+                    state.block.isWrapOutside = false
+                    state.block.isPatinaOutside = false
+                    state.currentOrder.wrapOutside = "нет"
+                    state.currentOrder.patinaOutside = "нет"
                     break
                 case "нет":
                 case "примечание":
-                    state.order.decorationOutside = "нет" 
-                    state.isWrapOutside = false
-                    state.isPatinaOutside = false
-                    state.order.wrapOutside = "нет"
-                    state.order.patinaOutside = "нет"
+                    state.currentOrder.decorationOutside = "нет" 
+                    state.block.isWrapOutside = false
+                    state.block.isPatinaOutside = false
+                    state.currentOrder.wrapOutside = "нет"
+                    state.currentOrder.patinaOutside = "нет"
                     break                
             }
         },
-        setDecorationOutside: (state, action: PayloadAction<string>) => { state.order.decorationOutside = action.payload },        
-        setWrapOutside: (state, action: PayloadAction<string>) => { state.order.wrapOutside = action.payload },        
-        setPatinaOutside: (state, action: PayloadAction<string>) => { state.order.patinaOutside = action.payload },
+        setDecorationOutside: (state, action: PayloadAction<string>) => { state.currentOrder.decorationOutside = action.payload },        
+        setWrapOutside: (state, action: PayloadAction<string>) => { state.currentOrder.wrapOutside = action.payload },        
+        setPatinaOutside: (state, action: PayloadAction<string>) => { state.currentOrder.patinaOutside = action.payload },
 
         setTypeDecorationInside: (state, action: PayloadAction<string>) => { 
-            state.order.typeDecorationInside = action.payload
+            state.currentOrder.typeDecorationInside = action.payload
 
-            const { typeDecorationsInside, decorations } = state            
+            const { decorations } = state.staticTables          
+            const { typeDecorationsInside } = state.computedTables          
             
             const selectedType = typeDecorationsInside.find(item => item.value === action.payload)!
 
             switch (selectedType.variety) {
                 case "нет":
                 case "примечание":
-                    state.decorationsInside = decorations.filter(item => item.variety === "нет")
+                    state.computedTables.decorationsInside = decorations.filter(item => item.variety === "нет")
                     break
                 default: 
-                    state.decorationsInside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
+                    state.computedTables.decorationsInside = decorations.filter(item => item.variety === selectedType.variety || item.variety === "примечание")
             }
             
             switch (selectedType.type) {
                 case "панель":                                                      
-                    state.isWrapInside = true
-                    state.isPatinaInside = true
-                    state.order.wrapInside = ""
-                    state.order.patinaInside = ""
+                    state.block.isWrapInside = true
+                    state.block.isPatinaInside = true
+                    state.currentOrder.wrapInside = ""
+                    state.currentOrder.patinaInside = ""
                     break
                 case "металл":                                       
-                    state.isWrapInside = false
-                    state.isPatinaInside = false
-                    state.order.wrapInside = "нет"
-                    state.order.patinaInside = "нет"
+                    state.block.isWrapInside = false
+                    state.block.isPatinaInside = false
+                    state.currentOrder.wrapInside = "нет"
+                    state.currentOrder.patinaInside = "нет"
                     break
                 case "нет":
                 case "примечание":
-                    state.order.decorationInside = "нет" 
-                    state.isWrapInside = false
-                    state.isPatinaInside = false
-                    state.order.wrapInside = "нет"
-                    state.order.patinaInside = "нет"
+                    state.currentOrder.decorationInside = "нет" 
+                    state.block.isWrapInside = false
+                    state.block.isPatinaInside = false
+                    state.currentOrder.wrapInside = "нет"
+                    state.currentOrder.patinaInside = "нет"
                     break
                 default:
-                    state.order.decorationInside = "нет" 
-                    state.isWrapInside = false
-                    state.isPatinaInside = false
-                    state.order.wrapInside = "нет"
-                    state.order.patinaInside = "нет"              
+                    state.currentOrder.decorationInside = "нет" 
+                    state.block.isWrapInside = false
+                    state.block.isPatinaInside = false
+                    state.currentOrder.wrapInside = "нет"
+                    state.currentOrder.patinaInside = "нет"              
             }
         },
-        setDecorationInside: (state, action: PayloadAction<string>) => { state.order.decorationInside = action.payload },        
-        setWrapInside: (state, action: PayloadAction<string>) => { state.order.wrapInside = action.payload }, 
-        setPatinaInside: (state, action: PayloadAction<string>) => { state.order.patinaInside = action.payload },        
+        setDecorationInside: (state, action: PayloadAction<string>) => { state.currentOrder.decorationInside = action.payload },        
+        setWrapInside: (state, action: PayloadAction<string>) => { state.currentOrder.wrapInside = action.payload }, 
+        setPatinaInside: (state, action: PayloadAction<string>) => { state.currentOrder.patinaInside = action.payload },        
         
-        setLocationJumb: (state, action: PayloadAction<string>) => { state.order.locationJumb = action.payload },        
-        setJamb: (state, action: PayloadAction<string>) => { state.order.jamb = action.payload },
-        setJambWrap: (state, action: PayloadAction<string>) => { state.order.jambWrap = action.payload }, 
+        setLocationJumb: (state, action: PayloadAction<string>) => { state.currentOrder.locationJumb = action.payload },        
+        setJamb: (state, action: PayloadAction<string>) => { state.currentOrder.jamb = action.payload },
+        setJambWrap: (state, action: PayloadAction<string>) => { state.currentOrder.jambWrap = action.payload }, 
 
         setTypeWindow: (state, action: PayloadAction<string>) => {
-            const { model, doorThick} = state.order           
+            const { model, doorThick} = state.currentOrder           
 
             if (model === "" || doorThick === undefined) {                
                 return alert("Сначала выберите модель двери и толщину")                
             }
 
-            const { windows, typeWindows } = state
+            const { windows, typeWindows } = state.staticTables
 
-            state.order.typeWindow = action.payload
+            state.currentOrder.typeWindow = action.payload
 
             const selectedType = typeWindows.find(item => item.value === action.payload)!
 
             switch (selectedType.type) {
                 case "нет":
                 case "примечание":    
-                    state.order.doorWindow = "нет"
-                    state.order.colorTint = "нет"
-                    state.isColorForge = false
-                    state.order.colorForge = "нет"
-                    state.isPatinaForge = false
-                    state.order.patinaForge = "нет"
-                    state.order.heightWindow = 0
-                    state.order.widthWindow = 0
-                    state.order.thickWindow= 0  
+                    state.currentOrder.doorWindow = "нет"
+                    state.currentOrder.colorTint = "нет"
+                    state.block.isColorForge = false
+                    state.currentOrder.colorForge = "нет"
+                    state.block.isPatinaForge = false
+                    state.currentOrder.patinaForge = "нет"
+                    state.currentOrder.heightWindow = 0
+                    state.currentOrder.widthWindow = 0
+                    state.currentOrder.thickWindow= 0  
                     break
                 case "КС":
-                    state.order.doorWindow = ""
-                    state.order.colorTint = ""
-                    state.isColorForge = true
-                    state.order.colorForge = ""
-                    state.isPatinaForge = true
-                    state.order.patinaForge = ""
-                    state.order.heightWindow = undefined
-                    state.order.widthWindow = undefined
-                    state.order.thickWindow= undefined 
+                    state.currentOrder.doorWindow = ""
+                    state.currentOrder.colorTint = ""
+                    state.block.isColorForge = true
+                    state.currentOrder.colorForge = ""
+                    state.block.isPatinaForge = true
+                    state.currentOrder.patinaForge = ""
+                    state.currentOrder.heightWindow = undefined
+                    state.currentOrder.widthWindow = undefined
+                    state.currentOrder.thickWindow= undefined 
                     break 
                 case "С":
-                    state.order.doorWindow = ""
-                    state.order.colorTint = ""
-                    state.isColorForge = false
-                    state.order.colorForge = "нет"
-                    state.isPatinaForge = false
-                    state.order.patinaForge = "нет"
-                    state.order.heightWindow = undefined
-                    state.order.widthWindow = undefined
-                    state.order.thickWindow= undefined 
+                    state.currentOrder.doorWindow = ""
+                    state.currentOrder.colorTint = ""
+                    state.block.isColorForge = false
+                    state.currentOrder.colorForge = "нет"
+                    state.block.isPatinaForge = false
+                    state.currentOrder.patinaForge = "нет"
+                    state.currentOrder.heightWindow = undefined
+                    state.currentOrder.widthWindow = undefined
+                    state.currentOrder.thickWindow= undefined 
                     break
                 default:    
-                    state.order.doorWindow = "нет"
-                    state.order.colorTint = "нет"
-                    state.isColorForge = false
-                    state.order.colorForge = "нет"
-                    state.isPatinaForge = false
-                    state.order.patinaForge = "нет"
-                    state.order.heightWindow = 0
-                    state.order.widthWindow = 0
-                    state.order.thickWindow= 0 
+                    state.currentOrder.doorWindow = "нет"
+                    state.currentOrder.colorTint = "нет"
+                    state.block.isColorForge = false
+                    state.currentOrder.colorForge = "нет"
+                    state.block.isPatinaForge = false
+                    state.currentOrder.patinaForge = "нет"
+                    state.currentOrder.heightWindow = 0
+                    state.currentOrder.widthWindow = 0
+                    state.currentOrder.thickWindow= 0 
             }
 
-            state.currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")            
+            state.computedTables.currentWindows = windows.filter(item => item.type === selectedType.type || item.type === "нет" || item.type === "примечание")            
         },
         setDoorWindow: (state, action: PayloadAction<string>) => { 
-            state.order.doorWindow = action.payload
+            state.currentOrder.doorWindow = action.payload
 
-            const {windows, models} = state
-            const { doorThick, model } = state.order
+            const {windows, models} = state.staticTables
+            const { doorThick, model } = state.currentOrder
 
             const selectedModel = models.find(item => item.value === model)!
             const selectedWindow = windows.find(item => item.value === action.payload)!
             
             if (selectedModel.isTermo) {
-                state.order.thickWindow = selectedWindow.tTermo
+                state.currentOrder.thickWindow = selectedWindow.tTermo
             } else {
                 switch (doorThick) {
                     case 60:
-                        state.order.thickWindow = selectedWindow.t60
+                        state.currentOrder.thickWindow = selectedWindow.t60
                         break
                     case 70:
-                        state.order.thickWindow = selectedWindow.t70
+                        state.currentOrder.thickWindow = selectedWindow.t70
                         break
                     case 80:
-                        state.order.thickWindow = selectedWindow.t80
+                        state.currentOrder.thickWindow = selectedWindow.t80
                         break
                     case 90:
-                        state.order.thickWindow = selectedWindow.t90
+                        state.currentOrder.thickWindow = selectedWindow.t90
                         break
                     case 100:
-                        state.order.thickWindow = selectedWindow.t100
+                        state.currentOrder.thickWindow = selectedWindow.t100
                         break       
                 }
             } 
             
-            state.order.heightWindow = selectedWindow.height
-            state.order.widthWindow = selectedWindow.width            
+            state.currentOrder.heightWindow = selectedWindow.height
+            state.currentOrder.widthWindow = selectedWindow.width            
         },
-        setColorTint: (state, action: PayloadAction<string>) => { state.order.colorTint = action.payload },
-        setColorForge: (state, action: PayloadAction<string>) => { state.order.colorForge = action.payload },        
-        setPatinaForge: (state, action: PayloadAction<string>) => { state.order.patinaForge = action.payload },        
-        setHeightWindow: (state, action: PayloadAction<number | undefined>) => { state.order.heightWindow = action.payload },
-        setWidthWindow: (state, action: PayloadAction<number | undefined>) => { state.order.widthWindow = action.payload },
-        setThickWindow: (state, action: PayloadAction<number | undefined>) => { state.order.thickWindow = action.payload }, 
+        setColorTint: (state, action: PayloadAction<string>) => { state.currentOrder.colorTint = action.payload },
+        setColorForge: (state, action: PayloadAction<string>) => { state.currentOrder.colorForge = action.payload },        
+        setPatinaForge: (state, action: PayloadAction<string>) => { state.currentOrder.patinaForge = action.payload },        
+        setHeightWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.heightWindow = action.payload },
+        setWidthWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.widthWindow = action.payload },
+        setThickWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickWindow = action.payload }, 
         
-        setIsStainlessDoorStep: (state, action: PayloadAction<boolean>) => { state.order.isStainlessDoorStep = action.payload },
-        setIsStreetDoor: (state, action: PayloadAction<boolean>) => { state.order.isStreetDoor = action.payload },
-        setIsEccentric: (state, action: PayloadAction<boolean>) => { state.order.isEccentric = action.payload },
-        setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.order.isBackSheet = action.payload },
-        setIsTermoCable: (state, action: PayloadAction<boolean>) => { state.order.isTermoCable = action.payload },
-        setIsCloser: (state, action: PayloadAction<boolean>) => { state.order.isCloser = action.payload },
-        setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.order.isEnhanceCloser = action.payload },       
-        setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.order.isElectromagnet = action.payload },
-        setIsIllumination: (state, action: PayloadAction<boolean>) => { state.order.isIllumination = action.payload },
+        setIsStainlessDoorStep: (state, action: PayloadAction<boolean>) => { state.currentOrder.isStainlessDoorStep = action.payload },
+        setIsStreetDoor: (state, action: PayloadAction<boolean>) => { state.currentOrder.isStreetDoor = action.payload },
+        setIsEccentric: (state, action: PayloadAction<boolean>) => { state.currentOrder.isEccentric = action.payload },
+        setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.currentOrder.isBackSheet = action.payload },
+        setIsTermoCable: (state, action: PayloadAction<boolean>) => { state.currentOrder.isTermoCable = action.payload },
+        setIsCloser: (state, action: PayloadAction<boolean>) => { state.currentOrder.isCloser = action.payload },
+        setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.currentOrder.isEnhanceCloser = action.payload },       
+        setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.currentOrder.isElectromagnet = action.payload },
+        setIsIllumination: (state, action: PayloadAction<boolean>) => { state.currentOrder.isIllumination = action.payload },
 
-        setSealer: (state, action: PayloadAction<string>) => { state.order.sealer = action.payload },
+        setSealer: (state, action: PayloadAction<string>) => { state.currentOrder.sealer = action.payload },
 
         setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
-        setOrder: (state, action: PayloadAction<IOrder>) => { state.order = action.payload },
-        rebootState: state => initialState        
+        setOrder: (state, action: PayloadAction<IOrder>) => { state.currentOrder = action.payload },
+        rebootState: state => initialState,
+        rebootCurrentOrder: state => { state.currentOrder = initialCurrentOrder },        
+        rebootBlock: state => { state.block = initialBlock },     
+        rebootComputedTables: state => { state.computedTables = initialComputedTables },
+        rebootOtherState: state => { 
+            state.isLoading = false
+            state.isFetching = false
+            state.isSuccess = false
+            state.isCancel = false
+            state.orders = []
+        },      
     }
 })
 

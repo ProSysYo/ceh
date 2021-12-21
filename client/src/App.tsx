@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react'
 import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import ru_RU from 'antd/lib/locale/ru_RU';
 import { Drawer, Layout } from 'antd';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
@@ -20,24 +22,26 @@ const App: FC = () => {
     };
 
     return (
-        <BrowserRouter>
-            <Layout>
-                <Drawer title="Меню" placement="left" width="250" onClose={onClose} visible={visible}>
-                    <Sidebar />
-                </Drawer>
-                
-                <StyledLayout>
-                    <TopBar onMenuClick={showDrawer}/>
-                    <StyledContent>
-                    <Switch>
-                        <Route exact path="/orders" component={Orders} />                        
-                        <Route exact path="/addorder" component={OrderContainer} />                        
-                        <Route exact path="/editorder/:id" component={OrderContainer} />                        
-                    </Switch>
-                    </StyledContent>
-                </StyledLayout>
-            </Layout>
-        </BrowserRouter>
+        <ConfigProvider locale={ru_RU}>
+            <BrowserRouter>
+                <Layout>
+                    <Drawer title="Меню" placement="left" width="250" onClose={onClose} visible={visible}>
+                        <Sidebar />
+                    </Drawer>
+                    
+                    <StyledLayout>
+                        <TopBar onMenuClick={showDrawer}/>
+                        <StyledContent>
+                        <Switch>
+                            <Route exact path="/orders" component={Orders} />                        
+                            <Route exact path="/addorder" component={OrderContainer} />                        
+                            <Route exact path="/editorder/:id" component={OrderContainer} />                        
+                        </Switch>
+                        </StyledContent>
+                    </StyledLayout>
+                </Layout>
+            </BrowserRouter>
+        </ConfigProvider>
     )
 }
 

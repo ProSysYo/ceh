@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Table, Spin, Tooltip, DatePicker } from 'antd';
+import { Button, Table, Spin, Tooltip,  Calendar } from 'antd';
 import styled from 'styled-components';
-import { format} from 'date-fns'
+import  moment from 'moment'
 import { FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined, ScheduleOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -15,12 +15,15 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { getOrder } from '../../store/actions/orderActions';
 import { orderActions } from '../../store/slices/orderSlice';
 import Modal from 'antd/lib/modal/Modal';
+import { type } from 'os';
+import { openNotification } from '../../commons/notification';
 
 const Orders: React.FC = () => { 
     const { orders, isLoading } = useAppSelector(state => state.order)
     const [visible, setVisible] = useState(false)
     const [visibleCalendar, setVisibleCalendar] = useState(false)      
     const [selectedId, setSelectedId] = useState("")      
+    const [planeDate, setPlaneDate] = useState("")      
     
     const dispatch = useAppDispatch()
 
@@ -28,8 +31,9 @@ const Orders: React.FC = () => {
         await dispatch(getOrder(id))
         setVisible(true);
     };
+
     const onClose = async () => {
-        await dispatch(orderActions.rebootCurrentOrder())
+        dispatch(orderActions.rebootCurrentOrder())
         setVisible(false);
     }; 
     
@@ -38,17 +42,25 @@ const Orders: React.FC = () => {
         setVisibleCalendar(true)        
     }
 
-    const calendarCancel = () => {
+    const calendarCancel = () => { 
         setSelectedId("")
         setVisibleCalendar(false)
+        setPlaneDate("")
     }
 
     const calendarOk = () => {
-
+        if (!planeDate) {
+            openNotification("error", "Выберите дату отгрузки")
+            return 
+        }
+        if (!selectedId) {
+            openNotification("error", "Нет выбранного заказа")
+            return
+        }
     }
 
-    const onChangeDate = () => {
-        
+    const onSelectDate = (value: moment.Moment) => { 
+        setPlaneDate(value.format("DD.MM.YYYY"))
     }
     
     return (
@@ -73,7 +85,7 @@ const Orders: React.FC = () => {
                             title = 'Дата создания'
                             dataIndex = 'dateCreate'       
                             width = {10} 
-                            render = {((date: Date) => format(new Date(date), "dd.MM.yyyy") )} 
+                            render = {((date: Date) => moment(date).format("DD.MM.YYYY",) )} 
                         />
                         <Column
                             title = 'Действия'                                  
@@ -99,16 +111,24 @@ const Orders: React.FC = () => {
                             )}
                         />
                     </Table>
-                </TableContainer>                                           
+                </TableContainer> 
+
                 <FilterContainer>
                     <OrdersFilter/>
                 </FilterContainer>
+                
                 <ShowOrder onClose={onClose} visible={visible}/>
-                <Modal title="Basic Modal" visible={visibleCalendar} onOk={calendarOk} onCancel={calendarCancel}>
-                    <DatePicker onChange={onChangeDate} />
+
+                <Modal 
+                    title="Выберите дату отгрузки" 
+                    visible={visibleCalendar} 
+                    onOk={calendarOk} 
+                    onCancel={calendarCancel} 
+                    destroyOnClose 
+                >                    
+                    <Calendar fullscreen={false} onSelect={onSelectDate} />
                 </Modal>
-            </Container>
-            
+            </Container>            
             
             <StyledSpin spinning={isLoading} size="large" tip="Загрузка данных..."/>
         </>

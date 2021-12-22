@@ -1,121 +1,42 @@
 import {Dispatch} from "redux";
-import { orderActions } from "../slices/orderSlice";
+import { fetchTables, orderActions } from "../slices/orderSlice";
 import { api } from '../../api/api';
 import { IOrder } from '../../interfaces/IOrder';
 import { openNotification } from "../../commons/notification";
 
 export const fetchAll = () => {
-    return async (dispatch: Dispatch<any>) => {
-        try {
-            let response          
-            dispatch(orderActions.setLoading(true))
-
-            // response = await api.getCustomers()
-            // dispatch(orderActions.setCustomers(response.data))
-
-            response = await api.getParties()
-            dispatch(orderActions.setParties(response.data))
-
-            response = await api.getModels()
-            dispatch(orderActions.setModels(response.data))
-
-            response = await api.getModelBoxes()
-            dispatch(orderActions.setModelBoxes(response.data))            
-
-            response = await api.getLocks()
-            const baseLocks = response.data.filter(lock => lock.installation === "основной" || lock.installation === "нет" || lock.installation === "примечание")
-            const optionalLocks = response.data.filter(lock => lock.installation === "дополнительный" || lock.installation === "нет" || lock.installation === "примечание")
-            dispatch(orderActions.setBaseLoks(baseLocks))
-            dispatch(orderActions.setOptionalLocks(optionalLocks))
-
-            response = await api.getSpinners()
-            dispatch(orderActions.setSpinners(response.data))
-
-            response = await api.getSpinners()
-            dispatch(orderActions.setSpinners(response.data))
-
-            response = await api.getCyliners()
-            dispatch(orderActions.setCylinders(response.data))
-
-            response = await api.getCovers()
-            dispatch(orderActions.setCovers(response.data))
-
-            response = await api.getEyes()
-            dispatch(orderActions.setEyes(response.data))
-
-            response = await api.getEyeLocations()
-            dispatch(orderActions.setEyeLocations(response.data))
-
-            response = await api.getHandles()
-            dispatch(orderActions.setHandles(response.data))
-
-            response = await api.getTypeDecorations()
-            dispatch(orderActions.setTypeDecorations(response.data))
-
-            response = await api.getTypeDecorations()
-            dispatch(orderActions.setTypeDecorations(response.data))
-
-            response = await api.getDecorations()
-            dispatch(orderActions.setDecorations(response.data))
-
-            response = await api.getWraps()
-            dispatch(orderActions.setWraps(response.data))
-
-            response = await api.getPatinas()
-            dispatch(orderActions.setPatinas(response.data))
-
-            response = await api.getTypeWindows()
-            dispatch(orderActions.setTypeWindows(response.data))
-
-            response = await api.getWindows()
-            dispatch(orderActions.setWindows(response.data))
-
-            response = await api.getColorTints()
-            dispatch(orderActions.setColorTints(response.data))
-
-            response = await api.getColorForges()
-            dispatch(orderActions.setColorForges(response.data))
-
-            response = await api.getPatinaForges()
-            dispatch(orderActions.setPatinaForges(response.data))
-
-            response = await api.getLoacationHinges()
-            dispatch(orderActions.setLocationHinges(response.data))
-            response = await api.getHingeCounts()
-            dispatch(orderActions.setHingeCounts(response.data))
-
-            response = await api.getTypeHinges()
-            dispatch(orderActions.setTypeHinges(response.data))
-
-            response = await api.getThickMetalLeafs()
-            dispatch(orderActions.setThickMetalLeafs(response.data))
-
-            response = await api.getThickMetalBoxes()
-            dispatch(orderActions.setThickMetalBoxes(response.data))
-
-            response = await api.getJambs()
-            dispatch(orderActions.setJambs(response.data))
-
-            response = await api.getLocationJambs()
-            dispatch(orderActions.setLocationJambs(response.data))
-
-            response = await api.getFittingColors()            
-            dispatch(orderActions.setFittingColors(response.data))
-            
-            response = await api.getSealers()            
-            dispatch(orderActions.setSealers(response.data))
-
-            dispatch(orderActions.setLoading(false))            
-        } catch (e: any) {            
-            if (e.isAxiosError){
-                if (!e.response) {
-                    console.log("Нет соединения с сервером")                    
-                    return 
-                }                         
-            } else {
-                console.log("other error", e);                
-            }          
-        }
+    return async (dispatch: Dispatch<any>) => {                          
+        dispatch(orderActions.setLoading(true))
+        await dispatch(fetchTables("customers"))
+        await dispatch(fetchTables("parties"))
+        await dispatch(fetchTables("models"))
+        await dispatch(fetchTables("modelBoxes"))
+        await dispatch(fetchTables("spinners"))
+        await dispatch(fetchTables("locks"))
+        await dispatch(fetchTables("cylinders"))
+        await dispatch(fetchTables("covers"))                       
+        await dispatch(fetchTables("eyes"))                       
+        await dispatch(fetchTables("eyeLocations"))                       
+        await dispatch(fetchTables("handles"))                       
+        await dispatch(fetchTables("typeDecorations"))                       
+        await dispatch(fetchTables("decorations"))                       
+        await dispatch(fetchTables("wraps"))                       
+        await dispatch(fetchTables("patinas"))                       
+        await dispatch(fetchTables("typeWindows"))                      
+        await dispatch(fetchTables("windows"))                      
+        await dispatch(fetchTables("colorTints"))                      
+        await dispatch(fetchTables("colorForges"))                      
+        await dispatch(fetchTables("patinaForges"))                      
+        await dispatch(fetchTables("locationHinges"))                      
+        await dispatch(fetchTables("hingeCounts"))                   
+        await dispatch(fetchTables("typeHinges"))                   
+        await dispatch(fetchTables("thickMetalLeafs"))                   
+        await dispatch(fetchTables("thickMetalBoxes"))                  
+        await dispatch(fetchTables("jambs"))                  
+        await dispatch(fetchTables("locationJambs"))                  
+        await dispatch(fetchTables("fittingColors"))                  
+        await dispatch(fetchTables("sealers"))
+        dispatch(orderActions.setLoading(false))
     }
 }
 

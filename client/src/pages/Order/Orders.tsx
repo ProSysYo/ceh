@@ -15,7 +15,6 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { getOrder } from '../../store/actions/orderActions';
 import { orderActions } from '../../store/slices/orderSlice';
 import Modal from 'antd/lib/modal/Modal';
-import { type } from 'os';
 import { openNotification } from '../../commons/notification';
 
 const Orders: React.FC = () => { 

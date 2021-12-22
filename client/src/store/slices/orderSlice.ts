@@ -287,9 +287,7 @@ const initialState: OrderSate = {
 export const fetchTables = createAsyncThunk(
     'order/tables',
     async (tableName: tables) => {
-        const response = await api.fetchTableByName(tableName)
-        console.log(response);
-        
+        const response = await api.fetchTableByName(tableName)        
         return {
             data: response.data,
             tableName
@@ -307,51 +305,18 @@ export const orderSlice = createSlice({
         setCancel: (state, action: PayloadAction<boolean>) => { state.isCancel = action.payload },
 
         setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
-
-        setCustomers: (state, action: PayloadAction<ICustomer[]>) => { state.staticTables.customers = action.payload },
-        setParties: (state, action: PayloadAction<IParty[]>) => { state.staticTables.parties = action.payload },
-        setModels: (state, action: PayloadAction<IModel[]>) => { state.staticTables.models = action.payload },
-        setModelBoxes: (state, action: PayloadAction<IModelBox[]>) => { state.staticTables.modelBoxes = action.payload },
-        setBaseLoks: (state, action: PayloadAction<ILock[]>) => { state.staticTables.baseLocks = action.payload },
-        setOptionalLocks: (state, action: PayloadAction<ILock[]>) => { state.staticTables.optionalLocks = action.payload },
-        setSpinners: (state, action: PayloadAction<ISpinner[]>) => { state.staticTables.spinners = action.payload },
-        setCylinders: (state, action: PayloadAction<ICylinder[]>) => { state.staticTables.cylinders = action.payload },
-        setCovers: (state, action: PayloadAction<ICover[]>) => { state.staticTables.covers = action.payload },
+        
         setBaseCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers = action.payload },
         setBaseCovers2: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers2 = action.payload },
-        setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.optionalCovers = action.payload },
-        setEyes: (state, action: PayloadAction<IEye[]>) => { state.staticTables.eyes = action.payload },
-        setEyeLocations: (state, action: PayloadAction<IEyeLocation[]>) => { state.staticTables.eyeLocations = action.payload },
-        setHandles: (state, action: PayloadAction<IHandle[]>) => { state.staticTables.handles = action.payload },
-        setTypeDecorations: (state, action: PayloadAction<ITypeDecoration[]>) => { state.staticTables.typeDecorations = action.payload },
+        setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.optionalCovers = action.payload },        
         setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsOutside = action.payload },
         setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsInside = action.payload },
-        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.computedTables.doorThicks = action.payload },
-        setDecorations: (state, action: PayloadAction<IDecoration[]>) => { state.staticTables.decorations = action.payload },
+        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.computedTables.doorThicks = action.payload },        
         setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsOutside = action.payload },
-        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsInside = action.payload },
-        setWraps: (state, action: PayloadAction<IWrap[]>) => { state.staticTables.wraps = action.payload },
-        setPatinas: (state, action: PayloadAction<IPatina[]>) => { state.staticTables.patinas = action.payload },
-        setTypeWindows: (state, action: PayloadAction<ITypeWindow[]>) => { state.staticTables.typeWindows = action.payload },
-        setWindows: (state, action: PayloadAction<IWindow[]>) => { state.staticTables.windows = action.payload },
-        setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.computedTables.currentWindows = action.payload },
-        setColorTints: (state, action: PayloadAction<IColorTint[]>) => { state.staticTables.colorTints = action.payload },
-        setColorForges: (state, action: PayloadAction<IColorForge[]>) => { state.staticTables.colorForges = action.payload },
-        setPatinaForges: (state, action: PayloadAction<IPatinaForge[]>) => { state.staticTables.patinaForges = action.payload },
-
-        setLocationHinges: (state, action: PayloadAction<ILocationHinge[]>) => { state.staticTables.locationHinges = action.payload },
-        setHingeCounts: (state, action: PayloadAction<IHingeCount[]>) => { state.staticTables.hingeCounts = action.payload },
-        setTypeHinges: (state, action: PayloadAction<ITypeHinge[]>) => { state.staticTables.typeHinges = action.payload },
-
-        setThickMetalLeafs: (state, action: PayloadAction<IThickMetal[]>) => { state.staticTables.thickMetalLeafs = action.payload },
-        setThickMetalBoxes: (state, action: PayloadAction<IThickMetal[]>) => { state.staticTables.thickMetalBoxes = action.payload },
-        setJambs: (state, action: PayloadAction<IJamb[]>) => { state.staticTables.jambs = action.payload },
-        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.computedTables.currentJambs = action.payload },
-        setLocationJambs: (state, action: PayloadAction<ILocationJamb[]>) => { state.staticTables.locationJambs = action.payload },
-        setFittingColors: (state, action: PayloadAction<IFittingColor[]>) => { state.staticTables.fittingColors = action.payload },
-
-        setSealers: (state, action: PayloadAction<ISealer[]>) => { state.staticTables.sealers = action.payload },
-
+        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsInside = action.payload },        
+        setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.computedTables.currentWindows = action.payload },        
+        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.computedTables.currentJambs = action.payload }, 
+        
         setId: (state, action: PayloadAction<string>) => { state.currentOrder._id = action.payload },
         setNumber: (state, action: PayloadAction<string>) => { state.currentOrder.number = action.payload },
         setCustomer: (state, action: PayloadAction<string>) => { state.currentOrder.customer = action.payload },
@@ -919,8 +884,8 @@ export const orderSlice = createSlice({
     },
     extraReducers: (builder) => {        
         builder.addCase(fetchTables.fulfilled, (state, action) => {
-        const { data, tableName } = action.payload
-        state.staticTables[tableName as keyof IStaticTables] = data
+            const { data, tableName } = action.payload
+            state.staticTables[tableName as keyof IStaticTables] = data
         })
     }
 })  

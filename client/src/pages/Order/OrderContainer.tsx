@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-import { fetchTables, orderActions } from '../../store/slices/orderSlice';
+import {  orderActions } from '../../store/slices/orderSlice';
 import { fetchAll, loadOrder } from '../../store/actions/orderActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { Spin } from 'antd';
 import AddEditOrder from './AddEditOrder';
-import { tables } from '../../api/api';
 
 
 // interface ChildComponentProps extends RouteComponentProps<any> {}
@@ -23,7 +22,7 @@ const OrderContainer: React.FC<RouteComponentProps<any>> = ({ match }) => {
     useEffect(() => {
         const loadData = async () => {
             await  dispatch(fetchAll())
-            await dispatch(fetchTables("customers"))
+            
             if (isEditMode) {
                 await dispatch(loadOrder(match.params.id))
             }

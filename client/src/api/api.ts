@@ -28,16 +28,6 @@ import { http } from '../commons/http';
 import { IFittingColor } from '../interfaces/IFittingColor';
 import { IHingeCount } from "../interfaces/IHingeCount";
 import { ISealer } from '../interfaces/ISealer';
-import { IStaticTables } from '../store/slices/orderSlice';
-
-const mock = {
-    customers:  [
-        { _id: "1", value: "D001", name: "Бункер" },
-        { _id: "2", value: "D002", name: "Ижевск" },
-        { _id: "3", value: "D003", name: "Лабиринт" },
-        { _id: "4", value: "D004", name: "Красноярск" },
-    ]
-}
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -306,6 +296,13 @@ const sealers: ISealer[] = [
     { _id: "4", value: "1-шлегель 2-шлегель 3-магнит", name: "1-шлегель 2-шлегель 3-магнит" },    
 ];
 
+const mock = {
+    customers, parties, models, modelBoxes, locks, spinners, cylinders, covers, eyes,
+    eyeLocations, handles, typeDecorations, decorations, wraps, patinas, typeWindows,
+    windows, colorTints, colorForges, patinaForges, locationHinges, hingeCounts, 
+    typeHinges, thickMetalLeafs, thickMetalBoxes, jambs, locationJambs, fittingColors, sealers
+}
+
 const deley = 50
 
 export type tables =
@@ -338,51 +335,12 @@ export type tables =
     "locationJambs" |
     "fittingColors" |
     "sealers"
-  
-
-
 
 const fetchTableByName = (tableName: tables) => {
-    return new Promise<{data:any}>((res) => {        
-        console.log(typeof tableName);
-        mock[tableName] = d
-        setTimeout(() => res({data: [tableName]}), deley) 
+    return new Promise<{data:any}>((res) => {
+        setTimeout(() => res({data: mock[tableName]}), deley) 
     })
 }
-
-const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
-const getParties = () => new Promise<{data:IParty[]}>((res) => { setTimeout(() => res({data: parties}), deley) })
-const getModels = () => new Promise<{data:IModel[]}>((res) => { setTimeout(() => res({data: models}), deley) })
-const getModelBoxes = () => new Promise<{data:IModelBox[]}>((res) => { setTimeout(() => res({data: modelBoxes}), deley) })
-const getLocks = () => new Promise<{data:ILock[]}>((res) => { setTimeout(() => res({data: locks}), deley) })
-const getSpinners = () => new Promise<{data:ISpinner[]}>((res) => { setTimeout(() => res({data: spinners}), deley) })
-const getCyliners = () => new Promise<{data:ICylinder[]}>((res) => { setTimeout(() => res({data: cylinders}), deley) })
-const getCovers = () => new Promise<{data:ICover[]}>((res) => { setTimeout(() => res({data: covers}), deley) })
-const getEyes = () => new Promise<{data:IEye[]}>((res) => { setTimeout(() => res({data: eyes}), deley) })
-const getEyeLocations = () => new Promise<{data:IEyeLocation[]}>((res) => { setTimeout(() => res({data: eyeLocations}), deley) })
-const getHandles = () => new Promise<{data:IHandle[]}>((res) => { setTimeout(() => res({data: handles}), deley) })
-const getTypeDecorations = () => new Promise<{data:ITypeDecoration[]}>((res) => { setTimeout(() => res({data: typeDecorations}), deley) })
-const getDecorations = () => new Promise<{data:IDecoration[]}>((res) => { setTimeout(() => res({data: decorations}), deley) })
-const getWraps = () => new Promise<{data:IWrap[]}>((res) => { setTimeout(() => res({data: wraps}), deley) })
-const getPatinas = () => new Promise<{data:IPatina[]}>((res) => { setTimeout(() => res({data: patinas}), deley) })
-const getTypeWindows = () => new Promise<{data:ITypeWindow[]}>((res) => { setTimeout(() => res({data: typeWindows}), deley) })
-const getWindows = () => new Promise<{data:IWindow[]}>((res) => { setTimeout(() => res({data: windows}), deley) })
-const getColorTints = () => new Promise<{data:IColorTint[]}>((res) => { setTimeout(() => res({data: colorTints}), deley) })
-const getColorForges = () => new Promise<{data: IColorForge[]}>((res) => { setTimeout(() => res({data: colorForges}), deley) })
-const getPatinaForges = () => new Promise<{data: IPatinaForge[]}>((res) => { setTimeout(() => res({data: patinaForges}), deley) })
-const getLoacationHinges = () => new Promise<{data: ILocationHinge[]}>((res) => { setTimeout(() => res({data: locationHinges}), deley) })
-const getHingeCounts = () => new Promise<{data: IHingeCount[]}>((res) => { setTimeout(() => res({data: hingeCounts}), deley) })
-const getTypeHinges = () => new Promise<{data: ITypeHinge[]}>((res) => { setTimeout(() => res({data: typeHinges}), deley) })
-const getThickMetalLeafs = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalLeafs}), deley) })
-const getThickMetalBoxes = () => new Promise<{data: IThickMetal[]}>((res) => { setTimeout(() => res({data: thickMetalBoxes}), deley) })
-const getJambs = () => new Promise<{data: IJamb[]}>((res) => { setTimeout(() => res({data: jambs}), deley) })
-const getLocationJambs = () => new Promise<{data: ILocationJamb[]}>((res) => { setTimeout(() => res({data: locationJambs}), deley) })
-const getFittingColors = () => new Promise<{data: IFittingColor[]}>((res) => { setTimeout(() => res({data: fittingColors}), deley) })
-const getSealers = () => new Promise<{data: ISealer[]}>((res) => { setTimeout(() => res({data: sealers}), deley) })
-
-
-
-
 const createOrder = (data: IOrder) => {
     return http.post("/orders", data);
 };
@@ -399,42 +357,10 @@ const getOrder = (id: string) => {
     return http.get<IOrder>(`/orders/${id}`);
 };
 
-
-
-
 export const api = {
-    fetchTableByName,
-    getCustomers,
-    getParties, 
-    getModels,
-    getModelBoxes,
-    getLocks,
-    getSpinners,
-    getCyliners,
-    getCovers,
-    getEyes,
-    getHandles,
-    getTypeDecorations,
-    getDecorations,
-    getWraps,
-    getPatinas,
-    getTypeWindows,
-    getWindows,
-    getColorTints,
-    getColorForges,
-    getPatinaForges,
-    getLoacationHinges,
-    getTypeHinges,
-    getThickMetalLeafs,
-    getThickMetalBoxes,
-    getEyeLocations,
-    getJambs,
-    getLocationJambs,
-    getFittingColors,
-    createOrder,
-    getHingeCounts,
+    fetchTableByName,    
+    createOrder,    
     getOrders,
-    getOrder,
-    getSealers,
+    getOrder,    
     updateOrder
 }

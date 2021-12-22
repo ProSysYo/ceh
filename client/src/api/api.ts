@@ -28,6 +28,16 @@ import { http } from '../commons/http';
 import { IFittingColor } from '../interfaces/IFittingColor';
 import { IHingeCount } from "../interfaces/IHingeCount";
 import { ISealer } from '../interfaces/ISealer';
+import { IStaticTables } from '../store/slices/orderSlice';
+
+const mock = {
+    customers:  [
+        { _id: "1", value: "D001", name: "Бункер" },
+        { _id: "2", value: "D002", name: "Ижевск" },
+        { _id: "3", value: "D003", name: "Лабиринт" },
+        { _id: "4", value: "D004", name: "Красноярск" },
+    ]
+}
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -298,6 +308,48 @@ const sealers: ISealer[] = [
 
 const deley = 50
 
+export type tables =
+    "customers" |
+    "parties"  |
+    "models" |
+    "modelBoxes" |
+    "locks"|
+    "spinners" |
+    "cylinders" |
+    "covers" |
+    "eyes" |
+    "eyeLocations" |
+    "handles" |
+    "typeDecorations" |
+    "decorations" |
+    "wraps" |
+    "patinas" |
+    "typeWindows" |
+    "windows" |
+    "colorTints" |
+    "colorForges" |
+    "patinaForges" |
+    "locationHinges" |
+    "hingeCounts" |
+    "typeHinges" |
+    "thickMetalLeafs" |
+    "thickMetalBoxes" |
+    "jambs" |
+    "locationJambs" |
+    "fittingColors" |
+    "sealers"
+  
+
+
+
+const fetchTableByName = (tableName: tables) => {
+    return new Promise<{data:any}>((res) => {        
+        console.log(typeof tableName);
+        mock[tableName] = d
+        setTimeout(() => res({data: [tableName]}), deley) 
+    })
+}
+
 const getCustomers = () => new Promise<{data:ICustomer[]}>((res) => { setTimeout(() => res({data: customers}), deley) })
 const getParties = () => new Promise<{data:IParty[]}>((res) => { setTimeout(() => res({data: parties}), deley) })
 const getModels = () => new Promise<{data:IModel[]}>((res) => { setTimeout(() => res({data: models}), deley) })
@@ -351,6 +403,7 @@ const getOrder = (id: string) => {
 
 
 export const api = {
+    fetchTableByName,
     getCustomers,
     getParties, 
     getModels,

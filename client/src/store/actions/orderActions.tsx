@@ -10,8 +10,8 @@ export const fetchAll = () => {
             let response          
             dispatch(orderActions.setLoading(true))
 
-            response = await api.getCustomers()
-            dispatch(orderActions.setCustomers(response.data))
+            // response = await api.getCustomers()
+            // dispatch(orderActions.setCustomers(response.data))
 
             response = await api.getParties()
             dispatch(orderActions.setParties(response.data))

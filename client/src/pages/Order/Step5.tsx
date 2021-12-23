@@ -51,7 +51,7 @@ const Step5: FC = () => {
                     <Select 
                         items={staticTables.colorTints} 
                         value={currentOrder.colorTint} 
-                        onChange={ (value) => dispatch(orderActions.setColorTint(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "colorTint", value}))}                        
                     />
                 </Form.Item> 
                 <Form.Item 
@@ -62,7 +62,7 @@ const Step5: FC = () => {
                         items={staticTables.colorForges} 
                         value={currentOrder.colorForge}
                         disabled={!block.isColorForge}
-                        onChange={ (value) => dispatch(orderActions.setColorForge(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "colorForge", value}))}                       
                     />
                 </Form.Item>
                 <Form.Item 
@@ -73,26 +73,26 @@ const Step5: FC = () => {
                         items={staticTables.patinaForges} 
                         value={currentOrder.patinaForge}
                         disabled={!block.isPatinaForge}
-                        onChange={ (value) => dispatch(orderActions.setPatinaForge(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaForge", value}))}                       
                     />
                 </Form.Item>
                 <Form.Item 
                     label="Высота стеклопакета"
                     { ...validateErrors.heightWindow && { help: validateErrors.heightWindow, validateStatus: 'error'}}
                 >
-                    <InputNumber value={currentOrder.heightWindow} onChange={(value)=> dispatch(orderActions.setHeightWindow(value))} />
+                    <InputNumber value={currentOrder.heightWindow} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "heightWindow", value}))} />
                 </Form.Item>
                 <Form.Item 
                     label="Ширина стеклопакета"
                     { ...validateErrors.widthWindow && { help: validateErrors.widthWindow, validateStatus: 'error'}}
                 >
-                    <InputNumber  value={currentOrder.widthWindow} onChange={(value)=>  dispatch(orderActions.setWidthWindow(value))} />
+                    <InputNumber  value={currentOrder.widthWindow} onChange={(value)=>  dispatch(orderActions.setOrderFieldNum({fieldName: "widthWindow", value}))} />
                 </Form.Item>
                 <Form.Item 
                     label="Толщина стеклопакета"
                     { ...validateErrors.thickWindow && { help: validateErrors.thickWindow, validateStatus: 'error'}}
                 >
-                    <InputNumber  value={currentOrder.thickWindow} onChange={(value)=> dispatch(orderActions.setThickWindow(value))} />
+                    <InputNumber  value={currentOrder.thickWindow} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "thickWindow", value}))} />
                 </Form.Item> 
             </Form>
         </Container>

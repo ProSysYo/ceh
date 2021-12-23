@@ -44,7 +44,7 @@ const Step2: FC = () => {
                         <Select 
                             items={computedTables.doorThicks} 
                             value={currentOrder.doorThick}                            
-                            onChange={ (value) => dispatch(orderActions.setDoorThick(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldNum({fieldName: "doorThick", value}))}                        
                         />
                     </Form.Item>
                     <Form.Item 
@@ -54,7 +54,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.modelBoxes} 
                             value={currentOrder.modelBox} 
-                            onChange={ (value) => dispatch(orderActions.setModelBox(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "modelBox", value}))}                        
                         />
                     </Form.Item>
 
@@ -66,7 +66,7 @@ const Step2: FC = () => {
                         items={staticTables.locationJambs} 
                         value={currentOrder.locationJumb}
                         disabled={!block.isLocationJamb}
-                        onChange={ (value) => dispatch(orderActions.setLocationJumb(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "locationJumb", value}))}                        
                     />
                 </Form.Item>
 
@@ -77,7 +77,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.sealers} 
                             value={currentOrder.sealer} 
-                            onChange={ (value) => dispatch(orderActions.setSealer(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "sealer", value}))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -86,21 +86,21 @@ const Step2: FC = () => {
                         label="Высота двери"
                         { ...validateErrors.height && { help: validateErrors.height, validateStatus: 'error'}}
                     >
-                        <InputNumber  value={currentOrder.height} onChange={(value)=> dispatch(orderActions.setHeight(value))} />
+                        <InputNumber  value={currentOrder.height} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "height", value}))} />
                     </Form.Item>
 
                     <Form.Item 
                         label="Ширина двери"
                         { ...validateErrors.width && { help: validateErrors.width, validateStatus: 'error'}}
                     >
-                        <InputNumber  value={currentOrder.width} onChange={(value)=> dispatch(orderActions.setWidth(value))} />
+                        <InputNumber  value={currentOrder.width} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "width", value}))} />
                     </Form.Item>
                     
                     <Form.Item 
                         label="Ширина раб. створки"
                         { ...validateErrors.widthDouble && { help: validateErrors.widthDouble, validateStatus: 'error'}}
                     >
-                        <InputNumber disabled={!block.isDouble} value={currentOrder.widthDouble} onChange={(value)=> dispatch(orderActions.setWidthDouble(value))} />
+                        <InputNumber disabled={!block.isDouble} value={currentOrder.widthDouble} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "widthDouble", value}))} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -115,7 +115,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.locationHinges} 
                             value={currentOrder.locationHinge} 
-                            onChange={ (value) => dispatch(orderActions.setLocationHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "locationHinge", value}))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -128,7 +128,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.typeHinges} 
                             value={currentOrder.typeHinge} 
-                            onChange={ (value) => dispatch(orderActions.setTypeHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "typeHinge", value}))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -141,7 +141,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.hingeCounts} 
                             value={currentOrder.countHinge} 
-                            onChange={ (value) => dispatch(orderActions.setCountHinge(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldNum({fieldName: "countHinge", value}))}                        
                         />
                     </Form.Item>                    
                 </Col>
@@ -157,7 +157,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.thickMetalLeafs} 
                             value={currentOrder.thickMetalLeaf} 
-                            onChange={ (value) => dispatch(orderActions.setThickMetalLeaf(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldNum({fieldName: "thickMetalLeaf", value}))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -169,7 +169,7 @@ const Step2: FC = () => {
                         <Select 
                             items={staticTables.thickMetalBoxes} 
                             value={currentOrder.thickMetalBox} 
-                            onChange={ (value) => dispatch(orderActions.setThickMetalBox(value))}                        
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldNum({fieldName: "thickMetalBox", value}))}                        
                         />
                     </Form.Item>
                 </Col>

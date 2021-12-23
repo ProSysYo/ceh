@@ -36,14 +36,14 @@ const Step1: FC = () => {
                     <Select 
                         items={staticTables.customers} 
                         value={customer} 
-                        onChange={ (value) => dispatch(orderActions.setCustomer(value))}                       
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "customer", value}))}                       
                     />
                 </Form.Item>
                 <Form.Item 
                     label="Номер заказчика"
                     { ...validateErrors.numberCustomer && { help: validateErrors.numberCustomer, validateStatus: 'error'}}
                 >
-                    <Input  value={numberCustomer} onChange={(e)=> dispatch(orderActions.setNumberCustomer(e.target.value))} />
+                    <Input  value={numberCustomer} onChange={(e)=> dispatch(orderActions.setOrderFieldStr({fieldName: "numberCustomer", value: e.target.value}))} />
                 </Form.Item>
 
                 <Form.Item 
@@ -53,7 +53,7 @@ const Step1: FC = () => {
                     <Select 
                         items={staticTables.parties} 
                         value={party} 
-                        onChange={ (value) => dispatch(orderActions.setParty(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "party", value}))}                        
                     />
                 </Form.Item>
                 
@@ -61,21 +61,21 @@ const Step1: FC = () => {
                     label="Количество дверей"
                     { ...validateErrors.countDoors && { help: validateErrors.countDoors, validateStatus: 'error'}}
                 >
-                    <InputNumber min={0} value={countDoors} onChange={(value)=> dispatch(orderActions.setCountDoors(value))} />
+                    <InputNumber min={0} value={countDoors} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "countDoors", value}))} />
                 </Form.Item>
 
                 <Form.Item 
                     label="Стоимость одной двери"
                     { ...validateErrors.costDoor && { help: validateErrors.costDoor, validateStatus: 'error'}}
                 >
-                    <InputNumber min={0} value={costDoor} onChange={(value)=> dispatch(orderActions.setCostDoor(value))} />
+                    <InputNumber min={0} value={costDoor} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "costDoor", value}))} />
                 </Form.Item>
 
                 <Form.Item 
                     label="Примечание"
                     { ...validateErrors.note && { help: validateErrors.note, validateStatus: 'error'}}
                 >
-                    <Input.TextArea rows = {8}  value={note} onChange={(e)=> dispatch(orderActions.setNote(e.target.value))} />
+                    <Input.TextArea rows = {8}  value={note} onChange={(e)=> dispatch(orderActions.setOrderFieldStr({fieldName: "note", value: e.target.value}))} />
                 </Form.Item>
             </Form>
         </Container>

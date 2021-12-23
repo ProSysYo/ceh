@@ -41,7 +41,7 @@ const Step4: FC = () => {
                     <Select 
                         items={computedTables.decorationsOutside} 
                         value={currentOrder.decorationOutside} 
-                        onChange={ (value) => dispatch(orderActions.setDecorationOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "decorationOutside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
@@ -52,7 +52,7 @@ const Step4: FC = () => {
                         items={staticTables.wraps} 
                         value={currentOrder.wrapOutside}
                         disabled={!block.isWrapOutside} 
-                        onChange={ (value) => dispatch(orderActions.setWrapOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "wrapOutside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
@@ -63,7 +63,7 @@ const Step4: FC = () => {
                         items={staticTables.patinas} 
                         value={currentOrder.patinaOutside} 
                         disabled={!block.isPatinaOutside} 
-                        onChange={ (value) => dispatch(orderActions.setPatinaOutside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaOutside", value}))}                        
                     />
                 </Form.Item>
 
@@ -85,7 +85,7 @@ const Step4: FC = () => {
                     <Select 
                         items={computedTables.decorationsInside} 
                         value={currentOrder.decorationInside} 
-                        onChange={ (value) => dispatch(orderActions.setDecorationInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "decorationInside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
@@ -96,7 +96,7 @@ const Step4: FC = () => {
                         items={staticTables.wraps} 
                         value={currentOrder.wrapInside} 
                         disabled={!block.isWrapInside}
-                        onChange={ (value) => dispatch(orderActions.setWrapInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "wrapInside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
@@ -107,7 +107,7 @@ const Step4: FC = () => {
                         items={staticTables.patinas} 
                         value={currentOrder.patinaInside}
                         disabled={!block.isPatinaInside}
-                        onChange={ (value) => dispatch(orderActions.setPatinaInside(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaInside", value}))}                        
                     />
                 </Form.Item>  
 
@@ -119,7 +119,7 @@ const Step4: FC = () => {
                     <Select 
                         items={computedTables.currentJambs} 
                         value={currentOrder.jamb}
-                        onChange={ (value) => dispatch(orderActions.setJamb(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "jamb", value}))}                        
                     />
                 </Form.Item>
 
@@ -131,7 +131,7 @@ const Step4: FC = () => {
                         items={staticTables.wraps} 
                         value={currentOrder.jambWrap} 
                         disabled={!block.isJambWrap}
-                        onChange={ (value) => dispatch(orderActions.setJambWrap(value))}                        
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "jambWrap", value}))}                        
                     />
                 </Form.Item>              
             </Form>

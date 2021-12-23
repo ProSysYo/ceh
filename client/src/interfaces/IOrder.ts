@@ -1,17 +1,12 @@
-export interface IOrder {
-    _id?: string;
+export interface IOrderStr {
+    _id: string;
     customer: string;
     number: string;
     numberCustomer: string;
     party: string;    
-    model: string;    
-    doorThick: number | undefined;
-    height: number | undefined;
-    width: number | undefined;
+    model: string;
     modelBox: string;
-    widthDouble: number | undefined;
     locationHinge: string; //Расположение петель
-    countHinge: number|string;//Количество петель
     typeHinge: string;
 
     //Основной замок
@@ -25,7 +20,6 @@ export interface IOrder {
     baseCoverColorOutside: string;
     baseCoverInside: string;
     baseCoverColorInside: string;
-
     //Накладки основного замка 2
     baseCoverOutside2: string;
     baseCoverColorOutside2: string;
@@ -69,18 +63,30 @@ export interface IOrder {
     colorTint: string;
     colorForge: string;
     patinaForge: string;
-    heightWindow: number | undefined;
-    widthWindow: number | undefined;
-    thickWindow: number | undefined;
-
-    countDoors: number | string;
-    costDoor: number | string;
     note: string;
-    thickMetalLeaf: number | undefined;
-    thickMetalBox: number | undefined;
     jamb: string;
     jambWrap: string;
     locationJumb: string;
+
+    sealer: string;//Уплотнитель
+}
+
+export interface IOrderNum {
+    doorThick: number | undefined;
+    height: number | undefined;
+    width: number | undefined;    
+    widthDouble: number | undefined;    
+    countHinge: number| undefined;//Количество петель 
+    heightWindow: number | undefined;
+    widthWindow: number | undefined;
+    thickWindow: number | undefined;
+    countDoors: number | undefined;
+    costDoor: number | undefined;    
+    thickMetalLeaf: number | undefined;
+    thickMetalBox: number | undefined;
+}
+
+export interface IOrderBool {
     isStainlessDoorStep: boolean //порог из нержавейки
     isStreetDoor: boolean;
     isEccentric: boolean;
@@ -90,7 +96,8 @@ export interface IOrder {
     isTermoCable: boolean; //Термокабель
     isElectromagnet: boolean; //Электромагнит
     isIllumination: boolean; //Подсветка
-    sealer: string;//Уплотнитель
+}
 
+export interface IOrder extends IOrderStr, IOrderNum, IOrderBool{
     dateCreate: Date | undefined;
 }

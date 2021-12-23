@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { ICustomer } from '../../interfaces/ICustomer';
-import { IOrder } from '../../interfaces/IOrder';
+import { IOrder, IOrderNum, IOrderStr, IOrderBool } from '../../interfaces/IOrder';
 import { IParty } from '../../interfaces/IParty';
 import { IModel } from '../../interfaces/IModel';
 import { IModelBox } from '../../interfaces/IModelBox';
@@ -174,6 +174,7 @@ const initialBlock: IBlock = {
 }
 
 const initialCurrentOrder: IOrder = {
+    _id: "",
     customer: "",
     number: "",
     numberCustomer: "",
@@ -189,7 +190,7 @@ const initialCurrentOrder: IOrder = {
     //Петли
     locationHinge: "",
     typeHinge: "",
-    countHinge: "",
+    countHinge: undefined,
 
     //Основной замок
     baseLock: "",
@@ -248,8 +249,8 @@ const initialCurrentOrder: IOrder = {
     heightWindow: undefined,
     widthWindow: undefined,
     thickWindow: undefined,
-    countDoors: "",
-    costDoor: "",
+    countDoors: undefined,
+    costDoor: undefined,
     note: "",
     thickMetalLeaf: undefined,
     thickMetalBox: undefined,
@@ -304,27 +305,15 @@ export const orderSlice = createSlice({
         setSuccess: (state, action: PayloadAction<boolean>) => { state.isSuccess = action.payload },
         setCancel: (state, action: PayloadAction<boolean>) => { state.isCancel = action.payload },
 
-        setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload },
+        setOrders: (state, action: PayloadAction<IOrder[]>) => { state.orders = action.payload }, 
+
+        setOrderFieldStr: (state, action: PayloadAction<{fieldName: keyof IOrderStr, value: string}>) => { state.currentOrder[action.payload.fieldName] = action.payload.value },
+        setOrderFieldNum: (state, action: PayloadAction<{fieldName: keyof IOrderNum, value: number | undefined}>) => { state.currentOrder[action.payload.fieldName] = action.payload.value },
+        setOrderFieldBool: (state, action: PayloadAction<{fieldName: keyof IOrderBool, value: boolean}>) => { state.currentOrder[action.payload.fieldName] = action.payload.value },
         
-        setBaseCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers = action.payload },
-        setBaseCovers2: (state, action: PayloadAction<ICover[]>) => { state.computedTables.baseCovers2 = action.payload },
-        setOptionalCovers: (state, action: PayloadAction<ICover[]>) => { state.computedTables.optionalCovers = action.payload },        
-        setTypeDecorationsOutside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsOutside = action.payload },
-        setTypeDecorationsInside: (state, action: PayloadAction<ITypeDecoration[]>) => { state.computedTables.typeDecorationsInside = action.payload },
-        setDoorThicks: (state, action: PayloadAction<number[]>) => { state.computedTables.doorThicks = action.payload },        
-        setDecorationsOutside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsOutside = action.payload },
-        setDecorationsInside: (state, action: PayloadAction<IDecoration[]>) => { state.computedTables.decorationsInside = action.payload },        
-        setCurrentWindows: (state, action: PayloadAction<IWindow[]>) => { state.computedTables.currentWindows = action.payload },        
-        setCurrentJambs: (state, action: PayloadAction<IJamb[]>) => { state.computedTables.currentJambs = action.payload }, 
-        
-        setId: (state, action: PayloadAction<string>) => { state.currentOrder._id = action.payload },
-        setNumber: (state, action: PayloadAction<string>) => { state.currentOrder.number = action.payload },
-        setCustomer: (state, action: PayloadAction<string>) => { state.currentOrder.customer = action.payload },
-        setNumberCustomer: (state, action: PayloadAction<string>) => { state.currentOrder.numberCustomer = action.payload },
-        setParty: (state, action: PayloadAction<string>) => { state.currentOrder.party = action.payload },
-        setCountDoors: (state, action: PayloadAction<number | string>) => { state.currentOrder.countDoors = action.payload },
-        setCostDoor: (state, action: PayloadAction<number | string>) => { state.currentOrder.costDoor = action.payload },
-        setNote: (state, action: PayloadAction<string>) => { state.currentOrder.note = action.payload },
+        setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
+        setOrder: (state, action: PayloadAction<IOrder>) => { state.currentOrder = action.payload },
+
         setModel: (state, action: PayloadAction<string>) => {
             state.currentOrder.model = action.payload
 
@@ -390,19 +379,6 @@ export const orderSlice = createSlice({
             state.currentOrder.widthWindow = undefined
             state.currentOrder.thickWindow = undefined
         },
-        setDoorThick: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.doorThick = action.payload },
-        setModelBox: (state, action: PayloadAction<string>) => { state.currentOrder.modelBox = action.payload },
-        setHeight: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.height = action.payload },
-        setWidth: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.width = action.payload },
-        setWidthDouble: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.widthDouble = action.payload },
-        setLocationHinge: (state, action: PayloadAction<string>) => { state.currentOrder.locationHinge = action.payload },
-        setTypeHinge: (state, action: PayloadAction<string>) => { state.currentOrder.typeHinge = action.payload },
-        setCountHinge: (state, action: PayloadAction<number | string>) => { state.currentOrder.countHinge = action.payload },
-
-        setThickMetalLeaf: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickMetalLeaf = action.payload },
-        setThickMetalBox: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickMetalBox = action.payload },
-
-        //Основной замок
         setBaseLock: (state, action: PayloadAction<string>) => {
             state.currentOrder.baseLock = action.payload
 
@@ -542,24 +518,7 @@ export const orderSlice = createSlice({
                     state.currentOrder.baseCoverInside2 = "нет"
                     state.currentOrder.baseCoverColorInside2 = "нет"
             }
-        },
-        setBaseCylinder: (state, action: PayloadAction<string>) => { state.currentOrder.baseCylinder = action.payload },
-        setLockSpinner: (state, action: PayloadAction<string>) => { state.currentOrder.lockSpinner = action.payload },
-        setLockSpinnerColor: (state, action: PayloadAction<string>) => { state.currentOrder.lockSpinnerColor = action.payload },
-
-        //Накладки основного замка        
-        setBaseCoverOutside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverOutside = action.payload },
-        setBaseCoverColorOutside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorOutside = action.payload },
-        setBaseCoverInside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverInside = action.payload },
-        setBaseCoverColorInside: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorInside = action.payload },
-
-        //Накладки основного замка 2       
-        setBaseCoverOutside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverOutside2 = action.payload },
-        setBaseCoverColorOutside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorOutside2 = action.payload },
-        setBaseCoverInside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverInside2 = action.payload },
-        setBaseCoverColorInside2: (state, action: PayloadAction<string>) => { state.currentOrder.baseCoverColorInside2 = action.payload },
-
-        //Дополнительный замок
+        }, 
         setOptionalLock: (state, action: PayloadAction<string>) => {
             state.currentOrder.optionalLock = action.payload
 
@@ -607,16 +566,7 @@ export const orderSlice = createSlice({
                     state.currentOrder.optionalCoverInside = "нет"
                     state.currentOrder.optionalCoverColorInside = "нет"
             }
-        },
-        setOptionalCylinder: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCylinder = action.payload },
-
-        //Накладки дополнительного замка       
-        setOptonalCoverOutside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverOutside = action.payload },
-        setOptonalCoverColorOutside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverColorOutside = action.payload },
-        setOptonalCoverInside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverInside = action.payload },
-        setOptonalCoverColorInside: (state, action: PayloadAction<string>) => { state.currentOrder.optionalCoverColorInside = action.payload },
-
-        //Глазок
+        }, 
         setEye: (state, action: PayloadAction<string>) => {
             const eye: string = action.payload
             state.currentOrder.eye = eye
@@ -627,11 +577,7 @@ export const orderSlice = createSlice({
                 state.currentOrder.colorEye = ""
                 state.currentOrder.eyeLocation = ""
             }
-        },
-        setColorEye: (state, action: PayloadAction<string>) => { state.currentOrder.colorEye = action.payload },
-        setEyeLocation: (state, action: PayloadAction<string>) => { state.currentOrder.eyeLocation = action.payload },
-
-        //Ручка
+        }, 
         setHandle: (state, action: PayloadAction<string>) => {
             const handle = action.payload
             state.currentOrder.handle = handle
@@ -640,10 +586,7 @@ export const orderSlice = createSlice({
             } else {
                 state.currentOrder.handleColor = ""
             }
-        },
-        setHandleColor: (state, action: PayloadAction<string>) => { state.currentOrder.handleColor = action.payload },
-
-        //Вертушок
+        }, 
         setSpinner: (state, action: PayloadAction<string>) => {
             const spinner: string = action.payload
             state.currentOrder.spinner = spinner
@@ -653,8 +596,6 @@ export const orderSlice = createSlice({
                 state.currentOrder.spinnerColor = ""
             }
         },
-        setSpinnerColor: (state, action: PayloadAction<string>) => { state.currentOrder.spinnerColor = action.payload },
-
         setTypeDecorationOutside: (state, action: PayloadAction<string>) => {
             state.currentOrder.typeDecorationOutside = action.payload
 
@@ -694,11 +635,7 @@ export const orderSlice = createSlice({
                     state.currentOrder.patinaOutside = "нет"
                     break
             }
-        },
-        setDecorationOutside: (state, action: PayloadAction<string>) => { state.currentOrder.decorationOutside = action.payload },
-        setWrapOutside: (state, action: PayloadAction<string>) => { state.currentOrder.wrapOutside = action.payload },
-        setPatinaOutside: (state, action: PayloadAction<string>) => { state.currentOrder.patinaOutside = action.payload },
-
+        },        
         setTypeDecorationInside: (state, action: PayloadAction<string>) => {
             state.currentOrder.typeDecorationInside = action.payload
 
@@ -744,14 +681,7 @@ export const orderSlice = createSlice({
                     state.currentOrder.wrapInside = "нет"
                     state.currentOrder.patinaInside = "нет"
             }
-        },
-        setDecorationInside: (state, action: PayloadAction<string>) => { state.currentOrder.decorationInside = action.payload },
-        setWrapInside: (state, action: PayloadAction<string>) => { state.currentOrder.wrapInside = action.payload },
-        setPatinaInside: (state, action: PayloadAction<string>) => { state.currentOrder.patinaInside = action.payload },
-
-        setLocationJumb: (state, action: PayloadAction<string>) => { state.currentOrder.locationJumb = action.payload },
-        setJamb: (state, action: PayloadAction<string>) => { state.currentOrder.jamb = action.payload },
-        setJambWrap: (state, action: PayloadAction<string>) => { state.currentOrder.jambWrap = action.payload },
+        },        
 
         setTypeWindow: (state, action: PayloadAction<string>) => {
             const { model, doorThick } = state.currentOrder
@@ -849,27 +779,7 @@ export const orderSlice = createSlice({
             state.currentOrder.heightWindow = selectedWindow.height
             state.currentOrder.widthWindow = selectedWindow.width
         },
-        setColorTint: (state, action: PayloadAction<string>) => { state.currentOrder.colorTint = action.payload },
-        setColorForge: (state, action: PayloadAction<string>) => { state.currentOrder.colorForge = action.payload },
-        setPatinaForge: (state, action: PayloadAction<string>) => { state.currentOrder.patinaForge = action.payload },
-        setHeightWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.heightWindow = action.payload },
-        setWidthWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.widthWindow = action.payload },
-        setThickWindow: (state, action: PayloadAction<number | undefined>) => { state.currentOrder.thickWindow = action.payload },
-
-        setIsStainlessDoorStep: (state, action: PayloadAction<boolean>) => { state.currentOrder.isStainlessDoorStep = action.payload },
-        setIsStreetDoor: (state, action: PayloadAction<boolean>) => { state.currentOrder.isStreetDoor = action.payload },
-        setIsEccentric: (state, action: PayloadAction<boolean>) => { state.currentOrder.isEccentric = action.payload },
-        setIsBackSheet: (state, action: PayloadAction<boolean>) => { state.currentOrder.isBackSheet = action.payload },
-        setIsTermoCable: (state, action: PayloadAction<boolean>) => { state.currentOrder.isTermoCable = action.payload },
-        setIsCloser: (state, action: PayloadAction<boolean>) => { state.currentOrder.isCloser = action.payload },
-        setIsEnhanceCloser: (state, action: PayloadAction<boolean>) => { state.currentOrder.isEnhanceCloser = action.payload },
-        setIsElectromagnet: (state, action: PayloadAction<boolean>) => { state.currentOrder.isElectromagnet = action.payload },
-        setIsIllumination: (state, action: PayloadAction<boolean>) => { state.currentOrder.isIllumination = action.payload },
-
-        setSealer: (state, action: PayloadAction<string>) => { state.currentOrder.sealer = action.payload },
-
-        setValidateErrors: (state, action: PayloadAction<object | null>) => { state.validateErrors = action.payload },
-        setOrder: (state, action: PayloadAction<IOrder>) => { state.currentOrder = action.payload },
+        
         rebootState: state => initialState,
         rebootCurrentOrder: state => { state.currentOrder = initialCurrentOrder },
         rebootBlock: state => { state.block = initialBlock },
@@ -886,6 +796,10 @@ export const orderSlice = createSlice({
         builder.addCase(fetchTables.fulfilled, (state, action) => {
             const { data, tableName } = action.payload
             state.staticTables[tableName as keyof IStaticTables] = data
+            if (tableName === 'locks') {
+                state.staticTables.baseLocks = data.filter((lock: ILock) => lock.installation === "основной" || lock.installation === "нет" || lock.installation === "примечание")
+                state.staticTables.optionalLocks = data.filter((lock : ILock) => lock.installation === "дополнительный" || lock.installation === "нет" || lock.installation === "примечание")
+            } 
         })
     }
 })  

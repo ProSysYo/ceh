@@ -13,19 +13,19 @@ export class OrderController {
         return this.orderService.create(dto)
     }
 
-    @Patch(':id')
-    update(@Body() dto: UpdateOrderDto) {
-        return this.orderService.update(dto)
-    }
+    // @Patch(':id')
+    // update(@Body() dto: UpdateOrderDto) {
+    //     return this.orderService.update(dto)
+    // }
 
     @Get()
     getAll(@Query() query) { 
         return this.orderService.getAll(query)
     }
 
-    @Get(':id')
-    async getOrder(@Param() { id }: ParamsWithId) {
-        return this.orderService.findOne(id);
-    }
+    // @Get(':id')
+    // async getOrder(@Param() { id }: ParamsWithId) {
+    //     return this.orderService.findOne(id);
+    // }
 
 }

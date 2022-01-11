@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Order, OrderDocument } from './order.schema';
+import { Order } from './order.model';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class OrderService {
-    constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>) { }
+    constructor(
+        @InjectModel(Order) 
+        private orderModel: typeof Order,
+    ) { }
 
     async create(dto: CreateOrderDto): Promise<Order> {
 
@@ -24,24 +26,24 @@ export class OrderService {
         return order
     }
 
-    async update(dto: UpdateOrderDto): Promise<Order> {  
-        console.log(dto._id);
+//     async update(dto: UpdateOrderDto): Promise<Order> {  
+//         console.log(dto._id);
               
-        const order = await this.orderModel.findOneAndUpdate({ _id: dto._id }, dto, {new: true})
-        return order
-    }
+//         const order = await this.orderModel.findByPk({ id: dto._id }, dto)
+//         return order
+//     }
 
     async getAll(query): Promise<Order[]> {
-        const orders = await this.orderModel.find(query)
+        const orders = await this.orderModel.findAll({where: query})
         return orders
     }
 
-    async findOne(id: string) {
-        const order = await this.orderModel.findById(id)
+//     async findOne(id: number) {
+//         const order = await this.orderModel.findOne(id)
 
-        if (!order) {
-            throw new NotFoundException();
-        }
-        return order;
-    }
+//         if (!order) {
+//             throw new NotFoundException();
+//         }
+//         return order;
+//     }
 }

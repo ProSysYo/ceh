@@ -1,13 +1,22 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Order } from './order/order.model';
 import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://prosys:prosys@cluster0.4hlja.mongodb.net/ceh?retryWrites=true&w=majority',
-    ),
+    SequelizeModule.forRoot({
+      dialect: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '1234',
+      database: 'ceh',
+      models: [Order],
+      autoLoadModels: true,
+      synchronize: true,
+    }),
     OrderModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

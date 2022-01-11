@@ -1,4 +1,4 @@
-import { IsMongoId, IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 
 export class CreateOrderDto {
     @IsNotEmpty({message: 'Поле не должно быть пустым'})    

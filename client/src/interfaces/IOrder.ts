@@ -1,7 +1,5 @@
-export interface IOrderStr {
-    _id: string;
-    customer: string;
-    number: string;
+export interface IOrderStr {    
+    customer: string;    
     numberCustomer: string;
     party: string;    
     model: string;
@@ -72,30 +70,32 @@ export interface IOrderStr {
 }
 
 export interface IOrderNum {
-    doorThick: number | undefined;
-    height: number | undefined;
-    width: number | undefined;    
-    widthDouble: number | undefined;    
-    countHinge: number| undefined;//Количество петель 
-    heightWindow: number | undefined;
-    widthWindow: number | undefined;
-    thickWindow: number | undefined;
-    countDoors: number | undefined;
-    costDoor: number | undefined;    
-    thickMetalLeaf: number | undefined;
-    thickMetalBox: number | undefined;
+    id?: number;
+    doorThick?: number;
+    height?: number;
+    width?: number;    
+    widthDouble?: number;    
+    countHinge?: number;
+    heightWindow?: number;
+    widthWindow?: number;
+    thickWindow?: number;
+    countDoors?: number;
+    costDoor?: number;    
+    thickMetalLeaf?: number;
+    thickMetalBox?: number;
+    number?: number;
 }
 
 export interface IOrderBool {
-    isStainlessDoorStep: boolean //порог из нержавейки
+    isStainlessDoorStep: boolean;
     isStreetDoor: boolean;
     isEccentric: boolean;
     isBackSheet: boolean;
-    isCloser: boolean; //доводчик
-    isEnhanceCloser: boolean; //Училение под доводчик
-    isTermoCable: boolean; //Термокабель
-    isElectromagnet: boolean; //Электромагнит
-    isIllumination: boolean; //Подсветка
+    isCloser: boolean;
+    isEnhanceCloser: boolean;
+    isTermoCable: boolean;
+    isElectromagnet: boolean;
+    isIllumination: boolean;
 }
 
 export interface IOrder extends IOrderStr, IOrderNum, IOrderBool{

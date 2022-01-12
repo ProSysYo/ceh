@@ -60,7 +60,7 @@ export const addOrder = (data: IOrder) => {
                 
                 if (e.response.status === 422) {
                     openNotification("error", "Ошибка валидации, проверьте все поля") 
-                    dispatch(orderActions.setValidateErrors(e.response.data))                                     
+                    dispatch(orderActions.setValidateErrors(e.response.data.errors))                                     
                 } else {
                     console.log(e.response);
                     
@@ -134,7 +134,7 @@ export const getOrders = (filters: {}) => {
     }
 }
 
-export const loadOrder = (id: string) => {
+export const loadOrder = (id: number) => {
     return async (dispatch: Dispatch) => {
         try {
             dispatch(orderActions.setLoading(true))      
@@ -142,7 +142,7 @@ export const loadOrder = (id: string) => {
             const data = response.data
             if (data) {
                 //Порядок вызова важен, т.к. нижестоящий action может зависет от вышестоящего
-                dispatch(orderActions.setOrderFieldStr({fieldName: "_id", value: data._id}))
+                dispatch(orderActions.setOrderFieldNum({fieldName: "id", value: data.id}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "number", value: data.number}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "customer", value: data.customer}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "numberCustomer", value: data.numberCustomer}))
@@ -236,7 +236,7 @@ export const loadOrder = (id: string) => {
     }
 }
 
-export const getOrder = (id: string) => {
+export const getOrder = (id: number) => {
     return async (dispatch: Dispatch) => {
         try {            
             const response = await api.getOrder(id)

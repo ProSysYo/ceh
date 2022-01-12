@@ -21,12 +21,12 @@ const Orders: React.FC = () => {
     const { orders, isLoading } = useAppSelector(state => state.order)
     const [visible, setVisible] = useState(false)
     const [visibleCalendar, setVisibleCalendar] = useState(false)      
-    const [selectedId, setSelectedId] = useState("")      
+    const [selectedId, setSelectedId] = useState(0)      
     const [planeDate, setPlaneDate] = useState("")      
     
     const dispatch = useAppDispatch()
 
-    const showDrawer = async (id: string) => {
+    const showDrawer = async (id: number) => {
         await dispatch(getOrder(id))
         setVisible(true);
     };
@@ -36,13 +36,13 @@ const Orders: React.FC = () => {
         setVisible(false);
     }; 
     
-    const showCalendar = (id: string) => {
+    const showCalendar = (id: number) => {
         setSelectedId(id)
         setVisibleCalendar(true)        
     }
 
     const calendarCancel = () => { 
-        setSelectedId("")
+        setSelectedId(0)
         setVisibleCalendar(false)
         setPlaneDate("")
     }
@@ -70,7 +70,7 @@ const Orders: React.FC = () => {
             
             <Container>
                 <TableContainer>
-                    <Table dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 680 }} size="small" rowKey="number" loading={isLoading}>
+                    <Table dataSource={orders} pagination={{ pageSize: 40 }} scroll={{ y: 680 }} size="small" rowKey="number">
                         <Column title="Номер" dataIndex="number" width={15} />
                         <Column title="Номера дверей" dataIndex="" width={15} />
                         <Column title="Заказчик" dataIndex="customer" width={10} />
@@ -92,11 +92,11 @@ const Orders: React.FC = () => {
                             render = {(record: IOrder) => (
                                 <> 
                                     <Tooltip placement="bottom" title="Просмотр">
-                                        <ActionButton icon={ <EyeOutlined/> } onClick={() => showDrawer(record._id!)} size="small"/>
+                                        <ActionButton icon={ <EyeOutlined/> } onClick={() => showDrawer(record.id!)} size="small"/>
                                     </Tooltip>
 
                                     <Tooltip placement="bottom" title="Редактировать">
-                                        <ActionLink to={`/editorder/${record._id}`}><EditOutlined/></ActionLink>
+                                        <ActionLink to={`/editorder/${record.id}`}><EditOutlined/></ActionLink>
                                     </Tooltip>
 
                                     <Tooltip placement="bottom" title="Удалить">
@@ -104,7 +104,7 @@ const Orders: React.FC = () => {
                                     </Tooltip>
 
                                     <Tooltip placement="bottom" title="Запустить">
-                                        <ActionButton icon={ <ScheduleOutlined/> } onClick={() => showCalendar(record._id!)} size="small" />
+                                        <ActionButton icon={ <ScheduleOutlined/> } onClick={() => showCalendar(record.id!)} size="small" />
                                     </Tooltip>    
                                 </>
                             )}

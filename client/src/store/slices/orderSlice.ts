@@ -174,7 +174,7 @@ const initialBlock: IBlock = {
 }
 
 const initialCurrentOrder: IOrder = {
-    _id: "",
+    id: undefined,
     customer: "",
     number: "",
     numberCustomer: "",
@@ -790,6 +790,7 @@ export const orderSlice = createSlice({
             state.isSuccess = false
             state.isCancel = false
             state.orders = []
+            state.validateErrors = []
         },
     },
     extraReducers: (builder) => {        

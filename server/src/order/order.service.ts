@@ -1,49 +1,50 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Order } from './order.model';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { InjectModel } from '@nestjs/sequelize';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
-    constructor(
-        @InjectModel(Order) 
-        private orderModel: typeof Order,
-    ) { }
+	constructor(
+		@InjectRepository(Order)
+		private repository: Repository<Order>
+	) {}
 
-    async create(dto: CreateOrderDto): Promise<Order> {
+	async create(dto: CreateOrderDto): Promise<Order> {
+		const number = new Date().valueOf();
+		const dateCreate: Date = new Date();
+		const newOrder = await this.repository.create({ ...dto, number, dateCreate });
+		const order = await this.repository.save(newOrder);
+		return order;
+	}
 
-        // if (dto.widthDouble === 0) {
-        //     throw new HttpException({ 
-        //         status: HttpStatus.FORBIDDEN, 
-        //         errors: 'Ширина доп створки болжна быть больше 0'
-        //     }, HttpStatus.FORBIDDEN);
-        // }        
+	async update(dto: UpdateOrderDto): Promise<Order> {
+		console.log(dto.id);
+		const id = dto.id;
 
-        const number: Number = new Date().valueOf()
-        const dateCreate: Date = new Date()
-        const order = await this.orderModel.create({ ...dto, number, dateCreate })
-        return order
-    }
+		const order = await this.repository.findOne(id);
 
-//     async update(dto: UpdateOrderDto): Promise<Order> {  
-//         console.log(dto._id);
-              
-//         const order = await this.orderModel.findByPk({ id: dto._id }, dto)
-//         return order
-//     }
+		if (!order) {
+			throw new HttpException(`Заказ не найден`, HttpStatus.NOT_FOUND);
+		}
 
-    async getAll(query): Promise<Order[]> {
-        const orders = await this.orderModel.findAll({where: query})
-        return orders
-    }
+		await this.repository.update(id, dto);
+		return await this.repository.findOne(id);
+	}
 
-//     async findOne(id: number) {
-//         const order = await this.orderModel.findOne(id)
+	async getAll(query): Promise<Order[]> {
+		const orders = await this.repository.find({ where: query });
+		return orders;
+	}
 
-//         if (!order) {
-//             throw new NotFoundException();
-//         }
-//         return order;
-//     }
+	async findOne(id: number) {
+		const order = await this.repository.findOne(id);
+
+		if (!order) {
+			throw new HttpException(`Заказ не найден`, HttpStatus.NOT_FOUND);
+		}
+		return order;
+	}
 }

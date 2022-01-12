@@ -285,8 +285,8 @@ const locationJambs: ILocationJamb[] = [
 
 const fittingColors: IFittingColor[] = [
     { _id: "1", value: "нет", name: "нет" },
-    { _id: "2", value: "хром", name: "хром" },       
-    { _id: "3", value: "бронза", name: "бронза" },       
+    { _id: "2", value: "Х", name: "хром" },       
+    { _id: "3", value: "Б", name: "бронза" },       
 ];
 
 const sealers: ISealer[] = [
@@ -346,14 +346,14 @@ const createOrder = (data: IOrder) => {
 };
 
 const updateOrder = (data: IOrder) => {
-    return http.patch(`/orders/${data._id}`, data);
+    return http.patch(`/orders/${data.id}`, data);
 };
 
 const getOrders = (filters: {}) => {
     return http.get("/orders", { params: filters });
 };
 
-const getOrder = (id: string) => {
+const getOrder = (id: number) => {
     return http.get<IOrder>(`/orders/${id}`);
 };
 

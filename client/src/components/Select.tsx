@@ -14,7 +14,7 @@ interface SelectProps {
 const Select: FC<SelectProps> = ({items, value, onChange, disabled = false, firstOption = "не выбрано", defaultValue, placeholder}) => {
     return (
         <SelectAnt
-            value={(value === undefined) ? "" : value}
+            value={(!value && !placeholder) ? "" : value}
             showSearch
             optionFilterProp="children"
             disabled={disabled}            

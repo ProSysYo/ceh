@@ -1,8 +1,8 @@
 import {Dispatch} from "redux";
 import { fetchTables, orderActions } from "../slices/orderSlice";
 import { api } from '../../api/api';
-import { IOrder } from '../../interfaces/IOrder';
 import { openNotification } from "../../commons/notification";
+import { IOrder } from "../../../../interfaces/IOrder";
 
 export const fetchAll = () => {
     return async (dispatch: Dispatch<any>) => {                          
@@ -36,6 +36,10 @@ export const fetchAll = () => {
         await dispatch(fetchTables("locationJambs"))                  
         await dispatch(fetchTables("fittingColors"))                  
         await dispatch(fetchTables("sealers"))
+        await dispatch(fetchTables("ears"))
+        await dispatch(fetchTables("holeInBoxes"))
+        await dispatch(fetchTables("colorDoors"))
+        await dispatch(fetchTables("packagings"))
         dispatch(orderActions.setLoading(false))
     }
 }
@@ -143,7 +147,7 @@ export const loadOrder = (id: number) => {
             if (data) {
                 //Порядок вызова важен, т.к. нижестоящий action может зависет от вышестоящего
                 dispatch(orderActions.setOrderFieldNum({fieldName: "id", value: data.id}))
-                dispatch(orderActions.setOrderFieldStr({fieldName: "number", value: data.number}))
+                dispatch(orderActions.setOrderFieldNum({fieldName: "number", value: data.number}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "customer", value: data.customer}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "numberCustomer", value: data.numberCustomer}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "party", value: data.party}))
@@ -205,8 +209,7 @@ export const loadOrder = (id: number) => {
                 dispatch(orderActions.setOrderFieldNum({fieldName: "heightWindow", value: data.heightWindow}))
                 dispatch(orderActions.setOrderFieldNum({fieldName: "widthWindow", value: data.widthWindow}))
                 dispatch(orderActions.setOrderFieldNum({fieldName: "thickWindow", value: data.thickWindow}))
-                dispatch(orderActions.setOrderFieldBool({fieldName: "isStainlessDoorStep", value: data.isStainlessDoorStep}))
-                dispatch(orderActions.setOrderFieldBool({fieldName: "isStreetDoor", value: data.isStreetDoor}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isStainlessDoorStep", value: data.isStainlessDoorStep}))                
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isEccentric", value: data.isEccentric}))
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isBackSheet", value: data.isBackSheet}))
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isTermoCable", value: data.isTermoCable}))
@@ -214,7 +217,12 @@ export const loadOrder = (id: number) => {
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isEnhanceCloser", value: data.isEnhanceCloser}))
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isElectromagnet", value: data.isElectromagnet}))
                 dispatch(orderActions.setOrderFieldBool({fieldName: "isIllumination", value: data.isIllumination}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isNoise", value: data.isNoise}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "sealer", value: data.sealer}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "ear", value: data.ear}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "holeInBox", value: data.holeInBox}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "colorDoor", value: data.colorDoor}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "packaging", value: data.packaging}))
 
                 openNotification("success", "Заказ загружен")
             }

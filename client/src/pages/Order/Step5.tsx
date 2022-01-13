@@ -1,19 +1,18 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Form, InputNumber } from 'antd';
+import { Divider, Form } from 'antd';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Select from '../../components/Select';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { orderActions } from '../../store/slices/orderSlice';
 
-
 const Step5: FC = () => {
     const dispatch = useAppDispatch()
 
+    const { currentOrder } = useAppSelector(state => state.order)
     const { staticTables } = useAppSelector(state => state.order)
     const { computedTables } = useAppSelector(state => state.order)
     const { block } = useAppSelector(state => state.order)
-    const { currentOrder } = useAppSelector(state => state.order)
     const { validateErrors } = useAppSelector(state => state.order)
 
     return (
@@ -21,79 +20,120 @@ const Step5: FC = () => {
             <Form
                 name="basic"
                 labelCol={{ span: 9 }}
-                wrapperCol={{ span: 5 }}
-                size = "middle"                 
-            >                   
+                wrapperCol={{ span: 5 }}   
+                size = "middle"              
+            >  
+                <Divider>Наружная отделка</Divider>
                 <Form.Item 
-                    label="Тип окна*"
-                    { ...validateErrors.typeWindow && { help: validateErrors.typeWindow, validateStatus: 'error'}}
+                    label="Отделка / Тип панели*"
+                    { ...validateErrors.typeDecorationOutside && { help: validateErrors.typeDecorationOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={staticTables.typeWindows} 
-                        value={currentOrder.typeWindow} 
-                        onChange={ (value) => dispatch(orderActions.setTypeWindow(value))}                       
+                        items={computedTables.typeDecorationsOutside} 
+                        value={currentOrder.typeDecorationOutside} 
+                        onChange={ (value) => dispatch(orderActions.setTypeDecorationOutside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item 
-                    label="Окно*"
-                    { ...validateErrors.doorWindow && { help: validateErrors.doorWindow, validateStatus: 'error'}}
+                    label="Элемент отделки / Фрезеровка"
+                    { ...validateErrors.decorationOutside && { help: validateErrors.decorationOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={computedTables.currentWindows} 
-                        value={currentOrder.doorWindow} 
-                        onChange={ (value) => dispatch(orderActions.setDoorWindow(value))}                       
+                        items={computedTables.decorationsOutside} 
+                        value={currentOrder.decorationOutside} 
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "decorationOutside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
-                    label="Цвет тонировки"
-                    { ...validateErrors.colorTint && { help: validateErrors.colorTint, validateStatus: 'error'}}
+                    label="Цвет пленки панели"
+                    { ...validateErrors.wrapOutside && { help: validateErrors.wrapOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={staticTables.colorTints} 
-                        value={currentOrder.colorTint} 
-                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "colorTint", value}))}                        
-                    />
-                </Form.Item> 
-                <Form.Item 
-                    label="Цвет ковки"
-                    { ...validateErrors.colorForge && { help: validateErrors.colorForge, validateStatus: 'error'}}
-                >
-                    <Select 
-                        items={staticTables.colorForges} 
-                        value={currentOrder.colorForge}
-                        disabled={!block.isColorForge}
-                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "colorForge", value}))}                       
+                        items={staticTables.wraps} 
+                        value={currentOrder.wrapOutside}
+                        disabled={!block.isWrapOutside} 
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "wrapOutside", value}))}                        
                     />
                 </Form.Item>
                 <Form.Item 
-                    label="Патина на ковке"
-                    { ...validateErrors.patinaForge && { help: validateErrors.patinaForge, validateStatus: 'error'}}
+                    label="Патина на панели"
+                    { ...validateErrors.patinaOutside && { help: validateErrors.patinaOutside, validateStatus: 'error'}}
                 >
                     <Select 
-                        items={staticTables.patinaForges} 
-                        value={currentOrder.patinaForge}
-                        disabled={!block.isPatinaForge}
-                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaForge", value}))}                       
+                        items={staticTables.patinas} 
+                        value={currentOrder.patinaOutside} 
+                        disabled={!block.isPatinaOutside} 
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaOutside", value}))}                        
+                    />
+                </Form.Item>
+
+                <Divider>Внутренняя отделка</Divider>
+                <Form.Item 
+                    label="Отделка / Тип панели*"
+                    { ...validateErrors.typeDecorationInside && { help: validateErrors.typeDecorationInside, validateStatus: 'error'}}
+                >
+                    <Select 
+                        items={computedTables.typeDecorationsInside} 
+                        value={currentOrder.typeDecorationInside} 
+                        onChange={ (value) => dispatch(orderActions.setTypeDecorationInside(value))}                        
                     />
                 </Form.Item>
                 <Form.Item 
-                    label="Высота стеклопакета"
-                    { ...validateErrors.heightWindow && { help: validateErrors.heightWindow, validateStatus: 'error'}}
+                    label="Элемент отделки / Фрезеровка"
+                    { ...validateErrors.decorationInside && { help: validateErrors.decorationInside, validateStatus: 'error'}}
                 >
-                    <InputNumber value={currentOrder.heightWindow} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "heightWindow", value}))} />
+                    <Select 
+                        items={computedTables.decorationsInside} 
+                        value={currentOrder.decorationInside} 
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "decorationInside", value}))}                        
+                    />
                 </Form.Item>
                 <Form.Item 
-                    label="Ширина стеклопакета"
-                    { ...validateErrors.widthWindow && { help: validateErrors.widthWindow, validateStatus: 'error'}}
+                    label="Цвет пленки панели"
+                    { ...validateErrors.wrapInside && { help: validateErrors.wrapInside, validateStatus: 'error'}}
                 >
-                    <InputNumber  value={currentOrder.widthWindow} onChange={(value)=>  dispatch(orderActions.setOrderFieldNum({fieldName: "widthWindow", value}))} />
+                    <Select 
+                        items={staticTables.wraps} 
+                        value={currentOrder.wrapInside} 
+                        disabled={!block.isWrapInside}
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "wrapInside", value}))}                        
+                    />
                 </Form.Item>
                 <Form.Item 
-                    label="Толщина стеклопакета"
-                    { ...validateErrors.thickWindow && { help: validateErrors.thickWindow, validateStatus: 'error'}}
+                    label="Патина на панели"
+                    { ...validateErrors.patinaInside && { help: validateErrors.patinaInside, validateStatus: 'error'}}
                 >
-                    <InputNumber  value={currentOrder.thickWindow} onChange={(value)=> dispatch(orderActions.setOrderFieldNum({fieldName: "thickWindow", value}))} />
-                </Form.Item> 
+                    <Select 
+                        items={staticTables.patinas} 
+                        value={currentOrder.patinaInside}
+                        disabled={!block.isPatinaInside}
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "patinaInside", value}))}                        
+                    />
+                </Form.Item>  
+
+                <Divider>Наличник</Divider> 
+                <Form.Item 
+                    label="Наличник"
+                    { ...validateErrors.jamb && { help: validateErrors.jamb, validateStatus: 'error'}}
+                >
+                    <Select 
+                        items={computedTables.currentJambs} 
+                        value={currentOrder.jamb}
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "jamb", value}))}                        
+                    />
+                </Form.Item>
+
+                <Form.Item 
+                    label="Цвет пленки наличника"
+                    { ...validateErrors.jambWrap && { help: validateErrors.jambWrap, validateStatus: 'error'}}
+                >
+                    <Select 
+                        items={staticTables.wraps} 
+                        value={currentOrder.jambWrap} 
+                        disabled={!block.isJambWrap}
+                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "jambWrap", value}))}                        
+                    />
+                </Form.Item>              
             </Form>
         </Container>
     )

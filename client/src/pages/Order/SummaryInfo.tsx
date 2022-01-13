@@ -67,6 +67,7 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Номер заказчика" value={currentOrder.numberCustomer} />
                     <Row title="Номер заказа" value={currentOrder.number} />
                     <Row title="Партийность" value={currentOrder.party} />
+                    <Row title="Упаковка" value={currentOrder.packaging} />
                     <Row title="Количество дверей" value={currentOrder.countDoors} />
                     <Row title="Стоимость одной двери" value={currentOrder.costDoor} />
                     <Row title="Примечание" value={currentOrder.note} />
@@ -79,6 +80,7 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Ширина двери" value={currentOrder.width} />
                     <Row title="Ширина раб. створки" value={currentOrder.widthDouble} />
                     <Row title="Уплотнитель" value={currentOrder.sealer} />
+                    <Row title="Цвет покраски двери" value={currentOrder.colorDoor} />
                     <Row title="Располож. налич. (внутр. откр.)" value={currentOrder.locationJumb} />
                 </Group>
                 <Group title="Петли">
@@ -90,6 +92,12 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Толщина металла полотна" value={currentOrder.thickMetalLeaf} />
                     <Row title="Толщина металла короба" value={currentOrder.thickMetalBox} />
                 </Group>
+                <Group title="Крепление">
+                    <Row title="Уши" value={currentOrder.ear} />
+                    <Row title="Отверстия в коробе" value={currentOrder.holeInBox} />
+                </Group>                
+            </Column>
+            <Column>
                 <Group title="Основной замок">
                     <Row title="Основной замок" value={currentOrder.baseLock} />
                     <Row title="Цилиндр" value={currentOrder.baseCylinder} />
@@ -109,8 +117,6 @@ const SummaryInfo: React.FC = () => {
                         value={currentOrder.baseCoverInside2 + ((currentOrder.baseCoverColorInside2 !== "нет") ? " " + currentOrder.baseCoverColorInside2 : "")}
                     />
                 </Group>
-            </Column>
-            <Column>
                 <Group title="Дополнительный замок">
                     <Row title="Дополнительный замок" value={currentOrder.optionalLock} />
                     <Row title="Цилиндр дополнительного замка" value={currentOrder.optionalCylinder} />
@@ -147,7 +153,9 @@ const SummaryInfo: React.FC = () => {
                 <Group title="Наличник">                    
                     <Row title="Наличник" value={currentOrder.jamb} />
                     <Row title="Цвет пленки наличника" value={currentOrder.jambWrap} />
-                </Group>
+                </Group>                               
+            </Column>
+            <Column>
                 <Group title="Окно">
                     <Row title="Тип окна" value={currentOrder.typeWindow} />
                     <Row title="Окно" value={currentOrder.doorWindow} />
@@ -157,9 +165,7 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Высота стеклопакета" value={currentOrder.heightWindow} />
                     <Row title="Ширина стеклопакета" value={currentOrder.widthWindow} />
                     <Row title="Толщина стеклопакета" value={currentOrder.thickWindow} />
-                </Group>               
-            </Column>
-            <Column>                
+                </Group>                
                 <Group title="Опции">
                     <Row title="Порог из нержавейки" value={currentOrder.isStainlessDoorStep ? "да" : "нет"} />
                     <Row title="Эксцентрик" value={currentOrder.isEccentric ? "да" : "нет"} />
@@ -169,6 +175,7 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Усиление под довочик" value={currentOrder.isEnhanceCloser ? "да" : "нет"} />
                     <Row title="Электромагнит" value={currentOrder.isElectromagnet ? "да" : "нет"} />
                     <Row title="Подсветка" value={currentOrder.isIllumination ? "да" : "нет"} />
+                    <Row title="Шумоизоляция" value={currentOrder.isNoise ? "да" : "нет"} />
                 </Group>
             </Column>
         </Container>

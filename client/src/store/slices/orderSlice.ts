@@ -1,34 +1,39 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { ICustomer } from '../../interfaces/ICustomer';
-import { IOrder, IOrderNum, IOrderStr, IOrderBool } from '../../interfaces/IOrder';
-import { IParty } from '../../interfaces/IParty';
-import { IModel } from '../../interfaces/IModel';
-import { IModelBox } from '../../interfaces/IModelBox';
-import { ILock } from '../../interfaces/ILock';
-import { ISpinner } from '../../interfaces/ISpinner';
-import { ICylinder } from '../../interfaces/ICylinder';
-import { ICover } from '../../interfaces/ICover';
-import { IEye } from '../../interfaces/IEye';
-import { IHandle } from '../../interfaces/IHandle';
-import { ITypeDecoration } from '../../interfaces/ITypeDecoration';
-import { IDecoration } from '../../interfaces/IDecoration';
-import { IWrap } from '../../interfaces/IWrap';
-import { IPatina } from '../../interfaces/IPatina';
-import { ITypeWindow } from '../../interfaces/ITypeWindow';
-import { IWindow } from '../../interfaces/IWindow';
-import { IColorTint } from '../../interfaces/IColorTint';
-import { IColorForge } from '../../interfaces/IColorForge';
-import { IPatinaForge } from '../../interfaces/IPatinaForge';
-import { ILocationHinge } from '../../interfaces/ILoacationHinge';
-import { ITypeHinge } from '../../interfaces/ITypeHinge';
-import { IThickMetal } from '../../interfaces/IThickMetal';
-import { IEyeLocation } from '../../interfaces/IEyeLocation';
-import { IJamb } from '../../interfaces/IJamb';
-import { ILocationJamb } from '../../interfaces/ILocationJamb';
-import { IFittingColor } from '../../interfaces/IFittingColor';
-import { IHingeCount } from '../../interfaces/IHingeCount';
-import { ISealer } from '../../interfaces/ISealer';
+
+import { IOrder, IOrderNum, IOrderStr, IOrderBool } from '../../../../interfaces/IOrder';
+import { IParty } from '../../../../interfaces/IParty';
+import { IModel } from '../../../../interfaces/IModel';
+import { IModelBox } from '../../../../interfaces/IModelBox';
+import { ILock } from '../../../../interfaces/ILock';
+import { ISpinner } from '../../../../interfaces/ISpinner';
+import { ICylinder } from '../../../../interfaces/ICylinder';
+import { ICover } from '../../../../interfaces/ICover';
+import { IEye } from '../../../../interfaces/IEye';
+import { IHandle } from '../../../../interfaces/IHandle';
+import { ITypeDecoration } from '../../../../interfaces/ITypeDecoration';
+import { IDecoration } from '../../../../interfaces/IDecoration';
+import { IWrap } from '../../../../interfaces/IWrap';
+import { IPatina } from '../../../../interfaces/IPatina';
+import { ITypeWindow } from '../../../../interfaces/ITypeWindow';
+import { IWindow } from '../../../../interfaces/IWindow';
+import { IColorTint } from '../../../../interfaces/IColorTint';
+import { IColorForge } from '../../../../interfaces/IColorForge';
+import { IPatinaForge } from '../../../../interfaces/IPatinaForge';
+import { ILocationHinge } from '../../../../interfaces/ILoacationHinge';
+import { ITypeHinge } from '../../../../interfaces/ITypeHinge';
+import { IThickMetal } from '../../../../interfaces/IThickMetal';
+import { IEyeLocation } from '../../../../interfaces/IEyeLocation';
+import { IJamb } from '../../../../interfaces/IJamb';
+import { ILocationJamb } from '../../../../interfaces/ILocationJamb';
+import { IFittingColor } from '../../../../interfaces/IFittingColor';
+import { IHingeCount } from '../../../../interfaces/IHingeCount';
+import { ISealer } from '../../../../interfaces/ISealer';
 import { api, tables } from '../../api/api';
+import { IEar } from '../../../../interfaces/IEar';
+import { IHoleInBox } from '../../../../interfaces/IHoleInBox';
+import { ICustomer } from '../../../../interfaces/ICustomer';
+import { IColorDoor } from '../../../../interfaces/IColorDoor';
+import { IPackaging } from '../../../../interfaces/IPackaging';
 
 
 export interface IStaticTables {
@@ -62,6 +67,10 @@ export interface IStaticTables {
     colorTints: IColorTint[];
     colorForges: IColorForge[];
     patinaForges: IPatinaForge[];
+    ears: IEar[];
+    holeInBoxes: IHoleInBox[];
+    colorDoors: IColorDoor[];
+    packagings: IPackaging[];
 }
 
 interface IComputedTables {
@@ -139,7 +148,11 @@ const initialStaticTables: IStaticTables = {
     jambs: [],
     locationJambs: [],
     fittingColors: [],
-    sealers: []
+    sealers: [],
+    ears: [],
+    holeInBoxes: [],
+    colorDoors: [],
+    packagings: [],
 }
 
 const initialComputedTables: IComputedTables = {
@@ -176,7 +189,7 @@ const initialBlock: IBlock = {
 const initialCurrentOrder: IOrder = {
     id: undefined,
     customer: "",
-    number: "",
+    number: undefined,
     numberCustomer: "",
     party: "",
 
@@ -186,50 +199,41 @@ const initialCurrentOrder: IOrder = {
     width: undefined,
     modelBox: "",
     widthDouble: undefined,
-
-    //Петли
+    
     locationHinge: "",
     typeHinge: "",
     countHinge: undefined,
-
-    //Основной замок
+    
     baseLock: "",
     lockSpinner: "нет",
     lockSpinnerColor: "нет",
     baseCylinder: "нет",
-
-    //Накладки основного замка
+    
     baseCoverOutside: "нет",
     baseCoverColorOutside: "нет",
     baseCoverInside: "нет",
     baseCoverColorInside: "нет",
-
-    //Накладки основного замка (если двухсистемный замок)
+    
     baseCoverOutside2: "нет",
     baseCoverColorOutside2: "нет",
     baseCoverInside2: "нет",
     baseCoverColorInside2: "нет",
-
-    //Дополнительный замок
+    
     optionalLock: "",
     optionalCylinder: "нет",
-
-    //Накладки дополнительного замка
+    
     optionalCoverOutside: "нет",
     optionalCoverColorOutside: "нет",
     optionalCoverInside: "нет",
     optionalCoverColorInside: "нет",
-
-    //Глазок
+    
     eye: "",
     colorEye: "",
     eyeLocation: "",
-
-    //Ручка
+    
     handle: "",
     handleColor: "",
-
-    //Вертушок двери(не замка)
+    
     spinner: "",
     spinnerColor: "",
 
@@ -258,8 +262,7 @@ const initialCurrentOrder: IOrder = {
     jambWrap: "",
     locationJumb: "нет",
 
-    isStainlessDoorStep: false,
-    isStreetDoor: false,
+    isStainlessDoorStep: false,    
     isEccentric: false,
     isBackSheet: false,
     isCloser: false,
@@ -267,7 +270,13 @@ const initialCurrentOrder: IOrder = {
     isTermoCable: false,
     isElectromagnet: false,
     isIllumination: false,
+    isNoise: false,
+
     sealer: "",
+    ear: "",
+    holeInBox: "",
+    colorDoor: "",
+    packaging: "",
 
     dateCreate: undefined,
 }

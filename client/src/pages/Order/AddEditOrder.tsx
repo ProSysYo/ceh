@@ -18,6 +18,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { addOrder, updateOrder } from '../../store/actions/orderActions';
 import { orderActions } from '../../store/slices/orderSlice';
+import Step8 from './Step8';
 
 const renderStep = (step: number) => {
     switch (step) {
@@ -28,6 +29,7 @@ const renderStep = (step: number) => {
         case 4: return <Step5/>
         case 5: return <Step6/>
         case 6: return <Step7/>
+        case 7: return <Step8/>
     }
 }
 

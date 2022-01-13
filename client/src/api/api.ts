@@ -1,33 +1,38 @@
-import { IModel } from "../interfaces/IModel";
-import { ILock } from '../interfaces/ILock';
-import { ISpinner } from '../interfaces/ISpinner';
-import { ICylinder } from '../interfaces/ICylinder';
-import { ICover } from '../interfaces/ICover';
-import { IEye } from '../interfaces/IEye';
-import { IHandle } from '../interfaces/IHandle';
-import { ITypeDecoration } from '../interfaces/ITypeDecoration';
-import { IDecoration } from "../interfaces/IDecoration";
-import { IWrap } from '../interfaces/IWrap';
-import { IPatina } from '../interfaces/IPatina';
-import { ITypeWindow } from "../interfaces/ITypeWindow";
-import { IWindow } from '../interfaces/IWindow';
-import { IColorTint } from '../interfaces/IColorTint';
-import { IColorForge } from '../interfaces/IColorForge';
-import { IPatinaForge } from '../interfaces/IPatinaForge';
-import { ILocationHinge } from '../interfaces/ILoacationHinge';
-import { ITypeHinge } from '../interfaces/ITypeHinge';
-import { IThickMetal } from '../interfaces/IThickMetal';
-import { IModelBox } from '../interfaces/IModelBox';
-import { IParty } from '../interfaces/IParty';
-import { ICustomer } from '../interfaces/ICustomer';
-import { IEyeLocation } from '../interfaces/IEyeLocation';
-import { IJamb } from '../interfaces/IJamb';
-import { ILocationJamb } from '../interfaces/ILocationJamb';
-import { IOrder } from '../interfaces/IOrder';
+import { IModel } from '../../../interfaces/IModel';
+import { ILock } from '../../../interfaces/ILock';
+import { ISpinner } from '../../../interfaces/ISpinner';
+import { ICylinder } from '../../../interfaces/ICylinder';
+import { ICover } from '../../../interfaces/ICover';
+import { IEye } from '../../../interfaces/IEye';
+import { IHandle } from '../../../interfaces/IHandle';
+import { ITypeDecoration } from '../../../interfaces/ITypeDecoration';
+import { IDecoration } from '../../../interfaces/IDecoration';
+import { IWrap } from '../../../interfaces/IWrap';
+import { IPatina } from '../../../interfaces/IPatina';
+import { ITypeWindow } from '../../../interfaces/ITypeWindow';
+import { IWindow } from '../../../interfaces/IWindow';
+import { IColorTint } from '../../../interfaces/IColorTint';
+import { IColorForge } from '../../../interfaces/IColorForge';
+import { IPatinaForge } from '../../../interfaces/IPatinaForge';
+import { ILocationHinge } from '../../../interfaces/ILoacationHinge';
+import { ITypeHinge } from '../../../interfaces/ITypeHinge';
+import { IThickMetal } from '../../../interfaces/IThickMetal';
+import { IModelBox } from '../../../interfaces/IModelBox';
+import { IParty } from '../../../interfaces/IParty';
+
+import { IEyeLocation } from '../../../interfaces/IEyeLocation';
+import { IJamb } from '../../../interfaces/IJamb';
+import { ILocationJamb } from '../../../interfaces/ILocationJamb';
+import { IOrder } from '../../../interfaces/IOrder';
 import { http } from '../commons/http';
-import { IFittingColor } from '../interfaces/IFittingColor';
-import { IHingeCount } from "../interfaces/IHingeCount";
-import { ISealer } from '../interfaces/ISealer';
+import { IFittingColor } from '../../../interfaces/IFittingColor';
+import { IHingeCount } from '../../../interfaces/IHingeCount';
+import { ISealer } from '../../../interfaces/ISealer';
+import { IEar } from '../../../interfaces/IEar';
+import { IHoleInBox } from '../../../interfaces/IHoleInBox';
+import { ICustomer } from '../../../interfaces/ICustomer';
+import { IColorDoor } from '../../../interfaces/IColorDoor';
+import { IPackaging } from '../../../interfaces/IPackaging';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -296,11 +301,36 @@ const sealers: ISealer[] = [
     { _id: "4", value: "1-шлегель 2-шлегель 3-магнит", name: "1-шлегель 2-шлегель 3-магнит" },    
 ];
 
+const ears: IEar[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "80x40x8шт", name: "80x40x8шт" },       
+    { _id: "3", value: "100x40x8шт", name: "100x40x8шт" },       
+];
+
+const holeInBoxes: IHoleInBox[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "6шт Д10", name: "6шт Д10" },       
+    { _id: "3", value: "8шт Д12", name: "8шт Д12" },       
+];
+
+const colorDoors: IColorDoor[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "черный муар", name: "черный муар" },       
+    { _id: "3", value: "шагрень черная", name: "шагрень черная" },       
+];
+
+const packagings: IPackaging[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "ХАВЕР", name: "ХАВЕР" },       
+    { _id: "3", value: "ЛАБИРИНТ", name: "ЛАБИРИНТ" },       
+];
+
 const mock = {
     customers, parties, models, modelBoxes, locks, spinners, cylinders, covers, eyes,
     eyeLocations, handles, typeDecorations, decorations, wraps, patinas, typeWindows,
     windows, colorTints, colorForges, patinaForges, locationHinges, hingeCounts, 
-    typeHinges, thickMetalLeafs, thickMetalBoxes, jambs, locationJambs, fittingColors, sealers
+    typeHinges, thickMetalLeafs, thickMetalBoxes, jambs, locationJambs, fittingColors, sealers,
+    ears, holeInBoxes, colorDoors, packagings
 }
 
 const deley = 50
@@ -334,7 +364,11 @@ export type tables =
     "jambs" |
     "locationJambs" |
     "fittingColors" |
-    "sealers"
+    "sealers" | 
+    "ears" |
+    "holeInBoxes" |
+    "colorDoors" |
+    "packagings"
 
 const fetchTableByName = (tableName: tables) => {
     return new Promise<{data:any}>((res) => {

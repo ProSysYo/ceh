@@ -59,17 +59,16 @@ const Step2: FC = () => {
                     </Form.Item>
 
                     <Form.Item 
-                    label="Расположение наличника (внутр. откр.)"
-                    { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
-                >
-                    <Select 
-                        items={staticTables.locationJambs} 
-                        value={currentOrder.locationJumb}
-                        disabled={!block.isLocationJamb}
-                        onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "locationJumb", value}))}                        
-                    />
-                </Form.Item>
-
+                        label="Расположение наличника (внутр. откр.)"
+                        { ...validateErrors.locationJumb && { help: validateErrors.locationJumb, validateStatus: 'error'}}
+                    >
+                        <Select 
+                            items={staticTables.locationJambs} 
+                            value={currentOrder.locationJumb}
+                            disabled={!block.isLocationJamb}
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "locationJumb", value}))}                        
+                        />
+                    </Form.Item>
                     <Form.Item 
                         label="Уплотнитель"
                         { ...validateErrors.sealer && { help: validateErrors.sealer, validateStatus: 'error'}}
@@ -78,6 +77,16 @@ const Step2: FC = () => {
                             items={staticTables.sealers} 
                             value={currentOrder.sealer} 
                             onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "sealer", value}))}                        
+                        />
+                    </Form.Item>
+                    <Form.Item 
+                        label="Цвет покраски двери"
+                        { ...validateErrors.doorColor && { help: validateErrors.doorColor, validateStatus: 'error'}}
+                    >
+                        <Select 
+                            items={staticTables.colorDoors} 
+                            value={currentOrder.colorDoor} 
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "colorDoor", value}))}                        
                         />
                     </Form.Item>
                 </Col>
@@ -173,7 +182,35 @@ const Step2: FC = () => {
                         />
                     </Form.Item>
                 </Col>
-            </Row>                 
+            </Row>
+
+            <Divider >Крепление</Divider>    
+            <Row gutter={24}>
+                <Col span={12}>
+                    <Form.Item 
+                        label="Уши"
+                        { ...validateErrors.ear && { help: validateErrors.ear, validateStatus: 'error'}}
+                    >
+                        <Select 
+                            items={staticTables.ears} 
+                            value={currentOrder.ear} 
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "ear", value}))}                        
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item 
+                        label="Отверстия в коробе"
+                        { ...validateErrors.holeInBox && { help: validateErrors.holeInBox, validateStatus: 'error'}}
+                    >
+                        <Select 
+                            items={staticTables.holeInBoxes} 
+                            value={currentOrder.holeInBox} 
+                            onChange={ (value) => dispatch(orderActions.setOrderFieldStr({fieldName: "holeInBox", value}))}                        
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>                        
         </Form>    
         </Container>
     )

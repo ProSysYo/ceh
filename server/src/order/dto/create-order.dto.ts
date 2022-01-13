@@ -199,15 +199,27 @@ export class CreateOrderDto {
 	readonly locationJumb: string;
 
 	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
-	readonly sealer: string; //Уплотнитель
+	readonly sealer: string;
 
-	readonly isStainlessDoorStep: boolean; //порог из нержавейки
-	readonly isStreetDoor: boolean;
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly ear: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly holeInBox: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly colorDoor: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly packaging: string;
+
+	readonly isStainlessDoorStep: boolean;
 	readonly isEccentric: boolean;
 	readonly isBackSheet: boolean;
-	readonly isCloser: boolean; //доводчик
-	readonly isEnhanceCloser: boolean; //Училение под доводчик
-	readonly isTermoCable: boolean; //Термокабель
-	readonly isElectromagnet: boolean; //Электромагнит
-	readonly isIllumination: boolean; //Подсветка
+	readonly isCloser: boolean;
+	readonly isEnhanceCloser: boolean;
+	readonly isTermoCable: boolean;
+	readonly isElectromagnet: boolean;
+	readonly isIllumination: boolean;
+	readonly isNoise: boolean;
 }

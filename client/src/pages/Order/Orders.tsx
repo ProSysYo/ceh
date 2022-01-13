@@ -5,9 +5,8 @@ import  moment from 'moment'
 import { FileAddOutlined, EditOutlined, DeleteOutlined, EyeOutlined, ScheduleOutlined } from '@ant-design/icons';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
-import OrdersFilter from '../../components/OrdersFilter';
+import OrdersFilter from './OrdersFilter';
 import { Link } from 'react-router-dom';
-import { IOrder } from '../../interfaces/IOrder';
 import Column from 'antd/lib/table/Column';
 
 import ShowOrder from './ShowOrder';
@@ -16,6 +15,7 @@ import { getOrder } from '../../store/actions/orderActions';
 import { orderActions } from '../../store/slices/orderSlice';
 import Modal from 'antd/lib/modal/Modal';
 import { openNotification } from '../../commons/notification';
+import { IOrder } from '../../../../interfaces/IOrder';
 
 const Orders: React.FC = () => { 
     const { orders, isLoading } = useAppSelector(state => state.order)

@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IOrder } from '../../../interfaces/IOrder';
 
 @Entity()
-export class Order {
+export class Order implements IOrder {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -195,9 +196,6 @@ export class Order {
 	isStainlessDoorStep: boolean;
 
 	@Column({ nullable: false })
-	isStreetDoor: boolean;
-
-	@Column({ nullable: false })
 	isEccentric: boolean;
 
 	@Column({ nullable: false })
@@ -219,7 +217,22 @@ export class Order {
 	isIllumination: boolean;
 
 	@Column({ nullable: false })
+	isNoise: boolean;
+
+	@Column({ nullable: false })
 	sealer: string;
+
+	@Column({ nullable: false })
+	ear: string;
+
+	@Column({ nullable: false })
+	holeInBox: string;
+
+	@Column({ nullable: false })
+	colorDoor: string;
+
+	@Column({ nullable: false })
+	packaging: string;
 
 	@Column({ type: 'date', nullable: false })
 	dateCreate: Date;

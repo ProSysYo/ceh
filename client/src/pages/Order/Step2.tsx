@@ -81,7 +81,7 @@ const Step2: FC = () => {
                     </Form.Item>
                     <Form.Item 
                         label="Цвет покраски двери"
-                        { ...validateErrors.doorColor && { help: validateErrors.doorColor, validateStatus: 'error'}}
+                        { ...validateErrors.colorDoor && { help: validateErrors.colorDoor, validateStatus: 'error'}}
                     >
                         <Select 
                             items={staticTables.colorDoors} 

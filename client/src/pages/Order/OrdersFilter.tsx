@@ -155,6 +155,21 @@ const OrdersFilter: React.FC = () => {
                             <MyItem fieldName="isIllumination" valuePropName="checked"><Checkbox>Подсветка</Checkbox></MyItem>                                                       
                             <MyItem fieldName="isNoise" valuePropName="checked"><Checkbox>Шумоизоляция</Checkbox></MyItem>                                                       
                         </Panel>
+
+                        <Panel header="Полка / Фрамуга" key="14">
+                            <MyItem fieldName="typePolkaLeft"><Select items={staticTables.typePolkas} placeholder="Тип полки слева"/></MyItem>
+                            <MyItem fieldName="isForgePolkaLeft" valuePropName="checked"><Checkbox>Ковка на полке слева</Checkbox></MyItem>                            
+                            <MyItem fieldName="isGlassPolkaLeft" valuePropName="checked"><Checkbox>Ст-т на полке слева</Checkbox></MyItem>                            
+
+                            <MyItem fieldName="typePolkaRight"><Select items={staticTables.typePolkas} placeholder="Тип полки справа"/></MyItem>
+                            <MyItem fieldName="isForgePolkaRight" valuePropName="checked"><Checkbox>Ковка на полке справа</Checkbox></MyItem>                            
+                            <MyItem fieldName="isGlassPolkaRight" valuePropName="checked"><Checkbox>Ст-т на полке справа</Checkbox></MyItem>
+
+                            <MyItem fieldName="executionFramuga"><Select items={staticTables.executionFramugas} placeholder="Исполнение фрамуги"/></MyItem>
+                            <MyItem fieldName="typeFramuga"><Select items={staticTables.typeFramugas} placeholder="Тип фрамуги"/></MyItem>
+                            <MyItem fieldName="isForgeFramuga" valuePropName="checked"><Checkbox>Ковка на фрамуге</Checkbox></MyItem>                            
+                            <MyItem fieldName="isGlassFramuga" valuePropName="checked"><Checkbox>Ст-т на фрамуге</Checkbox></MyItem>                                                 
+                        </Panel>
                     </Collapse>
                 </Form>  
             </Filters>

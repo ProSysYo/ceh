@@ -213,6 +213,36 @@ export class CreateOrderDto {
 	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
 	readonly packaging: string;
 
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly typePolkaLeft: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isForgePolkaLeft: boolean;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isGlassPolkaLeft: boolean;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly typePolkaRight: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isForgePolkaRight: boolean;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isGlassPolkaRight: boolean;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly executionFramuga: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly typeFramuga: string;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isForgeFramuga: boolean;
+
+	@IsNotEmpty({ message: 'Поле не должно быть пустым' })
+	readonly isGlassFramuga: boolean;
+
 	readonly isStainlessDoorStep: boolean;
 	readonly isEccentric: boolean;
 	readonly isBackSheet: boolean;

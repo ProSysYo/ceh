@@ -12,19 +12,6 @@ const Group: FC<{ title: string }> = ({ title, children }) => {
     )
 }
 
-const Rows = styled.div`    
-    width: 450px;    
-    display: flex;
-    flex-direction: column;     
-`;
-const Title = styled.div`
-    font-size: 16px;
-    padding-left: 10px;
-    border-bottom: 1px solid #f0f0f0;
-    text-align: center;
-    font-weight: 700;        
-`;
-
 const Row: FC<{ title: string, value: any }> = ({ title, value }) => {
     return (
         <RowGroup>
@@ -34,35 +21,14 @@ const Row: FC<{ title: string, value: any }> = ({ title, value }) => {
     )
 
 }
-const RowGroup = styled.div`
-    display: flex;
-    width: 100%;         
-`;
 
-const RowTitle = styled.div`
-    font-size: 12px;
-    width: 50%;
-    padding: 1px 10px;    
-    border-left: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;       
-    border-right: 1px solid #f0f0f0;       
-`;
-
-const RowValue = styled.div`
-    font-size: 12px;
-    width: 50%;
-    padding: 1px 10px; 
-    border-bottom: 1px solid #f0f0f0;
-    border-right: 1px solid #f0f0f0;
-    background-color: #fcfafa;      
-`;
 const SummaryInfo: React.FC = () => {
     const { currentOrder } = useAppSelector(state => state.order)
 
     return (
         <Container>
             <Column>
-                <Group title="Основное">
+                <Group title="Информация по заказу">
                     <Row title="Заказчика" value={currentOrder.customer} />
                     <Row title="Номер заказчика" value={currentOrder.numberCustomer} />
                     <Row title="Номер заказа" value={currentOrder.number} />
@@ -177,6 +143,22 @@ const SummaryInfo: React.FC = () => {
                     <Row title="Подсветка" value={currentOrder.isIllumination ? "да" : "нет"} />
                     <Row title="Шумоизоляция" value={currentOrder.isNoise ? "да" : "нет"} />
                 </Group>
+                <Group title="Полка левая">
+                    <Row title="Тип" value={currentOrder.typePolkaLeft} />
+                    <Row title="Ковка" value={currentOrder.isForgePolkaLeft ? "да" : "нет"} />
+                    <Row title="Стеклопакет" value={currentOrder.isGlassPolkaLeft ? "да" : "нет"} />
+                </Group>
+                <Group title="Полка правая">
+                    <Row title="Тип" value={currentOrder.typePolkaRight} />
+                    <Row title="Ковка" value={currentOrder.isForgePolkaRight ? "да" : "нет"} />
+                    <Row title="Стеклопакет" value={currentOrder.isGlassPolkaRight ? "да" : "нет"} />
+                </Group>
+                <Group title="Фрамуга">
+                    <Row title="Исполнение" value={currentOrder.executionFramuga} />
+                    <Row title="Тип" value={currentOrder.typeFramuga} />
+                    <Row title="Ковка" value={currentOrder.isForgeFramuga ? "да" : "нет"} />
+                    <Row title="Стеклопакет" value={currentOrder.isGlassFramuga ? "да" : "нет"} />                    
+                </Group>
             </Column>
         </Container>
 
@@ -196,4 +178,40 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     margin: 5px;     
+`;
+
+const Rows = styled.div`    
+    width: 450px;    
+    display: flex;
+    flex-direction: column;     
+`;
+const Title = styled.div`
+    font-size: 14px;
+    padding-left: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+    font-weight: 700;        
+`;
+
+const RowGroup = styled.div`
+    display: flex;
+    width: 100%;         
+`;
+
+const RowTitle = styled.div`
+    font-size: 12px;
+    width: 50%;
+    padding: 1px 10px;    
+    border-left: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;       
+    border-right: 1px solid #f0f0f0;       
+`;
+
+const RowValue = styled.div`
+    font-size: 12px;
+    width: 50%;
+    padding: 1px 10px; 
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    background-color: #fcfafa;      
 `;

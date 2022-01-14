@@ -234,6 +234,36 @@ export class Order implements IOrder {
 	@Column({ nullable: false })
 	packaging: string;
 
+	@Column({ nullable: false })
+	typePolkaLeft: string;
+
+	@Column({ nullable: false })
+	isForgePolkaLeft: boolean;
+
+	@Column({ nullable: false })
+	isGlassPolkaLeft: boolean;
+
+	@Column({ nullable: false })
+	typePolkaRight: string;
+
+	@Column({ nullable: false })
+	isForgePolkaRight: boolean;
+
+	@Column({ nullable: false })
+	isGlassPolkaRight: boolean;
+
+	@Column({ nullable: false })
+	executionFramuga: string;
+
+	@Column({ nullable: false })
+	typeFramuga: string;
+
+	@Column({ nullable: false })
+	isForgeFramuga: boolean;
+
+	@Column({ nullable: false })
+	isGlassFramuga: boolean;
+
 	@Column({ type: 'date', nullable: false })
 	dateCreate: Date;
 }

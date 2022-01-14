@@ -68,6 +68,10 @@ export interface IOrderStr {
     holeInBox: string; //Отверстие в коробе
     colorDoor: string; //Цвет покраски двери
     packaging: string; //Упаковка
+    typePolkaLeft: string; //Тип полки слева
+    typePolkaRight: string; //Тип полки справа
+    executionFramuga: string; //Исполнение фрамуги
+    typeFramuga: string; //Тип фрамуги
 }
 
 export interface IOrderNum {
@@ -103,6 +107,12 @@ export interface IOrderBool {
     isElectromagnet: boolean; //Электромагнит
     isIllumination: boolean; //Подсветка
     isNoise: boolean; //Шумоизоляция
+    isForgePolkaLeft: boolean; //Ковка на полке слева
+    isGlassPolkaLeft: boolean; //Стеклопакет на полке слева
+    isForgePolkaRight: boolean; //Ковка на полке справа
+    isGlassPolkaRight: boolean; //Стеклопакет на полке справа
+    isForgeFramuga: boolean; //Ковка на фрамуге
+    isGlassFramuga: boolean; //Стеклопакет на фрамуге
 } 
 
 export interface IOrder extends IOrderStr, IOrderNum, IOrderBool{

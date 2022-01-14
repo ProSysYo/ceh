@@ -40,6 +40,9 @@ export const fetchAll = () => {
         await dispatch(fetchTables("holeInBoxes"))
         await dispatch(fetchTables("colorDoors"))
         await dispatch(fetchTables("packagings"))
+        await dispatch(fetchTables("typePolkas"))
+        await dispatch(fetchTables("executionFramugas"))
+        await dispatch(fetchTables("typeFramugas"))
         dispatch(orderActions.setLoading(false))
     }
 }
@@ -223,6 +226,17 @@ export const loadOrder = (id: number) => {
                 dispatch(orderActions.setOrderFieldStr({fieldName: "holeInBox", value: data.holeInBox}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "colorDoor", value: data.colorDoor}))
                 dispatch(orderActions.setOrderFieldStr({fieldName: "packaging", value: data.packaging}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "typePolkaLeft", value: data.typePolkaLeft}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isForgePolkaLeft", value: data.isForgePolkaLeft}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isGlassPolkaLeft", value: data.isGlassPolkaLeft}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "typePolkaRight", value: data.typePolkaRight}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isForgePolkaRight", value: data.isForgePolkaRight}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isGlassPolkaRight", value: data.isGlassPolkaRight}))
+
+                dispatch(orderActions.setOrderFieldStr({fieldName: "executionFramuga", value: data.executionFramuga}))
+                dispatch(orderActions.setOrderFieldStr({fieldName: "typeFramuga", value: data.typeFramuga}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isForgeFramuga", value: data.isForgeFramuga}))
+                dispatch(orderActions.setOrderFieldBool({fieldName: "isGlassFramuga", value: data.isGlassFramuga}))
 
                 openNotification("success", "Заказ загружен")
             }

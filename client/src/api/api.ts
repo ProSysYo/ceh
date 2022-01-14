@@ -33,6 +33,9 @@ import { IHoleInBox } from '../../../interfaces/IHoleInBox';
 import { ICustomer } from '../../../interfaces/ICustomer';
 import { IColorDoor } from '../../../interfaces/IColorDoor';
 import { IPackaging } from '../../../interfaces/IPackaging';
+import { ITypePolka } from '../../../interfaces/ITypePolka';
+import { IExecutionFramuga } from '../../../interfaces/IExecutionFramuga';
+import { ITypeFramuga } from '../../../interfaces/ITypeFramuga';
 
 const customers: ICustomer[] = [
     { _id: "1", value: "D001", name: "Бункер" },
@@ -325,12 +328,30 @@ const packagings: IPackaging[] = [
     { _id: "3", value: "ЛАБИРИНТ", name: "ЛАБИРИНТ" },       
 ];
 
+const typePolkas: ITypePolka[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "МП", name: "металл-панель" },       
+    { _id: "3", value: "ПП", name: "панель-панель" },       
+];
+
+const executionFramugas: IExecutionFramuga[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "заодно", name: "заодно" },       
+    { _id: "3", value: "отдельно", name: "отдельно" },       
+];
+
+const typeFramugas: ITypeFramuga[] = [
+    { _id: "1", value: "нет", name: "нет" },
+    { _id: "2", value: "МП", name: "металл-панель" },       
+    { _id: "3", value: "ПП", name: "панель-панель" },       
+];
+
 const mock = {
     customers, parties, models, modelBoxes, locks, spinners, cylinders, covers, eyes,
     eyeLocations, handles, typeDecorations, decorations, wraps, patinas, typeWindows,
     windows, colorTints, colorForges, patinaForges, locationHinges, hingeCounts, 
     typeHinges, thickMetalLeafs, thickMetalBoxes, jambs, locationJambs, fittingColors, sealers,
-    ears, holeInBoxes, colorDoors, packagings
+    ears, holeInBoxes, colorDoors, packagings, typePolkas, executionFramugas, typeFramugas
 }
 
 const deley = 50
@@ -368,7 +389,10 @@ export type tables =
     "ears" |
     "holeInBoxes" |
     "colorDoors" |
-    "packagings"
+    "packagings" |
+    "typePolkas" |
+    "executionFramugas" |
+    "typeFramugas"
 
 const fetchTableByName = (tableName: tables) => {
     return new Promise<{data:any}>((res) => {

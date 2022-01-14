@@ -34,6 +34,9 @@ import { IHoleInBox } from '../../../../interfaces/IHoleInBox';
 import { ICustomer } from '../../../../interfaces/ICustomer';
 import { IColorDoor } from '../../../../interfaces/IColorDoor';
 import { IPackaging } from '../../../../interfaces/IPackaging';
+import { ITypePolka } from '../../../../interfaces/ITypePolka';
+import { IExecutionFramuga } from '../../../../interfaces/IExecutionFramuga';
+import { ITypeFramuga } from '../../../../interfaces/ITypeFramuga';
 
 
 export interface IStaticTables {
@@ -71,6 +74,9 @@ export interface IStaticTables {
     holeInBoxes: IHoleInBox[];
     colorDoors: IColorDoor[];
     packagings: IPackaging[];
+    typePolkas: ITypePolka[];
+    executionFramugas: IExecutionFramuga[];
+    typeFramugas: ITypeFramuga[];
 }
 
 interface IComputedTables {
@@ -153,6 +159,9 @@ const initialStaticTables: IStaticTables = {
     holeInBoxes: [],
     colorDoors: [],
     packagings: [],
+    typePolkas: [],
+    executionFramugas: [],
+    typeFramugas: []
 }
 
 const initialComputedTables: IComputedTables = {
@@ -277,6 +286,18 @@ const initialCurrentOrder: IOrder = {
     holeInBox: "",
     colorDoor: "",
     packaging: "",
+
+    typePolkaLeft: "",
+    typePolkaRight: "",
+    isForgePolkaLeft: false,
+    isGlassPolkaLeft: false,
+    isForgePolkaRight: false,
+    isGlassPolkaRight: false,
+
+    executionFramuga: "",
+    typeFramuga: "",
+    isForgeFramuga: false,
+    isGlassFramuga: false,
 
     dateCreate: undefined,
 }

@@ -1,12 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IOrder } from '../../../interfaces/IOrder';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { IOrder } from "../../../interfaces/IOrder";
 
 @Entity()
 export class Order implements IOrder {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ type: 'bigint', unique: true, nullable: false })
+	@Column({ type: "bigint", unique: true, nullable: false })
 	number: number;
 
 	@Column({ nullable: false })
@@ -177,10 +177,10 @@ export class Order implements IOrder {
 	@Column({ nullable: false })
 	note: string;
 
-	@Column({ type: 'double precision', nullable: false })
+	@Column({ type: "double precision", nullable: false })
 	thickMetalLeaf: number;
 
-	@Column({ type: 'double precision', nullable: false })
+	@Column({ type: "double precision", nullable: false })
 	thickMetalBox: number;
 
 	@Column({ nullable: false })
@@ -264,6 +264,6 @@ export class Order implements IOrder {
 	@Column({ nullable: false })
 	isGlassFramuga: boolean;
 
-	@Column({ type: 'date', nullable: false })
+	@Column({ type: "date", nullable: false })
 	dateCreate: Date;
 }

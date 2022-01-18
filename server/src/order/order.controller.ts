@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { Body, Controller, Get, Param, Patch, Post, Query } from "@nestjs/common";
+import { OrderService } from "./order.service";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { UpdateOrderDto } from "./dto/update-order.dto";
 
-@Controller('/orders')
+@Controller("/orders")
 export class OrderController {
 	constructor(private orderService: OrderService) {}
 
@@ -12,7 +12,7 @@ export class OrderController {
 		return this.orderService.create(dto);
 	}
 
-	@Patch(':id')
+	@Patch(":id")
 	update(@Body() dto: UpdateOrderDto) {
 		return this.orderService.update(dto);
 	}
@@ -22,7 +22,7 @@ export class OrderController {
 		return this.orderService.getAll(query);
 	}
 
-	@Get(':id')
+	@Get(":id")
 	async getOrder(@Param() { id }) {
 		return this.orderService.findOne(id);
 	}

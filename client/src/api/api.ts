@@ -415,10 +415,18 @@ const getOrder = (id: number) => {
     return http.get<IOrder>(`/orders/${id}`);
 };
 
+const registerUser = (data: {
+    login: string,
+    password: string
+}) => {
+    return http.post("/auth/register", data)
+}
+
 export const api = {
     fetchTableByName,    
     createOrder,    
     getOrders,
     getOrder,    
-    updateOrder
+    updateOrder,
+    registerUser
 }

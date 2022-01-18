@@ -8,12 +8,8 @@ const defaultOptions = {
 }
 
 export const http = axios.create(defaultOptions)
-
-// let http = axios.create(defaultOptions)
-// http.interceptors.request.use(function (config) {
-//     const token = localStorage.getItem('token');
-//     config.headers.Authorization =  token ? `Bearer ${token}` : '';
-//     return config;
-// })
-
-// export { http }
+http.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization =  token ? `Bearer ${token}` : '';
+    return config;
+})

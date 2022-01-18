@@ -7,11 +7,19 @@ import { CreateUserDto } from "../user/create-user.dto";
 
 @Injectable()
 export class AuthService {
-	constructor(private userService: UserService, private jwtService: JwtService) {}
+	constructor(private userService: UserService, private jwtService: JwtService) { }
 
 	async login(dto: CreateUserDto) {
 		const user = await this.validateUser(dto);
-		return this.generateToken(user);
+		const token = this.generateToken(user);
+		return {
+			token,
+			user: {
+				id: user.id,
+				login: user.login,
+				role: user.role,
+			},
+		};
 	}
 
 	async registration(dto: CreateUserDto) {
@@ -24,7 +32,7 @@ export class AuthService {
 		}
 		const hashPassword = await bcrypt.hash(dto.password, 5);
 		const user = await this.userService.create({ ...dto, password: hashPassword });
-		return this.generateToken(user);
+		return user;
 	}
 
 	private async generateToken(user: User) {

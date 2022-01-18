@@ -7,9 +7,13 @@ import { register } from '../../store/slices/authSlice';
 
 const Register: FC = () => {
     const dispatch = useAppDispatch()
+    const [form] = Form.useForm();
 
     const onFinish = async (values: any) => {
-        await dispatch(register(values))
+        const res = await dispatch(register(values)).unwrap()
+        if (res) {
+            form.resetFields();
+        }        
     };
     
     const onFinishFailed = (errorInfo: any) => {
@@ -19,6 +23,7 @@ const Register: FC = () => {
         <Container>
             <Form
                 name="register"
+                form={form}
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 18 }}
                 onFinish={onFinish}

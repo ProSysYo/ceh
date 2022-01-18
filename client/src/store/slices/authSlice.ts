@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
+import { openNotification } from '../../commons/notification';
 
 interface IAuthState {
     isAuth: boolean;
@@ -20,6 +21,9 @@ export const register = createAsyncThunk(
     async (data: { login: string, password: string }, {rejectWithValue}) => {
         try {
             const response = await api.registerUser(data)        
+            
+            openNotification("success", "Пользователь создан")
+
             return {
                 data: response.data,            
             }
@@ -28,6 +32,8 @@ export const register = createAsyncThunk(
             if (!error.isAxiosError) {
                 throw error
             }
+
+            openNotification("error", error.response.data.message)
             return rejectWithValue(error.response.data)
         }
         
@@ -41,10 +47,10 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {        
         builder
             .addCase(register.fulfilled, (state, action) => {
-                console.log("ddd"); 
+                console.log("success"); 
             })
             .addCase(register.rejected, (state, action) => {
-                console.log(action.payload); 
+                console.log("reject"); 
             })
     }
 })

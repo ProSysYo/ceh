@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Drawer, Layout } from 'antd';
@@ -11,13 +11,21 @@ import Home from './pages/Home/Home';
 import { useAppSelector } from './hooks/useAppSelector';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import { useDispatch } from 'react-redux';
+import { auth } from './store/slices/authSlice';
 
 const { Content } = Layout;
 
 const App: FC = () => {
+    const dispatch = useDispatch();
     const { isAuth } = useAppSelector(state => state.auth)
-
     const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        dispatch(auth())
+        // eslint-disable-next-line
+    }, [])
+
     const showDrawer = () => {
         setVisible(true);
     };

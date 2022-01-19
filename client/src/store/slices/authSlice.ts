@@ -40,6 +40,53 @@ export const register = createAsyncThunk(
     }
 )
 
+export const login = createAsyncThunk(
+    'auth/login',
+    async (data: { login: string, password: string }, {rejectWithValue}) => {
+        try {
+            const response = await api.login(data)   
+
+            localStorage.setItem('token', response.data.token)            
+            
+            openNotification("success", "Вход выполнен")
+
+            return {
+                data: response.data,            
+            }
+        } catch (error: any) {
+            
+            if (!error.isAxiosError) {
+                throw error
+            }
+
+            openNotification("error", error.response.data.message)
+            return rejectWithValue(error.response.data)
+        }
+        
+    }
+)
+
+export const auth = createAsyncThunk(
+    'auth/auth',
+    async (_, {rejectWithValue}) => {
+        try {
+            const response = await api.auth();            
+            localStorage.setItem('token', response.data.token) 
+            openNotification("success", "Вход выполнен")
+
+            return {
+                data: response.data,            
+            }
+        } catch (error: any) {            
+            if (!error.isAxiosError) {
+                throw error
+            }
+            openNotification("error", error.response.data.message)
+            return rejectWithValue(error.response.data)
+        }        
+    }
+)
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -51,6 +98,18 @@ export const authSlice = createSlice({
             })
             .addCase(register.rejected, (state, action) => {
                 console.log("reject"); 
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.isAuth = true;
+                state.isLoading = false;
+                state.errors = null;
+                state.user = action.payload.data.user;
+            })
+            .addCase(auth.fulfilled, (state, action) => {
+                state.isAuth = true;
+                state.isLoading = false;
+                state.errors = null;
+                state.user = action.payload.data.user;
             })
     }
 })

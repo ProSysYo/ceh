@@ -415,11 +415,16 @@ const getOrder = (id: number) => {
     return http.get<IOrder>(`/orders/${id}`);
 };
 
-const registerUser = (data: {
-    login: string,
-    password: string
-}) => {
+const registerUser = (data: { login: string, password: string }) => {
     return http.post("/auth/register", data)
+}
+
+const login = (data: { login: string, password: string }) => {
+    return http.post("/auth/login", data)
+}
+
+const auth = () => {
+    return http.get("/auth/auth")
 }
 
 export const api = {
@@ -428,5 +433,7 @@ export const api = {
     getOrders,
     getOrder,    
     updateOrder,
-    registerUser
+    registerUser,
+    login,
+    auth
 }

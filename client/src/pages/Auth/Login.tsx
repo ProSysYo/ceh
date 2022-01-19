@@ -2,10 +2,14 @@ import { Button, Divider, Form, Input } from "antd";
 import { FC } from "react";
 import styled from "styled-components"
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { login } from '../../store/slices/authSlice';
 
 const Login: FC = () => {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const dispatch = useAppDispatch();
+
+    const onFinish = async (values: any) => {
+        await dispatch(login(values))       
     };
     
     const onFinishFailed = (errorInfo: any) => {
@@ -24,7 +28,7 @@ const Login: FC = () => {
                 <Divider>Авторизация</Divider>    
                 <Form.Item
                     label="Логин"
-                    name="username"
+                    name="login"
                     rules={[{ required: true, message: 'Введите логин' }]}
                 >
                     <Input />

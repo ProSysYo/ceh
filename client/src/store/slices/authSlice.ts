@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
 import { openNotification } from '../../commons/notification';
+import { IUser } from '../../interfaces/IUser';
 
 interface IAuthState {
     isAuth: boolean;
-    user: null | {};
+    user: null | IUser;
     isLoading: boolean;
     errors: any;
 }
@@ -71,9 +72,8 @@ export const auth = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const response = await api.auth();            
-            localStorage.setItem('token', response.data.token) 
-            openNotification("success", "Вход выполнен")
-
+            localStorage.setItem('token', response.data.token)
+            
             return {
                 data: response.data,            
             }
@@ -90,7 +90,13 @@ export const auth = createAsyncThunk(
 export const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        logout: (state) => {
+            localStorage.removeItem('token')
+            state.user = null
+            state.isAuth = false            
+        }
+    },
     extraReducers: (builder) => {        
         builder
             .addCase(register.fulfilled, (state, action) => {
@@ -103,7 +109,7 @@ export const authSlice = createSlice({
                 state.isAuth = true;
                 state.isLoading = false;
                 state.errors = null;
-                state.user = action.payload.data.user;
+                state.user = action.payload.data.user;                
             })
             .addCase(auth.fulfilled, (state, action) => {
                 state.isAuth = true;
@@ -113,5 +119,6 @@ export const authSlice = createSlice({
             })
     }
 })
+export const authActions = authSlice.actions
 
 export default authSlice.reducer

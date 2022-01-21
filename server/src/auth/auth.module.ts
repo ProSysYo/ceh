@@ -11,10 +11,8 @@ import { UserModule } from "../user/user.module";
 		UserModule,
 		JwtModule.register({
 			secret: process.env.PRIVATE_KEY || "SECRET",
-			signOptions: {
-				expiresIn: "24h",
-			},
 		}),
 	],
+	exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

@@ -132,7 +132,14 @@ export const getOrders = (filters: {}) => {
                     openNotification("error", "Нет соединения с сервером") 
                     console.log("Нет соединения с сервером")                    
                     return 
-                }                         
+                }
+
+                if (e.response.status === 403) {
+                    openNotification("error", e.response.data.message) 
+                                                         
+                } else {
+                    openNotification("error", e.response.data.errors)
+                }                       
             } else {
                 openNotification("error", "Не известная ошибка") 
                 console.log("other error", e);                

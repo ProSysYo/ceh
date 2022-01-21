@@ -24,8 +24,8 @@ const Register: FC = () => {
             <Form
                 name="register"
                 form={form}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
+                labelCol={{ span: 11 }}
+                wrapperCol={{ span: 13 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
@@ -39,6 +39,14 @@ const Register: FC = () => {
                     <Input />
                 </Form.Item>
 
+                <Form.Item
+                    label="Имя пользователя"
+                    name="name"
+                    rules={[{ required: true, message: 'Введите имя пользователя' }]}
+                >
+                    <Input />
+                </Form.Item>
+                
                 <Form.Item
                     label="Пароль"
                     name="password"

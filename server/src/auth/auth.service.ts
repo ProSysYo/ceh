@@ -1,23 +1,23 @@
-import { HttpException, HttpStatus, Injectable, Req, UnauthorizedException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import { UserService } from "src/user/user.service";
 import { User } from "../user/user.entity";
 import { CreateUserDto } from "../user/create-user.dto";
-import { Request } from "express";
+import { EntryUserDto } from "../user/entry-user.dto";
 
 @Injectable()
 export class AuthService {
 	constructor(private userService: UserService, private jwtService: JwtService) {}
 
-	async login(dto: CreateUserDto) {
+	async login(dto: EntryUserDto) {
 		const user = await this.validateUser(dto);
 		const token = await this.generateToken(user);
 		return {
 			token,
 			user: {
 				id: user.id,
-				login: user.login,
+				name: user.name,
 				role: user.role,
 			},
 		};
@@ -36,10 +36,9 @@ export class AuthService {
 		return user;
 	}
 
-	async auth(@Req() request: Request) {
-		const header = request.headers.authorization;
-		const bearer = header.split(" ")[0];
-		const token = header.split(" ")[1];
+	async auth(authHeader: string) {
+		const bearer = authHeader.split(" ")[0];
+		const token = authHeader.split(" ")[1];
 
 		if (bearer !== "Bearer" || !token) {
 			throw new UnauthorizedException({ message: "Пользователь не авторизован" });
@@ -51,18 +50,18 @@ export class AuthService {
 			token: newToken,
 			user: {
 				id: user.id,
-				login: user.login,
+				name: user.name,
 				role: user.role,
 			},
 		};
 	}
 
 	private async generateToken(user: User) {
-		const payload = { login: user.login, id: user.id, roles: user.role };
+		const payload = { name: user.name, id: user.id, role: user.role };
 		return this.jwtService.sign(payload);
 	}
 
-	private async validateUser(dto: CreateUserDto) {
+	private async validateUser(dto: EntryUserDto) {
 		const user = await this.userService.findByLogin(dto.login);
 		if (!user) {
 			throw new UnauthorizedException({ message: "Такого логина не существует" });

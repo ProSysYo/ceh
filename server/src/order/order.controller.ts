@@ -18,8 +18,7 @@ export class OrderController {
 	@Post()
 	@Roles("ADMIN", "MANAGER")
 	create(@Body() dto: CreateOrderDto, @Req() request: RequestWithUser) {
-		console.log(request.user);
-		return this.orderService.create(dto);
+		return this.orderService.create(dto, request.user);
 	}
 
 	@Patch(":id")

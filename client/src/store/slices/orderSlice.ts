@@ -200,6 +200,7 @@ const initialCurrentOrder: IOrder = {
     customer: "",
     number: undefined,
     numberCustomer: "",
+    manager: "",
     party: "",
 
     model: "",

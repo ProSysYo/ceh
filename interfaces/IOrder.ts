@@ -1,6 +1,7 @@
 export interface IOrderStr {    
     customer: string; //Код заказчика    
     numberCustomer: string; //Номер заказчика
+    manager: string; //Менеджер
     party: string; //Партийность    
     model: string; //Модель
     modelBox: string; //Модель короба

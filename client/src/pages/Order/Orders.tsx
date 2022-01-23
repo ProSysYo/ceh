@@ -75,10 +75,7 @@ const Orders: React.FC = () => {
                         <Column title="Номера дверей" dataIndex="" width={15} />
                         <Column title="Заказчик" dataIndex="customer" width={10} />
                         <Column title="Номер заказчика" dataIndex="numberCustomer" width={15} />
-                        <Column title="Модель" dataIndex="model" width={10} />
-                        <Column title="Высота" dataIndex="height" width={10} />
-                        <Column title="Ширина" dataIndex="width" width={10} />
-                        <Column title="Окно" dataIndex="doorWindow" width={10} />
+                        <Column title="Менеджер" dataIndex="manager" width={15} />                       
                         <Column title="Цена" dataIndex="costDoor" width={10} />
                         <Column
                             title = 'Дата создания'
@@ -158,10 +155,10 @@ const Container = styled.div`
 
 const TableContainer = styled.div`
     margin-top: 10px;
-    width: 85%;   
+    width: 80%;   
 `;
 
 const FilterContainer = styled.div`
-    width: 15%;
+    width: 20%;
     margin-left: 10px;        
 `;

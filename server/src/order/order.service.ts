@@ -4,6 +4,7 @@ import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto } from "./dto/update-order.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { IUserInReq } from "src/interfaces/IUserInReq";
 
 @Injectable()
 export class OrderService {
@@ -12,10 +13,11 @@ export class OrderService {
 		private repository: Repository<Order>
 	) {}
 
-	async create(dto: CreateOrderDto): Promise<Order> {
+	async create(dto: CreateOrderDto, user: IUserInReq): Promise<Order> {
 		const number = new Date().valueOf();
 		const dateCreate: Date = new Date();
-		const newOrder = await this.repository.create({ ...dto, number, dateCreate });
+		const manager: string = user.name;
+		const newOrder = await this.repository.create({ ...dto, number, manager, dateCreate });
 		const order = await this.repository.save(newOrder);
 		return order;
 	}

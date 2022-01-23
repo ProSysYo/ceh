@@ -16,6 +16,9 @@ export class Order implements IOrder {
 	numberCustomer: string;
 
 	@Column({ nullable: false })
+	manager: string;
+
+	@Column({ nullable: false })
 	party: string;
 
 	@Column({ nullable: false })
